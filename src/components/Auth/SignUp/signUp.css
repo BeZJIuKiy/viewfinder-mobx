@@ -1,0 +1,100 @@
+.singup__body {
+    width: 100%;
+    height: 100vh;
+
+    /* background: url(../images/background01.gif) no-repeat center; */
+    background-size: cover;
+
+    display: flex;
+
+    align-items: center;    
+    justify-content: center;
+}
+
+.singup__container {
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+
+
+/* Items */
+.singup__header {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.singup__header__img {
+    margin: 0 auto 10px;
+}
+
+.singup__header__title {
+    font-size: 24px;
+}
+
+
+
+/* Form */
+.singup__form__items {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.singup__form__item {
+    display: flex;
+    flex-direction: column;
+}
+
+.teeeest {
+    width: 45%;
+}
+
+.singup__input {
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 12px;
+    margin-top: 30px;
+}
+
+.singup__error {
+    font-weight: 400;
+    color: #999;
+}
+
+
+/* Footer */
+.singup__footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.singup__footer__item {
+    font-size: 14px;
+
+    padding: 4px;
+    color: #5156c7;
+    text-decoration: none;
+
+    border: 2px transparent solid;
+    border-radius: 5px;
+
+    transition: background-color 0.1s linear;
+}
+
+.singup__footer__item:hover {
+    background-color: #fff;
+    font-weight: 700;
+}
+
+
+
+/* Button */
+.signUp__btn {
+    width: 100%;
+}

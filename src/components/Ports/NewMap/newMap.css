@@ -1,0 +1,13 @@
+.newmap {
+    width: 100%;
+}
+
+.newmap.show {
+    display: flex;
+    height: calc(100vh - 64px);
+}
+
+.newmap.hide {
+    display: none;
+    height: 0;
+}

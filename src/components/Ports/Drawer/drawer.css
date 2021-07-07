@@ -1,0 +1,40 @@
+.drawer {
+    height: calc(100vh - 64px);
+    min-width: 300px;
+    background-color: #fff;
+    overflow: auto;
+}
+
+.drawer__item {
+    padding: 15px 10px;
+    margin: 10px 10px;
+
+    display: flex;
+    align-items: center;
+
+    font-size: 18px;
+    font-weight: 400;
+    color: #333;
+    background-color: #eee;
+
+    border: 1px #fff solid;
+    border-radius: 5px;
+
+    transition: background-color 0.2s linear;
+}
+
+.drawer__cam__wrapper__item {
+    display: flex;
+    flex-direction: column;
+}
+
+.drawer__cam__icon {
+    margin: 0 5px;
+    width: 20px;
+    height: 20px;
+}
+
+.drawer__item:hover {
+    background-color: #ccc;
+    cursor: pointer;
+}

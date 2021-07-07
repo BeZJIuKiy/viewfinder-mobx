@@ -1,0 +1,12 @@
+.searcher {
+    display: flex;
+    position: relative;
+}
+
+.home__map__changer {
+    position: absolute;
+    top: 70px;
+    left: 320px;
+    display: flex;
+    z-index: 1;
+}

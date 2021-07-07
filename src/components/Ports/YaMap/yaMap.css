@@ -1,0 +1,53 @@
+.yamap {
+    width: 100%;
+    /* height: calc(100vh - 64px); */
+}
+
+.yamap.show {
+    display: flex;
+    height: calc(100vh - 64px);
+}
+
+.yamap.hide {
+    display: none;
+    height: 0;
+}
+
+.yamap__item {
+    width: calc(100vw - 300px);
+    height: 100%;
+}
+
+
+
+/* Balloon Content */
+.yamap__balloon__text {
+    margin: 10px 0 20px 0;
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 10px;
+}
+
+.yamap__balloon__link {
+    text-align: end;
+}
+
+.yamap__balloon__content {
+    margin-bottom: 10px;
+}
+
+.yamap__balloon__link__item {
+    border-radius: 5px;
+
+    color: inherit;
+    text-decoration: none;
+    
+    font-size: 18px;
+    padding: 10px;
+
+    transition: background-color 0.2s linear;
+}
+
+.yamap__balloon__link__item:hover {
+    background-color: #eee;
+}

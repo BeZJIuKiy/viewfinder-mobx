@@ -1,0 +1,204 @@
+/* Events */
+.events {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    /* background-color: #3f3f3f; */
+}
+
+.events__container {
+    width: 100%;
+    max-width: 1600px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 20px auto 0;
+}
+
+.events__content {
+    display: flex;
+}
+
+.events__camera {
+    display: flex;
+    width: 100%;
+    position: relative;
+}
+
+.events__camera__item {
+    margin: 0 15px;
+    z-index: 2;
+}
+
+.events__camera__item.container {
+    margin: 5px 0 0 0;
+    border-right: 2px solid #aaa;
+
+}
+
+.events__camera__item.hide {
+    display: none;
+}
+
+.events__camera__item.show {
+    display: flex;
+}
+
+.events__camera__item.title {
+    min-width: 200px;
+
+    padding: 8px 0;
+
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.events__camera__item.events__and__image {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.events__live {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.events__live.show {
+    height: 100%;
+}
+
+.events__live.hide {
+    height: 0;
+    display: none;
+}
+
+.events__live__camera {
+    margin-left: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.events__live__camera.title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.events__live__another__cameras {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto; 
+    /* padding-top: 20px; */
+}
+
+.events__live__another__cameras.title {
+    width: 100%;
+    margin-bottom: 4px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.events__live__another__cameras__item {
+    position: relative;
+    margin-left: 20px;
+}
+
+.events__live__go__another__camera {
+    position: absolute;
+    width: 100%;
+    /* height: calc(100% + 20px); */
+    /* width: 100%; */
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: block;
+}
+
+.events__footer {
+    display: flex;
+    flex-direction: column;
+}
+
+.events__image {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.events__image.show {
+    height: 100%;
+}
+
+.events__image.hide {
+    height: 0;
+    display: none;
+}
+
+.events__image__boat.title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.events__image__boat.img {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.events__image__boat.close {
+    position: absolute;
+    top: -40px;
+    right: 20px;
+    z-index: 1;
+    display: block;
+}
+
+.events__image__boat.left__arrow {
+    transform: rotate(180deg);
+    margin: 0px 3px 0px -3px;
+}
+
+
+
+/* Setup Events */
+.account__events {
+    font-size: 16px;
+    color: #333;
+    font-weight: 700;
+}
+
+.events__type__notification.critical {
+    background-color: #d32f2f;
+    
+    color: #fff;
+    font-weight: 500;
+    letter-spacing: 1px;
+    
+    border-radius: 5px;
+    /* text-align: center; */
+}
+.events__type__notification.warning {
+    background-color: #ffb74d;
+    
+    color: #444;
+    font-weight: 500;
+    letter-spacing: 1px;
+    
+    border-radius: 5px;
+    /* text-align: center; */
+}

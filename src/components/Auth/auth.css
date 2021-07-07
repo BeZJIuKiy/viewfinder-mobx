@@ -1,0 +1,181 @@
+.auth {
+    /* background: url('./images/background01.gif') center no-repeat; */
+    background: url('./images/backgroundChanged02.jpg') center no-repeat;
+    background-size: cover;
+
+    width: 100%;
+    height: 100vh;
+
+    position: relative;
+}
+
+.auth__info {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+}
+
+.auth__info__substrate {
+    background-color: #999;
+    opacity: 0.3;
+
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+    display: block;
+}
+
+.auth__info__substrate.project__name {
+    top: 10px;
+    left: 10px;
+}
+
+.auth__info.project__name {
+    padding: 60px 0 0 120px;
+    user-select: none;
+
+    /* font-family: 'Great Vibes', cursive; */
+    /* font-family: 'Chivo', sans-serif; */
+    font-family: 'Lato', sans-serif;
+    font-size: 80px;
+    font-weight: 700;
+
+    position: relative;
+    z-index: 1;
+    display: block;
+}
+
+.auth__info__contact__us {
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    position: relative;
+
+    line-height: 1.4;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    font-weight: 500;
+}
+
+.auth__info__contact__us.title {
+    text-align: center;
+}
+
+.auth__info__contact__us.phone {
+    display: flex;
+    flex-direction: row;
+}
+
+.auth__info__contact__us.phone a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.auth__info__contact__us.email {
+    display: flex;
+    flex-direction: row;
+}
+
+.auth__info__contact__us.email a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.auth__info__substrate.contact__us {
+    background-color: #ccc;
+    height: 40%;
+
+    z-index: 1;
+}
+
+
+.auth__wrapper {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+
+    width: 100%;
+    height: auto;
+
+    max-width: 600px;
+    max-height: 300px;
+
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    z-index: 1;
+    transform: translate(-50%, -20%);
+}
+
+.auth__item {
+    margin: 0 10px;
+}
+
+
+/* Кнопки в разделе Auth */
+.btn {
+    cursor: pointer;
+
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 10px 25px;
+
+    font-family: 'Roboto', sans-serif;
+    color: inherit;
+    background: transparent;
+
+    font-size: 24px;
+    font-weight: 300;
+
+    text-decoration: none;
+
+    transition: background-color 0.2s linear,
+    border-color 0.2s linear;
+}
+
+.btn--default {
+    color: #222;
+    border-color: #bbb;
+}
+
+.btn--default:hover {
+    border-color: #aaa;
+}
+
+.btn--primary {
+    color: #5156c7;
+    background-color: #E0FFFF;
+    border-color: #9ea7da;
+}
+
+.btn--auth {
+    padding: 10px 40px;
+    font-size: 20px;
+}
+
+.btn--primary:hover {
+    border-color: #5156c7;
+    background-color: #B0E0E6;
+}
+
+.btn--secondary {
+    color: #f50757;
+    background-color: #FFF8DC;
+    border-color: #fa7faa;
+}
+
+.btn--secondary:hover {
+    border-color: #f50757;
+    background-color: #FFDAB9;
+}
+
+.auth__demo__submit {
+    text-align: center;
+}

@@ -1,0 +1,61 @@
+.demo__wrapper {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
+    background: rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px);
+}
+
+.demo__wrapper.open {
+    height: 100%;
+    display: block;
+}
+
+.demo__wrapper.close {
+    height: 0;
+    display: none;
+}
+
+.demo__body {
+    max-width: 500px;
+    margin: auto;
+    margin-top: 5%;
+    background: white;
+    
+    padding: 20px;
+    border-radius: 10px;
+
+    max-height: 500px;
+
+    overflow-y: scroll;
+
+    -ms-overflow-style: none;
+    scrollbar-width: 0;
+}
+
+.demo__body::-webkit-scrollbar {    /* Отключение видимости скролл бара */
+    width: 0;                       /* Ширина: 0 */
+    background: transparent;        /* Фон: прозрачный */
+}
+
+.demo__close {
+    top: -15px;
+
+    font-size: 40px;
+    color: #999;
+    text-align: right;
+    cursor: pointer;
+}
+
+.demo__title {
+    text-align: center;
+    width: 100%;
+    margin: 0;
+}
+
+.demo__text {
+    font-weight: 300;
+    color: #333;
+    font-style: italic;
+}

@@ -1,0 +1,127 @@
+.singin__body {
+    width: 100%;
+    height: 100vh;
+
+    background: url(../images/backgroundChanged02.jpg) no-repeat center;
+    background-size: cover;
+
+    display: flex;
+
+    align-items: baseline;
+    justify-content: center;
+}
+
+.singin__container {
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    margin-top: 80px;
+}
+
+
+
+/* Items */
+.singin__header {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.singin__header__img {
+    margin: 0 auto 10px;
+}
+
+.singin__header__title {
+    font-size: 24px;
+}
+
+
+
+/* Form */
+.singin__form {
+    display: flex;
+    flex-direction: column;
+}
+
+.singin__form__item {
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 12px;
+    margin-top: 30px;
+}
+
+.singin__form__remember {
+    position: relative;
+    display: flex;
+}
+
+.singin__form__remember__bgc {
+    margin: 10px 0;
+    width: 146px;
+    height: 24px;
+    opacity: 0.7;
+    border-radius: 5px;
+    background-color: #777;
+}
+
+.singin__form__remember__text {
+    position: absolute;
+    top: 1px;
+    left: 4px;
+    z-index: 1;
+    display: block;
+    color: #fff;
+    font-size: 24px;
+}
+
+
+
+/* Btn */
+.singin__form__btn {
+    margin-top: 10px;
+    color: #fff;
+    font-size: 24px;
+
+    padding: 6px;
+    border-radius: 5px;
+    background-color: #3f51b5;
+}
+
+
+
+/* Footer */
+.singin__footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.singin__footer__item {
+    position: absolute;
+    top: 8px;
+    right: 0;
+    z-index: 1;
+
+    display: block;
+
+    font-size: 14px;
+
+    padding: 4px;
+    /* color: #5156c7; */
+    color: #fff;
+    text-decoration: none;
+
+    border: 2px transparent solid;
+    border-radius: 5px;
+
+    transition: background-color 0.2s linear;
+}
+
+.singin__form__remember__bgc--footer {
+    width: 155px;
+}
+/* .singin__footer__item:hover {
+    background-color: #fff;
+    font-weight: 500;
+} */
