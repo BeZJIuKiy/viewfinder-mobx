@@ -12,6 +12,7 @@ import './events.css'
 import ports from "../../../store/ports";
 import header from "../../../store/header";
 import {observer} from "mobx-react-lite";
+import {Canvas} from "./Canvas";
 
 
 export const Events = observer(() => {
@@ -86,9 +87,7 @@ export const Events = observer(() => {
 						<div className={`events__live__another__cameras title`}>
 							{`${description}`}
 
-							{/* <IconButton aria-label="show 4 new mails" color="inherit"> */}
 							<IconButton color="inherit" style={{padding: '10px 0 0 5px'}}>
-								{/*<Badge badgeContent={events.length} color="secondary">*/}
 								<Badge badgeContent={camerasNewNote[i]} color="secondary">
 									<NotificationsIcon color="primary"/>
 								</Badge>
@@ -153,18 +152,19 @@ export const Events = observer(() => {
 										{`${camera.city}: ${camera.description}`}
 									</div>
 									<div>
-										<iframe width="676" height="380"
-											    src={camera.link}
-											    title="YouTube video player"
-											    frameBorder="0"
-											    allow="accelerometer;
-                                                   autoplay;
-                                                   clipboard-write;
-                                                   encrypted-media;
-                                                   gyroscope;
-                                                   picture-in-picture"
-											    allowFullScreen
-										/>
+										{/*<iframe width="676" height="380"*/}
+										{/*	    src={camera.link}*/}
+										{/*	    title="YouTube video player"*/}
+										{/*	    frameBorder="0"*/}
+										{/*	    allow="accelerometer;*/}
+                                        {/*           autoplay;*/}
+                                        {/*           clipboard-write;*/}
+                                        {/*           encrypted-media;*/}
+                                        {/*           gyroscope;*/}
+                                        {/*           picture-in-picture"*/}
+										{/*	    allowFullScreen*/}
+										{/*/>*/}
+										<Canvas />
 									</div>
 								</div>
 

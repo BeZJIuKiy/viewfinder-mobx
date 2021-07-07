@@ -7,6 +7,7 @@ import boat1_03 from '../components/Ports/Events/images/b1-03.jpg'
 import boat1_04 from '../components/Ports/Events/images/b1-04.jpg'
 import {makeAutoObservable} from "mobx";
 import boat1_01 from '../components/Ports/Events/images/b1-01.jpg'
+import canvasState from "./canvasState";
 // import boat1_02 from '../components/Ports/Events/images/b1-02.jpg'
 // import boat1_05 from '../components/Ports/Events/images/b1-05.jpg'
 
@@ -299,6 +300,7 @@ class ports {
 		}
 
 		this.selectedObjects.camera = this.selectedObjects.port.cameras.data[index];
+		canvasState.setCameraInMap(this.selectedObjects.camera.id);
 	};
 
 	setSelectedEvent = (index) => {

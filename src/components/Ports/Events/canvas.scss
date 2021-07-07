@@ -1,0 +1,29 @@
+.canvas {
+    //height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+canvas {
+    //border: 1px solid black;
+    background: none;
+
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    display: block;
+
+    // background: url('https://cdn.asiatatler.com/asiatatler/i/hk/2020/01/20123811-hong-kong-most-expensive-city-julius-baer-hong-kong-tatler_cover_2000x1342.jpg') no-repeat center center;
+    // background-size: cover;
+}
+
+.canvas_draw {
+    position: relative;
+
+    //max-width: 1200px;
+    //max-height: 800px;
+    //
+    //width: 100%;
+    //height: 100%;
+}
