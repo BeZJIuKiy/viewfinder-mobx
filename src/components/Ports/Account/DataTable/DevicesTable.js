@@ -22,7 +22,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditIcon from '@material-ui/icons/Edit';
 import {observer} from "mobx-react-lite";
-import ports from "../../../../store-mobx/ports";
+import ports from "../../../../store/ports";
 
 function descendingComparator(a, b, orderBy) {
 	if (b[orderBy] < a[orderBy]) {

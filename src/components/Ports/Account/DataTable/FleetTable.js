@@ -21,7 +21,7 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditIcon from '@material-ui/icons/Edit';
-import account from "../../../../store-mobx/account";
+import account from "../../../../store/account";
 import {observer} from "mobx-react-lite";
 
 function descendingComparator(a, b, orderBy) {

@@ -9,10 +9,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import CloseIcon from '@material-ui/icons/Close';
 import Badge from '@material-ui/core/Badge';
 import './events.css'
-import {useSelector} from "react-redux";
-import {useActions} from "../../../hooks/useActions";
-import ports from "../../../store-mobx/ports";
-import header from "../../../store-mobx/header";
+import ports from "../../../store/ports";
+import header from "../../../store/header";
 import {observer} from "mobx-react-lite";
 
 
@@ -26,8 +24,7 @@ export const Events = observer(() => {
 
 	const {camerasNewNote} = header;
 
-	// if (typeof camera.id === 'undefined') ports.setSelectedCamera(0);
-	if (!!!camera.id) ports.setSelectedCamera(0);
+	if (!Number.isInteger(camera.id)) ports.setSelectedCamera(0);
 
 	const [currentBoat, setCurrentBoat] = useState('');
 	const [otherCameras, setOtherCameras] = useState();

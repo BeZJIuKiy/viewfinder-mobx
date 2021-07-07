@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import {DevicesTable} from './DataTable/DevicesTable';
 import {FleetTable} from './DataTable/FleetTable';
 import {observer} from "mobx-react-lite";
-import account from "../../../store-mobx/account";
+import account from "../../../store/account";
 
 
 export const Account = observer(() => {

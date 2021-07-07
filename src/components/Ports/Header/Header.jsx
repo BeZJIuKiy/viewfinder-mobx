@@ -11,8 +11,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import {NavLink} from 'react-router-dom';
 import './Header.css';
 import {observer} from "mobx-react-lite";
-import header from "../../../store-mobx/header";
-import ports from "../../../store-mobx/ports";
+import header from "../../../store/header";
+import ports from "../../../store/ports";
 
 const useStyles = makeStyles((theme) => ({
 	grow: {

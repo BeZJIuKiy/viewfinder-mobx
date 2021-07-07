@@ -1,11 +1,5 @@
 import {makeAutoObservable} from "mobx";
 import {userAvatar} from "./ports";
-import {
-	ADD_ALL_NEW_NOTIFICATIONS,
-	ADD_NEW_CAMERAS_NOTIFICATIONS,
-	ADD_NEW_PORTS_NOTIFICATIONS
-} from "../store-redux/reducers/headerReducer";
-
 
 class header {
 	allNewNote = null;

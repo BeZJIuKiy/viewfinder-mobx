@@ -3,7 +3,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ports from "../../../store-mobx/ports";
+import ports from "../../../store/ports";
 
 const useStyles = makeStyles((theme) => ({
 	root: {

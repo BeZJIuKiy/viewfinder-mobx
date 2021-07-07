@@ -4,7 +4,6 @@ import { SignIn } from './components/Auth/SinginIn/SinginIn';
 import { Auth } from './components/Auth/Auth';
 import { Account } from './components/Ports/Account/Account';
 import { Events } from './components/Ports/Events/Events';
-import Tests from "./components/Tests/Tests";
 
 function App() {
   return (
@@ -14,7 +13,6 @@ function App() {
       <Route path='/ports' component={Ports} />
       <Route path='/account' component={Account} />
       <Route path='/events' component={Events} />
-      {/*<Route path='/tests' component={Tests} />*/}
       {/*<Route path='/events' render={() => <Events /> } /> так можно*/}
     </BrowserRouter>
   );

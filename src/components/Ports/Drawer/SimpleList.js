@@ -11,8 +11,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import {NavLink, useHistory} from 'react-router-dom';
 import {observer} from "mobx-react-lite";
-import ports from "../../../store-mobx/ports";
-import header from "../../../store-mobx/header";
+import ports from "../../../store/ports";
+import header from "../../../store/header";
 
 const useStyles = makeStyles((theme) => ({
 	root: {

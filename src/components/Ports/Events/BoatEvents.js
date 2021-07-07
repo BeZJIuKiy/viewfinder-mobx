@@ -20,7 +20,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import ports from "../../../store-mobx/ports";
+import ports from "../../../store/ports";
 import {observer} from "mobx-react-lite";
 
 

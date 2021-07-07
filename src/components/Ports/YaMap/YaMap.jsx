@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Map, Placemark, YMaps} from 'react-yandex-maps';
 import './yaMap.css';
-import {useSelector} from "react-redux";
-import {useActions} from "../../../hooks/useActions";
-import ports from "../../../store-mobx/ports";
+import ports from "../../../store/ports";
 import {observer} from "mobx-react-lite";
 
 const YaMap = observer((props) => {

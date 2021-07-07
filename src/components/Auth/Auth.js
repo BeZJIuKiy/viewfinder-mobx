@@ -2,7 +2,7 @@ import './auth.css';
 import 'fontsource-roboto';
 import {NavLink, useHistory} from 'react-router-dom';
 import {Form, Formik} from 'formik';
-import auth from "../../store-mobx/auth";
+import auth from "../../store/auth";
 
 
 export const Auth = () => {
