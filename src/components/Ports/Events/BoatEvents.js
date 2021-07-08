@@ -260,7 +260,8 @@ export const BoatEvents = observer(() => {
 
 	useEffect(() => {
 		if (imageId >= 0) setSelected([imageId]);
-	}, [imageId])
+		else if (selected.length === 1 && imageId < 0) setSelected([]);
+	}, [imageId]);
 
 	const rows = [];
 	data.forEach(row => {

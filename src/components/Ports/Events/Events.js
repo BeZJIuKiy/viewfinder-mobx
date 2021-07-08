@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TestList} from './TestList';
 import {TestImage} from './TestImage';
 import {BoatEvents} from './BoatEvents';
@@ -13,7 +13,6 @@ import ports from "../../../store/ports";
 import header from "../../../store/header";
 import {observer} from "mobx-react-lite";
 import {Canvas} from "./Canvas";
-import canvasState from "../../../store/canvasState";
 
 
 export const Events = observer(() => {
@@ -39,12 +38,8 @@ export const Events = observer(() => {
 	}, [event]);
 
 	const findImageId = () => {
-		for (let i = 0; i < camera.events.length; ++i) {
-			if (camera.events[i].id === imageId) {
-				return camera.events[i];
-			}
-		}
-		return camera.events[0];
+		const index = camera.events.findIndex(event => event.id === imageId);
+		return camera.events[index > -1 ? index : 0];
 	}
 
 	useEffect(() => {
@@ -57,20 +52,16 @@ export const Events = observer(() => {
 			? camera.events.filter(e => e.typeVessel === currentBoat)
 			: camera.events;
 
-		cameraEvent.forEach((element, index) => {
-			if (id === element.id) {
-				const task = (index + num < 0 || index + num === cameraEvent.length);
-				const imgNum = task ? index : index + num;
+		const index = cameraEvent.findIndex((element) => element.id === id);
+		const task = (index + num < 0 || index + num === cameraEvent.length);
+		const imgNum = task ? index : index + num;
 
-				setSelectedEvent(cameraEvent[imgNum]);
-			}
-		});
+		setSelectedEvent(cameraEvent[imgNum]);
+		ports.setImageId(cameraEvent[imgNum].id);
 	}
 
 	const otherCameraClick = (i) => {
 		ports.setSelectedCamera(i);
-
-		// canvasState.test.get(camera.id).redrawPolygons();
 	}
 
 	const closeImage = () => {
