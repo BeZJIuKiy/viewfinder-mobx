@@ -33,8 +33,10 @@ class CanvasState {
 		/* Test 1.778 16:9 */
 		// width: 1280,
 		// height: 720,
-		width: 800,
-		height: 450,
+		// width: 800,
+		// height: 450,
+		width: 1920,
+		height: 1080,
 	}
 
 	pointCoefficient = 1;

@@ -142,6 +142,11 @@ export default class Polygons {
 		this.polygons = this.showCenterPoint();
 
 		this.selectPolygon() ? this.polygonSelection() : this.drawPolygons();
+
+		this.postPolygon("https://lockalhost:5000", this.polygons);
+			// .then((data) => {
+			// 	console.log(data);  // JSON data parsed by `response.json()` call
+			// })
 	}
 	cmbUp = (e) => {
 		console.log("Отпущена СКМ");
@@ -177,7 +182,12 @@ export default class Polygons {
 
 	mouseMoveHandler(e) {
 		this.bounds = e.target.getBoundingClientRect();
-		this.mousePos = {x: e.pageX - this.bounds.left, y: e.pageY - this.bounds.top};
+		this.mousePos = {
+			x: e.offsetX,
+			y: e.offsetY,
+			// x: e.pageX - this.bounds.left,
+			// y: e.pageY - this.bounds.top,
+		};
 
 		if (!this.isDrag) this.findAnyPoint();
 		if (this.isDrag && this.currentHandle < 0) this.isCreateRect = true;
@@ -329,6 +339,7 @@ export default class Polygons {
 		})
 
 	}
+
 	drawLine = (x, y) => {
 		this.ctx.strokeStyle = this.polygons[this.curPolygon]?.getLineColor();
 		this.ctx.lineWidth = this.polygons[this.curPolygon]?.getLineWidth();
@@ -355,16 +366,40 @@ export default class Polygons {
 		this.ctx.globalCompositeOperation = 'source-over';
 	}
 
-	redrawPolygons = (camId) => {
-		// this.polygons = canvasState.test.get(camId);
-		this.drawPolygons();
-		this.polygons = this.showCenterPoint();
-	}
-
 	destroyEvents() {
 		this.canvas.onmousemove = null;
 		this.canvas.onmousedown = null;
 		this.canvas.onmouseup = null;
 		this.canvas.oncontextmenu = null;
+	}
+
+	postPolygon = async (url = "", data = {}) => {
+		// Default options are marked with *
+		const pointsToSend = this.polygons.map((polygon) =>
+			polygon.getPoints().map((point) => ({
+				...point, x: point.x * canvasState.pointCoefficient, y: point.y * canvasState.pointCoefficient
+			}))
+		)
+		try {
+			const response = await fetch(url, {
+				method: "POST", // *GET, POST, PUT, DELETE, etc.
+				mode: "cors", // no-cors, *cors, same-origin
+				cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+				credentials: "same-origin", // include, *same-origin, omit
+				headers: {
+					"Content-Type": "application/json"
+					// 'Content-Type': 'application/x-www-form-urlencoded',
+				},
+				redirect: "follow", // manual, *follow, error
+				referrerPolicy: "no-referrer", // no-referrer, *client
+				body: JSON.stringify(pointsToSend), // body data type must match "Content-Type" header
+			});
+
+			// return await response.json();   // parses JSON response into native JavaScript objects
+		} catch (e) {
+			console.log("Ошибка");
+		}
+
+		// return false;
 	}
 };
