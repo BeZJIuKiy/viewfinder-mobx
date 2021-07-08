@@ -144,9 +144,9 @@ export default class Polygons {
 		this.selectPolygon() ? this.polygonSelection() : this.drawPolygons();
 
 		this.postPolygon("https://lockalhost:5000", this.polygons);
-			// .then((data) => {
-			// 	console.log(data);  // JSON data parsed by `response.json()` call
-			// })
+		// .then((data) => {
+		// 	console.log(data);  // JSON data parsed by `response.json()` call
+		// })
 	}
 	cmbUp = (e) => {
 		console.log("Отпущена СКМ");
@@ -182,12 +182,7 @@ export default class Polygons {
 
 	mouseMoveHandler(e) {
 		this.bounds = e.target.getBoundingClientRect();
-		this.mousePos = {
-			x: e.offsetX,
-			y: e.offsetY,
-			// x: e.pageX - this.bounds.left,
-			// y: e.pageY - this.bounds.top,
-		};
+		this.mousePos = {x: e.offsetX, y: e.offsetY};
 
 		if (!this.isDrag) this.findAnyPoint();
 		if (this.isDrag && this.currentHandle < 0) this.isCreateRect = true;
