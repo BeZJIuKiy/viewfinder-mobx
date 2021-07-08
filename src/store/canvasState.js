@@ -60,19 +60,13 @@ class CanvasState {
 	username = "";
 
 	readyRectCounter = 0;
-	polygons = [];
+	// polygons = [];
 
 	test = new Map();
 
 
 	constructor() {
 		makeAutoObservable(this);
-	}
-
-	setCameraInMap = (id) => {
-		if (!!this.test.get(id)) return;
-
-		this.test.set(id, this.polygons);
 	}
 
 	getCanvasDif = () => this.canvasSize.difS;
@@ -97,16 +91,45 @@ class CanvasState {
 		++this.readyRectCounter;
 	}
 
-	addPolygon(polygon) {
-		this.polygons.push(polygon);
+	// addPolygon(polygon) {
+	// 	this.polygons.push(polygon);
+	// }
+
+	// changePolygon(index, polygon) {
+	// 	this.polygons.splice(index, 1, polygon);
+	// }
+
+	// deletePolygon(index) {
+	// 	this.polygons.splice(index, 1);
+	// }
+
+	setPolygonInCamera = (id) => {
+		if (this.test.has(id)) return;
+
+		const polygons = [];
+		this.test.set(id, polygons);
+
+		console.log(this.test);
 	}
 
-	changePolygon(index, polygon) {
-		this.polygons.splice(index, 1, polygon);
+	addPolygon(camId, polygon) {
+		const polygons = this.test.get(camId);
+		polygons.push(polygon);
+		this.test.set(camId, polygons);
+		console.log(this.test.get(camId));
 	}
 
-	deletePolygon(index) {
-		this.polygons.splice(index, 1);
+	changePolygon(camId, index, polygon) {
+		const polygons = this.test.get(camId);
+		polygons.splice(index, 1, polygon);
+		this.test.set(camId, polygons);
+		console.log(this.test.get(camId));
+	}
+
+	deletePolygon(camId, index) {
+		const polygons = this.test.get(camId);
+		polygons.splice(index, 1);
+		this.test.set(camId, polygons);
 	}
 }
 

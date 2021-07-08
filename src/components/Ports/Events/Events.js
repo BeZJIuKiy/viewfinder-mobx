@@ -13,6 +13,7 @@ import ports from "../../../store/ports";
 import header from "../../../store/header";
 import {observer} from "mobx-react-lite";
 import {Canvas} from "./Canvas";
+import canvasState from "../../../store/canvasState";
 
 
 export const Events = observer(() => {
@@ -68,6 +69,8 @@ export const Events = observer(() => {
 
 	const otherCameraClick = (i) => {
 		ports.setSelectedCamera(i);
+
+		// canvasState.test.get(camera.id).redrawPolygons();
 	}
 
 	const closeImage = () => {

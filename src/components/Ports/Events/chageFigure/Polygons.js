@@ -14,6 +14,7 @@ export default class Polygons {
 	saved = "";
 	isCreateRect = false;
 
+	cameraId = ports.selectedObjects.camera.id;
 	polygons = [];
 	curPolygon = null;
 	isDrag = false;
@@ -153,13 +154,13 @@ export default class Polygons {
 
 		if (this.polygons[this.curPolygon].getPoints().length <= 2) {
 			this.deletePolygon();
-			canvasState.deletePolygon(this.curPolygon);
+			canvasState.deletePolygon(this.cameraId, this.curPolygon);
 
 			this.curPolygon = null;
 			this.currentHandle = -1;
 		} else {
 			this.polygons[this.curPolygon].points = this.polygons[this.curPolygon].getPoints();
-			canvasState.changePolygon(this.curPolygon, this.polygons[this.curPolygon]);
+			canvasState.changePolygon(this.cameraId, this.curPolygon, this.polygons[this.curPolygon]);
 			this.polygons = this.showCenterPoint();
 		}
 
@@ -169,8 +170,8 @@ export default class Polygons {
 	/* FUNCTION: lmbUp */
 	createNewPolygon = () => {
 		this.isCreateRect = false;
-		canvasState.addPolygon(new Polygon(canvasState.readyRectCounter, this.startX, this.startY, this.width, this.height));
-		this.polygons = canvasState.polygons;
+		canvasState.addPolygon(this.cameraId, new Polygon(canvasState.readyRectCounter, this.startX, this.startY, this.width, this.height));
+		this.polygons = canvasState.test.get(this.cameraId);
 	}
 
 
@@ -288,6 +289,22 @@ export default class Polygons {
 			this.polygons[this.curPolygon].setPoints(points);
 		}
 	}
+	selectPolygon = () => {
+		let findedPolygon = false;
+		for (let i = 0; i < this.polygons.length; ++i) {
+			const points = this.polygons[i].getPoints();
+			this.ctx.beginPath();
+			this.ctx.moveTo(points[0].x, points[0].y);
+			points.forEach(({x, y}) => this.ctx.lineTo(x, y));
+			this.ctx.closePath();
+
+			if (this.ctx.isPointInPath(this.mousePos.x, this.mousePos.y)) {
+				this.curPolygon = i;
+				findedPolygon = true;
+			}
+		}
+		return findedPolygon;
+	}
 
 	drawPolygons(polygons = this.polygons) {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -312,24 +329,6 @@ export default class Polygons {
 		})
 
 	}
-
-	selectPolygon = () => {
-		let findedPolygon = false;
-		for (let i = 0; i < this.polygons.length; ++i) {
-			const points = this.polygons[i].getPoints();
-			this.ctx.beginPath();
-			this.ctx.moveTo(points[0].x, points[0].y);
-			points.forEach(({x, y}) => this.ctx.lineTo(x, y));
-			this.ctx.closePath();
-
-			if (this.ctx.isPointInPath(this.mousePos.x, this.mousePos.y)) {
-				this.curPolygon = i;
-				findedPolygon = true;
-			}
-		}
-		return findedPolygon;
-	}
-
 	drawLine = (x, y) => {
 		this.ctx.strokeStyle = this.polygons[this.curPolygon]?.getLineColor();
 		this.ctx.lineWidth = this.polygons[this.curPolygon]?.getLineWidth();
@@ -354,6 +353,12 @@ export default class Polygons {
 		this.ctx.fill();
 
 		this.ctx.globalCompositeOperation = 'source-over';
+	}
+
+	redrawPolygons = (camId) => {
+		// this.polygons = canvasState.test.get(camId);
+		this.drawPolygons();
+		this.polygons = this.showCenterPoint();
 	}
 
 	destroyEvents() {

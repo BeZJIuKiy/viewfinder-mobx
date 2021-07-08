@@ -4,6 +4,7 @@ import './canvas.scss'
 import { useParams } from 'react-router-dom'
 import Polygons from "./chageFigure/Polygons";
 import canvasState from "../../../store/canvasState";
+import ports from "../../../store/ports";
 
 
 export const Canvas = observer(() => {
@@ -79,7 +80,7 @@ export const Canvas = observer(() => {
             canvasState.setSessionId(params.id);
 
             new Polygons(canvasRef.current, socket, params.id);
-    }, [canvasState.username]);
+    }, [ports.selectedObjects.camera]);
 
     return (
         <div className="canvas">

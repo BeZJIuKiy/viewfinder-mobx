@@ -300,7 +300,7 @@ class ports {
 		}
 
 		this.selectedObjects.camera = this.selectedObjects.port.cameras.data[index];
-		canvasState.setCameraInMap(this.selectedObjects.camera.id);
+		canvasState.setPolygonInCamera(this.selectedObjects.camera.id);
 	};
 
 	setSelectedEvent = (index) => {
