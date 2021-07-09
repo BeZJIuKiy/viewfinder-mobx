@@ -117,21 +117,16 @@ class CanvasState {
 	addPolygon(camId, polygon) {
 		const polygons = this.test.get(camId);
 		polygons.push(polygon);
-		this.test.set(camId, polygons);
-		console.log(this.test.get(camId));
 	}
 
 	changePolygon(camId, index, polygon) {
 		const polygons = this.test.get(camId);
 		polygons.splice(index, 1, polygon);
-		this.test.set(camId, polygons);
-		console.log(this.test.get(camId));
 	}
 
 	deletePolygon(camId, index) {
 		const polygons = this.test.get(camId);
 		polygons.splice(index, 1);
-		this.test.set(camId, polygons);
 	}
 }
 
