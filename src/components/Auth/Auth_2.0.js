@@ -159,7 +159,7 @@ export const Auth_2_0 = () => {
             }}
         >
             {({isSubmitting}) => (
-                <Form className='auth__demo__submit'>
+                <Form>
                     <Button
                         variant="contained"
                         color="secondary"

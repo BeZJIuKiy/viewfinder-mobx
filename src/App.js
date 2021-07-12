@@ -6,13 +6,16 @@ import { Account } from './components/Ports/Account/Account';
 import { Events } from './components/Ports/Events/Events';
 import {Canvas} from "./components/Ports/Events/Canvas";
 import {Auth_2_0} from "./components/Auth/Auth_2.0";
+import {Signin_2_0} from "./components/Auth/SinginIn/Signin_2.0";
+
 
 function App() {
   return (
     <BrowserRouter>
       {/*<Route exact path='/' component={Auth} />*/}
+      {/*  <Route path='/signin' component={SignIn} />*/}
       <Route exact path='/' component={Auth_2_0} />
-      <Route path='/signin' component={SignIn} />
+      <Route path='/signin' component={Signin_2_0} />
       <Route path='/ports' component={Ports} />
       <Route path='/account' component={Account} />
       <Route path='/events' component={Events} />

@@ -1,10 +1,11 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import backgroundImage from "./images/backgroundNew.jpg"
+import backgroundImage from "../images/backgroundNew.jpg"
 import Button from "@material-ui/core/Button";
-import auth from "../../store/auth";
+import auth from "../../../store/auth";
 import {Form, Formik} from "formik";
 import {useHistory} from "react-router-dom";
+import {SigninForm} from "./SigninForm";
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -64,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
         position: "absolute",
         top: "50%",
         left: "25%",
-        transform: "translate(-50%, -25%)",
+        transform: "translate(-50%, -50%)",
         zIndex: 2,
     },
 
@@ -79,13 +80,13 @@ const useStyles = makeStyles((theme) => ({
     },
 
     mainFormBorderSubstrate: {
-        width: "40%",
+        width: "50%",
         height: "100%",
-        padding: "10px 30px",
+        // padding: "10px 30px",
         borderRadius: 5,
 
-        backgroundColor: "#555",
-        opacity: 0.7,
+        backgroundColor: "#fff",
+        opacity: 0.2,
 
         position: "absolute",
         top: "50%",
@@ -124,7 +125,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-export const Auth_2_0 = () => {
+export const Signin_2_0 = () => {
     const classes = useStyles();
     const history = useHistory();
 
@@ -159,7 +160,7 @@ export const Auth_2_0 = () => {
             }}
         >
             {({isSubmitting}) => (
-                <Form className='auth__demo__submit'>
+                <Form>
                     <Button
                         variant="contained"
                         color="secondary"
@@ -188,16 +189,10 @@ export const Auth_2_0 = () => {
         <div className={classes.main}>
             <div className={classes.mainSubstrateLeft}></div>
             <div className={classes.mainItem}>
-                <div className={classes.mainTitle}>ViewFinder</div>
                 <div className={classes.mainForm}>
-                    {/*<div className={classes.mainFormBorderSubstrate}></div>*/}
+                    <div className={classes.mainFormBorderSubstrate}></div>
                     <div className={classes.mainFormBorder}>
-                        {/*<div className={classes.mainFormTitle}>ViewFinder</div>*/}
-                        <div className={classes.mainFormText}>текст текст текст много текста</div>
-                        <div className={classes.mainFormBtn}>
-                            {demoBtn()}
-                            {goToSignIn()}
-                        </div>
+                        <SigninForm />
                     </div>
                 </div>
             </div>
