@@ -1,8 +1,10 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-// import backgroundImage from "./images/backgroundChanged02.jpg"
 import backgroundImage from "./images/backgroundNew.jpg"
 import Button from "@material-ui/core/Button";
+import auth from "../../store/auth";
+import {Form, Formik} from "formik";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -51,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         fontSize: "4vw",
         fontWeight: 500,
+        userSelect: "none",
         // marginBottom: "1vw",
     },
 
@@ -123,6 +126,63 @@ const useStyles = makeStyles((theme) => ({
 
 export const Auth_2_0 = () => {
     const classes = useStyles();
+    const history = useHistory();
+
+    const sendData = async (values) => {
+        const url = 'http://localhost:8000/api/auth/sign_in';
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(values),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const json = await response.json();
+
+            console.log('Успешно: ', JSON.stringify(json));
+        } catch (error) {
+            console.log('Ошибка');
+            // console.error('Ошибка: ', error);
+        }
+    }
+
+    const demoBtn = () =>
+        <Formik
+            initialValues={auth.demoUser}
+            onSubmit={(values, {setSubmitting}) => {
+                sendData(values);
+                history.push('/ports');
+                setSubmitting(false);
+            }}
+        >
+            {({isSubmitting}) => (
+                <Form className='auth__demo__submit'>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        style={{fontSize: "1.5vw", width: "10vw"}}
+                        type={"submit"}
+                        disabled={isSubmitting}
+                    >
+                        DEMO
+                    </Button>
+                </Form>
+            )}
+        </Formik>
+
+    const goToSignIn = () =>
+        <Button
+            variant="contained"
+            color="primary"
+            style={{fontSize: "1.5vw", width: "10vw"}}
+            onClick={() => history.push('/signin')}
+        >
+            Log in
+        </Button>
+
 
     return (
         <div className={classes.main}>
@@ -135,19 +195,9 @@ export const Auth_2_0 = () => {
                         {/*<div className={classes.mainFormTitle}>ViewFinder</div>*/}
                         <div className={classes.mainFormText}>текст текст текст много текста</div>
                         <div className={classes.mainFormBtn}>
-                            <Button variant="contained" color="secondary" style={{fontSize: "1.5vw", width: "10vw"}}>
-                                DEMO
-                            </Button>
-
-                            <Button variant="contained" color="primary" style={{fontSize: "1.5vw", width: "10vw"}}>
-                                Log in
-                            </Button>
+                            {demoBtn()}
+                            {goToSignIn()}
                         </div>
-                        {/*<div className={classes.mainFormBtn}>*/}
-                        {/*    <Button variant="contained" color="primary" style={{fontSize: "1.5vw", width: "10vw"}}>*/}
-                        {/*        Login in*/}
-                        {/*    </Button>*/}
-                        {/*</div>*/}
                     </div>
                 </div>
             </div>
