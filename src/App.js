@@ -5,11 +5,13 @@ import { Auth } from './components/Auth/Auth';
 import { Account } from './components/Ports/Account/Account';
 import { Events } from './components/Ports/Events/Events';
 import {Canvas} from "./components/Ports/Events/Canvas";
+import {Auth_2_0} from "./components/Auth/Auth_2.0";
 
 function App() {
   return (
     <BrowserRouter>
-      <Route exact path='/' component={Auth} />
+      {/*<Route exact path='/' component={Auth} />*/}
+      <Route exact path='/' component={Auth_2_0} />
       <Route path='/signin' component={SignIn} />
       <Route path='/ports' component={Ports} />
       <Route path='/account' component={Account} />
