@@ -146,18 +146,6 @@ export const Events = observer(() => {
 										{`${camera.city}: ${camera.description}`}
 									</div>
 									<div>
-										{/*<iframe width="676" height="380"*/}
-										{/*	    src={camera.link}*/}
-										{/*	    title="YouTube video player"*/}
-										{/*	    frameBorder="0"*/}
-										{/*	    allow="accelerometer;*/}
-                                        {/*           autoplay;*/}
-                                        {/*           clipboard-write;*/}
-                                        {/*           encrypted-media;*/}
-                                        {/*           gyroscope;*/}
-                                        {/*           picture-in-picture"*/}
-										{/*	    allowFullScreen*/}
-										{/*/>*/}
 										<Canvas />
 									</div>
 								</div>

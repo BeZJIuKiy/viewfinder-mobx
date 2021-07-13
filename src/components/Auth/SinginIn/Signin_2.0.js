@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
         height: "100%",
 
         backgroundColor: "#333",
-        opacity: 0.7,
+        opacity: 0.95,
 
         position: "absolute",
         top: 0,
@@ -72,7 +72,6 @@ const useStyles = makeStyles((theme) => ({
     mainForm: {
         display: "flex",
         flexDirection: "column",
-        // height: "80%",
         justifyContent: "center",
         alignItems: "center",
 
@@ -83,10 +82,10 @@ const useStyles = makeStyles((theme) => ({
         width: "50%",
         height: "100%",
         // padding: "10px 30px",
-        borderRadius: 5,
+        borderRadius: 20,
 
         backgroundColor: "#fff",
-        opacity: 0.2,
+        opacity: 0.0,
 
         position: "absolute",
         top: "50%",
@@ -99,10 +98,6 @@ const useStyles = makeStyles((theme) => ({
     mainFormBorder: {
         width: "50%",
 
-        // backgroundColor: "#444",
-        // opacity: 0.7,
-
-        // borderRadius: 5,
         color: "white",
 
         padding: "10px 30px",
@@ -174,23 +169,13 @@ export const Signin_2_0 = () => {
             )}
         </Formik>
 
-    const goToSignIn = () =>
-        <Button
-            variant="contained"
-            color="primary"
-            style={{fontSize: "1.5vw", width: "10vw"}}
-            onClick={() => history.push('/signin')}
-        >
-            Log in
-        </Button>
-
 
     return (
         <div className={classes.main}>
             <div className={classes.mainSubstrateLeft}></div>
             <div className={classes.mainItem}>
                 <div className={classes.mainForm}>
-                    <div className={classes.mainFormBorderSubstrate}></div>
+                    {/*<div className={classes.mainFormBorderSubstrate}></div>*/}
                     <div className={classes.mainFormBorder}>
                         <SigninForm />
                     </div>

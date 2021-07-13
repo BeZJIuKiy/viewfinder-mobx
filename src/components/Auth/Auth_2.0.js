@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
         height: "100%",
 
         backgroundColor: "#333",
-        opacity: 0.7,
+        opacity: 0.95,
 
         position: "absolute",
         top: 0,
