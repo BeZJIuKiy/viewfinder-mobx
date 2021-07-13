@@ -163,7 +163,7 @@ export const Auth_2_0 = () => {
                     <Button
                         variant="contained"
                         color="secondary"
-                        style={{fontSize: "1.5vw", width: "10vw"}}
+                        style={{fontSize: "1.3vw", width: "10vw"}}
                         type={"submit"}
                         disabled={isSubmitting}
                     >
@@ -177,7 +177,7 @@ export const Auth_2_0 = () => {
         <Button
             variant="contained"
             color="primary"
-            style={{fontSize: "1.5vw", width: "10vw"}}
+            style={{fontSize: "1.3vw", width: "10vw"}}
             onClick={() => history.push('/signin')}
         >
             Log in

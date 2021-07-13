@@ -14,9 +14,34 @@ import header from "../../../store/header";
 import {observer} from "mobx-react-lite";
 import {Canvas} from "./Canvas";
 import canvasState from "../../../store/canvasState";
+import {makeStyles} from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 
+const useStyles = makeStyles((theme) => ({
+    mainCameraControl: {
+        width: "100%",
+        display: "flex",
+
+        "&>:nth-last-child(2)": {
+            marginLeft: "auto",
+        }
+    },
+
+    mainControlItems: {
+        margin: "0 5px",
+    },
+
+    saveBtn: {
+        backgroundColor: "green",
+    },
+    cancelBtn: {
+        backgroundColor: "red",
+    }
+}));
 
 export const Events20 = observer(() => {
+    const classes = useStyles();
+
     const {
         selectedObjects: {
             port, camera, event,
@@ -94,7 +119,6 @@ export const Events20 = observer(() => {
                         </div>
 
                         <iframe
-                            // width="285" height="160"
                             width="100%" height="auto"
                             src={link}
                             title="YouTube video player"
@@ -112,16 +136,6 @@ export const Events20 = observer(() => {
             }
         }));
     }, [camera]);
-
-    const text = () => {
-        console.log("вызвал");
-
-        return (
-            <div>
-                123
-            </div>
-        )
-    }
 
     const visible = !!camera.events?.length ? "show" : "hide";
     const eventsTitle = !!camera.events?.length ? "Detected Objects" : "No Detected Objects";
@@ -152,12 +166,37 @@ export const Events20 = observer(() => {
                             <div className={`events__live ${imageVisible ? 'hide' : 'show'}`}>
                                 <div className='events__live__camera'>
                                     <div className={`events__live__camera__title`}>
-                                    {/*<div className={`events__live__camera title`}>*/}
+                                        {/*<div className={`events__live__camera title`}>*/}
                                         {/*{`${camera.city}: ${camera.description}`}*/}
                                         Selected Camera
                                     </div>
+
                                     <div>
                                         <Canvas/>
+                                    </div>
+
+                                    <div className={classes.mainCameraControl}>
+                                        <div className={classes.mainControlItems}>
+                                            <Button variant="contained" color="primary">
+                                                Control Camera
+                                            </Button>
+                                        </div>
+                                        <div className={classes.mainControlItems}>
+                                            <Button variant="contained" color="secondary">
+                                                Create control zones
+                                            </Button>
+                                        </div>
+
+                                        <div className={classes.mainControlItems}>
+                                            <Button className={classes.saveBtn} variant="contained">
+                                                Save
+                                            </Button>
+                                        </div>
+                                        <div className={classes.mainControlItems}>
+                                            <Button className={classes.cancelBtn} variant="contained">
+                                                Cancel
+                                            </Button>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -172,7 +211,7 @@ export const Events20 = observer(() => {
                             <div className={`events__image ${imageVisible ? 'show' : 'hide'}`}>
                                 <div className='events__image__boat'>
                                     <div className={`events__image__boat title`}>
-                                        {text()}
+                                        {`${selectedEvent?.time} ${selectedEvent?.typeVessel}`}
                                     </div>
                                     <div className={`events__image__boat img`}>
                                         <div className={`events__image__boat close`}>
