@@ -11,7 +11,7 @@ import {observer} from "mobx-react-lite";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		// width: '100%',
-		width: 250,
+		// width: 250,
 		maxWidth: 360,
 		maxHeight: 400,
 		backgroundColor: theme.palette.background.paper,
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 
 	list: {
-		minWidth: 150,
+		minWidth: 100,
 	}
 }));
 
@@ -28,7 +28,7 @@ export const TestList = observer(() => {
 	const {selectedObjects: {camera}} = ports;
 
 	/* Переделать!!! */
-	const cameraEvents = camera.events.length ? `All Events ${camera.name}` : `No events`;
+	const cameraEvents = camera.events.length ? `All Detects ${camera.name}` : `No events`;
 	const vesselTypes = camera.events.map(b => b.typeVessel)
 		.filter((type, index, arr) => arr.indexOf(type) === index)
 		.map((type, i) =>

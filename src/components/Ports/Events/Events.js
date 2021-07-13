@@ -118,7 +118,7 @@ export const Events = observer(() => {
 	}
 
 	const visible = !!camera.events?.length ? "show" : "hide";
-	const eventsTitle = !!camera.events?.length ? "EVENTS" : "NO EVENTS";
+	const eventsTitle = !!camera.events?.length ? "Detected Objects" : "No Detected Objects";
 
 	return (
 		<div className='events'>
@@ -143,7 +143,8 @@ export const Events = observer(() => {
 							<div className={`events__live ${imageVisible ? 'hide' : 'show'}`}>
 								<div className='events__live__camera'>
 									<div className={`events__live__camera title`}>
-										{`${camera.city}: ${camera.description}`}
+										{/*{`${camera.city}: ${camera.description}`}*/}
+										Selected Camera
 									</div>
 									<div>
 										<Canvas />

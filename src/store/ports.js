@@ -70,8 +70,9 @@ class ports {
 						events: [
 							{
 								id: this.counter.eventsId++,
-								typeError: 'Regular',
-								typeVessel: 'Boat 1',
+								// typeError: 'Regular',
+								typeError: 'Warning',
+								typeVessel: "Tugboat",
 								location: 'Russia',
 								city: 'Saint Petersburg',
 								camera: 'Camera 1',
@@ -86,7 +87,7 @@ class ports {
 							{
 								id: this.counter.eventsId++,
 								typeError: 'Regular',
-								typeVessel: 'Boat 2',
+								typeVessel: "Dry Cargo Ship",
 								location: 'Russia',
 								city: 'Saint Petersburg',
 								camera: 'Camera 1',
@@ -100,8 +101,8 @@ class ports {
 
 							{
 								id: this.counter.eventsId++,
-								typeError: 'Regular',
-								typeVessel: 'Boat 2',
+								typeError: 'Critical',
+								typeVessel: "Dry Cargo Ship",
 								location: 'Russia',
 								city: 'Saint Petersburg',
 								camera: 'Camera 1',
@@ -132,7 +133,7 @@ class ports {
 							// {
 							// 	id: this.counter.eventsId++,
 							// 	typeError: 'Regular',
-							// 	typeVessel: 'Boat 2',
+							// 	typeVessel: "Dry Cargo Ship",
 							// 	location: 'Russia',
 							// 	city: 'Saint Petersburg',
 							// 	camera: 'Camera 2',
@@ -178,7 +179,7 @@ class ports {
 		// 					{
 		// 						id: this.counter.eventsId++,
 		// 						typeError: 'Regular',
-		// 						typeVessel: 'Boat 1',
+		// 						typeVessel: "Tugboat",
 		// 						location: 'Russia',
 		// 						city: 'Saint Petersburg_02',
 		// 						camera: 'Camera 1',
@@ -193,7 +194,7 @@ class ports {
 		// 					{
 		// 						id: this.counter.eventsId++,
 		// 						typeError: 'Regular',
-		// 						typeVessel: 'Boat 2',
+		// 						typeVessel: "Dry Cargo Ship",
 		// 						location: 'Russia',
 		// 						city: 'Saint Petersburg_02',
 		// 						camera: 'Camera 1',
@@ -208,7 +209,7 @@ class ports {
 		// 					{
 		// 						id: this.counter.eventsId++,
 		// 						typeError: 'Regular',
-		// 						typeVessel: 'Boat 2',
+		// 						typeVessel: "Dry Cargo Ship",
 		// 						location: 'Russia',
 		// 						city: 'Saint Petersburg_02',
 		// 						camera: 'Camera 1',
@@ -239,7 +240,7 @@ class ports {
 		// 					{
 		// 						id: this.counter.eventsId++,
 		// 						typeError: 'Regular',
-		// 						typeVessel: 'Boat 2',
+		// 						typeVessel: "Dry Cargo Ship",
 		// 						location: 'Russia',
 		// 						city: 'Saint Petersburg_02',
 		// 						camera: 'Camera 2',
