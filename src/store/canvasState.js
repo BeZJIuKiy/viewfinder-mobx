@@ -7,6 +7,9 @@ class CanvasState {
 
 	userName = "alex";
 	isVisibleCameraCanvas = false;
+	isCreatePolygon = false;
+
+	tempPolygons = [];
 
 	size = {
 		/* Test 1.25 5:4 */
@@ -77,8 +80,17 @@ class CanvasState {
 	setVisibleCameraCanvas = (isVisible) => {
 		this.isVisibleCameraCanvas = isVisible;
 	}
+
 	reVisibleCameraCanvas = () => {
 		this.isVisibleCameraCanvas = !this.isVisibleCameraCanvas;
+	}
+
+	setCreatePolygon = (isVisible) => {
+		this.isCreatePolygon = isVisible;
+	}
+
+	reCreatePolygon = () => {
+		this.isCreatePolygon = !this.isCreatePolygon;
 	}
 
 	setSessionId(id) {

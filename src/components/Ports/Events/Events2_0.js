@@ -40,6 +40,12 @@ const useStyles = makeStyles((theme) => ({
     },
 
     controlBtn: {
+        "&.createDetectedZone": {
+            fontWeight: 600,
+            color: "#f50057",
+            backgroundColor: "#ddd",
+        },
+
         "&.save": {
             backgroundColor: "green",
         },
@@ -149,6 +155,16 @@ export const Events20 = observer(() => {
         }));
     }, [camera]);
 
+    const saveNewPolygonsData = () => {
+
+        canvasState.setCreatePolygon(false);
+    }
+
+    const deleteNewPolygonsData = () => {
+
+        canvasState.setCreatePolygon(false);
+    }
+
     const visible = !!camera.events?.length ? "show" : "hide";
     const eventsTitle = !!camera.events?.length ? "Detected Objects" : "No Detected Objects";
 
@@ -156,6 +172,7 @@ export const Events20 = observer(() => {
     const height = canvasState.size.height / canvasState.pointCoefficient;
 
     const btnControlName = canvasState.isVisibleCameraCanvas ? "Control Camera" : "Show Detected Areas";
+    const btnControlZonesName = canvasState.isCreatePolygon ? "Draw detected areas " : "Create control zones";
 
     return (
         <div className='events'>
@@ -198,18 +215,31 @@ export const Events20 = observer(() => {
                                             </Button>
                                         </div>
                                         <div className={`${classes.mainControlItems} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}>
-                                            <Button variant="contained" color="secondary">
-                                                Create control zones
+                                            <Button
+                                                className={`${classes.controlBtn} ${canvasState.isCreatePolygon ? "createDetectedZone" : ""}`}
+                                                variant="contained"
+                                                color="secondary"
+                                                onClick={() => canvasState.setCreatePolygon(true)}
+                                            >
+                                                {btnControlZonesName}
                                             </Button>
                                         </div>
 
-                                        <div className={classes.mainControlItems}>
-                                            <Button className={`${classes.controlBtn} save`} variant="contained">
+                                        <div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+                                            <Button
+                                                className={`${classes.controlBtn} save`}
+                                                variant="contained"
+                                                onClick={saveNewPolygonsData}
+                                            >
                                                 Save
                                             </Button>
                                         </div>
-                                        <div className={classes.mainControlItems}>
-                                            <Button className={`${classes.controlBtn} cancel`} variant="contained">
+                                        <div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+                                            <Button
+                                                className={`${classes.controlBtn} cancel`}
+                                                variant="contained"
+                                                onClick={deleteNewPolygonsData}
+                                            >
                                                 Cancel
                                             </Button>
                                         </div>

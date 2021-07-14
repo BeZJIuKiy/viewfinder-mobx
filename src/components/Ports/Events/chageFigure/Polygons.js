@@ -81,6 +81,7 @@ export default class Polygons {
 	}
 
 	mouseDownHandler(e) {
+		if (!canvasState.isCreatePolygon) return;
 		switch (e.which) {
 			case 1: {
 				this.lmbDown(e);
@@ -112,7 +113,6 @@ export default class Polygons {
 	}
 
 	mouseUpHandler(e) {
-		// if (this.curPolygon === null) return;
 		switch (e.which) {
 			case 1: {
 				this.lmbUp(e);
@@ -185,6 +185,8 @@ export default class Polygons {
 		this.mousePos = {x: e.offsetX, y: e.offsetY};
 
 		if (!this.isDrag) this.findAnyPoint();
+		if (!canvasState.isCreatePolygon) return;
+
 		if (this.isDrag && this.currentHandle < 0) this.isCreateRect = true;
 		if (this.isDrag && this.isCreateRect) this.drawNewRect();
 
