@@ -6,6 +6,7 @@ class CanvasState {
 	sessionId = null;
 
 	userName = "alex";
+	isVisibleCameraCanvas = false;
 
 	size = {
 		/* Test 1.25 5:4 */
@@ -72,6 +73,13 @@ class CanvasState {
 	}
 
 	getCanvasDif = () => this.canvasSize.difS;
+
+	setVisibleCameraCanvas = (isVisible) => {
+		this.isVisibleCameraCanvas = isVisible;
+	}
+	reVisibleCameraCanvas = () => {
+		this.isVisibleCameraCanvas = !this.isVisibleCameraCanvas;
+	}
 
 	setSessionId(id) {
 		this.sessionId = id;

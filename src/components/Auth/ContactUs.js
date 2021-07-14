@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     icons: {
-        fontSize: "2.6vw",
+        fontSize: "2vw",
         transition: "color 0.2s, background-color 0.2s",
         margin: theme.spacing(0.5),
 

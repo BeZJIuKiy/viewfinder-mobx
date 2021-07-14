@@ -1,16 +1,44 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {observer} from 'mobx-react-lite'
-import './canvas.scss'
+// import './canvas.scss'
 import {useParams} from 'react-router-dom'
 import Polygons from "./chageFigure/Polygons";
 import canvasState from "../../../store/canvasState";
 import ports from "../../../store/ports";
+import {makeStyles} from "@material-ui/core/styles";
 
+const useStyles = makeStyles((theme) => ({
+	main: {
+		display: "flex",
+		justifyContent: "center",
+	},
+
+	canvasDraw: {
+		position: "relative",
+	},
+
+	canvas: {
+		background: "none",
+
+		position: "absolute",
+		top: 0,
+		left: 0,
+		display: "block",
+
+		"&.show": {
+			zIndex: 2,
+		},
+		"&.hide": {
+			zIndex: -2,
+		}
+	}
+}));
 
 export const Canvas = observer(() => {
 	const canvasRef = useRef();
 	const iframeRef = useRef();
 	const params = useParams();
+	const classes = useStyles();
 
 	const [width, setWidth] = useState(canvasState.size.width);
 	const [height, setHeight] = useState(canvasState.size.height);
@@ -83,17 +111,19 @@ export const Canvas = observer(() => {
 	}, [width, ports.selectedObjects.camera]);
 
 	return (
-		<div className="canvas">
-			<div className="canvas_draw">
+		<div className={classes.main}>
+			<div className={classes.canvasDraw}>
 				<iframe
 					src="https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1"
+					// src={ports.selectedObjects.camera.link}
 					width={width} height={height} title="YouTube video player"
 					ref={iframeRef}
 					frameBorder="0"
 					allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 					allowFullScreen/>
-				<canvas ref={canvasRef} width={width} height={height}/>
-				{/*<canvas onMouseDown={() => mouseDownHandler()} ref={canvasRef} width={width} height={height} />*/}
+				<canvas
+					className={`${classes.canvas} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}
+					ref={canvasRef} width={width} height={height}/>
 			</div>
 		</div>
 	)

@@ -29,14 +29,26 @@ const useStyles = makeStyles((theme) => ({
 
     mainControlItems: {
         margin: "0 5px",
+
+        "&.show": {
+            display: "flex",
+        },
+
+        "&.hide": {
+            display: "none",
+        },
     },
 
-    saveBtn: {
-        backgroundColor: "green",
+    controlBtn: {
+        "&.save": {
+            backgroundColor: "green",
+        },
+
+        "&.cancel": {
+            backgroundColor: "red",
+        }
     },
-    cancelBtn: {
-        backgroundColor: "red",
-    }
+
 }));
 
 export const Events20 = observer(() => {
@@ -143,6 +155,8 @@ export const Events20 = observer(() => {
     const width = canvasState.size.width / canvasState.pointCoefficient;
     const height = canvasState.size.height / canvasState.pointCoefficient;
 
+    const btnControlName = canvasState.isVisibleCameraCanvas ? "Control Camera" : "Show Detected Areas";
+
     return (
         <div className='events'>
             <div>
@@ -166,8 +180,6 @@ export const Events20 = observer(() => {
                             <div className={`events__live ${imageVisible ? 'hide' : 'show'}`}>
                                 <div className='events__live__camera'>
                                     <div className={`events__live__camera__title`}>
-                                        {/*<div className={`events__live__camera title`}>*/}
-                                        {/*{`${camera.city}: ${camera.description}`}*/}
                                         Selected Camera
                                     </div>
 
@@ -177,23 +189,27 @@ export const Events20 = observer(() => {
 
                                     <div className={classes.mainCameraControl}>
                                         <div className={classes.mainControlItems}>
-                                            <Button variant="contained" color="primary">
-                                                Control Camera
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={canvasState.reVisibleCameraCanvas}
+                                            >
+                                                {btnControlName}
                                             </Button>
                                         </div>
-                                        <div className={classes.mainControlItems}>
+                                        <div className={`${classes.mainControlItems} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}>
                                             <Button variant="contained" color="secondary">
                                                 Create control zones
                                             </Button>
                                         </div>
 
                                         <div className={classes.mainControlItems}>
-                                            <Button className={classes.saveBtn} variant="contained">
+                                            <Button className={`${classes.controlBtn} save`} variant="contained">
                                                 Save
                                             </Button>
                                         </div>
                                         <div className={classes.mainControlItems}>
-                                            <Button className={classes.cancelBtn} variant="contained">
+                                            <Button className={`${classes.controlBtn} cancel`} variant="contained">
                                                 Cancel
                                             </Button>
                                         </div>
