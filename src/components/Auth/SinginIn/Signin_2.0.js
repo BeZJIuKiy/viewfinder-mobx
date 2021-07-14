@@ -1,11 +1,8 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import backgroundImage from "../images/backgroundNew.jpg"
-import Button from "@material-ui/core/Button";
-import auth from "../../../store/auth";
-import {Form, Formik} from "formik";
-import {useHistory} from "react-router-dom";
 import {SigninForm} from "./SigninForm";
+import {ContactUs} from "../ContactUs";
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -122,57 +119,11 @@ const useStyles = makeStyles((theme) => ({
 
 export const Signin_2_0 = () => {
     const classes = useStyles();
-    const history = useHistory();
-
-    const sendData = async (values) => {
-        const url = 'http://localhost:8000/api/auth/sign_in';
-
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                body: JSON.stringify(values),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            const json = await response.json();
-
-            console.log('Успешно: ', JSON.stringify(json));
-        } catch (error) {
-            console.log('Ошибка');
-            // console.error('Ошибка: ', error);
-        }
-    }
-
-    const demoBtn = () =>
-        <Formik
-            initialValues={auth.demoUser}
-            onSubmit={(values, {setSubmitting}) => {
-                sendData(values);
-                history.push('/ports');
-                setSubmitting(false);
-            }}
-        >
-            {({isSubmitting}) => (
-                <Form>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        style={{fontSize: "1.5vw", width: "10vw"}}
-                        type={"submit"}
-                        disabled={isSubmitting}
-                    >
-                        DEMO
-                    </Button>
-                </Form>
-            )}
-        </Formik>
-
 
     return (
         <div className={classes.main}>
             <div className={classes.mainSubstrateLeft}></div>
+            <ContactUs />
             <div className={classes.mainItem}>
                 <div className={classes.mainForm}>
                     {/*<div className={classes.mainFormBorderSubstrate}></div>*/}

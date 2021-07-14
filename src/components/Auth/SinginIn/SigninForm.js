@@ -120,16 +120,16 @@ export const SigninForm = () => {
                     </Button>
 
                     <Grid container>
-                        <Grid item xs>
+                        <Grid container justify="flex-end">
                             <Link href="#" variant="body2" className={classes.link}>
                                 Forgot password?
                             </Link>
                         </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2" className={classes.link}>
-                                {"Don't have an account? Sign Up"}
-                            </Link>
-                        </Grid>
+                        {/*<Grid item>*/}
+                        {/*    <Link href="#" variant="body2" className={classes.link}>*/}
+                        {/*        {"Don't have an account? Sign Up"}*/}
+                        {/*    </Link>*/}
+                        {/*</Grid>*/}
                     </Grid>
                 </form>
             </div>

@@ -8,6 +8,7 @@ import {Canvas} from "./components/Ports/Events/Canvas";
 import {Auth_2_0} from "./components/Auth/Auth_2.0";
 import {Signin_2_0} from "./components/Auth/SinginIn/Signin_2.0";
 import {Events20} from "./components/Ports/Events/Events2_0";
+import {Auth} from "./components/Auth/Auth";
 
 
 function App() {
