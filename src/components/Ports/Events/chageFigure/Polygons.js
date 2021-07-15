@@ -37,7 +37,7 @@ export default class Polygons {
 			switch (this.polygons.length - 1) {
 				case 0: {
 					this.polygons[0].setAttributeType("In/Out");
-					console.log(this.polygons[0].getAttributeFillColor());
+					// console.log(this.polygons[0].getAttributeFillColor());
 					break;
 				}
 
@@ -152,7 +152,9 @@ export default class Polygons {
 		console.log("Отпущена СКМ");
 	}
 	rmbUp = (e) => {
-		if (this.currentHandle < 0 || this.polygons[this.curPolygon].points[this.currentHandle].id === null) return;
+		if (this.currentHandle < 0
+			|| this.polygons[this.curPolygon].points[this.currentHandle].id === null
+			|| !canvasState.isCreatePolygon) return;
 
 		const id = this.polygons[this.curPolygon].points[this.currentHandle].id;
 		this.polygons[this.curPolygon].deletePoint(id);

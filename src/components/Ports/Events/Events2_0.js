@@ -16,6 +16,8 @@ import {Canvas} from "./Canvas";
 import canvasState from "../../../store/canvasState";
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Polygons from "./chageFigure/Polygons";
+import Polygon from "./chageFigure/Polygon";
 
 const useStyles = makeStyles((theme) => ({
     mainCameraControl: {
@@ -155,13 +157,39 @@ export const Events20 = observer(() => {
         }));
     }, [camera]);
 
-    const saveNewPolygonsData = () => {
+    useEffect(() => {
+        new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
+    }, [camera, canvasState.isCreatePolygon, canvasState.isVisibleCameraCanvas]);
 
+    const createChangePolygon = () => {
+        canvasState.setCreatePolygon(true);
+        canvasState.tempPolygons = canvasState.test.get(camera.id);
+
+        if (canvasState.tempPolygons.length) {
+            canvasState.tempPolygons = canvasState.tempPolygons.map(polygon => {
+                const points = polygon.getPoints().map(point => ({...point}));
+
+                console.log(points);
+                points[0].id = 500;
+                console.log(polygon.getPoints()[0].id);
+
+                const newPolygon = new Polygon(polygon.getId(), 0, 0, 0, 0);
+                newPolygon.setPoints(points);
+
+                return newPolygon;
+            })
+        } else {
+            canvasState.tempPolygons = [];
+        }
+        new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
+    }
+
+    const saveNewPolygonsData = () => {
         canvasState.setCreatePolygon(false);
     }
 
     const deleteNewPolygonsData = () => {
-
+        canvasState.test.set(camera.id, canvasState.tempPolygons);
         canvasState.setCreatePolygon(false);
     }
 
@@ -205,7 +233,7 @@ export const Events20 = observer(() => {
                                     </div>
 
                                     <div className={classes.mainCameraControl}>
-                                        <div className={classes.mainControlItems}>
+                                        <div className={`${classes.mainControlItems} ${!canvasState.isCreatePolygon ? "show" : "hide"}`}>
                                             <Button
                                                 variant="contained"
                                                 color="primary"
@@ -214,18 +242,20 @@ export const Events20 = observer(() => {
                                                 {btnControlName}
                                             </Button>
                                         </div>
-                                        <div className={`${classes.mainControlItems} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}>
+                                        <div
+                                            className={`${classes.mainControlItems} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}>
                                             <Button
                                                 className={`${classes.controlBtn} ${canvasState.isCreatePolygon ? "createDetectedZone" : ""}`}
                                                 variant="contained"
                                                 color="secondary"
-                                                onClick={() => canvasState.setCreatePolygon(true)}
+                                                onClick={createChangePolygon}
                                             >
                                                 {btnControlZonesName}
                                             </Button>
                                         </div>
 
-                                        <div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+                                        <div
+                                            className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
                                             <Button
                                                 className={`${classes.controlBtn} save`}
                                                 variant="contained"
@@ -234,7 +264,8 @@ export const Events20 = observer(() => {
                                                 Save
                                             </Button>
                                         </div>
-                                        <div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+                                        <div
+                                            className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
                                             <Button
                                                 className={`${classes.controlBtn} cancel`}
                                                 variant="contained"

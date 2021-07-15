@@ -31,6 +31,8 @@ export default class Polygon {
 		this.#centerPointColor = "gold";
 	}
 
+	getId = () => this.#id;
+
 	incCounter = () => {
 		++this.#idCounter;
 	}
@@ -92,17 +94,17 @@ export default class Polygon {
 		this.#attribute.type = type;
 		switch (type) {
 			case "In/Out": {
-				console.log("In/Out");
+				// console.log("In/Out");
 				this.setAttributeFillColor(32, 165, 211, 0.3);
 				break;
 			}
 			case "Parking": {
-				console.log("Parking");
+				// console.log("Parking");
 				this.setAttributeFillColor(211, 168, 32, 0.3);
 				break;
 			}
 			case "Restricted area": {
-				console.log("Restricted area");
+				// console.log("Restricted area");
 				this.setAttributeFillColor(211, 32, 32, 0.3);
 				break;
 			}
