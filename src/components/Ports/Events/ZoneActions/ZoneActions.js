@@ -49,7 +49,13 @@ export const ZoneActions = observer(() => {
                     <MenuItem className={classes.text} value={SET_NAME}>{SET_NAME}</MenuItem>
                     <MenuItem className={classes.text} value={SET_TYPE}>{SET_TYPE}</MenuItem>
                     <MenuItem className={classes.text} value={SET_COLOR}>{SET_COLOR}</MenuItem>
-                    <MenuItem className={classes.text} value={DELETE}>{DELETE}</MenuItem>
+                    <MenuItem
+                        className={classes.text}
+                        value={DELETE}
+                        disabled={!canvasState.isPolygonSelected}
+                    >
+                        {DELETE}
+                    </MenuItem>
                 </Select>
             </FormControl>
         </div>

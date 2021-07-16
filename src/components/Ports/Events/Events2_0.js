@@ -20,6 +20,7 @@ import Polygons from "./chageFigure/Polygons";
 import Polygon from "./chageFigure/Polygon";
 import {DELETE, SET_COLOR, SET_NAME, SET_TYPE, ZoneActions} from "./ZoneActions/ZoneActions";
 import {SetTypeAction} from "./ZoneActions/SetTypeAction";
+import {ConfirmDeletePolygon} from "./ZoneActions/ConfirmDeletePolygon";
 
 const useStyles = makeStyles((theme) => ({
     mainCameraControl: {
@@ -178,9 +179,7 @@ export const Events20 = observer(() => {
             case DELETE: {
                 console.log("DELETE");
                 setAction(
-                    <div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
-
-                    </div>
+                    <ConfirmDeletePolygon />
                 );
                 break;
             }
