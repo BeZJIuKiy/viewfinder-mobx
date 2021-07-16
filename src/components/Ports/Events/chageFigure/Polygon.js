@@ -1,3 +1,8 @@
+export const ZONE_TYPE_IN_OUT = "ZONE_TYPE_IN_OUT";
+export const ZONE_TYPE_PARKING = "ZONE_TYPE_PARKING";
+export const ZONE_TYPE_RESTRICTED_AREA = "ZONE_TYPE_RESTRICTED_AREA";
+export const DEFAULT = "DEFAULT";
+
 export default class Polygon {
 	#id = null;
 	#idCounter = 0;
@@ -93,20 +98,20 @@ export default class Polygon {
 	setAttributeType = (type) => {
 		this.#attribute.type = type;
 		switch (type) {
-			case "In/Out": {
-				// console.log("In/Out");
+			case ZONE_TYPE_IN_OUT: {
 				this.setAttributeFillColor(32, 165, 211, 0.3);
 				break;
 			}
-			case "Parking": {
-				// console.log("Parking");
+			case ZONE_TYPE_PARKING: {
 				this.setAttributeFillColor(211, 168, 32, 0.3);
 				break;
 			}
-			case "Restricted area": {
-				// console.log("Restricted area");
+			case ZONE_TYPE_RESTRICTED_AREA: {
 				this.setAttributeFillColor(211, 32, 32, 0.3);
 				break;
+			}
+			default: {
+				this.setAttributeFillColor(170, 170, 170, 0.3);
 			}
 		}
 	}

@@ -6,8 +6,11 @@ class CanvasState {
     sessionId = null;
 
     userName = "alex";
+
+    /* To EVENTS */
     isVisibleCameraCanvas = false;
     isCreatePolygon = false;
+    zoneAction = "";
 
     tempPolygons = [];
 
@@ -66,7 +69,8 @@ class CanvasState {
     username = "";
 
     readyRectCounter = 0;
-    // polygons = [];
+    isPolygonSelected = false;
+    currentPolygonNum = null;
 
     test = new Map();
 
@@ -77,10 +81,11 @@ class CanvasState {
 
     getCanvasDif = () => this.canvasSize.difS;
 
+
+    /* To EVENTS */
     setVisibleCameraCanvas = (isVisible) => {
         this.isVisibleCameraCanvas = isVisible;
     }
-
     reVisibleCameraCanvas = () => {
         this.isVisibleCameraCanvas = !this.isVisibleCameraCanvas;
     }
@@ -88,10 +93,14 @@ class CanvasState {
     setCreatePolygon = (isVisible) => {
         this.isCreatePolygon = isVisible;
     }
-
     reCreatePolygon = () => {
         this.isCreatePolygon = !this.isCreatePolygon;
     }
+
+    setZoneAction = (action) => {
+        this.zoneAction = action;
+    }
+
 
     setSessionId(id) {
         this.sessionId = id;
@@ -113,18 +122,6 @@ class CanvasState {
         ++this.readyRectCounter;
     }
 
-    // addPolygon(polygon) {
-    // 	this.polygons.push(polygon);
-    // }
-
-    // changePolygon(index, polygon) {
-    // 	this.polygons.splice(index, 1, polygon);
-    // }
-
-    // deletePolygon(index) {
-    // 	this.polygons.splice(index, 1);
-    // }
-
     setPolygonInCamera = (id) => {
         if (this.test.has(id)) return;
 
@@ -144,16 +141,17 @@ class CanvasState {
         polygons.splice(index, 1, polygon);
     }
 
+    setPolygonSelect = (isSelect) => {
+        this.isPolygonSelected = isSelect;
+    }
+
+    setCurrentPolygonNum = (number) => {
+        this.currentPolygonNum = number;
+    }
+
     deletePolygon(camId, index) {
         const polygons = this.test.get(camId);
         polygons.splice(index, 1);
-    }
-
-    setTempPolygons = (camId) => {
-        this.tempPolygons = [...this.test.get(camId)];
-        if (this.tempPolygons.length) {
-            this.tempPolygons = this.tempPolygons.map((polygon) => polygon.getPoints());
-        }
     }
 }
 

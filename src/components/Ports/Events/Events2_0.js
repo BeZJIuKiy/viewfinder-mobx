@@ -18,11 +18,14 @@ import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Polygons from "./chageFigure/Polygons";
 import Polygon from "./chageFigure/Polygon";
+import {DELETE, SET_COLOR, SET_NAME, SET_TYPE, ZoneActions} from "./ZoneActions/ZoneActions";
+import {SetTypeAction} from "./ZoneActions/SetTypeAction";
 
 const useStyles = makeStyles((theme) => ({
     mainCameraControl: {
         width: "100%",
         display: "flex",
+        marginTop: 5,
 
         "&>:nth-last-child(2)": {
             marginLeft: "auto",
@@ -31,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
     mainControlItems: {
         margin: "0 5px",
+        height: "55px",
 
         "&.show": {
             display: "flex",
@@ -42,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     controlBtn: {
+
         "&.createDetectedZone": {
             fontWeight: 600,
             color: "#f50057",
@@ -49,10 +54,14 @@ const useStyles = makeStyles((theme) => ({
         },
 
         "&.save": {
+            fontSize: 16,
+            width: "6vw",
             backgroundColor: "green",
         },
 
         "&.cancel": {
+            fontSize: 16,
+            width: "6vw",
             backgroundColor: "red",
         }
     },
@@ -76,6 +85,7 @@ export const Events20 = observer(() => {
     const [currentBoat, setCurrentBoat] = useState('');
     const [otherCameras, setOtherCameras] = useState();
     const [selectedEvent, setSelectedEvent] = useState(camera);
+    const [action, setAction] = useState(<div/>);
 
     useEffect(() => {
         setCurrentBoat(event.typeVessel);
@@ -83,37 +93,9 @@ export const Events20 = observer(() => {
         ports.setImageId(-1);
     }, [event]);
 
-    const findImageId = () => {
-        const index = camera.events.findIndex(event => event.id === imageId);
-        return camera.events[index > -1 ? index : 0];
-    }
-
     useEffect(() => {
         setSelectedEvent(findImageId())
     }, [imageId]);
-
-    const changeSelectedImg = (num) => {
-        const id = selectedEvent.id;
-        const cameraEvent = currentBoat
-            ? camera.events.filter(e => e.typeVessel === currentBoat)
-            : camera.events;
-
-        const index = cameraEvent.findIndex((element) => element.id === id);
-        const task = (index + num < 0 || index + num === cameraEvent.length);
-        const imgNum = task ? index : index + num;
-
-        setSelectedEvent(cameraEvent[imgNum]);
-        ports.setImageId(cameraEvent[imgNum].id);
-    }
-
-    const otherCameraClick = (i) => {
-        ports.setSelectedCamera(i);
-    }
-
-    const closeImage = () => {
-        ports.setVisibleSelectedImage(false);
-        ports.setImageId(-1);
-    }
 
     useEffect(() => {
         setOtherCameras(port.cameras.data.map(({id, description, events, link}, i) => {
@@ -161,6 +143,82 @@ export const Events20 = observer(() => {
         new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
     }, [camera, canvasState.isCreatePolygon, canvasState.isVisibleCameraCanvas]);
 
+    useEffect(() => {
+        switch (canvasState.zoneAction) {
+            case SET_NAME: {
+                console.log("SET_NAME");
+                setAction(
+                    <div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+
+                    </div>
+                );
+                break;
+            }
+
+            case SET_TYPE: {
+                console.log("SET_TYPE");
+                setAction(
+                    <div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+                        <SetTypeAction/>
+                    </div>
+                );
+                break;
+            }
+
+            case SET_COLOR: {
+                console.log("SET_COLOR");
+                setAction(
+                    <div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+
+                    </div>
+                );
+                break;
+            }
+
+            case DELETE: {
+                console.log("DELETE");
+                setAction(
+                    <div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+
+                    </div>
+                );
+                break;
+            }
+            default: {
+                setAction(<div/>);
+            }
+
+        }
+    }, [canvasState.zoneAction, canvasState.isCreatePolygon]);
+
+    const findImageId = () => {
+        const index = camera.events.findIndex(event => event.id === imageId);
+        return camera.events[index > -1 ? index : 0];
+    }
+
+    const changeSelectedImg = (num) => {
+        const id = selectedEvent.id;
+        const cameraEvent = currentBoat
+            ? camera.events.filter(e => e.typeVessel === currentBoat)
+            : camera.events;
+
+        const index = cameraEvent.findIndex((element) => element.id === id);
+        const task = (index + num < 0 || index + num === cameraEvent.length);
+        const imgNum = task ? index : index + num;
+
+        setSelectedEvent(cameraEvent[imgNum]);
+        ports.setImageId(cameraEvent[imgNum].id);
+    }
+
+    const otherCameraClick = (i) => {
+        ports.setSelectedCamera(i);
+    }
+
+    const closeImage = () => {
+        ports.setVisibleSelectedImage(false);
+        ports.setImageId(-1);
+    }
+
     const createChangePolygon = () => {
         canvasState.setCreatePolygon(true);
         canvasState.tempPolygons = canvasState.test.get(camera.id);
@@ -168,13 +226,11 @@ export const Events20 = observer(() => {
         if (canvasState.tempPolygons.length) {
             canvasState.tempPolygons = canvasState.tempPolygons.map(polygon => {
                 const points = polygon.getPoints().map(point => ({...point}));
-
-                console.log(points);
-                points[0].id = 500;
-                console.log(polygon.getPoints()[0].id);
+                const attributeType = polygon.getAttributeType();
 
                 const newPolygon = new Polygon(polygon.getId(), 0, 0, 0, 0);
                 newPolygon.setPoints(points);
+                newPolygon.setAttributeType(attributeType);
 
                 return newPolygon;
             })
@@ -186,11 +242,13 @@ export const Events20 = observer(() => {
 
     const saveNewPolygonsData = () => {
         canvasState.setCreatePolygon(false);
+        canvasState.setZoneAction("");
     }
 
     const deleteNewPolygonsData = () => {
         canvasState.test.set(camera.id, canvasState.tempPolygons);
         canvasState.setCreatePolygon(false);
+        canvasState.setZoneAction("");
     }
 
     const visible = !!camera.events?.length ? "show" : "hide";
@@ -233,7 +291,8 @@ export const Events20 = observer(() => {
                                     </div>
 
                                     <div className={classes.mainCameraControl}>
-                                        <div className={`${classes.mainControlItems} ${!canvasState.isCreatePolygon ? "show" : "hide"}`}>
+                                        <div
+                                            className={`${classes.mainControlItems} ${!canvasState.isCreatePolygon ? "show" : "hide"}`}>
                                             <Button
                                                 variant="contained"
                                                 color="primary"
@@ -253,6 +312,13 @@ export const Events20 = observer(() => {
                                                 {btnControlZonesName}
                                             </Button>
                                         </div>
+
+                                        <div
+                                            className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+                                            <ZoneActions/>
+                                        </div>
+
+                                        {action}
 
                                         <div
                                             className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>

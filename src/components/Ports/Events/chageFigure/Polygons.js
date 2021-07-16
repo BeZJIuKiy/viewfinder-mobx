@@ -33,34 +33,34 @@ export default class Polygons {
 		this.polygons = canvasState.test.get(ports.selectedObjects.camera.id);
 
 		/* DELETE */
-		if (this.polygons.length) {
-			switch (this.polygons.length - 1) {
-				case 0: {
-					this.polygons[0].setAttributeType("In/Out");
-					// console.log(this.polygons[0].getAttributeFillColor());
-					break;
-				}
-
-				case 1: {
-					this.polygons[0].setAttributeType("In/Out");
-					this.polygons[1].setAttributeType("Parking");
-					break;
-				}
-
-				case 2: {
-					this.polygons[0].setAttributeType("In/Out");
-					this.polygons[1].setAttributeType("Parking");
-					this.polygons[2].setAttributeType("Restricted area");
-					break;
-				}
-
-				default: {
-					this.polygons[0].setAttributeType("In/Out");
-					this.polygons[1].setAttributeType("Parking");
-					this.polygons[2].setAttributeType("Restricted area");
-				}
-			}
-		}
+		// if (this.polygons.length) {
+		// 	switch (this.polygons.length - 1) {
+		// 		case 0: {
+		// 			this.polygons[0].setAttributeType("In/Out");
+		// 			// console.log(this.polygons[0].getAttributeFillColor());
+		// 			break;
+		// 		}
+		//
+		// 		case 1: {
+		// 			this.polygons[0].setAttributeType("In/Out");
+		// 			this.polygons[1].setAttributeType("Parking");
+		// 			break;
+		// 		}
+		//
+		// 		case 2: {
+		// 			this.polygons[0].setAttributeType("In/Out");
+		// 			this.polygons[1].setAttributeType("Parking");
+		// 			this.polygons[2].setAttributeType("Restricted area");
+		// 			break;
+		// 		}
+		//
+		// 		default: {
+		// 			this.polygons[0].setAttributeType("In/Out");
+		// 			this.polygons[1].setAttributeType("Parking");
+		// 			this.polygons[2].setAttributeType("Restricted area");
+		// 		}
+		// 	}
+		// }
 
 		/* ====== */
 
@@ -137,10 +137,10 @@ export default class Polygons {
 
 		this.isDrag = false;
 		this.curPolygon = null;
+		canvasState.setCurrentPolygonNum(this.curPolygon);
 		this.currentHandle = -1;
 
 		this.polygons = this.showCenterPoint();
-
 		this.selectPolygon() ? this.polygonSelection() : this.drawPolygons();
 
 		this.postPolygon("https://lockalhost:5000", this.polygons);
@@ -309,6 +309,8 @@ export default class Polygons {
 
 			if (this.ctx.isPointInPath(this.mousePos.x, this.mousePos.y)) {
 				this.curPolygon = i;
+				canvasState.setCurrentPolygonNum(i);
+
 				findedPolygon = true;
 			}
 		}
@@ -317,6 +319,7 @@ export default class Polygons {
 
 	drawPolygons(polygons = this.polygons) {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		canvasState.setPolygonSelect(this.selectPolygon());
 
 		polygons.forEach((polygon, index) => {
 			const points = polygon.getPoints();

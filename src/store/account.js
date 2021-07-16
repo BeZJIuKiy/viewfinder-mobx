@@ -18,7 +18,7 @@ class account {
 	information = {};
 	statistic = {};
 
-	myFleet: [];
+	myFleet = [];
 
 	constructor() {
 		makeAutoObservable(this);
