@@ -24,8 +24,8 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
     paper: {
         position: 'absolute',
-        top: "30%",
-        left: "70%",
+        top: "80%",
+        left: "80%",
         transform: "translate(-50%, 0)",
 
         width: 400,
@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     confirmBtn: {
         display: "flex",
         justifyContent: "space-around",
+        marginTop: "2vw",
     },
 
     controlBtn: {
@@ -70,7 +71,6 @@ export const ConfirmDeletePolygon = () => {
         polygons.splice(canvasState.currentPolygonNum, 1);
         new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
 
-        // canvasState.deletePolygon(ports.selectedObjects.camera.id, canvasState.currentPolygonNum);
         setOpen(false);
         canvasState.setZoneAction("");
     }
@@ -78,9 +78,9 @@ export const ConfirmDeletePolygon = () => {
 
     const body = (
         <div style={modalStyle} className={classes.paper}>
-            <h2 id="simple-modal-title">Text in a modal</h2>
+            <h2 id="simple-modal-title">DELETE AREA</h2>
             <p id="simple-modal-description">
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                Are you sure  you want to delete this detection area?
             </p>
             <div className={classes.confirmBtn}>
                 <Button
