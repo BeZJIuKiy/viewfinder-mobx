@@ -114,8 +114,8 @@ export const Canvas = observer(() => {
 		<div className={classes.main}>
 			<div className={classes.canvasDraw}>
 				<iframe
-					src="https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1"
-					// src={ports.selectedObjects.camera.link}
+					// src="https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1"
+					src={ports.selectedObjects.camera.link}
 					width={width} height={height} title="YouTube video player"
 					ref={iframeRef}
 					frameBorder="0"
