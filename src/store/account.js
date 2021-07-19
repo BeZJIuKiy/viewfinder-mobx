@@ -2,6 +2,16 @@ import {makeAutoObservable} from "mobx";
 import {userAvatar} from "./ports";
 
 class account {
+	drawerItems = [
+		"Person information",
+		"Devices",
+		"Fleet",
+		"Payments"
+	];
+
+
+	selectedItem = "";
+
 	counter = {
 		fleetId: 0,
 	};
@@ -45,6 +55,10 @@ class account {
 			})
 		}
 		return testFleet;
+	}
+
+	setSelectedItem = (index) => {
+		this.selectedItem = this.drawerItems[index];
 	}
 }
 
