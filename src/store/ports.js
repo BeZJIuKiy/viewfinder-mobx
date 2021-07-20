@@ -127,7 +127,7 @@ class ports {
 						description: 'Club Parking PTZ',
 						coordinates: [59.977913, 30.240952],
 						zoom: 15,
-						link: 'https://rtsp.me/embed/KHyZd4ky/',
+						link: 'https://rtsp.me/embed/hitQb4bf/',
 
 						events: [
 							{

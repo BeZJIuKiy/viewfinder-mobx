@@ -6,11 +6,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import {observer} from "mobx-react-lite";
 import account from "../../../store/account";
+import {Icon} from "@material-ui/core";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: '100%',
-        maxWidth: 360,
+        width: '20vw',
+        minWidth: 170,
+        maxWidth: 300,
         backgroundColor: theme.palette.background.paper,
     },
 }));
@@ -22,14 +25,21 @@ export const Drawer = observer(() => {
         account.setSelectedItem(index);
     }
 
-    const drawerItems = account.drawerItems.map((item, i) => {
+    const drawerItems = account.drawerItems.map(({id, icon, title}, i) => {
         return (
-            <div key={item}>
+            <div key={title}>
                 <List component="nav" aria-label="main mailbox folders">
                     <ListItem button
                               onClick={() => handleSelectItem(i)}
+                              selected={i === account.selectedItemIndex}
                     >
-                        <ListItemText primary={item}/>
+                        <ListItemIcon>
+                            <Icon>
+                                {icon}
+                            </Icon>
+                        </ListItemIcon>
+
+                        <ListItemText primary={title}/>
                     </ListItem>
                 </List>
                 <Divider/>

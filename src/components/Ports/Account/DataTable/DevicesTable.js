@@ -369,10 +369,10 @@ export const DevicesTable = observer(() => {
 					onChangeRowsPerPage={handleChangeRowsPerPage}
 				/>
 			</Paper>
-			<FormControlLabel
-				control={<Switch checked={dense} onChange={handleChangeDense}/>}
-				label="Dense padding"
-			/>
+			{/*<FormControlLabel*/}
+			{/*	control={<Switch checked={dense} onChange={handleChangeDense}/>}*/}
+			{/*	label="Dense padding"*/}
+			{/*/>*/}
 		</div>
 	);
 });
