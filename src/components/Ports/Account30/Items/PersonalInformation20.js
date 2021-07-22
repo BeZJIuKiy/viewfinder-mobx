@@ -2,7 +2,7 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import account, {DEVICES, FLEET} from "../../../../store/account";
+import account, {DEVICES, FLEET, PERSONAL_INFORMATION} from "../../../../store/account";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -17,43 +17,28 @@ import {SmallDevicesTable20} from "../../Account/DataTable/SmallFleetTable20";
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        boxSizing: "border-box",
         // width: "38.2vw",
-        // width: "100%",
-
-        // marginTop: 20,
         margin: "20px 0",
         padding: "10px 20px",
         backgroundColor: "#fff",
         borderRadius: 30,
-
-        "&.left": {
-            // height: "95.8%",
-        },
-
-        "&.topRight": {
-            // height: "30vh",
-            // height: "45.5%",
-        },
-
-        "&.bottomRight": {
-            // height: "45.5%",
-        },
     },
 
-    main: {
-        width: "80vw",
+    mainContainer: {
+        boxSizing: "border-box",
+        width: "100%",
+        maxWidth: 1200,
+
+        margin: "20px 0",
+        // width: "80vw",
         // height: "80vh",
 
-        display: "flex",
-        justifyContent: "space-around",
-        alignItems: "center",
-        margin: "auto 0",
-        padding: "0 10px",
+        // display: "flex",
+        // justifyContent: "space-around",
+        // alignItems: "center",
 
         position: "relative",
     },
-
     substrate: {
         position: "absolute",
 
@@ -69,25 +54,53 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 30,
         opacity: 0.7,
     },
+    personalData: {
+        display: "flex",
+        // justifyContent: "center",
+        flexGrow: 1,
+    },
+    personalDataItem: {
+        width: "100%",
+        height: "100%",
+
+        flexDirection: "column",
+        // flexGrow: 1,
+    },
+    personalDataContentLeft: {
+        height: "100%",
+
+        margin: 20,
+        padding: "10px 40px",
+        backgroundColor: "#555",
+        borderRadius: 30,
+
+        textAlign: "center",
+    },
+    personalDataContentRight: {
+        height: "100%",
+
+        margin: 20,
+        padding: "10px 40px",
+        backgroundColor: "#555",
+        borderRadius: 30,
+
+        textAlign: "center",
+    },
 
     mainTitle: {
         fontWeight: 500,
         fontSize: "2.5vw",
     },
-
     mainSubtitle: {
         fontSize: "1.2vw",
     },
-
     mainText: {},
-
     content: {
         display: "flex",
         flexDirection: "column",
         marginTop: 15,
         alignItems: "center",
     },
-
     avatar: {
         width: "12vw",
         height: "100%",
@@ -96,11 +109,9 @@ const useStyles = makeStyles((theme) => ({
         minHeight: 200,
         margin: "0px 10px 0px 0px",
     },
-
     actions: {
         width: "100%",
     },
-
     actionItemName: {
         width: "10vw",
         minWidth: 100,
@@ -108,25 +119,22 @@ const useStyles = makeStyles((theme) => ({
 
         color: "#777",
     },
-
     actionItemAction: {
         width: "100%",
         color: "#444",
     },
-
     fastPay: {
         width: "20%",
 
         display: "flex",
         justifyContent: "space-around",
     },
-
     btn: {
         width: "5vw",
     }
 }));
 
-export const PersonalInformation = () => {
+export const PersonalInformation20 = () => {
     const classes = useStyles();
     const {avatar, firstName, secondName, dateOfBirth, sex, company, status} = account.personalInformation;
     const {phone, email} = account.contactInformation;
@@ -301,13 +309,35 @@ export const PersonalInformation = () => {
     };
 
     return (
-        <div className={classes.main}>
-            <div>
-                {personalInformationBlock("left", personalTitle, personalSubtitle, personalInformationActionList)}
-            </div>
-            <div>
-                {personalInformationBlock("topRight", devicesTitle, devicesSubtitle, devicesActionList)}
-                {personalInformationBlock("bottomRight", fleetTitle, fleetSubtitle, fleetActionList)}
+        <div className={classes.mainContainer}>
+            {/*<div>*/}
+            {/*    {personalInformationBlock("left", personalTitle, personalSubtitle, personalInformationActionList)}*/}
+            {/*</div>*/}
+            {/*<div>*/}
+            {/*    {personalInformationBlock("topRight", devicesTitle, devicesSubtitle, devicesActionList)}*/}
+            {/*    {personalInformationBlock("bottomRight", fleetTitle, fleetSubtitle, fleetActionList)}*/}
+            {/*</div>*/}
+            <div className={classes.personalData}>
+                <div className={classes.personalDataItem}>
+                    <div className={classes.personalDataContentLeft}>
+                        <div className={classes.mainTitle}>{PERSONAL_INFORMATION}</div>
+                        <div className={classes.mainSubtitle}>{personalSubtitle}</div>
+                        {personalInformationActionList()}
+                    </div>
+                </div>
+                <div className={classes.personalDataItem}>
+                    <div className={`${classes.personalDataContentRight}`}>
+                        <div className={classes.mainTitle}>{devicesTitle}</div>
+                        <div className={classes.mainSubtitle}>{devicesSubtitle}</div>
+                        {devicesActionList()}
+                    </div>
+
+                    <div className={`${classes.personalDataContentRight}`}>
+                        <div className={classes.mainTitle}>{fleetTitle}</div>
+                        <div className={classes.mainSubtitle}>{fleetSubtitle}</div>
+                        {fleetActionList()}
+                    </div>
+                </div>
             </div>
             <div className={classes.substrate}/>
         </div>

@@ -14,7 +14,7 @@ export const DEVICES = "Devices";
 export const FLEET = "Fleet";
 export const PAYMENTS = "Payments";
 
-const counter = {id: 0};
+const counter = {id: 0, pays: 0};
 
 const ShipIcon = () => (
     <Icon path={mdiFerry}
@@ -29,6 +29,17 @@ const ShipIcon = () => (
 );
 
 class account {
+    /* ПЕРЕНЕСТИ В ОТДЕЛЬНЫЙ STATE */
+
+    payHistory = [
+        {id: counter.pays++, date: "11.08.2021", price: 500},
+        {id: counter.pays++, date: "11.09.2021", price: 1500},
+        {id: counter.pays++, date: "11.10.2021", price: 2500},
+        {id: counter.pays++, date: "11.11.2021", price: 1700},
+    ];
+
+    /* =========================== */
+
     drawerItems = [
         {id: counter.id++, icon: <PersonIcon/>, title: PERSONAL_INFORMATION},
         {id: counter.id++, icon: <VideoCam/>, title: DEVICES},

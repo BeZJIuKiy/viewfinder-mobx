@@ -21,8 +21,9 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditIcon from '@material-ui/icons/Edit';
-import account from "../../../../store/account";
 import {observer} from "mobx-react-lite";
+import ports from "../../../../store/ports";
+import account from "../../../../store/account";
 
 function descendingComparator(a, b, orderBy) {
 	if (b[orderBy] < a[orderBy]) {
@@ -51,18 +52,9 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-	{id: 'imo', numeric: false, disablePadding: true, label: 'IMO'},
+	{id: 'imo', numeric: false, disablePadding: false, label: 'IMO'},
 	{id: 'name', numeric: false, disablePadding: false, label: 'Name'},
-	{id: 'vesselTypeGeneric', numeric: false, disablePadding: false, label: 'Vessel Type Generic'},
 	{id: 'vesselTypeDetailed', numeric: false, disablePadding: false, label: 'Vessel Type Detailed'},
-	{id: 'status', numeric: false, disablePadding: false, label: 'Status'},
-	{id: 'mmsi', numeric: false, disablePadding: false, label: 'MMSI'},
-	{id: 'callSign', numeric: false, disablePadding: false, label: 'Call Sign'},
-	{id: 'flag', numeric: false, disablePadding: false, label: 'Flag'},
-	// { id: 'grossTonnage', numeric: false, disablePadding: false, label: 'grossTonnage' },
-	// { id: 'summerDWT', numeric: false, disablePadding: false, label: 'summerDWT' },
-	// { id: 'lengthOverallBreadthExtreme', numeric: false, disablePadding: false, label: 'lengthOverallBreadthExtreme' },
-	{id: 'yearBuilt', numeric: true, disablePadding: false, label: 'Year Built'},
 ];
 
 function EnhancedTableHead(props) {
@@ -158,16 +150,16 @@ const EnhancedTableToolbar = (props) => {
 			) : (
 				<Typography className={classes.title} variant="h6" id="tableTitle" component="div">
 					{/* Events - это заголовок таблицы */}
-					{/*MY FLEET*/}
+					Cameras
 				</Typography>
 			)}
 
 			{numSelected === 1 ? (
 				<Tooltip
-					title="Change ship"
-					onClick={() => alert("Change ship")}
+					title="Change current camera"
+					onClick={() => alert("Change current camera")}
 				>
-					<IconButton aria-label="Change ship">
+					<IconButton aria-label="Change current camera">
 						<EditIcon color="primary"/>
 					</IconButton>
 				</Tooltip>
@@ -186,17 +178,17 @@ const EnhancedTableToolbar = (props) => {
 			) : (
 				<div className={classes.editIcons}>
 					<Tooltip
-						title="Change fleet"
-						onClick={() => alert("Change fleet")}
+						title="Change all cameras"
+						onClick={() => alert("Change all cameras")}
 					>
-						<IconButton aria-label="Change fleet">
+						<IconButton aria-label="Change all cameras">
 							<EditIcon color="primary"/>
 						</IconButton>
 					</Tooltip>
 
 					<Tooltip
 						title="Add ship"
-						onClick={() => alert("Add ship")}
+						onClick={() => alert("Add camera")}
 					>
 						{/* <IconButton aria-label="filter list"> */}
 						<IconButton aria-label="Add ship">
@@ -223,7 +215,8 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: theme.spacing(2),
 	},
 	table: {
-		minWidth: 750,
+		// minWidth: 500,
+		// width: "30vw",
 	},
 	visuallyHidden: {
 		border: 0,
@@ -238,30 +231,21 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export const FleetTable = observer(() => {
-	const testFleet = account.myFleet;
+export const SmallDevicesTable20 = observer(() => {
 	const rows = [];
-	testFleet.forEach((ship) => {
+
+	account.myFleet.forEach((ship) => {
 		rows.push({
 			id: ship.id,
 			imo: ship.imo,
 			name: ship.name,
-			vesselTypeGeneric: ship.vesselTypeGeneric,
 			vesselTypeDetailed: ship.vesselTypeDetailed,
-			status: ship.status,
-			mmsi: ship.mmsi,
-			callSign: ship.callSign,
-			flag: ship.flag,
-			// grossTonnage: row.grossTonnage,
-			// summerDWT: row.summerDWT,
-			// lengthOverallBreadthExtreme: row.lengthOverallBreadthExtreme,
-			yearBuilt: ship.yearBuilt,
 		})
 	});
 
 	const classes = useStyles();
 	const [order, setOrder] = React.useState('asc');
-	const [orderBy, setOrderBy] = React.useState('name');
+	const [orderBy, setOrderBy] = React.useState('country');
 	const [selected, setSelected] = React.useState([]);
 	const [page, setPage] = React.useState(0);
 	const [dense, setDense] = React.useState(true);
@@ -367,16 +351,7 @@ export const FleetTable = observer(() => {
 
 											<TableCell align="left">{row.imo}</TableCell>
 											<TableCell align="left">{row.name}</TableCell>
-											<TableCell align="left">{row.vesselTypeGeneric}</TableCell>
 											<TableCell align="left">{row.vesselTypeDetailed}</TableCell>
-											<TableCell align="left">{row.status}</TableCell>
-											<TableCell align="left">{row.mmsi}</TableCell>
-											<TableCell align="left">{row.callSign}</TableCell>
-											<TableCell align="left">{row.flag}</TableCell>
-											{/* <TableCell align="left">{row.grossTonnage}</TableCell> */}
-											{/* <TableCell align="left">{row.summerDWT}</TableCell> */}
-											{/* <TableCell align="left">{row.lengthOverallBreadthExtreme}</TableCell> */}
-											<TableCell align="left">{row.yearBuilt}</TableCell>
 										</TableRow>
 									);
 								})}

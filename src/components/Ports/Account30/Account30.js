@@ -8,6 +8,7 @@ import {PersonalInformation} from "./Items/PersonalInformation";
 import {Devices} from "./Items/Devices";
 import {Fleet} from "./Items/Fleet";
 import {Payments} from "./Items/Payments";
+import {PersonalInformation20} from "./Items/PersonalInformation20";
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const Account20 = observer(() => {
+export const Account30 = observer(() => {
     const classes = useStyles();
 
     const {selectedItem} = account;
@@ -37,7 +38,7 @@ export const Account20 = observer(() => {
     const components = () => {
         switch (selectedItem) {
             case PERSONAL_INFORMATION: {
-                return <PersonalInformation/>;
+                return <PersonalInformation20/>;
             }
             case DEVICES: {
                 return <Devices/>;

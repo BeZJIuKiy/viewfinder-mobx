@@ -11,10 +11,23 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: '20vw',
+        width: "14vw",
         minWidth: 170,
         maxWidth: 300,
+
+        marginTop: "8vh",
+
         backgroundColor: theme.palette.background.paper,
+    },
+
+    active: {
+        "&.isActive": {
+            color: "#333",
+        },
+
+        "&.noActive": {
+            color: "#aaa",
+        }
     },
 }));
 
@@ -29,9 +42,10 @@ export const Drawer = observer(() => {
         return (
             <div key={title}>
                 <List component="nav" aria-label="main mailbox folders">
-                    <ListItem button
-                              onClick={() => handleSelectItem(i)}
-                              selected={i === account.selectedItemIndex}
+                    <ListItem
+                        className={`${classes.active} ${i === account.selectedItemIndex ? "isActive" : "noActive"}`}
+                        button
+                        onClick={() => handleSelectItem(i)}
                     >
                         <ListItemIcon>
                             <Icon>
@@ -39,10 +53,12 @@ export const Drawer = observer(() => {
                             </Icon>
                         </ListItemIcon>
 
-                        <ListItemText primary={title}/>
+                        <ListItemText
+
+                            primary={title}
+                        />
                     </ListItem>
                 </List>
-                <Divider/>
             </div>
         )
     });
