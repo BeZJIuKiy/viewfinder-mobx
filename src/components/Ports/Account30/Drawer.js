@@ -11,11 +11,12 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        width: "14vw",
+        width: "15vw",
         minWidth: 170,
         maxWidth: 300,
 
-        marginTop: "8vh",
+        marginTop: "8vw",
+        marginLeft: "10vh",
 
         backgroundColor: theme.palette.background.paper,
     },

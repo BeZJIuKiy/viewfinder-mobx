@@ -25,18 +25,9 @@ const useStyles = makeStyles((theme) => ({
     },
 
     mainContainer: {
-        boxSizing: "border-box",
-        width: "100%",
-        maxWidth: 1200,
+        height: "calc(100% - 20px)",
 
         margin: "20px 0",
-        // width: "80vw",
-        // height: "80vh",
-
-        // display: "flex",
-        // justifyContent: "space-around",
-        // alignItems: "center",
-
         position: "relative",
     },
     substrate: {
@@ -56,32 +47,26 @@ const useStyles = makeStyles((theme) => ({
     },
     personalData: {
         display: "flex",
-        // justifyContent: "center",
         flexGrow: 1,
     },
     personalDataItem: {
-        width: "100%",
-        height: "100%",
-
         flexDirection: "column",
-        // flexGrow: 1,
+        flexGrow: 1,
     },
     personalDataContentLeft: {
-        height: "100%",
+        height: "calc(100% - 20px)",
 
-        margin: 20,
+        margin: "20px 10px 20px 20px",
         padding: "10px 40px",
-        backgroundColor: "#555",
+        backgroundColor: "#fff",
         borderRadius: 30,
 
         textAlign: "center",
     },
     personalDataContentRight: {
-        height: "100%",
-
-        margin: 20,
+        margin: "20px 20px 0px 10px",
         padding: "10px 40px",
-        backgroundColor: "#555",
+        backgroundColor: "#fff",
         borderRadius: 30,
 
         textAlign: "center",
@@ -89,10 +74,10 @@ const useStyles = makeStyles((theme) => ({
 
     mainTitle: {
         fontWeight: 500,
-        fontSize: "2.5vw",
+        fontSize: "1.5vw",
     },
     mainSubtitle: {
-        fontSize: "1.2vw",
+        fontSize: "1.0vw",
     },
     mainText: {},
     content: {
@@ -139,15 +124,15 @@ export const PersonalInformation20 = () => {
     const {avatar, firstName, secondName, dateOfBirth, sex, company, status} = account.personalInformation;
     const {phone, email} = account.contactInformation;
 
-    const personalInformationBlock = (prefix, title, subTitle, content) => (
-        <div className={`${classes.container} ${prefix}`}>
+    const informationBlock = (workClass, title, subTitle, content) => (
+        <div className={`${workClass}`}>
             <div className={classes.mainTitle}>{title}</div>
             <div className={classes.mainSubtitle}>{subTitle}</div>
             {content()}
         </div>
     );
 
-    const personalTitle = account.selectedItem;
+    const personalTitle = PERSONAL_INFORMATION;
     const personalSubtitle = "Here you can change personal information";
     const personalInformationActionList = () => {
         return (
@@ -308,35 +293,19 @@ export const PersonalInformation20 = () => {
         )
     };
 
+    // if(devicePixelRatio) alert(devicePixelRatio);
+    // else alert(outerWidth/innerWidth*100);
+
+
     return (
         <div className={classes.mainContainer}>
-            {/*<div>*/}
-            {/*    {personalInformationBlock("left", personalTitle, personalSubtitle, personalInformationActionList)}*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*    {personalInformationBlock("topRight", devicesTitle, devicesSubtitle, devicesActionList)}*/}
-            {/*    {personalInformationBlock("bottomRight", fleetTitle, fleetSubtitle, fleetActionList)}*/}
-            {/*</div>*/}
             <div className={classes.personalData}>
                 <div className={classes.personalDataItem}>
-                    <div className={classes.personalDataContentLeft}>
-                        <div className={classes.mainTitle}>{PERSONAL_INFORMATION}</div>
-                        <div className={classes.mainSubtitle}>{personalSubtitle}</div>
-                        {personalInformationActionList()}
-                    </div>
+                    {informationBlock(classes.personalDataContentLeft, personalTitle, personalSubtitle, personalInformationActionList)}
                 </div>
                 <div className={classes.personalDataItem}>
-                    <div className={`${classes.personalDataContentRight}`}>
-                        <div className={classes.mainTitle}>{devicesTitle}</div>
-                        <div className={classes.mainSubtitle}>{devicesSubtitle}</div>
-                        {devicesActionList()}
-                    </div>
-
-                    <div className={`${classes.personalDataContentRight}`}>
-                        <div className={classes.mainTitle}>{fleetTitle}</div>
-                        <div className={classes.mainSubtitle}>{fleetSubtitle}</div>
-                        {fleetActionList()}
-                    </div>
+                    {informationBlock(classes.personalDataContentRight, devicesTitle, devicesSubtitle, devicesActionList)}
+                    {informationBlock(classes.personalDataContentRight, fleetTitle, fleetSubtitle, fleetActionList)}
                 </div>
             </div>
             <div className={classes.substrate}/>

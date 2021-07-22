@@ -18,14 +18,17 @@ const useStyles = makeStyles((theme) => ({
 
     content: {
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        justifyContent: "center",
     },
 
     component: {
-        width: "100%",
-        height: "calc(100vh - 65px)",
+        width: "70vw",
+        // margin: "0 auto",
+        marginRight: "auto",
+        // height: "calc(100vh - 65px)",
         display: "flex",
-        justifyContent: "center",
+        // justifyContent: "center",
     },
 }));
 

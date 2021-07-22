@@ -150,7 +150,7 @@ const EnhancedTableToolbar = (props) => {
 			) : (
 				<Typography className={classes.title} variant="h6" id="tableTitle" component="div">
 					{/* Events - это заголовок таблицы */}
-					Cameras
+					Fleet
 				</Typography>
 			)}
 

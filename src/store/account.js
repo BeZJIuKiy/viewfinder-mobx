@@ -39,6 +39,7 @@ class account {
     ];
 
     /* =========================== */
+    // page = devicePixelRatio
 
     drawerItems = [
         {id: counter.id++, icon: <PersonIcon/>, title: PERSONAL_INFORMATION},
