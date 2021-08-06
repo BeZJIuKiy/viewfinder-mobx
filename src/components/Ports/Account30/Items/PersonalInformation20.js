@@ -42,8 +42,11 @@ const useStyles = makeStyles((theme) => ({
         transform: "translate(-50%, -50%)",
 
         backgroundColor: "#ddd",
-        borderRadius: 30,
+        borderRadius: 10,
+
         opacity: 0.7,
+
+        // borderRadius: 30,
     },
     personalData: {
         display: "flex",
@@ -59,7 +62,8 @@ const useStyles = makeStyles((theme) => ({
         margin: "20px 10px 20px 20px",
         padding: "10px 40px",
         backgroundColor: "#fff",
-        borderRadius: 30,
+        borderRadius: 10,
+        // borderRadius: 30,
 
         textAlign: "center",
     },
@@ -67,7 +71,8 @@ const useStyles = makeStyles((theme) => ({
         margin: "20px 20px 0px 10px",
         padding: "10px 40px",
         backgroundColor: "#fff",
-        borderRadius: 30,
+        borderRadius: 10,
+        // borderRadius: 30,
 
         textAlign: "center",
     },
@@ -83,8 +88,14 @@ const useStyles = makeStyles((theme) => ({
     content: {
         display: "flex",
         flexDirection: "column",
+
         marginTop: 15,
         alignItems: "center",
+
+        "&.right": {
+            maxHeight: "340px",
+            overflowY: "auto",
+        },
     },
     avatar: {
         width: "12vw",
@@ -149,22 +160,6 @@ export const PersonalInformation20 = () => {
                         </ListItem>
 
                         <Divider/>
-
-                        {/*<ListItem button>*/}
-                        {/*    <ListItemText className={classes.actionItemName} primary={"Date Of Birth"}/>*/}
-                        {/*    <ListItemText className={classes.actionItemAction} primary={`${dateOfBirth}`}/>*/}
-                        {/*    <ArrowForwardIosIcon color={"action"}/>*/}
-                        {/*</ListItem>*/}
-
-                        {/*<Divider/>*/}
-
-                        {/*<ListItem button>*/}
-                        {/*    <ListItemText className={classes.actionItemName} primary={"Sex"}/>*/}
-                        {/*    <ListItemText className={classes.actionItemAction} primary={`${sex}`}/>*/}
-                        {/*    <ArrowForwardIosIcon color={"action"}/>*/}
-                        {/*</ListItem>*/}
-
-                        {/*<Divider/>*/}
 
                         <ListItem button>
                             <ListItemText className={classes.actionItemName} primary={"Company"}/>
@@ -276,7 +271,7 @@ export const PersonalInformation20 = () => {
     const devicesSubtitle = "";
     const devicesActionList = () => {
         return (
-            <div className={classes.content}>
+            <div className={`${classes.content} right`}>
                 <DevicesTable/>
             </div>
         )
@@ -287,7 +282,7 @@ export const PersonalInformation20 = () => {
     // const fleetSubtitle = "Here you can change information of your fleet";
     const fleetActionList = () => {
         return (
-            <div className={classes.content}>
+            <div className={`${classes.content} right`}>
                 <SmallDevicesTable20/>
             </div>
         )

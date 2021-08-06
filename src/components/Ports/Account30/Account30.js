@@ -24,11 +24,8 @@ const useStyles = makeStyles((theme) => ({
 
     component: {
         width: "70vw",
-        // margin: "0 auto",
         marginRight: "auto",
-        // height: "calc(100vh - 65px)",
         display: "flex",
-        // justifyContent: "center",
     },
 }));
 
