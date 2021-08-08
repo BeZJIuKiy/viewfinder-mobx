@@ -15,7 +15,42 @@ import {FleetTable} from "../../Account/DataTable/FleetTable";
 import {DevicesTable} from "../../Account/DataTable/DevicesTable";
 import {SmallDevicesTable20} from "../../Account/DataTable/SmallFleetTable20";
 
+
+import Accordion from '@material-ui/core/Accordion';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+
 const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+
+        display: "flex",
+        flexDirection: "column",
+
+        alignItems: "center",
+
+        textAlign: "left",
+    },
+    heading: {
+        fontSize: theme.typography.pxToRem(11),
+        flexBasis: '33.33%',
+        flexShrink: 0,
+        fontWeight: 500,
+
+        color: theme.palette.text.secondary,
+        textTransform: "uppercase",
+
+        margin: "auto 0",
+    },
+    secondaryHeading: {
+        fontSize: theme.typography.pxToRem(15),
+        color: theme.palette.text.primary,
+    },
+
+
     container: {
         // width: "38.2vw",
         margin: "20px 0",
@@ -103,7 +138,8 @@ const useStyles = makeStyles((theme) => ({
 
         minWidth: 150,
         minHeight: 200,
-        margin: "0px 10px 0px 0px",
+        margin: "5px 0px",
+
     },
     actions: {
         width: "100%",
@@ -113,20 +149,23 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 100,
         maxWidth: 200,
 
+        fontSize: 11,
+        textTransform: "uppercase",
         color: "#777",
     },
     actionItemAction: {
         width: "100%",
         color: "#444",
     },
-    fastPay: {
-        width: "20%",
+    quickPay: {
+        width: "100%",
 
         display: "flex",
-        justifyContent: "space-around",
+        justifyContent: "center",
     },
     btn: {
         width: "5vw",
+        margin: "0px 3px",
     }
 }));
 
@@ -134,6 +173,12 @@ export const PersonalInformation20 = () => {
     const classes = useStyles();
     const {avatar, firstName, secondName, dateOfBirth, sex, company, status} = account.personalInformation;
     const {phone, email} = account.contactInformation;
+
+    const [expanded, setExpanded] = React.useState(false);
+
+    const handleChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+    };
 
     const informationBlock = (workClass, title, subTitle, content) => (
         <div className={`${workClass}`}>
@@ -147,6 +192,125 @@ export const PersonalInformation20 = () => {
     const personalSubtitle = "Here you can change personal information";
     const personalInformationActionList = () => {
         return (
+            <div className={classes.root}>
+                <img className={classes.avatar} src={avatar} alt="user avatar"/>
+
+                <Accordion expanded={expanded === 'Name'} onChange={handleChange('Name')}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel1bh-content"
+                        id="panel1bh-header"
+                    >
+                        <Typography className={classes.heading}>Name</Typography>
+                        <Typography className={classes.secondaryHeading}>{`${firstName} ${secondName}`}</Typography>
+                    </AccordionSummary>
+
+                    <AccordionDetails>
+                        <Typography>
+                            Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget
+                            maximus est, id dignissim quam.
+                        </Typography>
+                    </AccordionDetails>
+                </Accordion>
+
+
+                <Accordion expanded={expanded === "Company"} onChange={handleChange("Company")}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel2bh-content"
+                        id="panel2bh-header"
+                    >
+                        <Typography className={classes.heading}>Company</Typography>
+                        <Typography className={classes.secondaryHeading}>{`${company}`}</Typography>
+                    </AccordionSummary>
+
+                    <AccordionDetails>
+                        <Typography>
+                            Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus, varius pulvinar
+                            diam eros in elit. Pellentesque convallis laoreet laoreet.
+                        </Typography>
+                    </AccordionDetails>
+                </Accordion>
+
+
+                <Accordion expanded={expanded === "Account status"} onChange={handleChange("Account status")}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel3bh-content"
+                        id="panel3bh-header"
+                    >
+                        <Typography className={classes.heading}>Account status</Typography>
+                        <Typography className={classes.secondaryHeading}>{`${status}`}</Typography>
+                    </AccordionSummary>
+
+                    <AccordionDetails>
+                        <Typography>
+                            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
+                            vitae egestas augue. Duis vel est augue.
+                        </Typography>
+                    </AccordionDetails>
+                </Accordion>
+
+
+                <Accordion expanded={expanded === "Phone"} onChange={handleChange("Phone")}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel3bh-content"
+                        id="panel3bh-header"
+                    >
+                        <Typography className={classes.heading}>Phone</Typography>
+                        <Typography className={classes.secondaryHeading}>{`${phone}`}</Typography>
+                    </AccordionSummary>
+
+                    <AccordionDetails>
+                        <Typography>
+                            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
+                            vitae egestas augue. Duis vel est augue.
+                        </Typography>
+                    </AccordionDetails>
+                </Accordion>
+
+
+                <Accordion expanded={expanded === "Email"} onChange={handleChange("Email")}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel3bh-content"
+                        id="panel3bh-header"
+                    >
+                        <Typography className={classes.heading}>Email</Typography>
+                        <Typography className={classes.secondaryHeading}>{`${email}`}</Typography>
+                    </AccordionSummary>
+
+                    <AccordionDetails>
+                        <Typography>
+                            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
+                            vitae egestas augue. Duis vel est augue.
+                        </Typography>
+                    </AccordionDetails>
+                </Accordion>
+
+
+                <Accordion expanded={expanded === "Quick pay"} onChange={handleChange("Quick pay")}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon/>}
+                        aria-controls="panel4bh-content"
+                        id="panel4bh-header"
+                    >
+                        <Typography className={classes.heading}>Quick pay</Typography>
+                        <Typography className={classes.secondaryHeading}>{quickPay()}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Typography>
+                            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
+                            vitae egestas augue. Duis vel est augue.
+                        </Typography>
+                    </AccordionDetails>
+                </Accordion>
+            </div>
+        );
+    }
+    const OLDpersonalInformationActionList = () => {
+        return (
             <div className={classes.content}>
                 <img className={classes.avatar} src={avatar} alt="123"/>
 
@@ -154,7 +318,10 @@ export const PersonalInformation20 = () => {
                     <List component="nav" aria-label="main mailbox folders">
                         <Divider/>
                         <ListItem button>
-                            <ListItemText className={classes.actionItemName} primary={"Name"}/>
+                            {/*<ListItemText className={classes.actionItemName} primary={"Name"}/>*/}
+
+                            <ListItemText className={classes.actionItemName} classes={{primary: classes.actionItemName}}
+                                          primary={"Name"}/>
                             <ListItemText className={classes.actionItemAction} primary={`${firstName} ${secondName}`}/>
                             <ArrowForwardIosIcon color={"action"}/>
                         </ListItem>
@@ -162,7 +329,8 @@ export const PersonalInformation20 = () => {
                         <Divider/>
 
                         <ListItem button>
-                            <ListItemText className={classes.actionItemName} primary={"Company"}/>
+                            <ListItemText className={classes.actionItemName} classes={{primary: classes.actionItemName}}
+                                          primary={"Company"}/>
                             <ListItemText className={classes.actionItemAction} primary={`${company}`}/>
                             <ArrowForwardIosIcon color={"action"}/>
                         </ListItem>
@@ -170,7 +338,8 @@ export const PersonalInformation20 = () => {
                         <Divider/>
 
                         <ListItem button>
-                            <ListItemText className={classes.actionItemName} primary={"Account status"}/>
+                            <ListItemText className={classes.actionItemName} classes={{primary: classes.actionItemName}}
+                                          primary={"Account status"}/>
                             <ListItemText className={classes.actionItemAction} primary={`${status}`}/>
                             <ArrowForwardIosIcon color={"action"}/>
                         </ListItem>
@@ -180,7 +349,8 @@ export const PersonalInformation20 = () => {
                         {/*{lastPayments()}*/}
 
                         <ListItem button>
-                            <ListItemText className={classes.actionItemName} primary={"Phone"}/>
+                            <ListItemText className={classes.actionItemName} classes={{primary: classes.actionItemName}}
+                                          primary={"Phone"}/>
                             <ListItemText className={classes.actionItemAction} primary={`${phone}`}/>
                             <ArrowForwardIosIcon color={"action"}/>
                         </ListItem>
@@ -188,7 +358,8 @@ export const PersonalInformation20 = () => {
                         <Divider/>
 
                         <ListItem button>
-                            <ListItemText className={classes.actionItemName} primary={"Email"}/>
+                            <ListItemText className={classes.actionItemName} classes={{primary: classes.actionItemName}}
+                                          primary={"Email"}/>
                             <ListItemText className={classes.actionItemAction} primary={`${email}`}/>
                             <ArrowForwardIosIcon color={"action"}/>
                         </ListItem>
@@ -196,8 +367,9 @@ export const PersonalInformation20 = () => {
                         <Divider/>
 
                         <ListItem button>
-                            <ListItemText className={classes.actionItemName} primary={"Fast pay"}/>
-                            {fastPay()}
+                            <ListItemText className={classes.actionItemName} classes={{primary: classes.actionItemName}}
+                                          primary={"Quick pay"}/>
+                            {quickPay()}
                         </ListItem>
 
                         <Divider/>
@@ -224,19 +396,21 @@ export const PersonalInformation20 = () => {
             </div>
         ));
     }
-    const fastPay = () => {
+    const quickPay = () => {
         const lastPays = [];
         for (let i = account.payHistory.length - 1; i > account.payHistory.length - 4; --i) {
             lastPays.push(account.payHistory[i]);
         }
 
-        return lastPays.map(pay => (
-            <div className={classes.fastPay}>
-                <Button className={classes.btn} variant="contained" color="primary">
-                    {`$${pay.price}`}
-                </Button>
+        return (
+            <div className={classes.quickPay}>
+                {lastPays.map(pay => (
+                    <Button className={classes.btn} variant="contained" color="primary">
+                        {`$${pay.price}`}
+                    </Button>
+                ))}
             </div>
-        ))
+        )
     }
 
     const contactTitle = "Contact Information";
@@ -296,6 +470,7 @@ export const PersonalInformation20 = () => {
         <div className={classes.mainContainer}>
             <div className={classes.personalData}>
                 <div className={classes.personalDataItem}>
+                    {/*{informationBlock(classes.personalDataContentLeft, personalTitle, personalSubtitle, OLDpersonalInformationActionList)}*/}
                     {informationBlock(classes.personalDataContentLeft, personalTitle, personalSubtitle, personalInformationActionList)}
                 </div>
                 <div className={classes.personalDataItem}>
@@ -307,3 +482,136 @@ export const PersonalInformation20 = () => {
         </div>
     );
 }
+
+
+// const ChangeItemsAccordions = () => {
+//     const classes = useStyles();
+//     const [expanded, setExpanded] = React.useState(false);
+//
+//     const handleChange = (panel) => (event, isExpanded) => {
+//         setExpanded(isExpanded ? panel : false);
+//     };
+//
+//     return (
+//         <div className={classes.root}>
+//             <Accordion expanded={expanded === 'Name'} onChange={handleChange('Name')}>
+//                 <AccordionSummary
+//                     expandIcon={<ExpandMoreIcon/>}
+//                     aria-controls="panel1bh-content"
+//                     id="panel1bh-header"
+//                 >
+//                     <Typography className={classes.heading}>Name</Typography>
+//                     <Typography className={classes.secondaryHeading}>I am an accordion</Typography>
+//                 </AccordionSummary>
+//
+//                 <AccordionDetails>
+//                     <Typography>
+//                         Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget
+//                         maximus est, id dignissim quam.
+//                     </Typography>
+//                 </AccordionDetails>
+//             </Accordion>
+//
+//
+//             <Accordion expanded={expanded === 'Company'} onChange={handleChange('Company')}>
+//                 <AccordionSummary
+//                     expandIcon={<ExpandMoreIcon/>}
+//                     aria-controls="panel2bh-content"
+//                     id="panel2bh-header"
+//                 >
+//                     <Typography className={classes.heading}>Users</Typography>
+//                     <Typography className={classes.secondaryHeading}>
+//                         You are currently not an owner
+//                     </Typography>
+//                 </AccordionSummary>
+//
+//                 <AccordionDetails>
+//                     <Typography>
+//                         Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus, varius pulvinar
+//                         diam eros in elit. Pellentesque convallis laoreet laoreet.
+//                     </Typography>
+//                 </AccordionDetails>
+//             </Accordion>
+//
+//
+//             <Accordion expanded={expanded === 'Account status'} onChange={handleChange('Account status')}>
+//                 <AccordionSummary
+//                     expandIcon={<ExpandMoreIcon/>}
+//                     aria-controls="panel3bh-content"
+//                     id="panel3bh-header"
+//                 >
+//                     <Typography className={classes.heading}>Advanced settings</Typography>
+//                     <Typography className={classes.secondaryHeading}>
+//                         Filtering has been entirely disabled for whole web server
+//                     </Typography>
+//                 </AccordionSummary>
+//
+//                 <AccordionDetails>
+//                     <Typography>
+//                         Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
+//                         vitae egestas augue. Duis vel est augue.
+//                     </Typography>
+//                 </AccordionDetails>
+//             </Accordion>
+//
+//
+//             <Accordion expanded={expanded === 'Phone'} onChange={handleChange('Phone')}>
+//                 <AccordionSummary
+//                     expandIcon={<ExpandMoreIcon/>}
+//                     aria-controls="panel3bh-content"
+//                     id="panel3bh-header"
+//                 >
+//                     <Typography className={classes.heading}>Advanced settings</Typography>
+//                     <Typography className={classes.secondaryHeading}>
+//                         Filtering has been entirely disabled for whole web server
+//                     </Typography>
+//                 </AccordionSummary>
+//
+//                 <AccordionDetails>
+//                     <Typography>
+//                         Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
+//                         vitae egestas augue. Duis vel est augue.
+//                     </Typography>
+//                 </AccordionDetails>
+//             </Accordion>
+//
+//
+//             <Accordion expanded={expanded === 'Email'} onChange={handleChange('Email')}>
+//                 <AccordionSummary
+//                     expandIcon={<ExpandMoreIcon/>}
+//                     aria-controls="panel3bh-content"
+//                     id="panel3bh-header"
+//                 >
+//                     <Typography className={classes.heading}>Advanced settings</Typography>
+//                     <Typography className={classes.secondaryHeading}>
+//                         Filtering has been entirely disabled for whole web server
+//                     </Typography>
+//                 </AccordionSummary>
+//
+//                 <AccordionDetails>
+//                     <Typography>
+//                         Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
+//                         vitae egestas augue. Duis vel est augue.
+//                     </Typography>
+//                 </AccordionDetails>
+//             </Accordion>
+//
+//
+//             <Accordion expanded={expanded === 'Quick pay'} onChange={handleChange('Quick pay')}>
+//                 <AccordionSummary
+//                     expandIcon={<ExpandMoreIcon/>}
+//                     aria-controls="panel4bh-content"
+//                     id="panel4bh-header"
+//                 >
+//                     <Typography className={classes.heading}>Personal data</Typography>
+//                 </AccordionSummary>
+//                 <AccordionDetails>
+//                     <Typography>
+//                         Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
+//                         vitae egestas augue. Duis vel est augue.
+//                     </Typography>
+//                 </AccordionDetails>
+//             </Accordion>
+//         </div>
+//     );
+// };
