@@ -11,6 +11,7 @@ import {Events20} from "./components/Ports/Events/Events2_0";
 // import {Auth} from "./components/Auth/Auth";
 // import {Account30} from "./components/Ports/Account30/Account30";
 import {Account30} from "./components/Ports/Account30/Account30";
+import {Test} from "./components/Ports/Test";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path='/account' component={Account30}/>
             <Route path='/events' component={Events20}/>
             <Route path='/canvas' component={Canvas}/>
+            <Route path='/test' component={Test}/>
             {/*<Route path='/events' render={() => <Events /> } /> так можно*/}
         </BrowserRouter>
     );

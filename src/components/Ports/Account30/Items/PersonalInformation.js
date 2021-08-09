@@ -246,9 +246,6 @@ export const PersonalInformation = observer(() => {
 				return (
 					<div>
 						change company name
-						change company name
-						change company name
-						change company name
 					</div>
 				)
 			}
@@ -257,9 +254,6 @@ export const PersonalInformation = observer(() => {
 				return (
 					<div>
 						change phone number
-						change phone number
-						change phone number
-						change phone number
 					</div>
 				)
 			}
@@ -267,10 +261,6 @@ export const PersonalInformation = observer(() => {
 			case "email": {
 				return (
 					<div>
-						change email
-						change email
-						change email
-						change email
 						change email
 					</div>
 				)

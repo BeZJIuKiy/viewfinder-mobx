@@ -53,7 +53,7 @@ export const SimpleList = observer(() => {
 		const portId = Number.isInteger(id);
 
 		portId
-			? setData(cameras.data, camerasNewNote, cameraIcon.drawer)
+			? setData(cameras, camerasNewNote, cameraIcon.drawer)
 			: setData(data, portsNewNote, portIcon.drawer);
 	}, [selectedObjects.port]);
 

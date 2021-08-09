@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button";
 import {FleetTable} from "../../Account/DataTable/FleetTable";
 import {DevicesTable} from "../../Account/DataTable/DevicesTable";
 import {SmallDevicesTable20} from "../../Account/DataTable/SmallFleetTable20";
+import {Search} from "./Search";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -77,6 +78,8 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         marginTop: 15,
         alignItems: "center",
+
+        position: "relative",
     },
     avatar: {
         width: "12vw",
@@ -108,7 +111,17 @@ const useStyles = makeStyles((theme) => ({
     },
     btn: {
         width: "5vw",
-    }
+    },
+
+    search: {
+        display: "flex",
+
+        position: "absolute",
+
+        top: 4,
+        left: 5,
+        zIndex: 1,
+    },
 }));
 
 export const Fleet = () => {
@@ -129,6 +142,10 @@ export const Fleet = () => {
         return (
             <div className={classes.content}>
                 <FleetTable/>
+
+                <div className={classes.search}>
+                    <Search label={"Search Fleet"} />
+                </div>
             </div>
         )
     };

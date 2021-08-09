@@ -22,11 +22,11 @@ const YaMap = observer((props) => {
 		];
 
 		if (portId) {
-			setAllData(selectedObjects.port.cameras.data);
-			mapData(selectedObjects.port.coordinates, selectedObjects.port.cameras.data[0].zoom, controls)
+			setAllData(selectedObjects.port.cameras);
+			mapData(selectedObjects.port.coordinates, selectedObjects.port.cameras[0].zoom, controls)
 		} else {
 			setAllData(data);
-			mapData(data[0].cameras.data[0].coordinates, data[0].zoom, controls);
+			mapData(data[0].cameras.coordinates, data[0].zoom, controls);
 		}
 	}, [selectedObjects.port]);
 

@@ -70,11 +70,6 @@ class account {
         email: 'servise.soft@somemail.com',
     };
 
-    // contactInformation = {
-    //     phone: '+X (XXX) XXX-XX-XX',
-    //     email: 'servise.soft@somemail.com',
-    // };
-
     userData = {
         avatar: userAvatar,
         name: '',
@@ -99,18 +94,19 @@ class account {
         for (let i = 0; i < 10; ++i) {
             testFleet.push({
                 id: this.counter.fleetId++,
-                imo: `${i}${i}${i}${i}${i}${i}${i}`,
-                name: 'SERVICESOFT',
-                vesselTypeGeneric: 'Cargo - XXX',
-                vesselTypeDetailed: 'Container Ship',
-                status: 'Active',
-                mmsi: `${i}${i}${i}${i}${i}${i}${i}`,
-                callSign: 'AAAA',
-                flag: 'Any country',
-                grossTonnage: 'XXXXXX',
-                summerDWT: 'XXXXXX', /* В тоннах */
-                lengthOverallBreadthExtreme: `${450 + i} x ${62 + i} m`,
-                yearBuilt: 2020,
+                // "IMO": `${i}${i}${i}${i}${i}${i}${i}`,
+                "IMO": `${i}`.repeat(10),
+                "Name": 'SERVICESOFT',
+                "Vessel Type Generic": 'Cargo - XXX',
+                "Vessel Type Detailed": 'Container Ship',
+                "Status": 'Active',
+                "MMSI": `${i}`.repeat(10),
+                "Call Sign": 'AAAA',
+                "Flag": 'Any country',
+                // grossTonnage: 'XXXXXX',
+                // summerDWT: 'XXXXXX', /* В тоннах */
+                // lengthOverallBreadthExtreme: `${450 + i} x ${62 + i} m`,
+                "Year Built": 2020,
             })
         }
         return testFleet;

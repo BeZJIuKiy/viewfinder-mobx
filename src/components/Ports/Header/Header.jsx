@@ -55,9 +55,9 @@ export const Header = observer(() => {
 	const menuId = 'primary-search-account-menu';
 
 	const setPortNotes = () => {
-		data.forEach(({cameras: {data}}, portIndex) => {
+		data.forEach(({cameras}, portIndex) => {
 			let num = 0;
-			data.forEach(({events}) => {
+			cameras.forEach(({events}) => {
 				const temp = (events.filter(({newEvent}) => newEvent === true).length);
 				num += temp;
 			})
