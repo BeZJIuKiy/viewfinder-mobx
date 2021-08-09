@@ -57,18 +57,23 @@ class account {
 
     personalInformation = {
         avatar: userAvatar,
+        name: {
+            first: "Fernan",
+            last: "Magellan",
+        },
         firstName: "Fernan",
         secondName: "Magellan",
-        dateOfBirth: "20.11.1480",
-        sex: "male",
+        // sex: "male",
         company: "ServiceSoft",
-        status: "Gold"
-    };
-
-    contactInformation = {
+        // status: "Gold",
         phone: '+X (XXX) XXX-XX-XX',
         email: 'servise.soft@somemail.com',
     };
+
+    // contactInformation = {
+    //     phone: '+X (XXX) XXX-XX-XX',
+    //     email: 'servise.soft@somemail.com',
+    // };
 
     userData = {
         avatar: userAvatar,

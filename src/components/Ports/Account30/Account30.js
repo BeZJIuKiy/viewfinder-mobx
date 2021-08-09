@@ -4,11 +4,10 @@ import {Drawer} from "./Drawer";
 import {observer} from "mobx-react-lite";
 import account, {DEVICES, FLEET, PAYMENTS, PERSONAL_INFORMATION} from "../../../store/account";
 import {makeStyles} from "@material-ui/core/styles";
-import {PersonalInformation} from "./Items/PersonalInformation";
 import {Devices} from "./Items/Devices";
 import {Fleet} from "./Items/Fleet";
 import {Payments} from "./Items/Payments";
-import {PersonalInformation20} from "./Items/PersonalInformation20";
+import {PersonalInformation} from "./Items/PersonalInformation";
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -38,7 +37,7 @@ export const Account30 = observer(() => {
     const components = () => {
         switch (selectedItem) {
             case PERSONAL_INFORMATION: {
-                return <PersonalInformation20/>;
+                return <PersonalInformation/>;
             }
             case DEVICES: {
                 return <Devices/>;
