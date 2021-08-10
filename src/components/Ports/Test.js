@@ -7,7 +7,7 @@ export const Test = () => {
 	const allFleetFull = () => {
 		return account.myFleet.map((vessel) => ({
 				id: vessel.id,
-				"IMO": vessel.imo,
+				"IMO": String(vessel.imo),
 				"Name": vessel.name,
 				"Vessel Type Generic": vessel.vesselTypeGeneric,
 				"Vessel Type Detailed": vessel.vesselTypeDetailed,
@@ -45,11 +45,15 @@ export const Test = () => {
 		)
 	};
 
+	fetch('http://192.168.250.183:8080/api/boats')
+		.then(response => response.json())
+		.then(data => console.log(data));
+
 	return (
 		<div>
-			<AccountTable rowsData={allFleetFull()}/>
-			<AccountTable rowsData={allDevicesShort()}/>
-			<AccountTable rowsData={allFleetShort()}/>
+			{/*<AccountTable rowsData={allFleetFull()} title={"Fleet"} search={"IMO"}/>*/}
+			{/*<AccountTable rowsData={allDevicesShort()} title={"Devices"} search={"Camera Name"}/>*/}
+			{/*<AccountTable rowsData={allFleetShort()} title={"Fleet"} search={"IMO"}/>*/}
 		</div>
 	);
 };

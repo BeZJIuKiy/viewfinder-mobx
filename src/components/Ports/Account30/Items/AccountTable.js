@@ -23,6 +23,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditIcon from '@material-ui/icons/Edit';
 import {observer} from "mobx-react-lite";
 import {Search} from "./Search";
+import account from "../../../../store/account";
 
 function descendingComparator(a, b, orderBy) {
 	if (b[orderBy] < a[orderBy]) {
@@ -148,7 +149,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 			},
 	title: {
 		flex: '1 1 100%',
-		textAlign: "center",
+		textAlign: "right",
 	},
 	editIcons: {
 		display: 'flex'
@@ -172,7 +173,7 @@ const EnhancedTableToolbar = (props) => {
 			) : (
 				<Typography className={classes.title} variant="h6" id="tableTitle" component="div">
 					{/* Events - это заголовок таблицы */}
-					{/*MY FLEET*/}
+					{props.title}
 				</Typography>
 			)}
 
@@ -246,7 +247,7 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: theme.spacing(2),
 	},
 	table: {
-		minWidth: 750,
+		minWidth: 500,
 	},
 	visuallyHidden: {
 		border: 0,
@@ -261,7 +262,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export const AccountTable = observer(({rowsData}) => {
+export const AccountTable = observer(({rowsData, search, title, searchLabel, secretTitle}) => {
 	/* STYLES */
 	const classes = useStyles();
 
@@ -329,23 +330,19 @@ export const AccountTable = observer(({rowsData}) => {
 	}
 
 	/* VARS */
-	const rows = rowsData.map(d => {
-		const obj = {};
-		for (const key in d) {
-			obj[key] = d[key];
-		}
-		return obj;
-	});
+	console.log(account.searchQuery);
+	const isCurrentTable = account.searchQuery.data.length && secretTitle === account.searchQuery.secretTitle;
+	const rows = isCurrentTable ? account.searchQuery.data.map(d => d) : rowsData.map(d => d);
 	const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
 	return (
 		<div className={classes.root}>
 			<div className={classes.search}>
-				<Search/>
+				<Search data={rowsData} search={search} label={`Search ${searchLabel}`} secretTitle={secretTitle}/>
 			</div>
 
 			<Paper className={classes.paper}>
-				<EnhancedTableToolbar numSelected={selected.length}/>
+				<EnhancedTableToolbar numSelected={selected.length} title={title}/>
 				<TableContainer>
 					<Table
 						className={classes.table}

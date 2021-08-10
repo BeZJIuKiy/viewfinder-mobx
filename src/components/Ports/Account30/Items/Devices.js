@@ -102,6 +102,8 @@ import {FleetTable} from "../../Account/DataTable/FleetTable";
 import {DevicesTable} from "../../Account/DataTable/DevicesTable";
 import {SmallDevicesTable20} from "../../Account/DataTable/SmallFleetTable20";
 import {Search} from "./Search";
+import {AccountTable} from "./AccountTable";
+import ports from "../../../../store/ports";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -165,8 +167,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         marginTop: 15,
         alignItems: "center",
-
-        position: "relative",
     },
     avatar: {
         width: "12vw",
@@ -199,16 +199,6 @@ const useStyles = makeStyles((theme) => ({
     btn: {
         width: "5vw",
     },
-
-    search: {
-        display: "flex",
-
-        position: "absolute",
-
-        top: 4,
-        left: 5,
-        zIndex: 1,
-    },
 }));
 
 export const Devices = () => {
@@ -224,13 +214,29 @@ export const Devices = () => {
 
     const devicesTitle = DEVICES;
     const devicesSubtitle = "";
+    const allDevicesFull = () => {
+        const devices = [];
+        ports.data.forEach(({cameras}) => {
+            cameras.forEach(camera => {
+                devices.push({
+                    id: camera.id,
+                    "Country": camera.country,
+                    "City": camera.city,
+                    "Camera Name": camera.description,
+                    "Type": camera.type,
+                    "PTZ/STATIC": camera.move,
+                    "Viewing Angle": camera.viewingAngle,
+                    "Coordinates": `${camera.coordinates[0]}°, ${camera.coordinates[1]}°`
+                });
+            })
+        })
+
+        return devices;
+    };
     const devicesActionList = () => {
         return (
             <div className={classes.content}>
-                <DevicesTable/>
-                <div className={classes.search}>
-                    <Search label={"Search Devices"} />
-                </div>
+                <AccountTable secretTitle={"Devices: full Devices"} rowsData={allDevicesFull()} search={"Camera Name"} searchLabel={"Devices Name"}/>
             </div>
         )
     };

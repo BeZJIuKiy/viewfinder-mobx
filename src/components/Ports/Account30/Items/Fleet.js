@@ -15,6 +15,7 @@ import {FleetTable} from "../../Account/DataTable/FleetTable";
 import {DevicesTable} from "../../Account/DataTable/DevicesTable";
 import {SmallDevicesTable20} from "../../Account/DataTable/SmallFleetTable20";
 import {Search} from "./Search";
+import {AccountTable} from "./AccountTable";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -78,8 +79,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "column",
         marginTop: 15,
         alignItems: "center",
-
-        position: "relative",
     },
     avatar: {
         width: "12vw",
@@ -112,16 +111,6 @@ const useStyles = makeStyles((theme) => ({
     btn: {
         width: "5vw",
     },
-
-    search: {
-        display: "flex",
-
-        position: "absolute",
-
-        top: 4,
-        left: 5,
-        zIndex: 1,
-    },
 }));
 
 export const Fleet = () => {
@@ -137,15 +126,26 @@ export const Fleet = () => {
 
     const fleetTitle = FLEET;
     const fleetSubtitle = "";
+    const allFleetFull = () => {
+        return account.myFleet.map((vessel) => ({
+                id: vessel.id,
+                "IMO": vessel.imo,
+                "Name": vessel.name,
+                "Vessel Type Generic": vessel.vesselTypeGeneric,
+                "Vessel Type Detailed": vessel.vesselTypeDetailed,
+                "Status": vessel.status,
+                "MMSI": vessel.mmsi,
+                "Call Sign": vessel.callSign,
+                "Flag": vessel.flag,
+                "Year Built": vessel.yearBuilt
+            })
+        )
+    };
     // const fleetSubtitle = "Here you can change information of your fleet";
     const fleetActionList = () => {
         return (
             <div className={classes.content}>
-                <FleetTable/>
-
-                <div className={classes.search}>
-                    <Search label={"Search Fleet"} />
-                </div>
+                <AccountTable secretTitle={"Fleet: full Fleet"} rowsData={allFleetFull()} search={`IMO`} searchLabel={`Fleet IMO`}/>
             </div>
         )
     };

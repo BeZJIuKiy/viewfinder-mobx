@@ -22,6 +22,8 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {observer} from "mobx-react-lite";
+import {AccountTable} from "./AccountTable";
+import ports from "../../../../store/ports";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -177,7 +179,6 @@ export const PersonalInformation = observer(() => {
 
 	/* STORE */
 	const {avatar, name, firstName, secondName, company, status, phone, email} = account.personalInformation;
-	// const {avatar, firstName, secondName, company, status, phone, email} = account.personalInformation;
 
 	/* HOOKS */
 	const [expanded, setExpanded] = React.useState(false);
@@ -282,92 +283,6 @@ export const PersonalInformation = observer(() => {
 				<img className={classes.avatar} src={avatar} alt="user avatar"/>
 
 				{persInfoAccordion()}
-				{/*<Accordion expanded={expanded === 'Name'} onChange={handleChange('Name')}>*/}
-				{/*	<AccordionSummary*/}
-				{/*		expandIcon={<ExpandMoreIcon/>}*/}
-				{/*		aria-controls="panel1bh-content"*/}
-				{/*		id="panel1bh-header"*/}
-				{/*	>*/}
-				{/*		<Typography className={classes.heading}>Name</Typography>*/}
-				{/*		<Typography className={classes.secondaryHeading}>{`${firstName} ${secondName}`}</Typography>*/}
-				{/*	</AccordionSummary>*/}
-
-				{/*	<AccordionDetails>*/}
-				{/*		<Typography>*/}
-				{/*			Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget*/}
-				{/*			maximus est, id dignissim quam.*/}
-				{/*		</Typography>*/}
-				{/*	</AccordionDetails>*/}
-				{/*</Accordion>*/}
-				{/*<Accordion expanded={expanded === "Company"} onChange={handleChange("Company")}>*/}
-				{/*	<AccordionSummary*/}
-				{/*		expandIcon={<ExpandMoreIcon/>}*/}
-				{/*		aria-controls="panel2bh-content"*/}
-				{/*		id="panel2bh-header"*/}
-				{/*	>*/}
-				{/*		<Typography className={classes.heading}>Company</Typography>*/}
-				{/*		<Typography className={classes.secondaryHeading}>{`${company}`}</Typography>*/}
-				{/*	</AccordionSummary>*/}
-
-				{/*	<AccordionDetails>*/}
-				{/*		<Typography>*/}
-				{/*			Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus, varius pulvinar*/}
-				{/*			diam eros in elit. Pellentesque convallis laoreet laoreet.*/}
-				{/*		</Typography>*/}
-				{/*	</AccordionDetails>*/}
-				{/*</Accordion>*/}
-				{/*<Accordion expanded={expanded === "Account status"} onChange={handleChange("Account status")}>*/}
-				{/*	<AccordionSummary*/}
-				{/*		expandIcon={<ExpandMoreIcon/>}*/}
-				{/*		aria-controls="panel3bh-content"*/}
-				{/*		id="panel3bh-header"*/}
-				{/*	>*/}
-				{/*		<Typography className={classes.heading}>Account status</Typography>*/}
-				{/*		<Typography className={classes.secondaryHeading}>{`${status}`}</Typography>*/}
-				{/*	</AccordionSummary>*/}
-
-				{/*	<AccordionDetails>*/}
-				{/*		<Typography>*/}
-				{/*			Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,*/}
-				{/*			vitae egestas augue. Duis vel est augue.*/}
-				{/*		</Typography>*/}
-				{/*	</AccordionDetails>*/}
-				{/*</Accordion>*/}
-				{/*<Accordion expanded={expanded === "Phone"} onChange={handleChange("Phone")}>*/}
-				{/*	<AccordionSummary*/}
-				{/*		expandIcon={<ExpandMoreIcon/>}*/}
-				{/*		aria-controls="panel3bh-content"*/}
-				{/*		id="panel3bh-header"*/}
-				{/*	>*/}
-				{/*		<Typography className={classes.heading}>Phone</Typography>*/}
-				{/*		<Typography className={classes.secondaryHeading}>{`${phone}`}</Typography>*/}
-				{/*	</AccordionSummary>*/}
-
-				{/*	<AccordionDetails>*/}
-				{/*		<Typography>*/}
-				{/*			Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,*/}
-				{/*			vitae egestas augue. Duis vel est augue.*/}
-				{/*		</Typography>*/}
-				{/*	</AccordionDetails>*/}
-				{/*</Accordion>*/}
-				{/*<Accordion expanded={expanded === "Email"} onChange={handleChange("Email")}>*/}
-				{/*	<AccordionSummary*/}
-				{/*		expandIcon={<ExpandMoreIcon/>}*/}
-				{/*		aria-controls="panel3bh-content"*/}
-				{/*		id="panel3bh-header"*/}
-				{/*	>*/}
-				{/*		<Typography className={classes.heading}>Email</Typography>*/}
-				{/*		<Typography className={classes.secondaryHeading}>{`${email}`}</Typography>*/}
-				{/*	</AccordionSummary>*/}
-
-				{/*	<AccordionDetails>*/}
-				{/*		<Typography>*/}
-				{/*			Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,*/}
-				{/*			vitae egestas augue. Duis vel est augue.*/}
-				{/*		</Typography>*/}
-				{/*	</AccordionDetails>*/}
-				{/*</Accordion>*/}
-
 
 				<Accordion expanded={expanded === "Quick pay"} onChange={handleChange("Quick pay")}>
 					<AccordionSummary
@@ -527,20 +442,44 @@ export const PersonalInformation = observer(() => {
 
 	const devicesTitle = DEVICES;
 	const devicesSubtitle = "";
+	const allDevicesShort = () => {
+		const devices = [];
+		ports.data.forEach(({cameras}) => {
+			cameras.forEach(camera => {
+				devices.push({
+					id: camera.id,
+					"Country": camera.country,
+					"City": camera.city,
+					"Camera Name": camera.description,
+				});
+			})
+		})
+
+		return devices;
+	};
 	const devicesActionList = () => {
 		return (
 			<div className={`${classes.content} right`}>
-				<DevicesTable/>
+				<AccountTable secretTitle={"Personal information: short Devices"} rowsData={allDevicesShort()} search={"Camera Name"} searchLabel={"Devices Name"}/>
 			</div>
 		)
 	};
 
 	const fleetTitle = FLEET;
 	const fleetSubtitle = "";
+	const allFleetShort = () => {
+		return account.myFleet.map((vessel) => ({
+				id: vessel.id,
+				"IMO": vessel.imo,
+				"Name": vessel.name,
+				"Vessel Type Detailed": vessel.vesselTypeDetailed,
+			})
+		)
+	};
 	const fleetActionList = () => {
 		return (
 			<div className={`${classes.content} right`}>
-				<SmallDevicesTable20/>
+				<AccountTable secretTitle={"Personal information: short Fleet"} rowsData={allFleetShort()} search={"IMO"} searchLabel={"Fleet IMO"}/>
 			</div>
 		)
 	};

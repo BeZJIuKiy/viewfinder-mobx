@@ -70,19 +70,13 @@ class account {
         email: 'servise.soft@somemail.com',
     };
 
-    userData = {
-        avatar: userAvatar,
-        name: '',
-        company: '',
-        phone: '+X (XXX) XXX-XX-XX',
-        email: 'servise.soft@somemail.com',
-        status: 'Gold',
+    myFleet = [];
+
+    searchQuery = {
+        secretTitle: "",
+        data: [],
     };
 
-    information = {};
-    statistic = {};
-
-    myFleet = [];
 
     constructor() {
         makeAutoObservable(this);
@@ -99,7 +93,7 @@ class account {
                 vesselTypeGeneric: 'Cargo - XXX',
                 vesselTypeDetailed: 'Container Ship',
                 status: 'Active',
-                mmsi: `${i}`.repeat(10),
+                mmsi: `${i}`.repeat(i+1),
                 callSign: 'AAAA',
                 flag: 'Any country',
                 // grossTonnage: 'XXXXXX',
@@ -114,6 +108,11 @@ class account {
     setSelectedItem = (index) => {
         this.selectedItem = this.drawerItems[index].title;
         this.selectedItemIndex = index;
+    }
+
+    setSearchQuery = (secretTitle, data) => {
+        this.searchQuery.secretTitle = secretTitle;
+        this.searchQuery.data = data;
     }
 }
 
