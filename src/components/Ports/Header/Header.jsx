@@ -66,7 +66,7 @@ export const Header = observer(() => {
 	};
 
 	const setCameraNotes = () => {
-		port.cameras.data.forEach(({events}, i) => {
+		port.cameras.forEach(({events}, i) => {
 			const notif = (events.filter(({newEvent}) => newEvent)).length;
 			header.addNewCamerasNotifications(i, notif);
 		})

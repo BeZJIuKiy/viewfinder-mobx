@@ -108,7 +108,6 @@ EnhancedTableHead.propTypes = {
 	orderBy: PropTypes.string.isRequired,
 	rowCount: PropTypes.number.isRequired,
 };
-
 const useToolbarStyles = makeStyles((theme) => ({
 	root: {
 		paddingLeft: theme.spacing(2),
@@ -131,7 +130,6 @@ const useToolbarStyles = makeStyles((theme) => ({
 		display: 'flex'
 	},
 }));
-
 const EnhancedTableToolbar = (props) => {
 	const classes = useToolbarStyles();
 	const {numSelected} = props;
@@ -233,11 +231,7 @@ export const DevicesTable = observer(() => {
 	const rows = [];
 	const {data} = ports;
 
-	data.map(d => {
-		d.cameras.data.map(t => {
-			rows.push(t)
-		})
-	})
+	data.forEach(({cameras}) => cameras.forEach(t => rows.push(t)));
 
 	const classes = useStyles();
 	const [order, setOrder] = React.useState('asc');

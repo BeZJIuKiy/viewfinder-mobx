@@ -23,30 +23,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const SimpleList = observer(() => {
+	const classes = useStyles();
+	const history = useHistory();
+
+
 	const {data, portIcon, cameraIcon, selectedObjects} = ports;
 	const {portsNewNote, camerasNewNote} = header;
+
 
 	const [allData, setAllData] = useState(data)
 	const [notes, setNotes] = useState(data.map(() => 0));
 	const [icon, setIcon] = useState();
 
-	const classes = useStyles();
-	const history = useHistory();
-
-	const changeDataPorts = (i) => {
-		ports.setSelectedPort(i);
-	}
-
-	const changeDataCamera = (i) => {
-		ports.setSelectedCamera(i);
-		history.push('/events');
-	}
-
-	const setData = (data, note, icon) => {
-		setAllData(data);
-		setNotes(note);
-		setIcon(icon);
-	}
 
 	useEffect(() => {
 		const {id, cameras} = selectedObjects.port;
@@ -56,6 +44,21 @@ export const SimpleList = observer(() => {
 			? setData(cameras, camerasNewNote, cameraIcon.drawer)
 			: setData(data, portsNewNote, portIcon.drawer);
 	}, [selectedObjects.port]);
+
+
+	const changeDataPorts = (i) => {
+		ports.setSelectedPort(i);
+	}
+	const changeDataCamera = (i) => {
+		ports.setSelectedCamera(i);
+		history.push('/events');
+	}
+	const setData = (data, note, icon) => {
+		setAllData(data);
+		setNotes(note);
+		setIcon(icon);
+	}
+
 
 	const camData = allData.map(({id, link, description}, i) => {
 		const portId = Number.isInteger(selectedObjects.port.id);

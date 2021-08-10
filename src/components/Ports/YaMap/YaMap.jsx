@@ -4,13 +4,12 @@ import './yaMap.css';
 import ports from "../../../store/ports";
 import {observer} from "mobx-react-lite";
 
-const YaMap = observer((props) => {
+const YaMap = observer(({isVisible, style}) => {
 	const {data, portIcon, cameraIcon, selectedObjects} = ports;
+
 	const [allData, setAllData] = useState(data);
 	const [balContent, setBalContent] = useState('');
 	const [mapCenter, setMapCenter] = useState();
-
-	const mapData = (center, zoom, controls) => setMapCenter({center, zoom, controls});
 
 	useEffect(() => {
 		const portId = Number.isInteger(selectedObjects.port.id);
@@ -23,13 +22,15 @@ const YaMap = observer((props) => {
 
 		if (portId) {
 			setAllData(selectedObjects.port.cameras);
-			mapData(selectedObjects.port.coordinates, selectedObjects.port.cameras[0].zoom, controls)
+			console.log(selectedObjects.port)
+			mapData(selectedObjects.port.coordinates, selectedObjects.port.cameras[0].zoom, controls);
 		} else {
 			setAllData(data);
-			mapData(data[0].cameras.coordinates, data[0].zoom, controls);
+			mapData(data[0].cameras[0].coordinates, data[0].zoom, controls);
 		}
 	}, [selectedObjects.port]);
 
+	const mapData = (center, zoom, controls) => setMapCenter({center, zoom, controls});
 	const clickOnCamera = (camera, i) => {
 		ports.setSelectedCamera(i);
 
@@ -58,7 +59,7 @@ const YaMap = observer((props) => {
 		`);
 	}
 
-	const porstCoord = allData.map((c, i) => {
+	const portsCoordinates = allData.map((c, i) => {
 		return (
 			<Placemark
 				onClick={() => (!c.link) ? ports.setSelectedPort(i) : clickOnCamera(c, i)}
@@ -78,7 +79,7 @@ const YaMap = observer((props) => {
 	});
 
 	return (
-		<div className={`yamap ${props.isVisible ? 'show' : 'hide'}`} style={{...props.style}}>
+		<div className={`yamap ${isVisible ? 'show' : 'hide'}`} style={{...style}}>
 			<YMaps query={{lang: "en_US"}}>
 				<Map className='yamap__item'
 				     state={mapCenter}
@@ -89,7 +90,7 @@ const YaMap = observer((props) => {
 					     'control.RulerControl',
 				     ]}
 				>
-					{porstCoord}
+					{portsCoordinates}
 				</Map>
 
 			</YMaps>

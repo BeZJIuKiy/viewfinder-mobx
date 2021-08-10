@@ -78,10 +78,9 @@ export const Events20 = observer(() => {
             shipImage: {isVisible: imageVisible, id: imageId},
         },
     } = ports;
-
     const {camerasNewNote} = header;
 
-    if (!Number.isInteger(camera.id)) ports.setSelectedCamera(0);
+
 
     const [currentBoat, setCurrentBoat] = useState('');
     const [otherCameras, setOtherCameras] = useState();
@@ -93,13 +92,11 @@ export const Events20 = observer(() => {
         ports.setVisibleSelectedImage(false);
         ports.setImageId(-1);
     }, [event]);
-
     useEffect(() => {
         setSelectedEvent(findImageId())
     }, [imageId]);
-
     useEffect(() => {
-        setOtherCameras(port.cameras.data.map(({id, description, events, link}, i) => {
+        setOtherCameras(port.cameras.map(({id, description, events, link}, i) => {
             if (id !== camera.id) {
                 const notifications = camerasNewNote[i]
                     ? (
@@ -139,11 +136,9 @@ export const Events20 = observer(() => {
             }
         }));
     }, [camera]);
-
     useEffect(() => {
         new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
     }, [camera, canvasState.isCreatePolygon, canvasState.isVisibleCameraCanvas]);
-
     useEffect(() => {
         switch (canvasState.zoneAction) {
             case SET_NAME: {
@@ -194,7 +189,6 @@ export const Events20 = observer(() => {
         const index = camera.events.findIndex(event => event.id === imageId);
         return camera.events[index > -1 ? index : 0];
     }
-
     const changeSelectedImg = (num) => {
         const id = selectedEvent.id;
         const cameraEvent = currentBoat
@@ -208,16 +202,13 @@ export const Events20 = observer(() => {
         setSelectedEvent(cameraEvent[imgNum]);
         ports.setImageId(cameraEvent[imgNum].id);
     }
-
     const otherCameraClick = (i) => {
         ports.setSelectedCamera(i);
     }
-
     const closeImage = () => {
         ports.setVisibleSelectedImage(false);
         ports.setImageId(-1);
     }
-
     const createChangePolygon = () => {
         canvasState.setCreatePolygon(true);
         canvasState.tempPolygons = canvasState.test.get(camera.id);
@@ -238,17 +229,18 @@ export const Events20 = observer(() => {
         }
         new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
     }
-
     const saveNewPolygonsData = () => {
         canvasState.setCreatePolygon(false);
         canvasState.setZoneAction("");
     }
-
     const deleteNewPolygonsData = () => {
         canvasState.test.set(camera.id, canvasState.tempPolygons);
         canvasState.setCreatePolygon(false);
         canvasState.setZoneAction("");
     }
+
+
+    if (!Number.isInteger(camera.id)) ports.setSelectedCamera(0);
 
     const visible = !!camera.events?.length ? "show" : "hide";
     const eventsTitle = !!camera.events?.length ? "Detected Objects" : "No Detected Objects";

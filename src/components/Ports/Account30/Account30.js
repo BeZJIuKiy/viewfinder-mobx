@@ -32,7 +32,6 @@ export const Account30 = observer(() => {
     const classes = useStyles();
 
     const {selectedItem} = account;
-    if (!!!selectedItem) account.setSelectedItem(0);
 
     const components = () => {
         switch (selectedItem) {
@@ -50,6 +49,8 @@ export const Account30 = observer(() => {
             }
         }
     }
+
+    if (!!!selectedItem) account.setSelectedItem(0);
 
     return (
         <div className={classes.main}>
