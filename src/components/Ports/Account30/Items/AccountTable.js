@@ -21,7 +21,6 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EditIcon from '@material-ui/icons/Edit';
-import account from "../../../../store/account";
 import {observer} from "mobx-react-lite";
 import {Search} from "./Search";
 
@@ -51,22 +50,22 @@ function stableSort(array, comparator) {
 	return stabilizedThis.map((el) => el[0]);
 }
 
-const headCells = [
-	{id: 'imo', numeric: false, disablePadding: true, label: 'IMO'},
-	{id: 'name', numeric: false, disablePadding: false, label: 'Name'},
-	{id: 'vesselTypeGeneric', numeric: false, disablePadding: false, label: 'Vessel Type Generic'},
-	{id: 'vesselTypeDetailed', numeric: false, disablePadding: false, label: 'Vessel Type Detailed'},
-	{id: 'status', numeric: false, disablePadding: false, label: 'Status'},
-	{id: 'mmsi', numeric: false, disablePadding: false, label: 'MMSI'},
-	{id: 'callSign', numeric: false, disablePadding: false, label: 'Call Sign'},
-	{id: 'flag', numeric: false, disablePadding: false, label: 'Flag'},
-	// { id: 'grossTonnage', numeric: false, disablePadding: false, label: 'grossTonnage' },
-	// { id: 'summerDWT', numeric: false, disablePadding: false, label: 'summerDWT' },
-	// { id: 'lengthOverallBreadthExtreme', numeric: false, disablePadding: false, label: 'lengthOverallBreadthExtreme' },
-	{id: 'yearBuilt', numeric: true, disablePadding: false, label: 'Year Built'},
-];
+// const headCells = [
+// 	{id: 'imo', numeric: false, disablePadding: true, label: 'IMO'},
+// 	{id: 'name', numeric: false, disablePadding: false, label: 'Name'},
+// 	{id: 'vesselTypeGeneric', numeric: false, disablePadding: false, label: 'Vessel Type Generic'},
+// 	{id: 'vesselTypeDetailed', numeric: false, disablePadding: false, label: 'Vessel Type Detailed'},
+// 	{id: 'status', numeric: false, disablePadding: false, label: 'Status'},
+// 	{id: 'mmsi', numeric: false, disablePadding: false, label: 'MMSI'},
+// 	{id: 'callSign', numeric: false, disablePadding: false, label: 'Call Sign'},
+// 	{id: 'flag', numeric: false, disablePadding: false, label: 'Flag'},
+// 	// { id: 'grossTonnage', numeric: false, disablePadding: false, label: 'grossTonnage' },
+// 	// { id: 'summerDWT', numeric: false, disablePadding: false, label: 'summerDWT' },
+// 	// { id: 'lengthOverallBreadthExtreme', numeric: false, disablePadding: false, label: 'lengthOverallBreadthExtreme' },
+// 	{id: 'yearBuilt', numeric: true, disablePadding: false, label: 'Year Built'},
+// ];
 
-const headCellsTest = (data) => {
+const headCells = (data) => {
 	if (data.length === 0) return;
 	const arr = [];
 
@@ -96,7 +95,7 @@ function EnhancedTableHead(props) {
 						inputProps={{'aria-label': 'select all desserts'}}
 					/>
 				</TableCell>
-				{headCellsTest(headData).map((headCell) => (
+				{headCells(headData).map((headCell) => (
 					<TableCell
 						key={headCell.id}
 						align={headCell.numeric ? 'right' : 'left'}
@@ -149,6 +148,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 			},
 	title: {
 		flex: '1 1 100%',
+		textAlign: "center",
 	},
 	editIcons: {
 		display: 'flex'

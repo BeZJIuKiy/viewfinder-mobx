@@ -94,19 +94,18 @@ class account {
         for (let i = 0; i < 10; ++i) {
             testFleet.push({
                 id: this.counter.fleetId++,
-                // "IMO": `${i}${i}${i}${i}${i}${i}${i}`,
-                "IMO": `${i}`.repeat(10),
-                "Name": 'SERVICESOFT',
-                "Vessel Type Generic": 'Cargo - XXX',
-                "Vessel Type Detailed": 'Container Ship',
-                "Status": 'Active',
-                "MMSI": `${i}`.repeat(10),
-                "Call Sign": 'AAAA',
-                "Flag": 'Any country',
+                imo: `${i}`.repeat(10),
+                name: 'SERVICESOFT',
+                vesselTypeGeneric: 'Cargo - XXX',
+                vesselTypeDetailed: 'Container Ship',
+                status: 'Active',
+                mmsi: `${i}`.repeat(10),
+                callSign: 'AAAA',
+                flag: 'Any country',
                 // grossTonnage: 'XXXXXX',
                 // summerDWT: 'XXXXXX', /* В тоннах */
                 // lengthOverallBreadthExtreme: `${450 + i} x ${62 + i} m`,
-                "Year Built": 2020,
+                yearBuilt: 2020,
             })
         }
         return testFleet;
