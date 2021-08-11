@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
 
-        fontFamily: "Roboto",
+        // fontFamily: "Roboto",
 
         position: "relative",
     },

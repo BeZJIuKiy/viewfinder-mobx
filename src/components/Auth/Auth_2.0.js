@@ -1,6 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import backgroundImage from "./images/backgroundNew.jpg"
+import backgroundImage320px from "./images/background320px.jpg"
 import Button from "@material-ui/core/Button";
 import auth from "../../store/auth";
 import {Form, Formik} from "formik";
@@ -8,205 +9,253 @@ import {useHistory} from "react-router-dom";
 import {ContactUs} from "./ContactUs";
 
 const useStyles = makeStyles((theme) => ({
-    main: {
-        width: "100wh",
-        height: "100vh",
+	main: {
+		width: "100wh",
+		height: "100vh",
 
-        display: "flex",
+		display: "flex",
 
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
+		backgroundImage: `url(${backgroundImage})`,
+		backgroundPosition: 'center',
+		backgroundSize: 'cover',
+		backgroundRepeat: 'no-repeat',
 
-        fontFamily: "Roboto",
+		// fontFamily: `"Bitter", serif`,
 
-        position: "relative",
-    },
+		position: "relative",
 
-    mainSubstrateLeft: {
-        width: "50%",
-        height: "100%",
+		'@media(max-width: 425px)': {
+			backgroundImage: `url(${backgroundImage320px})`,
+			backgroundPosition: 'center',
+			backgroundSize: 'cover',
+			backgroundRepeat: 'no-repeat',
+		}
+	},
 
-        backgroundColor: "#333",
-        opacity: 0.95,
+	mainSubstrateLeft: {
+		width: "50%",
+		height: "100%",
 
-        position: "absolute",
-        top: 0,
-        left: 0,
-        zIndex: 1,
-    },
+		backgroundColor: "#333",
+		opacity: 0.7,
 
-    mainSubstrateRight: {
-        width: "50%",
-        height: "100%",
+		position: "absolute",
+		top: 0,
+		left: 0,
+		zIndex: 1,
 
-        backgroundColor: "#333",
-        opacity: 0.2,
+		'@media(max-width: 425px)': {
+			width: "100%",
+		}
+	},
 
-        position: "absolute",
-        top: 0,
-        right: 0,
-        zIndex: 1,
-    },
+	mainTitle: {
+		color: "white",
+		fontSize: "4vw",
+		fontWeight: 300,
+		userSelect: "none",
+		// textTransform: "uppercase",
+		// marginBottom: "1vw",
 
-    mainTitle: {
-        color: "white",
-        fontSize: "4vw",
-        fontWeight: 500,
-        userSelect: "none",
-        // marginBottom: "1vw",
-    },
+		'@media(max-width: 425px)': {
+			fontSize: "14vw",
+		}
+	},
 
-    mainItem: {
-        width: "50%",
-        textAlign: "center",
+	mainItem: {
+		width: "50%",
+		textAlign: "center",
 
-        position: "absolute",
-        top: "50%",
-        left: "25%",
-        transform: "translate(-50%, -25%)",
-        zIndex: 2,
-    },
+		position: "absolute",
+		top: "50%",
+		left: "25%",
+		transform: "translate(-50%, -25%)",
+		zIndex: 2,
 
-    mainForm: {
-        display: "flex",
-        flexDirection: "column",
-        // height: "80%",
-        justifyContent: "center",
-        alignItems: "center",
+		'@media(max-width: 425px)': {
+			width: "100%",
+			top: "45%",
+			left: "50%",
+			transform: "translate(-50%, -50%)",
+			zIndex: 1,
+		}
+	},
 
-        position: "relative",
-    },
+	mainForm: {
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center",
 
-    mainFormBorderSubstrate: {
-        width: "40%",
-        height: "100%",
-        padding: "10px 30px",
-        borderRadius: 5,
+		position: "relative",
+	},
 
-        backgroundColor: "#555",
-        opacity: 0.7,
+	mainFormBorder: {
+		width: "45%",
+		color: "white",
 
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        zIndex: -1,
+		padding: "10px 30px",
 
-        transform: "translate(-50%, -50%)",
-    },
+		'@media(max-width: 768px)': {
+			width: "38vw",
+		},
 
-    mainFormBorder: {
-        width: "50%",
+		'@media(max-width: 630px)': {
+			width: "43vw",
+		},
 
-        // backgroundColor: "#444",
-        // opacity: 0.7,
+		'@media(max-width: 425px)': {
+			width: "90vw",
+		},
+	},
 
-        // borderRadius: 5,
-        color: "white",
+	mainFormText: {
+		marginBottom: "6%",
+		fontSize: "1.2vw",
 
-        padding: "10px 30px",
-    },
+		'@media(max-width: 425px)': {
+			fontSize: "4vw",
+		}
+	},
 
-    mainFormTitle: {
-        fontSize: "2.5vw",
-        textAlign: "left",
-    },
+	mainFormBtn: {
+		width: "100%",
+		display: "flex",
+		justifyContent: "space-around",
 
-    mainFormText: {
-        marginBottom: "6%",
-        fontSize: "1.2vw",
-    },
+		marginTop: 10,
+	},
 
-    mainFormBtn: {
-        marginTop: 10,
-        display: "flex",
-        justifyContent: "space-around",
-    },
+	btn: {
+		width: "8vw",
+		fontSize: "1.3vw",
+		fontFamily: `"Quicksand", sans-serif`,
+		fontWeight: 500,
+		color: "#ddd",
+		borderColor: "none",
+
+		"&.demo": {
+			backgroundColor: "#9e2b4b",
+
+			"&:hover": {
+				backgroundColor: "#e22157",
+			}
+		},
+
+		"&.login": {
+			backgroundColor: "#3d4772",
+
+			"&:hover": {
+				backgroundColor: "#374fb9",
+			}
+		},
+
+		'@media(max-width: 768px)': {
+			width: "15vw",
+			maxWidth: "100px",
+			fontSize: "2vw",
+		},
+
+		'@media(max-width: 425px)': {
+			width: "35vw",
+			maxWidth: "150px",
+			fontSize: "5vw",
+		},
+
+		'@media(max-width: 320px)': {
+			width: "32vw",
+			maxWidth: "150px",
+			fontSize: "5vw",
+		},
+	},
 }))
 
 export const Auth_2_0 = () => {
-        const classes = useStyles();
-        const history = useHistory();
+		const classes = useStyles();
+		const history = useHistory();
 
-        const sendData = async (values) => {
-            const url = 'http://localhost:8000/api/auth/sign_in';
+		const sendData = async (values) => {
+			const url = 'http://localhost:8000/api/auth/sign_in';
 
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    body: JSON.stringify(values),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
+			try {
+				const response = await fetch(url, {
+					method: 'POST',
+					body: JSON.stringify(values),
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				});
 
-                const json = await response.json();
+				const json = await response.json();
 
-                console.log('Успешно: ', JSON.stringify(json));
-            } catch (error) {
-                console.log('Ошибка');
-                // console.error('Ошибка: ', error);
-            }
-        }
+				console.log('Успешно: ', JSON.stringify(json));
+			} catch (error) {
+				console.log('Ошибка');
+				// console.error('Ошибка: ', error);
+			}
+		}
 
-        const demoBtn = () =>
-            <Formik
-                initialValues={auth.demoUser}
-                onSubmit={(values, {setSubmitting}) => {
-                    sendData(values);
-                    history.push('/ports');
-                    setSubmitting(false);
-                }}
-            >
-                {({isSubmitting}) => (
-                    <Form>
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            style={{fontSize: "1.3vw", width: "10vw"}}
-                            type={"submit"}
-                            disabled={isSubmitting}
-                        >
-                            DEMO
-                        </Button>
-                    </Form>
-                )}
-            </Formik>
+		const demoBtn = () => {
+			return (
+				<Formik
+					initialValues={auth.demoUser}
+					onSubmit={(values, {setSubmitting}) => {
+						sendData(values);
+						history.push('/ports');
+						setSubmitting(false);
+					}}
+				>
+					{({isSubmitting}) => (
+						<Form>
+							<Button
+								className={`${classes.btn} demo`}
+								variant="outlined"
+								color="secondary"
+								type={"submit"}
+								disabled={isSubmitting}
+							>
+								DEMO
+							</Button>
+						</Form>
+					)}
+				</Formik>
+			)
+		}
+		const goToSignIn = () => {
+			return (
+				<Button
+					className={`${classes.btn} login`}
+					// variant="contained"
+					variant="outlined"
+					color="primary"
+					onClick={() => history.push('/signin')}
+				>
+					Log in
+				</Button>
+			)
+		}
 
-        const goToSignIn = () =>
-            <Button
-                variant="contained"
-                color="primary"
-                style={{fontSize: "1.3vw", width: "10vw"}}
-                onClick={() => history.push('/signin')}
-            >
-                Log in
-            </Button>
+		return (
+			<div className={classes.main}>
+				<div className={classes.mainSubstrateLeft}/>
 
+				<ContactUs/>
 
-        return (
-            <div className={classes.main}>
-                <div className={classes.mainSubstrateLeft}></div>
-                <ContactUs/>
-                <div className={classes.mainItem}>
-                    <div className={classes.mainTitle}>ViewFinder</div>
-                    <div className={classes.mainForm}>
-                        {/*<div className={classes.mainFormBorderSubstrate}></div>*/}
-                        <div className={classes.mainFormBorder}>
-                            {/*<div className={classes.mainFormTitle}>ViewFinder</div>*/}
-                            <div className={classes.mainFormText}>текст текст текст много текста</div>
-                            <div className={classes.mainFormBtn}>
-                                {demoBtn()}
-                                {goToSignIn()}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+				<div className={classes.mainItem}>
+					<div className={classes.mainTitle}>ViewFinder</div>
 
-                <div className={classes.mainSubstrateRight}></div>
-                <div className={classes.mainItem}></div>
-            </div>
-        );
-    }
+					<div className={classes.mainForm}>
+						<div className={classes.mainFormBorder}>
+							<div className={classes.mainFormText}></div>
+
+							<div className={classes.mainFormBtn}>
+								{demoBtn()}
+								{goToSignIn()}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
 ;

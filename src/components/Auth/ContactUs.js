@@ -3,78 +3,170 @@ import EmailIcon from '@material-ui/icons/Email';
 import TelegramIcon from '@material-ui/icons/Telegram';
 import {makeStyles} from "@material-ui/core/styles";
 import React from "react";
+import Popover from "@material-ui/core/Popover";
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
-    contactUs: {
-        display: "flex",
+	root: {
+		backgroundColor: "transparent",
+		boxShadow: "none",
+	},
 
-        position: "absolute",
-        top: 0,
-        left: "50%",
-        zIndex: 3,
+	contactUs: {
+		display: "flex",
 
-        transform: "translate(-100%, 10%)",
-    },
+		position: "absolute",
+		top: "90%",
+		left: "25%",
+		zIndex: 3,
 
-    icons: {
-        fontSize: "2vw",
-        transition: "color 0.2s, background-color 0.2s",
-        margin: theme.spacing(0.5),
+		transform: "translate(-50%, 0)",
 
-        "&.telegram": {
-            color: "white",
-            borderRadius: "50%",
-            backgroundColor: "#0088dd",
-            paddingRight: "5%",
+		'@media(max-width: 425px)': {
+			// flexDirection: "column",
+			top: "80%",
+			left: "50%",
 
-            "&:hover": {
-                color: "#0088dd",
-                backgroundColor: "white",
-            },
-        },
+			transform: "translate(-50%, 0%)",
+		},
 
-        "&.phone": {
-            color: "white",
-            borderRadius: "50%",
-            backgroundColor: "#0d7c04",
-            padding: 5,
+		'@media(max-width: 320px)': {},
+	},
 
-            "&:hover": {
-                color: "#0d7c04",
-                backgroundColor: "white",
-            },
-        },
+	icons: {
+		fontSize: "2vw",
+		transition: "color 0.2s, background-color 0.2s",
+		margin: theme.spacing(0.5),
 
-        "&.email": {
-            color: "white",
-            borderRadius: "50%",
-            backgroundColor: "#d33738",
-            padding: 5,
+		"&.telegram": {
+			color: "white",
+			borderRadius: "50%",
+			backgroundColor: "#777",
+			paddingRight: "5%",
 
-            "&:hover": {
-                color: "#d33738",
-                backgroundColor: "white",
-            },
-        },
-    }
+			"&:hover": {
+				color: "white",
+				backgroundColor: "#0088dd",
+			},
+		},
+		"&.phone": {
+			color: "white",
+			borderRadius: "50%",
+			backgroundColor: "#777",
+			padding: 5,
+
+			"&:hover": {
+				color: "white",
+				backgroundColor: "#0d7c04",
+			},
+		},
+		"&.email": {
+			color: "white",
+			borderRadius: "50%",
+			backgroundColor: "#777",
+			padding: 5,
+
+			"&:hover": {
+				color: "white",
+				backgroundColor: "#d33738",
+			},
+		},
+
+		'@media(max-width: 425px)': {
+			fontSize: "10vw",
+			margin: theme.spacing(0.5),
+
+			"&.telegram": {
+				backgroundColor: "#0088dd",
+			},
+			"&.phone": {
+				backgroundColor: "#0d7c04",
+			},
+			"&.email": {
+				backgroundColor: "#d33738",
+			},
+		},
+	},
+
+	popover: {
+		color: "gold",
+	},
+
+	btn: {
+		fontSize: "1.2vw",
+		color: "#ccc",
+		fontWeight: 900,
+		fontFamily: `"Quicksand", sans-serif`,
+
+		backgroundColor: "transparent",
+		boxShadow: "none",
+
+		transition: "color 0.2s, background-color 0.2s",
+
+		"&:hover": {
+			backgroundColor: "transparent",
+			boxShadow: "none",
+		},
+
+		'@media(max-width: 425px)': {
+			fontSize: "4vw",
+			fontWeight: 500,
+		},
+	}
 }))
 
 export const ContactUs = () => {
-    const classes = useStyles();
+	const classes = useStyles();
 
-    return (
-        <div className={classes.contactUs}>
-            <a href="tel:+71112223344">
-                <LocalPhoneIcon className={`${classes.icons} phone`}/>
-            </a>
+	const [anchorEl, setAnchorEl] = React.useState(null);
 
-            <a href="mailto:servise.soft@somemail.com" target="_blanc">
-                <EmailIcon className={`${classes.icons} email`}/>
-            </a>
+	const handleClick = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 
-            <a href="https://t.me/BeZJIuKiy" target="_blanc">
-                <TelegramIcon className={`${classes.icons} telegram`}/>
-            </a>
-        </div>
-    )
+	const open = Boolean(anchorEl);
+	const id = open ? 'simple-popover' : undefined;
+
+	return (
+		<div className={classes.contactUs}>
+			<Button className={classes.btn} aria-describedby={id} variant="contained" color="primary"
+			        onClick={handleClick}>
+				Contact us
+			</Button>
+			<Popover
+				// className={classes.popover}
+				classes={{paper: classes.root}}
+				id={id}
+				open={open}
+				anchorEl={anchorEl}
+				onClose={handleClose}
+				anchorOrigin={{
+					vertical: 'top',
+					horizontal: 'center',
+				}}
+				transformOrigin={{
+					vertical: 'bottom',
+					horizontal: 'center',
+				}}
+			>
+				<div style={{display: "flex", backgroundColor: "transparent"}}>
+					<a href="tel:+71112223344">
+						<LocalPhoneIcon className={`${classes.icons} phone`}/>
+					</a>
+
+					<a href="mailto:servise.soft@somemail.com" target="_blanc">
+						<EmailIcon className={`${classes.icons} email`}/>
+					</a>
+
+					<a href="https://t.me/BeZJIuKiy" target="_blanc">
+						<TelegramIcon className={`${classes.icons} telegram`}/>
+					</a>
+				</div>
+			</Popover>
+		</div>
+	)
 }

@@ -12,23 +12,33 @@ import {Events20} from "./components/Ports/Events/Events2_0";
 // import {Account30} from "./components/Ports/Account30/Account30";
 import {Account30} from "./components/Ports/Account30/Account30";
 import {Test} from "./components/Ports/Test";
+import {makeStyles} from "@material-ui/core/styles";
 
+const useStyles = makeStyles((theme) => ({
+	appMain: {
+		fontFamily: `"Quicksand", sans-serif`,
+	},
+}));
 
 function App() {
-    return (
-        <BrowserRouter>
-            <Route exact path='/' component={Auth_2_0}/>
-            <Route path='/signin' component={Signin_2_0}/>
-            <Route path='/ports' component={Ports}/>
-            {/*<Route path='/account' component={Account}/>*/}
-            {/*<Route path='/account' component={Account30}/>*/}
-            <Route path='/account' component={Account30}/>
-            <Route path='/events' component={Events20}/>
-            <Route path='/canvas' component={Canvas}/>
-            <Route path='/test' component={Test}/>
-            {/*<Route path='/events' render={() => <Events /> } /> так можно*/}
-        </BrowserRouter>
-    );
+	const classes = useStyles();
+
+	return (
+		<div className={classes.appMain}>
+			<BrowserRouter>
+				<Route exact path='/' component={Auth_2_0}/>
+				<Route path='/signin' component={Signin_2_0}/>
+				<Route path='/ports' component={Ports}/>
+				{/*<Route path='/account' component={Account}/>*/}
+				{/*<Route path='/account' component={Account30}/>*/}
+				<Route path='/account' component={Account30}/>
+				<Route path='/events' component={Events20}/>
+				<Route path='/canvas' component={Canvas}/>
+				<Route path='/test' component={Test}/>
+				{/*<Route path='/events' render={() => <Events /> } /> так можно*/}
+			</BrowserRouter>
+		</div>
+	);
 }
 
 export default App;
