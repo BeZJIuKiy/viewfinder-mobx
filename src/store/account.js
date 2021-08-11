@@ -72,10 +72,7 @@ class account {
 
     myFleet = [];
 
-    searchQuery = {
-        secretTitle: "",
-        data: [],
-    };
+    searchQuery = {};
 
 
     constructor() {
@@ -111,8 +108,7 @@ class account {
     }
 
     setSearchQuery = (secretTitle, data) => {
-        this.searchQuery.secretTitle = secretTitle;
-        this.searchQuery.data = data;
+        this.searchQuery[secretTitle] = [...data];
     }
 }
 

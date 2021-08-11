@@ -330,9 +330,8 @@ export const AccountTable = observer(({rowsData, search, title, searchLabel, sec
 	}
 
 	/* VARS */
-	console.log(account.searchQuery);
-	const isCurrentTable = account.searchQuery.data.length && secretTitle === account.searchQuery.secretTitle;
-	const rows = isCurrentTable ? account.searchQuery.data.map(d => d) : rowsData.map(d => d);
+	const isCurrentTableSearch = !!account.searchQuery[secretTitle]?.length;
+	const rows = isCurrentTableSearch ? account.searchQuery[secretTitle].map(d => d) : rowsData.map(d => d);
 	const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
 	return (
