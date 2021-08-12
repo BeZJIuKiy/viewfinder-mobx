@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
 		maxWidth: 360,
 		backgroundColor: theme.palette.background.paper,
 	},
+
+	main: {
+		// display: "flex",
+	}
 }));
 
 export const SimpleList = observer(() => {
@@ -60,31 +64,58 @@ export const SimpleList = observer(() => {
 	}
 
 
+	// const camData = allData.map(({id, link, description}, i) => {
+	// 	const portId = Number.isInteger(selectedObjects.port.id);
+	//
+	// 	return (
+	// 		<div key={id}>
+	// 			<List component="nav" aria-label="main mailbox folders">
+	// 				<ListItem button
+	// 				          onClick={() => portId ? changeDataCamera(i) : changeDataPorts(i)}
+	// 				>
+	// 					<ListItemIcon>
+	// 						<Icon>
+	// 							<img src={icon} height={25} width={25} alt=""/>
+	// 						</Icon>
+	// 					</ListItemIcon>
+	// 					<ListItemText primary={description}/>
+	//
+	// 					<IconButton aria-label="show 17 new notifications" color="default">
+	// 						<Badge badgeContent={notes[i]} color="secondary">
+	// 							<NavLink to="/events">
+	// 								<NotificationsIcon/>
+	// 							</NavLink>
+	// 						</Badge>
+	// 					</IconButton>
+	// 				</ListItem>
+	// 			</List>
+	// 			<Divider/>
+	// 		</div>
+	// 	)
+	// });
 	const camData = allData.map(({id, link, description}, i) => {
 		const portId = Number.isInteger(selectedObjects.port.id);
 
 		return (
 			<div key={id}>
-				<List component="nav" aria-label="main mailbox folders">
-					<ListItem button
-					          onClick={() => portId ? changeDataCamera(i) : changeDataPorts(i)}
-					>
-						<ListItemIcon>
-							<Icon>
-								<img src={icon} height={25} width={25} alt=""/>
-							</Icon>
-						</ListItemIcon>
-						<ListItemText primary={description}/>
+				<ListItem button
+				          onClick={() => portId ? changeDataCamera(i) : changeDataPorts(i)}
+				>
+					<ListItemIcon>
+						<Icon>
+							<img src={icon} height={25} width={25} alt=""/>
+						</Icon>
+					</ListItemIcon>
+					<ListItemText primary={description}/>
 
-						<IconButton aria-label="show 17 new notifications" color="default">
-							<Badge badgeContent={notes[i]} color="secondary">
-								<NavLink to="/events">
-									<NotificationsIcon/>
-								</NavLink>
-							</Badge>
-						</IconButton>
-					</ListItem>
-				</List>
+					<IconButton aria-label="show 17 new notifications" color="default">
+						<Badge badgeContent={notes[i]} color="secondary">
+							<NavLink to="/events">
+								<NotificationsIcon/>
+							</NavLink>
+						</Badge>
+					</IconButton>
+				</ListItem>
 				<Divider/>
 			</div>
 		)
@@ -92,7 +123,9 @@ export const SimpleList = observer(() => {
 
 	return (
 		<div className={classes.root}>
-			{camData}
+			<List className={classes.main} component="nav" aria-label="main mailbox folders">
+				{camData}
+			</List>
 		</div>
 	);
 })

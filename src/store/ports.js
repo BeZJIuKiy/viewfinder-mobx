@@ -14,6 +14,11 @@ import canvasState from "./canvasState";
 export const userAvatar = 'https://diletant.media/upload/medialibrary/75f/75fc56318cbdcf69f479b48892351a73.jpg';
 
 class ports {
+	windowSize = {
+		width: null,
+		height: null,
+	};
+
 	counter = {
 		portsId: 0,
 		camerasId: 0,
@@ -107,6 +112,37 @@ class ports {
 							camera: 'Camera 1',
 							date: '2020-12-21',
 							time: '10:24:16',
+							timezone: '+0300',
+							imageLink: boat1_04,
+							newEvent: true,
+							description: 'Nothing interesting, keep moving on',
+						},
+					],
+				},
+
+				{
+					id: this.counter.camerasId++,
+					country: 'Russia',
+					city: 'Saint Petersburg',
+					name: 'Camera 2',
+					type: 'Hikvision',
+					move: 'PTZ',
+					viewingAngle: '80',
+					description: 'Club Parking PTZ',
+					coordinates: [59.977913, 30.240952],
+					zoom: 15,
+					link: 'https://rtsp.me/embed/hitQb4bf/',
+
+					events: [
+						{
+							id: this.counter.eventsId++,
+							typeError: 'Regular',
+							typeVessel: "Dry Cargo Ship",
+							location: 'Russia',
+							city: 'Saint Petersburg',
+							camera: 'Camera 2',
+							date: '2020-12-21',
+							time: '10:22:31',
 							timezone: '+0300',
 							imageLink: boat1_04,
 							newEvent: true,

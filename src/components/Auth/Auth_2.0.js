@@ -8,167 +8,193 @@ import {Form, Formik} from "formik";
 import {useHistory} from "react-router-dom";
 import {ContactUs} from "./ContactUs";
 
-const useStyles = makeStyles((theme) => ({
-	main: {
-		width: "100wh",
-		height: "100vh",
+const useStyles = makeStyles((theme) => {
+	const scrollHeight = Math.max(
+		document.body.scrollHeight, document.documentElement.scrollHeight,
+		document.body.offsetHeight, document.documentElement.offsetHeight,
+		document.body.clientHeight, document.documentElement.clientHeight
+	);
 
-		display: "flex",
+	return ({
+		main: {
+			width: "100%",
+			height: scrollHeight,
+			// height: "100vh",
 
-		backgroundImage: `url(${backgroundImage})`,
-		backgroundPosition: 'center',
-		backgroundSize: 'cover',
-		backgroundRepeat: 'no-repeat',
+			display: "flex",
 
-		// fontFamily: `"Bitter", serif`,
-
-		position: "relative",
-
-		'@media(max-width: 425px)': {
-			backgroundImage: `url(${backgroundImage320px})`,
+			backgroundImage: `url(${backgroundImage})`,
 			backgroundPosition: 'center',
 			backgroundSize: 'cover',
 			backgroundRepeat: 'no-repeat',
-		}
-	},
 
-	mainSubstrateLeft: {
-		width: "50%",
-		height: "100%",
+			// fontFamily: `"Bitter", serif`,
 
-		backgroundColor: "#333",
-		opacity: 0.7,
+			position: "relative",
 
-		position: "absolute",
-		top: 0,
-		left: 0,
-		zIndex: 1,
 
-		'@media(max-width: 425px)': {
-			width: "100%",
-		}
-	},
+			'@media(max-width: 425px)': {
+				backgroundImage: `url(${backgroundImage320px})`,
+				backgroundPosition: 'center',
+				backgroundSize: 'cover',
+				backgroundRepeat: 'no-repeat',
+			}
+		},
 
-	mainTitle: {
-		color: "white",
-		fontSize: "4vw",
-		fontWeight: 300,
-		userSelect: "none",
-		// textTransform: "uppercase",
-		// marginBottom: "1vw",
+		mainSubstrateLeft: {
+			width: "50%",
+			height: "100%",
 
-		'@media(max-width: 425px)': {
-			fontSize: "14vw",
-		}
-	},
+			backgroundColor: "#333",
+			opacity: 0.7,
 
-	mainItem: {
-		width: "50%",
-		textAlign: "center",
-
-		position: "absolute",
-		top: "50%",
-		left: "25%",
-		transform: "translate(-50%, -25%)",
-		zIndex: 2,
-
-		'@media(max-width: 425px)': {
-			width: "100%",
-			top: "45%",
-			left: "50%",
-			transform: "translate(-50%, -50%)",
+			position: "absolute",
+			top: 0,
+			left: 0,
 			zIndex: 1,
-		}
-	},
 
-	mainForm: {
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		alignItems: "center",
-
-		position: "relative",
-	},
-
-	mainFormBorder: {
-		width: "45%",
-		color: "white",
-
-		padding: "10px 30px",
-
-		'@media(max-width: 768px)': {
-			width: "38vw",
+			'@media(max-width: 425px)': {
+				width: "100%",
+			}
 		},
 
-		'@media(max-width: 630px)': {
-			width: "43vw",
-		},
-
-		'@media(max-width: 425px)': {
-			width: "90vw",
-		},
-	},
-
-	mainFormText: {
-		marginBottom: "6%",
-		fontSize: "1.2vw",
-
-		'@media(max-width: 425px)': {
+		mainTitle: {
+			color: "white",
 			fontSize: "4vw",
-		}
-	},
+			fontWeight: 300,
+			userSelect: "none",
+			// textTransform: "uppercase",
+			// marginBottom: "1vw",
 
-	mainFormBtn: {
-		width: "100%",
-		display: "flex",
-		justifyContent: "space-around",
-
-		marginTop: 10,
-	},
-
-	btn: {
-		width: "8vw",
-		fontSize: "1.3vw",
-		fontFamily: `"Quicksand", sans-serif`,
-		fontWeight: 500,
-		color: "#ddd",
-		borderColor: "none",
-
-		"&.demo": {
-			backgroundColor: "#9e2b4b",
-
-			"&:hover": {
-				backgroundColor: "#e22157",
+			'@media(max-width: 425px)': {
+				fontSize: "14vw",
 			}
 		},
 
-		"&.login": {
-			backgroundColor: "#3d4772",
+		mainItem: {
+			width: "50%",
+			textAlign: "center",
 
-			"&:hover": {
-				backgroundColor: "#374fb9",
+			position: "absolute",
+			top: "50%",
+			left: "25%",
+			transform: "translate(-50%, -25%)",
+			zIndex: 2,
+
+			'@media(max-width: 768px)': {
+				top: "40%",
+			},
+
+			'@media(max-width: 425px)': {
+				width: "100%",
+				top: "45%",
+				left: "50%",
+				transform: "translate(-50%, -50%)",
+				zIndex: 1,
 			}
 		},
 
-		'@media(max-width: 768px)': {
-			width: "15vw",
-			maxWidth: "100px",
-			fontSize: "2vw",
+		mainForm: {
+			display: "flex",
+			flexDirection: "column",
+			justifyContent: "center",
+			alignItems: "center",
+
+			position: "relative",
 		},
 
-		'@media(max-width: 425px)': {
-			width: "35vw",
-			maxWidth: "150px",
-			fontSize: "5vw",
+		mainFormBorder: {
+			width: "45%",
+			color: "white",
+
+			padding: "10px 30px",
+
+			'@media(max-width: 1024px)': {
+				width: "28vw",
+			},
+
+			'@media(max-width: 768px)': {
+				width: "38vw",
+			},
+
+			'@media(max-width: 630px)': {
+				width: "43vw",
+			},
+
+			'@media(max-width: 425px)': {
+				width: "90vw",
+			},
 		},
 
-		'@media(max-width: 320px)': {
-			width: "32vw",
-			maxWidth: "150px",
-			fontSize: "5vw",
+		mainFormText: {
+			marginBottom: "6%",
+			fontSize: "1.2vw",
+
+			'@media(max-width: 425px)': {
+				fontSize: "4vw",
+			}
 		},
-	},
-}))
+
+		mainFormBtn: {
+			width: "100%",
+			display: "flex",
+			justifyContent: "space-around",
+
+			marginTop: 10,
+		},
+
+		btn: {
+			width: "8vw",
+			fontSize: "1.3vw",
+			fontFamily: `"Quicksand", sans-serif`,
+			fontWeight: 500,
+			color: "#ddd",
+			borderColor: "none",
+
+			"&.demo": {
+				backgroundColor: "#9e2b4b",
+
+				"&:hover": {
+					backgroundColor: "#e22157",
+				}
+			},
+
+			"&.login": {
+				backgroundColor: "#3d4772",
+
+				"&:hover": {
+					backgroundColor: "#374fb9",
+				}
+			},
+
+			'@media(max-width: 1024px)': {
+				width: "15vw",
+				maxWidth: "98px",
+				minWidth: "98px",
+				fontSize: "1.5vw",
+			},
+
+			'@media(max-width: 768px)': {
+				width: "15vw",
+				maxWidth: "100px",
+				fontSize: "2vw",
+			},
+
+			'@media(max-width: 425px)': {
+				width: "35vw",
+				maxWidth: "150px",
+				fontSize: "5vw",
+			},
+
+			'@media(max-width: 320px)': {
+				width: "32vw",
+				maxWidth: "150px",
+				fontSize: "5vw",
+			},
+		},
+	})
+})
+
 
 export const Auth_2_0 = () => {
 		const classes = useStyles();
@@ -194,7 +220,6 @@ export const Auth_2_0 = () => {
 				// console.error('Ошибка: ', error);
 			}
 		}
-
 		const demoBtn = () => {
 			return (
 				<Formik
@@ -234,6 +259,14 @@ export const Auth_2_0 = () => {
 				</Button>
 			)
 		}
+
+		const scrollHeight = Math.max(
+			document.body.scrollHeight, document.documentElement.scrollHeight,
+			document.body.offsetHeight, document.documentElement.offsetHeight,
+			document.body.clientHeight, document.documentElement.clientHeight
+		);
+
+		console.log('Полная высота документа с прокручиваемой частью: ' + scrollHeight);
 
 		return (
 			<div className={classes.main}>

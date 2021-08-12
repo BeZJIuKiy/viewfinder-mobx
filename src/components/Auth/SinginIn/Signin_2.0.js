@@ -1,6 +1,7 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import backgroundImage from "../images/backgroundNew.jpg"
+import backgroundImage425px from "../images/background320px.jpg"
 import {SigninForm} from "./SigninForm";
 import {ContactUs} from "../ContactUs";
 
@@ -19,6 +20,13 @@ const useStyles = makeStyles((theme) => ({
         // fontFamily: "Roboto",
 
         position: "relative",
+
+        "@media(max-width: 425px)": {
+            backgroundImage: `url(${backgroundImage425px})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+        }
     },
 
     mainSubstrateLeft: {
@@ -26,12 +34,16 @@ const useStyles = makeStyles((theme) => ({
         height: "100%",
 
         backgroundColor: "#333",
-        opacity: 0.95,
+        opacity: 0.7,
 
         position: "absolute",
         top: 0,
         left: 0,
         zIndex: 1,
+
+        "@media(max-width: 425px)": {
+            width: "100%",
+        }
     },
 
     mainSubstrateRight: {
@@ -45,6 +57,10 @@ const useStyles = makeStyles((theme) => ({
         top: 0,
         right: 0,
         zIndex: 1,
+
+        "@media(max-width: 425px)": {
+            opacity: 0,
+        },
     },
 
     mainTitle: {
@@ -64,6 +80,12 @@ const useStyles = makeStyles((theme) => ({
         left: "25%",
         transform: "translate(-50%, -50%)",
         zIndex: 2,
+
+        "@media(max-width: 425px)": {
+            width: "100%",
+            top: "40%",
+            left: "50%",
+        },
     },
 
     mainForm: {
@@ -75,29 +97,16 @@ const useStyles = makeStyles((theme) => ({
         position: "relative",
     },
 
-    mainFormBorderSubstrate: {
-        width: "50%",
-        height: "100%",
-        // padding: "10px 30px",
-        borderRadius: 20,
-
-        backgroundColor: "#fff",
-        opacity: 0.0,
-
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        zIndex: -1,
-
-        transform: "translate(-50%, -50%)",
-    },
-
     mainFormBorder: {
         width: "50%",
 
         color: "white",
 
         padding: "10px 30px",
+
+        "@media(max-width: 425px)": {
+            width: "100%",
+        },
     },
 
     mainFormTitle: {
@@ -115,7 +124,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-around",
     },
-}))
+}));
 
 export const Signin_2_0 = () => {
     const classes = useStyles();
@@ -126,7 +135,6 @@ export const Signin_2_0 = () => {
             <ContactUs />
             <div className={classes.mainItem}>
                 <div className={classes.mainForm}>
-                    {/*<div className={classes.mainFormBorderSubstrate}></div>*/}
                     <div className={classes.mainFormBorder}>
                         <SigninForm />
                     </div>

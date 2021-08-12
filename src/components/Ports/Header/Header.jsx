@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
-	}
+	},
 }));
 
 export const Header = observer(() => {
@@ -32,28 +32,32 @@ export const Header = observer(() => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-	const isMenuOpen = Boolean(anchorEl);
-	// const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+	useEffect(() => {
+		setPortNotes();
+		if (port.id >= 0) setCameraNotes();
+
+		header.addAllNewNotifications(portsNewNote);
+	}, [port, camera, event]);
+	useEffect(() => {
+		setPortNotes();
+		if (port.id >= 0) setCameraNotes();
+
+		header.addAllNewNotifications(portsNewNote);
+	}, []);
 
 	const handleProfileMenuOpen = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
-
 	const handleMobileMenuClose = () => {
 		setMobileMoreAnchorEl(null);
 	};
-
 	const handleMenuClose = () => {
 		setAnchorEl(null);
 		handleMobileMenuClose();
 	};
-
 	const handleMobileMenuOpen = (event) => {
 		setMobileMoreAnchorEl(event.currentTarget);
 	};
-
-	const menuId = 'primary-search-account-menu';
-
 	const setPortNotes = () => {
 		data.forEach(({cameras}, portIndex) => {
 			let num = 0;
@@ -64,22 +68,14 @@ export const Header = observer(() => {
 			header.addNewPortsNotifications(portIndex, num);
 		})
 	};
-
 	const setCameraNotes = () => {
 		port.cameras.forEach(({events}, i) => {
 			const notif = (events.filter(({newEvent}) => newEvent)).length;
 			header.addNewCamerasNotifications(i, notif);
 		})
 	};
-
-	useEffect(() => {
-		setPortNotes();
-		if (port.id >= 0) setCameraNotes();
-
-		header.addAllNewNotifications(portsNewNote);
-	}, [port, camera, event]);
-
-	const renderMenu = (
+	const renderMenu = () => {
+		return (
 		<Menu
 			anchorEl={anchorEl}
 			anchorOrigin={{vertical: 'top', horizontal: 'right'}}
@@ -97,7 +93,12 @@ export const Header = observer(() => {
 				<NavLink className={'menu__btn'} to='/account'>My account</NavLink>
 			</MenuItem>
 		</Menu>
-	);
+	)}
+
+
+	const menuId = 'primary-search-account-menu';
+	const isMenuOpen = Boolean(anchorEl);
+	// const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
 	return (
 		<div className={classes.grow}>
@@ -109,13 +110,13 @@ export const Header = observer(() => {
 					> ViewFinder
 					</NavLink>
 
-					<div className={'navButtons'}>
-						<NavLink className={'navButtons__item'}
-						         to="/ports"
-						         onClick={() => ports.clearSelectedObjects()}
-						> Ports
-						</NavLink>
-					</div>
+					{/*<div className={'navButtons'}>*/}
+					{/*	<NavLink className={'navButtons__item'}*/}
+					{/*	         to="/ports"*/}
+					{/*	         onClick={() => ports.clearSelectedObjects()}*/}
+					{/*	> Ports*/}
+					{/*	</NavLink>*/}
+					{/*</div>*/}
 
 					<div className={classes.grow}/>
 					<div className={classes.sectionDesktop}>
@@ -153,7 +154,7 @@ export const Header = observer(() => {
 				</Toolbar>
 			</AppBar>
 			{/* {renderNewMenu} */}
-			{renderMenu}
+			{renderMenu()}
 		</div>
 	);
 });

@@ -73,9 +73,22 @@ const useStyles = makeStyles((theme) => ({
 			},
 		},
 
+		'@media(max-width: 768px)': {
+			// fontSize: "10vw",
+
+			"&.telegram": {
+				backgroundColor: "#0088dd",
+			},
+			"&.phone": {
+				backgroundColor: "#0d7c04",
+			},
+			"&.email": {
+				backgroundColor: "#d33738",
+			},
+		},
+
 		'@media(max-width: 425px)': {
 			fontSize: "10vw",
-			margin: theme.spacing(0.5),
 
 			"&.telegram": {
 				backgroundColor: "#0088dd",
