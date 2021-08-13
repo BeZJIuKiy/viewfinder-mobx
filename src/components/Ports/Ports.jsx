@@ -9,98 +9,105 @@ import {makeStyles} from "@material-ui/core/styles";
 
 
 const useStyles = makeStyles((theme) => {
-    const scrollHeight = Math.max(
-        document.body.scrollHeight, document.documentElement.scrollHeight,
-        document.body.offsetHeight, document.documentElement.offsetHeight,
-        document.body.clientHeight, document.documentElement.clientHeight
-    );
+	const scrollHeight = Math.max(
+		document.body.scrollHeight, document.documentElement.scrollHeight,
+		document.body.offsetHeight, document.documentElement.offsetHeight,
+		document.body.clientHeight, document.documentElement.clientHeight
+	);
 
-    console.log(scrollHeight);
-    // console.log(window.screen.availHeight);
+	return ({
+		main: {
+			width: "100%",
+			height: scrollHeight,
+		},
 
-    return ({
-        main: {
-            width: "100%",
-            height: scrollHeight,
-        },
+		drawer: {
+			width: "100%",
 
-        mobileDrawer: {
-            width: "100%",
+			"@media(max-width: 425px)": {
+				display: "none",
+			},
+		},
 
-            display: "flex",
+		mobileDrawer: {
+			display: "none",
 
-            position: "absolute",
+			"@media(max-width: 425px)": {
+				width: "100%",
+				display: "flex",
 
-            // top: "100%",
-            // left: "100%",
-            bottom: 0,
-            left: 0,
-            zIndex: 1,
+				position: "absolute",
 
-            // transform: "translate(-100%, -100%)",
-            // overflowY: "hidden",
-        },
-        mobileDrawerTest: {
-            // width: "100%",
-        },
-        map: {
-            display: "flex",
+				bottom: 0,
+				left: 0,
+				zIndex: 1,
+			},
+		},
 
-            position: "absolute",
-            top: 70,
-            left: 320,
-            zIndex: 1,
+		changeMap: {
+			display: "flex",
 
-            "@media(max-width: 425px)": {
-                top: 72,
-                left: 10,
-            },
-        }
-    })
+			position: "absolute",
+			top: 70,
+			left: 320,
+			zIndex: 1,
+
+			"@media(max-width: 425px)": {
+				top: 72,
+				left: 10,
+			},
+		},
+		drawerContent: {
+			display: "flex",
+			position: "relative",
+		},
+	})
 })
 
 export const Ports = () => {
-    const classes = useStyles();
+	const classes = useStyles();
 
-    const { height, width } = useWindowDimensions();
+	const {height, width} = useWindowDimensions();
 
-    const [mapVisible, setmapVisible] = useState(true);
-    const addtype = ["Yamap", "NewMap"];
+	const [mapVisible, setmapVisible] = useState(true);
+	const addtype = ["Yamap", "NewMap"];
 
-    const handlerMapChange = () => setmapVisible(!mapVisible);
-    const isMobile = (width <= 425);
-    const drawer = isMobile ? "" : <Drawer isMobile={isMobile} />;
-    const mobileDrawer = isMobile ? <Drawer isMobile={isMobile} /> : "";
+	const handlerMapChange = () => setmapVisible(!mapVisible);
+	// const isMobile = (width <= 425);
+	// const drawer = isMobile ? "" : <Drawer/>;
+	//
+	// const mobileDrawer = isMobile ? <Drawer/> : "";
 
-    fetch('http://192.168.250.183:8080/api/boats', {
-        mode: 'no-cors'
-    })
-        .then(response => response.json())
-        .then(item => console.log(item));
+	fetch('http://192.168.250.183:8080/api/boats')
+		.then(response => response.json())
+		.then(item => console.log(item));
 
-    console.log(width, height)
+	console.log(width, height)
 
-    return (
-        <div className={classes.main}>
-            <Header />
-            <div className="searcher">
-                {drawer}
-                <YaMap isVisible={mapVisible} />
-                <NewMap isVisible={!mapVisible} />
-            </div>
+	return (
+		<div className={classes.main}>
+			<Header/>
+			<div className={`${classes.drawerContent}`}>
+				<div className={classes.drawer}>
+					<Drawer/>
+				</div>
 
-            <div className={classes.mobileDrawer}>
-                {mobileDrawer}
-            </div>
+				<YaMap isVisible={mapVisible}/>
+				<NewMap isVisible={!mapVisible}/>
+			</div>
 
-            <div className={`${classes.map}`}>
-                <select
-                    onChange={handlerMapChange}
-                    className="browser-default custom-select" >{
-                        addtype.map((address, key) => <option value={key} key={key}>{address}</option>)
-                    }
-                </select >
-            </div>
-        </div>
-    )
+			<div className={classes.mobileDrawer}>
+				<Drawer/>
+			</div>
+
+			<div className={`${classes.changeMap}`}>
+				<select
+					onChange={handlerMapChange}
+					className="browser-default custom-select">{
+					addtype.map((address, key) => <option value={key} key={key}>{address}</option>)
+				}
+				</select>
+			</div>
+		</div>
+	)
 }

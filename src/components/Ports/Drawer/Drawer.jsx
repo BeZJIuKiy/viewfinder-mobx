@@ -35,15 +35,12 @@ const useStyles = makeStyles((theme) => ({
 
     main: {
         display: "flex",
+        flexDirection: "column",
 
-        "&.desctop": {
-            flexDirection: "column"
-        },
-
-        "&.mobile": {
+        "@media(max-width: 425px)": {
             width: '100%',
-            padding: 0,
             flexDirection: "row",
+            padding: 0,
         },
     }
 }));
@@ -145,7 +142,8 @@ export const Drawer = observer(({isMobile}) => {
 
     return (
         <div className={classes.root}>
-            <List className={`${classes.main} ${isMobile ? "mobile" : "desctop"}`} component="nav" aria-label="main mailbox folders">
+            {/*<List className={`${classes.main} ${isMobile ? "mobile" : "desctop"}`} component="nav" aria-label="main mailbox folders">*/}
+            <List className={`${classes.main}`} component="nav" aria-label="main mailbox folders">
                 {camData}
             </List>
         </div>
