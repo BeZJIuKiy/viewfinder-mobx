@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme) => {
 				backgroundRepeat: 'no-repeat',
 			}
 		},
-
 		mainSubstrateLeft: {
 			width: "50%",
 			height: "100%",
@@ -57,7 +56,6 @@ const useStyles = makeStyles((theme) => {
 				width: "100%",
 			}
 		},
-
 		mainTitle: {
 			color: "white",
 			fontSize: "4vw",
@@ -70,7 +68,6 @@ const useStyles = makeStyles((theme) => {
 				fontSize: "14vw",
 			}
 		},
-
 		mainItem: {
 			width: "50%",
 			textAlign: "center",
@@ -93,7 +90,6 @@ const useStyles = makeStyles((theme) => {
 				zIndex: 1,
 			}
 		},
-
 		mainForm: {
 			display: "flex",
 			flexDirection: "column",
@@ -102,7 +98,6 @@ const useStyles = makeStyles((theme) => {
 
 			position: "relative",
 		},
-
 		mainFormBorder: {
 			width: "45%",
 			color: "white",
@@ -125,7 +120,6 @@ const useStyles = makeStyles((theme) => {
 				width: "90vw",
 			},
 		},
-
 		mainFormText: {
 			marginBottom: "6%",
 			fontSize: "1.2vw",
@@ -134,7 +128,6 @@ const useStyles = makeStyles((theme) => {
 				fontSize: "4vw",
 			}
 		},
-
 		mainFormBtn: {
 			width: "100%",
 			display: "flex",
@@ -142,7 +135,6 @@ const useStyles = makeStyles((theme) => {
 
 			marginTop: 10,
 		},
-
 		btn: {
 			width: "8vw",
 			fontSize: "1.3vw",

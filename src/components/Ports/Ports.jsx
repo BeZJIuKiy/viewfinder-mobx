@@ -72,6 +72,12 @@ export const Ports = () => {
     const drawer = isMobile ? "" : <Drawer isMobile={isMobile} />;
     const mobileDrawer = isMobile ? <Drawer isMobile={isMobile} /> : "";
 
+    fetch('http://192.168.250.183:8080/api/boats', {
+        mode: 'no-cors'
+    })
+        .then(response => response.json())
+        .then(item => console.log(item));
+
     console.log(width, height)
 
     return (

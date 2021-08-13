@@ -24,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 	},
 	title: {
+		fontSize: "2.5vw",
+		fontFamily: `"Quicksand", sans-serif`,
+	},
+	rememberMe: {
 		fontFamily: `"Quicksand", sans-serif`,
 	},
 	avatar: {
@@ -44,13 +48,16 @@ const useStyles = makeStyles((theme) => ({
 		margin: theme.spacing(3, 0, 2),
 
 		color: "#ddd",
+		fontSize: "1.3vw",
 		fontFamily: `"Quicksand", sans-serif`,
 		fontWeight: 500,
+
+		backgroundColor: "#3d4772",
 
 		"@media(max-width: 425px)": {
 			fontSize: "5vw",
 
-			backgroundColor: "#3d4772",
+			// backgroundColor: "#3d4772",
 
 			"&:hover": {
 				backgroundColor: "#374fb9",
@@ -67,16 +74,29 @@ export const SigninForm = () => {
 	const classes = useStyles();
 	const history = useHistory();
 
-	const validationSchema = yup.object({
-		email: yup
-			.string('Enter your email')
-			.email('Enter a valid email')
-			.required('Email is required'),
-		password: yup
-			.string('Enter your password')
-			.min(8, 'Password should be of minimum 8 characters length')
-			.required('Password is required'),
-	});
+	const postUser = async (values) => {
+		const url = 'http://localhost:8000/api/auth/sign_in';
+
+		try {
+			const response = await fetch(url, {
+				method: 'POST',
+				body: JSON.stringify(values),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			const json = await response.json();
+
+			console.log('Успешно: ', JSON.stringify(json));
+
+			return true;
+		} catch (error) {
+			console.log('Ошибка');
+			console.error('Ошибка: ', error);
+			return false;
+		}
+	}
 	const WithMaterialUI = () => {
 		const formik = useFormik({
 			initialValues: {
@@ -127,7 +147,7 @@ export const SigninForm = () => {
 					/>
 
 					<FormControlLabel
-						classes={{label: classes.title}}
+						classes={{label: classes.rememberMe}}
 						control={<Checkbox className={classes.checkBox} value="remember" color={"default"}/>}
 						label="Remember me"
 					/>
@@ -158,29 +178,17 @@ export const SigninForm = () => {
 			</div>
 		);
 	};
-	const postUser = async (values) => {
-		const url = 'http://localhost:8000/api/auth/sign_in';
 
-		try {
-			const response = await fetch(url, {
-				method: 'POST',
-				body: JSON.stringify(values),
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
-
-			const json = await response.json();
-
-			console.log('Успешно: ', JSON.stringify(json));
-
-			return true;
-		} catch (error) {
-			console.log('Ошибка');
-			console.error('Ошибка: ', error);
-			return false;
-		}
-	}
+	const validationSchema = yup.object({
+		email: yup
+			.string('Enter your email')
+			.email('Enter a valid email')
+			.required('Email is required'),
+		password: yup
+			.string('Enter your password')
+			.min(8, 'Password should be of minimum 8 characters length')
+			.required('Password is required'),
+	});
 
 	return (
 		<Container component="main" maxWidth="xs">
