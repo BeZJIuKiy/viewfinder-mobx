@@ -57,15 +57,6 @@ const useStyles = makeStyles((theme) => ({
 	accordion: {
 		width: "100%",
 	},
-
-
-	container: {
-		margin: "20px 0",
-		padding: "10px 20px",
-		backgroundColor: "#fff",
-		borderRadius: 30,
-	},
-
 	mainContainer: {
 		height: "calc(100% - 20px)",
 
@@ -114,7 +105,6 @@ const useStyles = makeStyles((theme) => ({
 
 		textAlign: "center",
 	},
-
 	mainTitle: {
 		fontWeight: 500,
 		fontSize: "1.5vw",
@@ -122,7 +112,6 @@ const useStyles = makeStyles((theme) => ({
 	mainSubtitle: {
 		fontSize: "1.0vw",
 	},
-	mainText: {},
 	content: {
 		display: "flex",
 		flexDirection: "column",
@@ -170,6 +159,13 @@ const useStyles = makeStyles((theme) => ({
 		width: "5vw",
 		margin: "0px 3px",
 	}
+
+	// container: {
+	// 	margin: "20px 0",
+	// 	padding: "10px 20px",
+	// 	backgroundColor: "#fff",
+	// 	borderRadius: 30,
+	// },
 }));
 
 export const PersonalInformation = observer(() => {

@@ -9,24 +9,46 @@ import {Fleet} from "./Items/Fleet";
 import {Payments} from "./Items/Payments";
 import {PersonalInformation} from "./Items/PersonalInformation";
 
-const useStyles = makeStyles((theme) => ({
-    main: {
-        display: "flex",
-        flexDirection: "column",
-    },
+const useStyles = makeStyles((theme) => {
 
-    content: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-    },
 
-    component: {
-        width: "70vw",
-        marginRight: "auto",
-        display: "flex",
-    },
-}));
+    return ({
+        main: {
+            display: "flex",
+            flexDirection: "column",
+        },
+
+        drawer: {
+            display: "flex",
+
+            "@media(max-width: 425px)": {
+                display: "none",
+            },
+        },
+
+        content: {
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+
+            "@media(max-width: 425px)": {
+                flexDirection: "column",
+            },
+        },
+
+        component: {
+            width: "70vw",
+            marginRight: "auto",
+            display: "flex",
+
+
+            "@media(max-width: 425px)": {
+                // display: "none",
+                flexDirection: "column",
+            },
+        },
+    })
+});
 
 export const Account30 = observer(() => {
     const classes = useStyles();
@@ -57,7 +79,7 @@ export const Account30 = observer(() => {
             <Header/>
 
             <div className={classes.content}>
-                <Drawer/>
+                <span className={classes.drawer}><Drawer/></span>
                 <div className={classes.component}>
                     {components()}
                 </div>

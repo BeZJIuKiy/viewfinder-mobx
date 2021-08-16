@@ -14,6 +14,8 @@ import {observer} from "mobx-react-lite";
 import header from "../../../store/header";
 import ports from "../../../store/ports";
 import {HeaderNotifications} from "./HeaderNotifications";
+import {useWindowDimensions} from "../../../useHooks/useWindowDimensions";
+import {MobileDrawer} from "../Account30/MobileDrawer";
 
 const useStyles = makeStyles((theme) => {
 	const {miniAvatar} = header
@@ -40,6 +42,15 @@ const useStyles = makeStyles((theme) => {
 			height: 40,
 			borderRadius: "50%",
 		},
+		mobileDrawer: {
+			display: "none",
+
+			"@media(max-width: 425px)": {
+				display: "flex",
+
+				marginRight: -20,
+			},
+		},
 	})
 });
 
@@ -48,6 +59,9 @@ export const Header = observer(() => {
 
 	const {allNewNote, portsNewNote} = header;
 	const {data, selectedObjects: {port, camera, event}} = ports;
+	const {width, height} = useWindowDimensions();
+
+	console.log(width, height);
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -125,6 +139,7 @@ export const Header = observer(() => {
 		<div className={classes.grow}>
 			<AppBar position="static" style={{background: '#2d2d2d'}}>
 				<Toolbar>
+					<span className={classes.mobileDrawer}><MobileDrawer/></span>
 					<NavLink className={'navButtonsHome'}
 					         to="/ports"
 					         onClick={() => ports.clearSelectedObjects()}
@@ -143,13 +158,13 @@ export const Header = observer(() => {
 					<div className={classes.sectionDesktop}>
 
 						{/* _________________Управление отображением уведомлений_________________ */}
-						<IconButton aria-label="show 4 new mails" color="inherit">
-							<Badge badgeContent={0} color="secondary">
-								<NavLink to='/ports/'>
-									<MailIcon className='header__icons'/>
-								</NavLink>
-							</Badge>
-						</IconButton>
+						{/*<IconButton aria-label="show 4 new mails" color="inherit">*/}
+						{/*	<Badge badgeContent={0} color="secondary">*/}
+						{/*		<NavLink to='/ports/'>*/}
+						{/*			<MailIcon className='header__icons'/>*/}
+						{/*		</NavLink>*/}
+						{/*	</Badge>*/}
+						{/*</IconButton>*/}
 
 						<HeaderNotifications />
 
