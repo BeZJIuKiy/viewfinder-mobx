@@ -73,10 +73,6 @@ export const Ports = () => {
 	const addtype = ["Yamap", "NewMap"];
 
 	const handlerMapChange = () => setmapVisible(!mapVisible);
-	// const isMobile = (width <= 425);
-	// const drawer = isMobile ? "" : <Drawer/>;
-	//
-	// const mobileDrawer = isMobile ? <Drawer/> : "";
 
 	fetch('http://192.168.250.183:8080/api/boats')
 		.then(response => response.json())
