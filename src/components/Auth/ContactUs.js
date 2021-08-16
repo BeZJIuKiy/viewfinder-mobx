@@ -144,6 +144,7 @@ export const ContactUs = () => {
 	const open = Boolean(anchorEl);
 	const id = open ? 'simple-popover' : undefined;
 
+
 	return (
 		<div className={classes.contactUs}>
 			<Button className={classes.btn} aria-describedby={id} variant="contained" color="primary"
@@ -151,7 +152,6 @@ export const ContactUs = () => {
 				Contact us
 			</Button>
 			<Popover
-				// className={classes.popover}
 				classes={{paper: classes.root}}
 				id={id}
 				open={open}

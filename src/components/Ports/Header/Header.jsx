@@ -13,20 +13,40 @@ import './Header.css';
 import {observer} from "mobx-react-lite";
 import header from "../../../store/header";
 import ports from "../../../store/ports";
+import {HeaderNotifications} from "./HeaderNotifications";
 
-const useStyles = makeStyles((theme) => ({
-	grow: {
-		flexGrow: 1,
-	},
-	menuButton: {
-		marginRight: theme.spacing(2),
-	},
-}));
+const useStyles = makeStyles((theme) => {
+	const {miniAvatar} = header
+
+	return ({
+		grow: {
+			flexGrow: 1,
+		},
+		menuButton: {
+			marginRight: theme.spacing(2),
+		},
+		accountIcon: {
+			width: "40px",
+			height: "40px",
+			borderRadius: "50%",
+
+			backgroundImage: `url(${miniAvatar})`,
+			backgroundPosition: 'center',
+			backgroundSize: 'cover',
+			backgroundRepeat: 'no-repeat',
+		},
+		icon: {
+			width: 40,
+			height: 40,
+			borderRadius: "50%",
+		},
+	})
+});
 
 export const Header = observer(() => {
 	const classes = useStyles();
 
-	const {miniAvatar, allNewNote, portsNewNote} = header;
+	const {allNewNote, portsNewNote} = header;
 	const {data, selectedObjects: {port, camera, event}} = ports;
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
@@ -76,24 +96,25 @@ export const Header = observer(() => {
 	};
 	const renderMenu = () => {
 		return (
-		<Menu
-			anchorEl={anchorEl}
-			anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-			id={menuId}
-			keepMounted
-			transformOrigin={{vertical: 'top', horizontal: 'right'}}
-			open={isMenuOpen}
-			onClose={handleMenuClose}
-		>
-			{/* <MenuItem onClick={handleMenuClose}> */}
-			{/* <NavLink className={'menu__btn'} to='/profile'>Profile</NavLink> */}
-			{/* Profile */}
-			{/* </MenuItem> */}
-			<MenuItem onClick={handleMenuClose}>
-				<NavLink className={'menu__btn'} to='/account'>My account</NavLink>
-			</MenuItem>
-		</Menu>
-	)}
+			<Menu
+				anchorEl={anchorEl}
+				anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+				id={menuId}
+				keepMounted
+				transformOrigin={{vertical: 'top', horizontal: 'right'}}
+				open={isMenuOpen}
+				onClose={handleMenuClose}
+			>
+				{/* <MenuItem onClick={handleMenuClose}> */}
+				{/* <NavLink className={'menu__btn'} to='/profile'>Profile</NavLink> */}
+				{/* Profile */}
+				{/* </MenuItem> */}
+				<MenuItem onClick={handleMenuClose}>
+					<NavLink className={'menu__btn'} to='/account'>My account</NavLink>
+				</MenuItem>
+			</Menu>
+		)
+	}
 
 
 	const menuId = 'primary-search-account-menu';
@@ -129,25 +150,30 @@ export const Header = observer(() => {
 								</NavLink>
 							</Badge>
 						</IconButton>
-						<IconButton aria-label="show 17 new notifications" color="inherit">
-							<Badge badgeContent={allNewNote} color="secondary">
-								<NavLink to='/events'>
-									<NotificationsIcon className='header__icons'/>
-								</NavLink>
-							</Badge>
-						</IconButton>
-						<IconButton
-							edge="end"
-							aria-label="account of current user"
-							aria-controls={menuId}
-							aria-haspopup="true"
-							onClick={handleProfileMenuOpen}
-							color="inherit"
-						>
-							{/* <AccountCircle /> */}
-							<img className='header_profile__icon'
-							     src={miniAvatar} alt=""/>
-						</IconButton>
+
+						<HeaderNotifications />
+
+						{/*<IconButton aria-label="show 17 new notifications" color="inherit">*/}
+						{/*	<Badge badgeContent={allNewNote} color="secondary">*/}
+						{/*		<NavLink to='/events'>*/}
+						{/*			<NotificationsIcon className='header__icons'/>*/}
+						{/*		</NavLink>*/}
+						{/*	</Badge>*/}
+						{/*</IconButton>*/}
+
+						<NavLink to='/account'>
+							<IconButton
+								edge="end"
+								aria-label="account of current user"
+								aria-controls={menuId}
+								aria-haspopup="true"
+								// onClick={handleProfileMenuOpen}
+								color="inherit"
+							>
+								<span className={`${classes.accountIcon}`}/>
+							</IconButton>
+						</NavLink>
+
 					</div>
 					<div className={classes.sectionMobile}>
 					</div>
