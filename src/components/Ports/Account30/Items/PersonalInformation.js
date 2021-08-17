@@ -24,6 +24,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {observer} from "mobx-react-lite";
 import {AccountTable} from "./AccountTable";
 import ports from "../../../../store/ports";
+import {useWindowDimensions} from "../../../../useHooks/useWindowDimensions";
+import {AccordionFromTable} from "./Accordion";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,6 +55,10 @@ const useStyles = makeStyles((theme) => ({
 
 		fontSize: theme.typography.pxToRem(15),
 		color: theme.palette.text.primary,
+
+		"@media(max-width: 425px)": {
+			marginLeft: "-10%",
+		},
 	},
 	accordion: {
 		width: "100%",
@@ -62,6 +68,10 @@ const useStyles = makeStyles((theme) => ({
 
 		margin: "20px 0",
 		position: "relative",
+
+		"@media(max-width: 425px)": {
+			margin: 0,
+		},
 	},
 	substrate: {
 		position: "absolute",
@@ -82,10 +92,18 @@ const useStyles = makeStyles((theme) => ({
 	personalData: {
 		display: "flex",
 		flexGrow: 1,
+
+		"@media(max-width: 425px)": {
+			flexDirection: "column",
+		},
 	},
 	personalDataItem: {
 		flexDirection: "column",
 		flexGrow: 1,
+
+		"@media(max-width: 425px)": {
+			// margin: "10px 0px",
+		},
 	},
 	personalDataContentLeft: {
 		height: "calc(100% - 20px)",
@@ -96,6 +114,11 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: 10,
 
 		textAlign: "center",
+
+		"@media(max-width: 425px)": {
+			padding: 10,
+			margin: "20px 20px 10px 20px",
+		},
 	},
 	personalDataContentRight: {
 		margin: "20px 20px 0px 10px",
@@ -104,13 +127,26 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: 10,
 
 		textAlign: "center",
+
+		"@media(max-width: 425px)": {
+			margin: "10px 20px 20px 20px",
+			padding: 10,
+		},
 	},
 	mainTitle: {
 		fontWeight: 500,
 		fontSize: "1.5vw",
+
+		"@media(max-width: 425px)": {
+			fontSize: "7vw",
+		},
 	},
 	mainSubtitle: {
 		fontSize: "1.0vw",
+
+		"@media(max-width: 425px)": {
+			fontSize: "4vw",
+		},
 	},
 	content: {
 		display: "flex",
@@ -154,18 +190,23 @@ const useStyles = makeStyles((theme) => ({
 
 		display: "flex",
 		justifyContent: "center",
+
+		"@media(max-width: 320px)": {
+			width: "100%"
+		},
 	},
 	btn: {
 		width: "5vw",
 		margin: "0px 3px",
-	}
 
-	// container: {
-	// 	margin: "20px 0",
-	// 	padding: "10px 20px",
-	// 	backgroundColor: "#fff",
-	// 	borderRadius: 30,
-	// },
+		"@media(max-width: 425px)": {
+			margin: "0px 2px",
+		},
+
+		"@media(max-width: 320px)": {
+			// display: "none",
+		},
+	}
 }));
 
 export const PersonalInformation = observer(() => {
@@ -175,6 +216,7 @@ export const PersonalInformation = observer(() => {
 
 	/* STORE */
 	const {avatar, name, firstName, secondName, company, status, phone, email} = account.personalInformation;
+	const {width} = useWindowDimensions();
 
 	/* HOOKS */
 	const [expanded, setExpanded] = React.useState(false);
@@ -299,75 +341,6 @@ export const PersonalInformation = observer(() => {
 			</div>
 		);
 	};
-	// const OLDpersonalInformationActionList = () => {
-	// 	return (
-	// 		<div className={classes.content}>
-	// 			<img className={classes.avatar} src={avatar} alt="123"/>
-	//
-	// 			<div className={classes.actions}>
-	// 				<List component="nav" aria-label="main mailbox folders">
-	// 					<Divider/>
-	// 					<ListItem button>
-	// 						{/*<ListItemText className={classes.actionItemName} primary={"Name"}/>*/}
-	//
-	// 						<ListItemText className={classes.actionItemName} classes={{primary: classes.actionItemName}}
-	// 						              primary={"Name"}/>
-	// 						<ListItemText className={classes.actionItemAction} primary={`${firstName} ${secondName}`}/>
-	// 						<ArrowForwardIosIcon color={"action"}/>
-	// 					</ListItem>
-	//
-	// 					<Divider/>
-	//
-	// 					<ListItem button>
-	// 						<ListItemText className={classes.actionItemName} classes={{primary: classes.actionItemName}}
-	// 						              primary={"Company"}/>
-	// 						<ListItemText className={classes.actionItemAction} primary={`${company}`}/>
-	// 						<ArrowForwardIosIcon color={"action"}/>
-	// 					</ListItem>
-	//
-	// 					<Divider/>
-	//
-	// 					<ListItem button>
-	// 						<ListItemText className={classes.actionItemName} classes={{primary: classes.actionItemName}}
-	// 						              primary={"Account status"}/>
-	// 						<ListItemText className={classes.actionItemAction} primary={`${status}`}/>
-	// 						<ArrowForwardIosIcon color={"action"}/>
-	// 					</ListItem>
-	//
-	// 					<Divider/>
-	//
-	// 					{/*{lastPayments()}*/}
-	//
-	// 					<ListItem button>
-	// 						<ListItemText className={classes.actionItemName} classes={{primary: classes.actionItemName}}
-	// 						              primary={"Phone"}/>
-	// 						<ListItemText className={classes.actionItemAction} primary={`${phone}`}/>
-	// 						<ArrowForwardIosIcon color={"action"}/>
-	// 					</ListItem>
-	//
-	// 					<Divider/>
-	//
-	// 					<ListItem button>
-	// 						<ListItemText className={classes.actionItemName} classes={{primary: classes.actionItemName}}
-	// 						              primary={"Email"}/>
-	// 						<ListItemText className={classes.actionItemAction} primary={`${email}`}/>
-	// 						<ArrowForwardIosIcon color={"action"}/>
-	// 					</ListItem>
-	//
-	// 					<Divider/>
-	//
-	// 					<ListItem button>
-	// 						<ListItemText className={classes.actionItemName} classes={{primary: classes.actionItemName}}
-	// 						              primary={"Quick pay"}/>
-	// 						{quickPay()}
-	// 					</ListItem>
-	//
-	// 					<Divider/>
-	// 				</List>
-	// 			</div>
-	// 		</div>
-	// 	)
-	// };
 
 	const lastPayments = () => {
 		const lastPays = [];
@@ -446,7 +419,7 @@ export const PersonalInformation = observer(() => {
 					id: camera.id,
 					"Country": camera.country,
 					"City": camera.city,
-					"Camera Name": camera.description,
+					"Title": camera.description,
 				});
 			})
 		})
@@ -456,7 +429,9 @@ export const PersonalInformation = observer(() => {
 	const devicesActionList = () => {
 		return (
 			<div className={`${classes.content} right`}>
-				<AccountTable secretTitle={"Personal information: short Devices"} rowsData={allDevicesShort()} search={"Camera Name"} searchLabel={"Devices Name"}/>
+				{width <= 425
+					? <AccordionFromTable tableData={allDevicesShort()} header={"Country"}/>
+					: <AccountTable secretTitle={"Personal information: short Devices"} rowsData={allDevicesShort()} search={"Camera Name"} searchLabel={"Devices Name"}/>}
 			</div>
 		)
 	};
@@ -468,27 +443,24 @@ export const PersonalInformation = observer(() => {
 				id: vessel.id,
 				"IMO": vessel.imo,
 				"Name": vessel.name,
-				"Vessel Type Detailed": vessel.vesselTypeDetailed,
+				"Type": vessel.vesselTypeDetailed,
 			})
 		)
 	};
 	const fleetActionList = () => {
 		return (
 			<div className={`${classes.content} right`}>
-				<AccountTable secretTitle={"Personal information: short Fleet"} rowsData={allFleetShort()} search={"IMO"} searchLabel={"Fleet IMO"}/>
+				{width <= 425
+					? <AccordionFromTable tableData={allFleetShort()} header={"IMO"}/>
+					: <AccountTable secretTitle={"Personal information: short Fleet"} rowsData={allFleetShort()} search={"IMO"} searchLabel={"Fleet IMO"}/>}
 			</div>
 		)
 	};
-
-	// if(devicePixelRatio) alert(devicePixelRatio);
-	// else alert(outerWidth/innerWidth*100);
-
 
 	return (
 		<div className={classes.mainContainer}>
 			<div className={classes.personalData}>
 				<div className={classes.personalDataItem}>
-					{/*{informationBlock(classes.personalDataContentLeft, personalTitle, personalSubtitle, OLDpersonalInformationActionList)}*/}
 					{informationBlock(classes.personalDataContentLeft, personalTitle, personalSubtitle, personalInformationActionList)}
 				</div>
 				<div className={classes.personalDataItem}>

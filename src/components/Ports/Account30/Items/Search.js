@@ -3,21 +3,29 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import {makeStyles} from "@material-ui/core/styles";
 import account from "../../../../store/account";
+import {useWindowDimensions} from "../../../../useHooks/useWindowDimensions";
 
 const useStyles = makeStyles((theme) => ({
 	autoComplete: {
 		width: 250,
 		backgroundColor: "#fff",
 		borderRadius: 5,
+
+		"@media(max-width: 425px)": {
+			width: 175,
+		},
 	}
 }))
 
 export const Search = ({data, search, label, secretTitle}) => {
 	const classes = useStyles();
 
+	const {width} = useWindowDimensions();
+
 	const handleChange = (e, value) => {
 		account.setSearchQuery(secretTitle, value ? [value] : []);
 	}
+
 
 	return (
 		<Autocomplete
@@ -26,7 +34,7 @@ export const Search = ({data, search, label, secretTitle}) => {
 			options={data}
 			getOptionLabel={(option) => option[search]}
 			renderInput={(params) => {
-				return (<TextField {...params} label={label} variant="outlined"/>)
+				return (<TextField {...params} label={width <= 425 ? "Search" : label} variant="outlined"/>)
 			}}
 			onChange={handleChange}
 		/>

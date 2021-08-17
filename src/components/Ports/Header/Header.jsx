@@ -59,9 +59,6 @@ export const Header = observer(() => {
 
 	const {allNewNote, portsNewNote} = header;
 	const {data, selectedObjects: {port, camera, event}} = ports;
-	const {width, height} = useWindowDimensions();
-
-	console.log(width, height);
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);

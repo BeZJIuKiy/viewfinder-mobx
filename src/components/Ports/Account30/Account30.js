@@ -8,9 +8,11 @@ import {Devices} from "./Items/Devices";
 import {Fleet} from "./Items/Fleet";
 import {Payments} from "./Items/Payments";
 import {PersonalInformation} from "./Items/PersonalInformation";
+import {useWindowDimensions} from "../../../useHooks/useWindowDimensions";
 
 const useStyles = makeStyles((theme) => {
-
+    // const {width, height} = useWindowDimensions();
+    // console.log(width)
 
     return ({
         main: {
@@ -43,8 +45,10 @@ const useStyles = makeStyles((theme) => {
 
 
             "@media(max-width: 425px)": {
-                // display: "none",
+                width: "100%",
                 flexDirection: "column",
+
+                margin: 0,
             },
         },
     })

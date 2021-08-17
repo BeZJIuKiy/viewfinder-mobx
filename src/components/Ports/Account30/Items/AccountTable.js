@@ -240,7 +240,12 @@ const useStyles = makeStyles((theme) => ({
 
 		top: 4,
 		left: 5,
-		zIndex: 1
+		zIndex: 1,
+
+		"@media(max-width: 425px)": {
+			top: 0,
+			left: 0,
+		},
 	},
 	paper: {
 		width: '100%',
