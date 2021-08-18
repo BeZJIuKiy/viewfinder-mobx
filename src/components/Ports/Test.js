@@ -4,9 +4,7 @@ import {AccordionFromTable} from "./Account30/Items/Accordion";
 import account from "../../store/account";
 import ports from "../../store/ports";
 
-const useStyles = makeStyles({
-
-});
+const useStyles = makeStyles({});
 
 export const Test = () => {
 	const allFleetShort = () => {
@@ -68,6 +66,7 @@ export const Test = () => {
 
 		return devices;
 	};
+
 
 	return (
 		<div>

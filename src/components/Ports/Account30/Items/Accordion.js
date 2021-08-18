@@ -102,7 +102,7 @@ export const AccordionFromTable = observer(({tableData, header}) => {
 			const last = allKeys[allKeys.length-1] === row[key]
 
 			fullRow.push(
-				<div className={classes.detailed}>
+				<div className={classes.detailed} key={`id-${header}-${key}`}>
 					<div className={classes.detailedFirst}>{key}:</div>
 					<div className={classes.detailedSecond}>{row[key]}</div>
 					{last ? "" : <div className={classes.substrate}/>}
@@ -116,7 +116,7 @@ export const AccordionFromTable = observer(({tableData, header}) => {
 	return (
 		tableData.map((row, index) => {
 			return (
-				<Accordion className={classes.accordion} expanded={expanded === index} onChange={handleChange(index)}>
+				<Accordion key={`accordion-from-table-${header}-${index}`} className={classes.accordion} expanded={expanded === index} onChange={handleChange(index)}>
 					<AccordionSummary
 						expandIcon={<ExpandMoreIcon/>}
 						aria-controls="panel1bh-content"

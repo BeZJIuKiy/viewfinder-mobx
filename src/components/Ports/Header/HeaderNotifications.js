@@ -25,6 +25,14 @@ const useStyles = makeStyles((theme) => ({
 		position: 'relative',
 		overflow: 'auto',
 		maxHeight: 300,
+
+		"@media(max-width: 425px)": {
+			maxWidth: "90%",
+		},
+
+		"@media(max-width: 320px)": {
+			maxWidth: 288,
+		},
 	},
 	listSection: {
 		backgroundColor: 'inherit',

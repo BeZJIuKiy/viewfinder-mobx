@@ -3,18 +3,14 @@ import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import {NavLink} from 'react-router-dom';
 import './Header.css';
 import {observer} from "mobx-react-lite";
 import header from "../../../store/header";
 import ports from "../../../store/ports";
 import {HeaderNotifications} from "./HeaderNotifications";
-import {useWindowDimensions} from "../../../useHooks/useWindowDimensions";
 import {MobileDrawer} from "../Account30/MobileDrawer";
 
 const useStyles = makeStyles((theme) => {
@@ -132,6 +128,72 @@ export const Header = observer(() => {
 	const isMenuOpen = Boolean(anchorEl);
 	// const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+	const a = [
+		{
+			'0':
+				{
+					ZO: 'NOR',
+					GE: 'FPO',
+					LT: 'N59.00',
+					LG: 'W030.00',
+					XT: 'N60.00',
+					XG: 'W033.00',
+					DU: 5,
+					GP: 0,
+					FO: 'KROK',
+					CA: [Array],
+					SS: 'NOR01',
+					BD: '2021 08 10',
+					BT: '15 45'
+				},
+			QI: 1,
+			AC: 'FIS',
+			TM: 'DCA',
+			RN: 315,
+			MA: 'OLA NORMAN',
+			DA: '2021 08 10',
+			TI: '15 45'
+		},
+		{
+			'0':
+				{
+					ZO: 'NOR',
+					LT: 'N59.00',
+					LG: 'W030.00',
+					XT: 'N60.00',
+					XG: 'W033.00',
+					DU: 5,
+					GP: 0,
+					FO: 'KROK',
+					CA: [Array],
+					SS: 'NOR01',
+					BD: '2021 08 10',
+					BT: '15 45'
+				},
+			'1':
+				{
+					ZO: 'NOR',
+					LT: 'N59.00',
+					LG: 'W030.00',
+					XT: 'N60.00',
+					XG: 'W033.00',
+					DU: 5,
+					GP: 0,
+					FO: 'KROK',
+					CA: [Array],
+					SS: 'NOR01',
+					BD: '2021 08 10',
+					BT: '15 45'
+				},
+			QI: 2,
+			AC: 'STE',
+			TM: 'DCA',
+			RN: 315,
+			MA: 'OLA NORMAN',
+			DA: '2021 08 10',
+			TI: '15 45'
+		}];
+
 	return (
 		<div className={classes.grow}>
 			<AppBar position="static" style={{background: '#2d2d2d'}}>
@@ -143,35 +205,9 @@ export const Header = observer(() => {
 					> ViewFinder
 					</NavLink>
 
-					{/*<div className={'navButtons'}>*/}
-					{/*	<NavLink className={'navButtons__item'}*/}
-					{/*	         to="/ports"*/}
-					{/*	         onClick={() => ports.clearSelectedObjects()}*/}
-					{/*	> Ports*/}
-					{/*	</NavLink>*/}
-					{/*</div>*/}
-
 					<div className={classes.grow}/>
 					<div className={classes.sectionDesktop}>
-
-						{/* _________________Управление отображением уведомлений_________________ */}
-						{/*<IconButton aria-label="show 4 new mails" color="inherit">*/}
-						{/*	<Badge badgeContent={0} color="secondary">*/}
-						{/*		<NavLink to='/ports/'>*/}
-						{/*			<MailIcon className='header__icons'/>*/}
-						{/*		</NavLink>*/}
-						{/*	</Badge>*/}
-						{/*</IconButton>*/}
-
-						<HeaderNotifications />
-
-						{/*<IconButton aria-label="show 17 new notifications" color="inherit">*/}
-						{/*	<Badge badgeContent={allNewNote} color="secondary">*/}
-						{/*		<NavLink to='/events'>*/}
-						{/*			<NotificationsIcon className='header__icons'/>*/}
-						{/*		</NavLink>*/}
-						{/*	</Badge>*/}
-						{/*</IconButton>*/}
+						<HeaderNotifications/>
 
 						<NavLink to='/account'>
 							<IconButton

@@ -28,186 +28,278 @@ import {useWindowDimensions} from "../../../../useHooks/useWindowDimensions";
 import {AccordionFromTable} from "./Accordion";
 
 
-const useStyles = makeStyles((theme) => ({
-	root: {
-		width: "100%",
+const useStyles = makeStyles((theme) => {
+	const {avatar} = account.personalInformation;
 
-		display: "flex",
-		flexDirection: "column",
+	return ({
+		root: {
+			width: "100%",
 
-		alignItems: "center",
+			marginTop: 10,
 
-		textAlign: "left",
-	},
-	heading: {
-		fontSize: theme.typography.pxToRem(11),
-		flexBasis: '33.33%',
-		flexShrink: 0,
-		fontWeight: 500,
-
-		color: theme.palette.text.secondary,
-		textTransform: "uppercase",
-
-		margin: "auto 0",
-	},
-	secondaryHeading: {
-		marginLeft: "-12%",
-
-		fontSize: theme.typography.pxToRem(15),
-		color: theme.palette.text.primary,
-
-		"@media(max-width: 425px)": {
-			marginLeft: "-10%",
+			"@media(max-width: 425px)": {
+				alignItems: "flex-start",
+			},
 		},
-	},
-	accordion: {
-		width: "100%",
-	},
-	mainContainer: {
-		height: "calc(100% - 20px)",
+		heading: {
+			fontSize: theme.typography.pxToRem(11),
+			flexBasis: '33.33%',
+			flexShrink: 0,
+			fontWeight: 500,
 
-		margin: "20px 0",
-		position: "relative",
+			color: theme.palette.text.secondary,
+			textTransform: "uppercase",
 
-		"@media(max-width: 425px)": {
-			margin: 0,
+			margin: "auto 0",
 		},
-	},
-	substrate: {
-		position: "absolute",
+		secondaryHeading: {
+			marginLeft: "-12%",
 
-		width: "100%",
-		height: "100%",
+			fontSize: theme.typography.pxToRem(15),
+			color: theme.palette.text.primary,
 
-		top: "50%",
-		left: "50%",
-		zIndex: -1,
-		transform: "translate(-50%, -50%)",
+			"@media(max-width: 425px)": {
+				marginLeft: "-10%",
+			},
+		},
+		desktopPersonalInfo: {
+			width: "100%",
 
-		backgroundColor: "#ddd",
-		borderRadius: 10,
-
-		opacity: 0.7,
-	},
-	personalData: {
-		display: "flex",
-		flexGrow: 1,
-
-		"@media(max-width: 425px)": {
+			display: "flex",
 			flexDirection: "column",
+			alignItems: "center",
+
+			textAlign: "left",
+
+			"@media(max-width: 425px)": {
+				display: "none",
+			},
 		},
-	},
-	personalDataItem: {
-		flexDirection: "column",
-		flexGrow: 1,
-
-		"@media(max-width: 425px)": {
-			// margin: "10px 0px",
+		accordion: {
+			width: "100%",
 		},
-	},
-	personalDataContentLeft: {
-		height: "calc(100% - 20px)",
+		mainContainer: {
+			height: "calc(100% - 20px)",
 
-		margin: "20px 10px 20px 20px",
-		padding: "10px 40px",
-		backgroundColor: "#fff",
-		borderRadius: 10,
+			margin: "20px 0",
+			position: "relative",
 
-		textAlign: "center",
-
-		"@media(max-width: 425px)": {
-			padding: 10,
-			margin: "20px 20px 10px 20px",
+			"@media(max-width: 425px)": {
+				margin: 0,
+			},
 		},
-	},
-	personalDataContentRight: {
-		margin: "20px 20px 0px 10px",
-		padding: "10px 40px",
-		backgroundColor: "#fff",
-		borderRadius: 10,
+		substrate: {
+			position: "absolute",
 
-		textAlign: "center",
+			width: "100%",
+			height: "100%",
 
-		"@media(max-width: 425px)": {
-			margin: "10px 20px 20px 20px",
-			padding: 10,
+			top: "50%",
+			left: "50%",
+			zIndex: -1,
+			transform: "translate(-50%, -50%)",
+
+			backgroundColor: "#ddd",
+			borderRadius: 10,
+
+			opacity: 0.7,
 		},
-	},
-	mainTitle: {
-		fontWeight: 500,
-		fontSize: "1.5vw",
+		personalData: {
+			display: "flex",
+			flexGrow: 1,
 
-		"@media(max-width: 425px)": {
-			fontSize: "7vw",
+			"@media(max-width: 425px)": {
+				flexDirection: "column",
+			},
 		},
-	},
-	mainSubtitle: {
-		fontSize: "1.0vw",
+		personalDataItem: {
+			flexDirection: "column",
+			flexGrow: 1,
 
-		"@media(max-width: 425px)": {
+			"@media(max-width: 425px)": {
+				// margin: "10px 0px",
+			},
+		},
+		personalDataContentLeft: {
+			height: "calc(100% - 20px)",
+
+			margin: "20px 10px 20px 20px",
+			padding: "10px 40px",
+			backgroundColor: "#fff",
+			borderRadius: 10,
+
+			textAlign: "center",
+
+			"@media(max-width: 425px)": {
+				padding: 10,
+				margin: "20px 20px 10px 20px",
+			},
+		},
+		personalDataContentRight: {
+			margin: "20px 20px 0px 10px",
+			padding: "10px 40px",
+			backgroundColor: "#fff",
+			borderRadius: 10,
+
+			textAlign: "center",
+
+			"@media(max-width: 425px)": {
+				margin: "10px 20px 20px 20px",
+				padding: 10,
+			},
+		},
+		mainTitle: {
+			fontWeight: 500,
+			fontSize: "1.5vw",
+
+			"@media(max-width: 425px)": {
+				display: "none",
+				fontSize: "7vw",
+			},
+		},
+		mainSubtitle: {
+			fontSize: "1.0vw",
+
+			"@media(max-width: 425px)": {
+				display: "none",
+				fontSize: "4vw",
+			},
+		},
+		content: {
+			display: "flex",
+			flexDirection: "column",
+
+			marginTop: 15,
+			alignItems: "center",
+
+			"&.right": {
+				maxHeight: "340px",
+				overflowY: "auto",
+			},
+		},
+		avatar: {
+			width: "12vw",
+			height: "100%",
+
+			minWidth: 150,
+			minHeight: 200,
+			margin: "5px 0px",
+		},
+		actions: {
+			width: "100%",
+		},
+		actionItemName: {
+			width: "10vw",
+			minWidth: 100,
+			maxWidth: 200,
+
+			fontSize: 11,
+			textTransform: "uppercase",
+			color: "#777",
+		},
+		actionItemAction: {
+			width: "100%",
+			color: "#444",
+		},
+		quickPay: {
+			width: "100%",
+
+			display: "flex",
+			justifyContent: "center",
+
+			"@media(max-width: 320px)": {
+				width: "100%"
+			},
+		},
+		btn: {
+			width: "5vw",
+			margin: "0px 3px",
+
+			"@media(max-width: 425px)": {
+				margin: "0px 2px",
+			},
+
+			"@media(max-width: 320px)": {
+				// display: "none",
+			},
+		},
+
+		mobilePersonalInfo: {
+			display: "none",
+			width: "100%",
+
+			"@media(max-width: 425px)": {
+				display: "flex",
+
+				"&.editBtn": {
+					justifyContent: "center",
+				},
+			},
+		},
+		mobilePersonalInfoAvatar: {
+			display: "flex",
+
+			minWidth: 130,
+			minHeight: 130,
+
+			borderRadius: "50%",
+
+			backgroundImage: `url(${avatar})`,
+			backgroundPosition: 'center',
+			backgroundSize: 'cover',
+			backgroundRepeat: 'no-repeat',
+		},
+		mobilePersonalInfoData: {
+			display: "flex",
+			flexDirection: "column",
+			justifyContent: "space-around",
+
+			width: "100%",
+			textAlign: "left",
+			paddingLeft: 20,
+			margin: "0 5px",
+
+			overflowX: "auto",
+		},
+		mobilePersonalInfoDataItem: {
 			fontSize: "4vw",
+			fontWeight: 500,
+
+			"&.name": {
+				fontSize: "5vw",
+				fontWeight: 700,
+			},
+
+			"&.filed": {
+				color: "#666",
+				fontSize: "2.8vw",
+				textTransform: "uppercase",
+			},
+			"&.data": {
+				color: "#333",
+				fontWeight: 700,
+				textTransform: "uppercase",
+			},
 		},
-	},
-	content: {
-		display: "flex",
-		flexDirection: "column",
+		editBtn: {
+			width: "90vw",
+			marginTop: 30,
+			fontFamily: `"Quicksand", sans-serif`,
 
-		marginTop: 15,
-		alignItems: "center",
+			fontSize: "4vw",
+			color: "#f5f5f5",
+			fontWeight: 500,
+			border: "none",
+			borderRadius: 7,
+			backgroundColor: "#00a4d4",
 
-		"&.right": {
-			maxHeight: "340px",
-			overflowY: "auto",
+			"&:hover": {
+				border: "none",
+				backgroundColor: "#00a4d4",
+			},
 		},
-	},
-	avatar: {
-		width: "12vw",
-		height: "100%",
-
-		minWidth: 150,
-		minHeight: 200,
-		margin: "5px 0px",
-
-	},
-	actions: {
-		width: "100%",
-	},
-	actionItemName: {
-		width: "10vw",
-		minWidth: 100,
-		maxWidth: 200,
-
-		fontSize: 11,
-		textTransform: "uppercase",
-		color: "#777",
-	},
-	actionItemAction: {
-		width: "100%",
-		color: "#444",
-	},
-	quickPay: {
-		width: "100%",
-
-		display: "flex",
-		justifyContent: "center",
-
-		"@media(max-width: 320px)": {
-			width: "100%"
-		},
-	},
-	btn: {
-		width: "5vw",
-		margin: "0px 3px",
-
-		"@media(max-width: 425px)": {
-			margin: "0px 2px",
-		},
-
-		"@media(max-width: 320px)": {
-			// display: "none",
-		},
-	}
-}));
+	})
+});
 
 export const PersonalInformation = observer(() => {
 	/* STYLES */
@@ -215,7 +307,7 @@ export const PersonalInformation = observer(() => {
 
 
 	/* STORE */
-	const {avatar, name, firstName, secondName, company, status, phone, email} = account.personalInformation;
+	const {avatar, name, company, status, balance, phone, email} = account.personalInformation;
 	const {width} = useWindowDimensions();
 
 	/* HOOKS */
@@ -243,7 +335,7 @@ export const PersonalInformation = observer(() => {
 			if (key === "avatar" || key === "firstName" || key === "secondName") continue;
 
 			personalInfo.push(
-				<Accordion className={classes.accordion} expanded={expanded === key} onChange={handleChange(key)}>
+				<Accordion key={`personalInfo-${key}`} className={classes.accordion} expanded={expanded === key} onChange={handleChange(key)}>
 					<AccordionSummary
 						expandIcon={<ExpandMoreIcon/>}
 						aria-controls="panel1bh-content"
@@ -306,38 +398,63 @@ export const PersonalInformation = observer(() => {
 			}
 
 			default: {
-				console.log("default");
 				return "";
 			}
 		}
 	}
 
+	const personalInfoMobile = () => {
+		return (
+			<div className={classes.mobilePersonalInfoData}>
+				<div className={`${classes.mobilePersonalInfoDataItem} name`}>{name.first} {name.last}</div>
+				<div className={classes.mobilePersonalInfoDataItem}>{company}</div>
+				<div className={`${classes.mobilePersonalInfoDataItem} filed`}>COUNTRY: <span className={`${classes.mobilePersonalInfoDataItem} data`}>${balance}</span></div>
+				<div className={`${classes.mobilePersonalInfoDataItem} filed`}>
+					Status: <span className={`${classes.mobilePersonalInfoDataItem} data`}>{status}</span>
+				</div>
+			</div>
+		)
+	};
 
 	const personalTitle = PERSONAL_INFORMATION;
 	const personalSubtitle = "Here you can change personal information";
+	const mobilePersonalInfoAvatar = <div className={classes.mobilePersonalInfoAvatar}/>
 	const personalInformationActionList = () => {
 		return (
 			<div className={classes.root}>
-				<img className={classes.avatar} src={avatar} alt="user avatar"/>
 
-				{persInfoAccordion()}
+				<div className={classes.desktopPersonalInfo}>
+					<img className={classes.avatar} src={avatar} alt="user avatar"/>
+					{persInfoAccordion()}
+					<Accordion expanded={expanded === "Quick pay"} onChange={handleChange("Quick pay")}>
+						<AccordionSummary
+							expandIcon={<ExpandMoreIcon/>}
+							aria-controls="panel4bh-content"
+							id="panel4bh-header"
+						>
+							<Typography className={classes.heading}>Quick pay</Typography>
+							<Typography component={'span'} className={classes.secondaryHeading}>{quickPay()}</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<Typography>
+								Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
+								vitae egestas augue. Duis vel est augue.
+							</Typography>
+						</AccordionDetails>
+					</Accordion>
+				</div>
 
-				<Accordion expanded={expanded === "Quick pay"} onChange={handleChange("Quick pay")}>
-					<AccordionSummary
-						expandIcon={<ExpandMoreIcon/>}
-						aria-controls="panel4bh-content"
-						id="panel4bh-header"
-					>
-						<Typography className={classes.heading}>Quick pay</Typography>
-						<Typography className={classes.secondaryHeading}>{quickPay()}</Typography>
-					</AccordionSummary>
-					<AccordionDetails>
-						<Typography>
-							Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
-							vitae egestas augue. Duis vel est augue.
-						</Typography>
-					</AccordionDetails>
-				</Accordion>
+				<div className={classes.mobilePersonalInfo}>
+					{mobilePersonalInfoAvatar}
+					{personalInfoMobile()}
+				</div>
+
+				<div className={`${classes.mobilePersonalInfo} editBtn`}>
+					<Button className={classes.editBtn} variant="outlined" color="primary">
+						Edit Profile
+					</Button>
+				</div>
+
 			</div>
 		);
 	};
@@ -370,7 +487,7 @@ export const PersonalInformation = observer(() => {
 				{lastPays.map(pay => (
 					<Button
 						className={classes.btn}
-						key={`${pay.price}`}
+						key={`quickPay-btn-${pay.price}`}
 						variant="contained"
 						color="primary"
 					>
@@ -431,7 +548,8 @@ export const PersonalInformation = observer(() => {
 			<div className={`${classes.content} right`}>
 				{width <= 425
 					? <AccordionFromTable tableData={allDevicesShort()} header={"Country"}/>
-					: <AccountTable secretTitle={"Personal information: short Devices"} rowsData={allDevicesShort()} search={"Camera Name"} searchLabel={"Devices Name"}/>}
+					: <AccountTable secretTitle={"Personal information: short Devices"} rowsData={allDevicesShort()}
+					                search={"Camera Name"} searchLabel={"Devices Name"}/>}
 			</div>
 		)
 	};
@@ -452,7 +570,8 @@ export const PersonalInformation = observer(() => {
 			<div className={`${classes.content} right`}>
 				{width <= 425
 					? <AccordionFromTable tableData={allFleetShort()} header={"IMO"}/>
-					: <AccountTable secretTitle={"Personal information: short Fleet"} rowsData={allFleetShort()} search={"IMO"} searchLabel={"Fleet IMO"}/>}
+					: <AccountTable secretTitle={"Personal information: short Fleet"} rowsData={allFleetShort()}
+					                search={"IMO"} searchLabel={"Fleet IMO"}/>}
 			</div>
 		)
 	};

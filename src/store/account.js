@@ -61,12 +61,12 @@ class account {
             first: "Fernan",
             last: "Magellan",
         },
-        firstName: "Fernan",
-        secondName: "Magellan",
         // sex: "male",
         company: "ServiceSoft",
-        // status: "Gold",
-        phone: '+X (XXX) XXX-XX-XX',
+        status: "Gold",
+        balance: 500,
+        // phone: '+X (XXX) XXX-XX-XX',
+        phone: '8 800 555-35-35',
         email: 'servise.soft@somemail.com',
     };
 

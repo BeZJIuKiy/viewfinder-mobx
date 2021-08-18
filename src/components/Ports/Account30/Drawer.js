@@ -41,7 +41,7 @@ export const Drawer = observer(() => {
 
     const drawerItems = account.drawerItems.map(({id, icon, title}, i) => {
         return (
-            <div key={title}>
+            <div key={`drawerItems-${title}`}>
                 <List component="nav" aria-label="main mailbox folders">
                     <ListItem
                         className={`${classes.active} ${i === account.selectedItemIndex ? "isActive" : "noActive"}`}

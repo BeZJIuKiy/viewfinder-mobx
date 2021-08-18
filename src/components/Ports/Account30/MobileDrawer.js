@@ -11,6 +11,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
+import account from "../../../store/account";
+import {Icon} from "@material-ui/core";
 
 const useStyles = makeStyles({
 	list: {
@@ -22,6 +24,15 @@ const useStyles = makeStyles({
 	menuIcon: {
 		fontSize: 32,
 		fill: "#fff",
+	},
+	active: {
+		"&.isActive": {
+			color: "#333",
+		},
+
+		"&.noActive": {
+			color: "#aaa",
+		}
 	},
 });
 
@@ -42,34 +53,41 @@ export const MobileDrawer = () => {
 		setState({...state, [anchor]: open});
 	};
 
-	const list = (anchor) => (
-		<div
-			className={clsx(classes.list, {
-				[classes.fullList]: anchor === 'top' || anchor === 'bottom',
-			})}
-			role="presentation"
-			onClick={toggleDrawer(anchor, false)}
-			onKeyDown={toggleDrawer(anchor, false)}
-		>
-			<List>
-				{['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-					<ListItem button key={text}>
-						<ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
-						<ListItemText primary={text}/>
+	const handleSelectItem = (index) => {
+		account.setSelectedItem(index);
+	}
+
+	const drawerItems = (anchor) => account.drawerItems.map(({id, icon, title}, i) => {
+		return (
+			<div
+				className={clsx(classes.list, {
+					[classes.fullList]: anchor === 'top' || anchor === 'bottom',
+				})}
+				role="presentation"
+				onClick={toggleDrawer(anchor, false)}
+				onKeyDown={toggleDrawer(anchor, false)}
+			>
+				<List component="nav" aria-label="main mailbox folders">
+					<ListItem
+						className={`${classes.active} ${i === account.selectedItemIndex ? "isActive" : "noActive"}`}
+						button
+						onClick={() => handleSelectItem(i)}
+					>
+						<ListItemIcon>
+							<Icon>
+								{icon}
+							</Icon>
+						</ListItemIcon>
+
+						<ListItemText
+
+							primary={title}
+						/>
 					</ListItem>
-				))}
-			</List>
-			<Divider/>
-			<List>
-				{['All mail', 'Trash', 'Spam'].map((text, index) => (
-					<ListItem button key={text}>
-						<ListItemIcon>{index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}</ListItemIcon>
-						<ListItemText primary={text}/>
-					</ListItem>
-				))}
-			</List>
-		</div>
-	);
+				</List>
+			</div>
+		)
+	});
 
 	const anchor = 'left';
 
@@ -79,7 +97,7 @@ export const MobileDrawer = () => {
 					<ListItemIcon><MenuIcon className={classes.menuIcon}/></ListItemIcon>
 				</Button>
 				<Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-					{list(anchor)}
+					{drawerItems(anchor)}
 				</Drawer>
 			</React.Fragment>
 	);
