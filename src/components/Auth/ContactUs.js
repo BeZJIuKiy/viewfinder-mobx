@@ -73,8 +73,22 @@ const useStyles = makeStyles((theme) => ({
 			},
 		},
 
+		'@media(max-width: 1024px)': {
+			fontSize: 36,
+
+			"&.telegram": {
+				backgroundColor: "#0088dd",
+			},
+			"&.phone": {
+				backgroundColor: "#0d7c04",
+			},
+			"&.email": {
+				backgroundColor: "#d33738",
+			},
+		},
+
 		'@media(max-width: 768px)': {
-			// fontSize: "10vw",
+			fontSize: 36,
 
 			"&.telegram": {
 				backgroundColor: "#0088dd",
@@ -120,6 +134,14 @@ const useStyles = makeStyles((theme) => ({
 		"&:hover": {
 			backgroundColor: "transparent",
 			boxShadow: "none",
+		},
+
+		'@media(max-width: 1024px)': {
+			fontSize: 18,
+		},
+
+		'@media(max-width: 768px)': {
+			fontSize: 18,
 		},
 
 		'@media(max-width: 425px)': {

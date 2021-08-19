@@ -31,7 +31,14 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         height: "calc(100% - 40px)",
 
+        margin: "20px 0",
+
         position: "relative",
+
+        "@media(max-width: 425px)": {
+            minWidth: 0,
+            margin: 0,
+        },
     },
     substrate: {
         position: "absolute",

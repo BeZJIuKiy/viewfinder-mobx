@@ -26,6 +26,14 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		fontSize: "2.5vw",
 		fontFamily: `"Quicksand", sans-serif`,
+
+		"@media(max-width: 1024px)": {
+			fontSize: 18,
+		},
+
+		"@media(max-width: 768px)": {
+			fontSize: 18,
+		},
 	},
 	rememberMe: {
 		fontFamily: `"Quicksand", sans-serif`,
@@ -54,15 +62,21 @@ const useStyles = makeStyles((theme) => ({
 
 		backgroundColor: "#3d4772",
 
+		"@media(max-width: 1024px)": {
+			fontSize: 18,
+		},
+
+		"@media(max-width: 768px)": {
+			fontSize: 18,
+		},
+
 		"@media(max-width: 425px)": {
 			fontSize: "5vw",
+		},
 
-			// backgroundColor: "#3d4772",
-
-			"&:hover": {
-				backgroundColor: "#374fb9",
-			},
-		}
+		"&:hover": {
+			backgroundColor: "#374fb9",
+		},
 	},
 
 	checkBox: {

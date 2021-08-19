@@ -80,12 +80,12 @@ export const Events20 = observer(() => {
     } = ports;
     const {camerasNewNote} = header;
 
-
-
     const [currentBoat, setCurrentBoat] = useState('');
     const [otherCameras, setOtherCameras] = useState();
     const [selectedEvent, setSelectedEvent] = useState(camera);
     const [action, setAction] = useState(<div/>);
+    // const [tResponse, setTResponse] = useState(null);
+
 
     useEffect(() => {
         setCurrentBoat(event.typeVessel);
@@ -230,6 +230,8 @@ export const Events20 = observer(() => {
         new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
     }
     const saveNewPolygonsData = () => {
+        fetchPostPolygon(canvasState.test.get(camera.id), "http://192.168.250.183:8080/api/positions");
+
         canvasState.setCreatePolygon(false);
         canvasState.setZoneAction("");
     }
@@ -239,6 +241,35 @@ export const Events20 = observer(() => {
         canvasState.setZoneAction("");
     }
 
+    const fetchPostPolygon = async (data, url) => {
+        try {
+            console.log(data)
+            // const url = "http://192.168.250.183:8080/api/positions";
+
+            const response = await fetch(url, {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(data) // body data type must match "Content-Type" header
+            });
+
+            // console.log(response.message);
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    const fetchGetPolygon = () => {
+        try {
+            const url = "http://192.168.250.183:8080/api/positions";
+            fetch(url)
+                .then(response => response.json())
+                .then(data => console.log(data));
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     if (!Number.isInteger(camera.id)) ports.setSelectedCamera(0);
 
@@ -250,6 +281,7 @@ export const Events20 = observer(() => {
 
     const btnControlName = canvasState.isVisibleCameraCanvas ? "Control Camera" : "Show Detected Areas";
     const btnControlZonesName = canvasState.isCreatePolygon ? "Draw detected areas " : "Create control zones";
+
 
     return (
         <div className='events'>

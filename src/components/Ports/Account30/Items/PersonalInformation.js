@@ -121,6 +121,7 @@ const useStyles = makeStyles((theme) => {
 			},
 		},
 		personalDataContentLeft: {
+			minWidth: 580,
 			height: "calc(100% - 20px)",
 
 			margin: "20px 10px 20px 20px",
@@ -131,6 +132,7 @@ const useStyles = makeStyles((theme) => {
 			textAlign: "center",
 
 			"@media(max-width: 425px)": {
+				minWidth: 0,
 				padding: 10,
 				margin: "20px 20px 10px 20px",
 			},
