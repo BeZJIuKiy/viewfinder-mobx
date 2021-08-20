@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Map, Placemark, YMaps} from 'react-yandex-maps';
+import {Clusterer, Map, Placemark, YMaps} from 'react-yandex-maps';
 import './yaMap.css';
 import ports from "../../../store/ports";
 import {observer} from "mobx-react-lite";
@@ -164,7 +164,14 @@ const YaMap = observer(({isVisible, style}) => {
 					     'control.RulerControl',
 				     ]}
 				>
+					<Clusterer
+						options={{
+							preset: 'islands#invertedYellowClusterIcons',
+							groupByCoordinates: false,
+						}}
+					>
 					{portsCoordinates}
+					</Clusterer>
 				</Map>
 
 			</YMaps>

@@ -7,6 +7,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import VideoCam from '@material-ui/icons/Videocam';
 import {mdiFerry} from '@mdi/js';
 import PaymentIcon from '@material-ui/icons/Payment';
+import {AutoSave} from "./AutoSave";
 
 
 export const PERSONAL_INFORMATION = "Personal Information";
@@ -78,6 +79,7 @@ class account {
     constructor() {
         makeAutoObservable(this);
         this.myFleet = this.testFleet();
+        // AutoSave(this, "account");
     }
 
     testFleet = () => {

@@ -85,6 +85,7 @@ export const Test = () => {
 	const getPoints = () => {
 		try {
 			const url = "http://192.168.250.183:8080/api/positions";
+			// const url = "https://jsonplaceholder.typicode.com/users";
 			fetch(url)
 				.then(response => response.json())
 				.then(data => console.log(data));
@@ -93,37 +94,39 @@ export const Test = () => {
 			console.log(e)
 		}
 	};
-
 	const postPoints = async () => {
 		// const pointsToSend = this.polygons.map((polygon) =>
-		const pointsToSend = canvasState.test.get(ports.selectedObjects.camera).map((polygon) =>
+		const pointsToSend = canvasState.test.get(ports.selectedObjects.camera.id).map((polygon) =>
 			polygon.getPoints().map((point) => ({
 				...point, x: point.x * canvasState.pointCoefficient, y: point.y * canvasState.pointCoefficient
 			}))
 		);
 
+		console.log(pointsToSend);
+
 		try {
 			const url = "http://192.168.250.183:8080/api/positions";
 
-			const response = await fetch(url, {
-				method: "POST", // *GET, POST, PUT, DELETE, etc.
-				mode: "cors", // no-cors, *cors, same-origin
-				cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-				credentials: "same-origin", // include, *same-origin, omit
-				headers: {
-					"Content-Type": "application/json"
-					// 'Content-Type': 'application/x-www-form-urlencoded',
-				},
-				redirect: "follow", // manual, *follow, error
-				referrerPolicy: "no-referrer", // no-referrer, *client
-				body: JSON.stringify(pointsToSend), // body data type must match "Content-Type" header
-			})
+			// const response = await fetch(url, {
+			// 	method: "POST", // *GET, POST, PUT, DELETE, etc.
+			// 	mode: "cors", // no-cors, *cors, same-origin
+			// 	cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+			// 	credentials: "same-origin", // include, *same-origin, omit
+			// 	headers: {
+			// 		"Content-Type": "application/json"
+			// 		// 'Content-Type': 'application/x-www-form-urlencoded',
+			// 	},
+			// 	redirect: "follow", // manual, *follow, error
+			// 	referrerPolicy: "no-referrer", // no-referrer, *client
+			// 	body: JSON.stringify(pointsToSend), // body data type must match "Content-Type" header
+			// })
 		} catch (e) {
 			console.log(e)
 		}
 	}
 
-	getPoints();
+	postPoints();
+	// getPoints();
 
 	return <div>123</div>
 }

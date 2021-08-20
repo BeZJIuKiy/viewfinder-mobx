@@ -6,33 +6,48 @@ import Polygons from "./chageFigure/Polygons";
 import canvasState from "../../../store/canvasState";
 import ports from "../../../store/ports";
 import {makeStyles} from "@material-ui/core/styles";
+import backgroundImage320px from "../../Auth/images/background320px.jpg";
 
-const useStyles = makeStyles((theme) => ({
-	main: {
-		display: "flex",
-		justifyContent: "center",
-	},
+const useStyles = makeStyles((theme) => {
+	const {camera} = ports.selectedObjects
 
-	canvasDraw: {
-		position: "relative",
-	},
-
-	canvas: {
-		background: "none",
-
-		position: "absolute",
-		top: 0,
-		left: 0,
-		display: "block",
-
-		"&.show": {
-			zIndex: 2,
+	return ({
+		main: {
+			display: "flex",
+			justifyContent: "center",
 		},
-		"&.hide": {
-			zIndex: -2,
-		}
-	}
-}));
+
+		canvasDraw: {
+			position: "relative",
+		},
+
+		canvas: {
+			background: "none",
+
+			position: "absolute",
+			top: 0,
+			left: 0,
+			display: "block",
+
+			"&.show": {
+				zIndex: 2,
+			},
+			"&.hide": {
+				zIndex: -2,
+			}
+		},
+
+		forPreview: {
+			width: 800,
+			height: 450,
+
+			backgroundImage: `url(${camera.link})`,
+			backgroundPosition: 'center',
+			backgroundSize: 'cover',
+			backgroundRepeat: 'no-repeat',
+		},
+	})
+});
 
 export const Canvas = observer(() => {
 	const canvasRef = useRef();
@@ -100,7 +115,6 @@ export const Canvas = observer(() => {
 		canvasState.setCanvas(canvasRef.current);
 		displayResolution(width / height);
 	}, []);
-
 	useEffect(() => {
 		const socket = new WebSocket('ws://localhost:5000/');
 
@@ -113,14 +127,17 @@ export const Canvas = observer(() => {
 	return (
 		<div className={classes.main}>
 			<div className={classes.canvasDraw}>
-				<iframe
-					// src="https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1"
-					src={ports.selectedObjects.camera.link}
-					width={width} height={height} title="YouTube video player"
-					ref={iframeRef}
-					frameBorder="0"
-					allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-					allowFullScreen/>
+				{/*<iframe*/}
+				{/*	// src="https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1"*/}
+				{/*	src={ports.selectedObjects.camera.link}*/}
+				{/*	width={width} height={height} title="YouTube video player"*/}
+				{/*	ref={iframeRef}*/}
+				{/*	frameBorder="0"*/}
+				{/*	allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
+				{/*	allowFullScreen/>*/}
+				<div className={classes.forPreview}>
+
+				</div>
 				<canvas
 					className={`${classes.canvas} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}
 					ref={canvasRef} width={width} height={height}/>

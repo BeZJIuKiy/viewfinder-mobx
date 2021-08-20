@@ -8,6 +8,7 @@ import boat1_04 from '../components/Ports/Events/images/b1-04.jpg'
 import {makeAutoObservable} from "mobx";
 import boat1_01 from '../components/Ports/Events/images/b1-01.jpg'
 import canvasState from "./canvasState";
+import {AutoSave} from "./AutoSave";
 // import boat1_02 from '../components/Ports/Events/images/b1-02.jpg'
 // import boat1_05 from '../components/Ports/Events/images/b1-05.jpg'
 
@@ -69,7 +70,8 @@ class ports {
 					description: 'Club Parking STATIC',
 					coordinates: [59.977915, 30.240934],
 					zoom: 15,
-					link: 'https://rtsp.me/embed/ayAby5ia',
+					link: 'http://192.168.250.240:8080/bgr',
+					// link: 'https://rtsp.me/embed/ayAby5ia',
 
 					events: [
 						{
@@ -131,7 +133,8 @@ class ports {
 					description: 'Club Parking PTZ',
 					coordinates: [59.977913, 30.240952],
 					zoom: 15,
-					link: 'https://rtsp.me/embed/hitQb4bf/',
+					link: 'http://192.168.250.240:8080/bgr',
+					// link: 'https://rtsp.me/embed/hitQb4bf/',
 
 					events: [
 						{
@@ -323,7 +326,8 @@ class ports {
 	];
 
 	constructor() {
-		makeAutoObservable(this)
+		makeAutoObservable(this);
+		// AutoSave(this, "ports");
 	}
 
 	setSelectedPort = (index) => {

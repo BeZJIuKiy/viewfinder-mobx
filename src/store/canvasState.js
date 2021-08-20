@@ -128,7 +128,7 @@ class CanvasState {
         const polygons = [];
         this.test.set(id, polygons);
 
-        console.log(this.test);
+        // console.log(this.test);
     }
 
     addPolygon(camId, polygon) {
