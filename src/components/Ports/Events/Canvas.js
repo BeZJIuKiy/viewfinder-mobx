@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => {
 			height: 450,
 
 			backgroundImage: `url(${camera.link})`,
+			// backgroundImage: `url(${camera.previewLink})`,
 			backgroundPosition: 'center',
 			backgroundSize: 'cover',
 			backgroundRepeat: 'no-repeat',

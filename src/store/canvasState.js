@@ -1,4 +1,6 @@
 import {makeAutoObservable} from "mobx";
+import {makePersistable} from "mobx-persist-store";
+import ports from "./ports";
 
 class CanvasState {
     canvas = null;
@@ -72,11 +74,41 @@ class CanvasState {
     isPolygonSelected = false;
     currentPolygonNum = null;
 
-    test = new Map();
+    saveDataTest = {};
+    // test = new Map();
 
 
     constructor() {
-        makeAutoObservable(this);
+        // makeAutoObservable(this);
+
+        makeAutoObservable(this, {}, { autoBind: true });
+
+        // makePersistable(this, {
+        //     name: "CanvasStore",
+        //     properties: [
+        //         // "canvas",
+        //         // "socket",
+        //         // "sessionId",
+        //         "userName",
+        //         "isVisibleCameraCanvas",
+        //         "isCreatePolygon",
+        //         "zoneAction",
+        //         "tempPolygons",
+        //         "size",
+        //         "pointCoefficient",
+        //         "canvasSize",
+        //         "username",
+        //         "readyRectCounter",
+        //         "isPolygonSelected",
+        //         "currentPolygonNum",
+        //         "saveDataTest",
+        //         // "test",
+        //     ],
+        //     storage: window.localStorage
+        // });
+
+        // console.log(ports)
+        // if (ports.selectedObjects.camera.id)
     }
 
     getCanvasDif = () => this.canvasSize.difS;
@@ -123,22 +155,27 @@ class CanvasState {
     }
 
     setPolygonInCamera = (id) => {
-        if (this.test.has(id)) return;
-
-        const polygons = [];
-        this.test.set(id, polygons);
-
         // console.log(this.test);
+        this.saveDataTest[id] = [];
+
+        // if (this.test.has(id)) return;
+        //
+        // const polygons = [];
+        // this.test.set(id, polygons);
     }
 
     addPolygon(camId, polygon) {
-        const polygons = this.test.get(camId);
-        polygons.push(polygon);
+        this.saveDataTest[camId].push(polygon);
+
+        // const polygons = this.test.get(camId);
+        // polygons.push(polygon);
     }
 
     changePolygon(camId, index, polygon) {
-        const polygons = this.test.get(camId);
-        polygons.splice(index, 1, polygon);
+        this.saveDataTest[camId].splice(index, 1, polygon);
+
+        // const polygons = this.test.get(camId);
+        // polygons.splice(index, 1, polygon);
     }
 
     setPolygonSelect = (isSelect) => {
@@ -150,8 +187,10 @@ class CanvasState {
     }
 
     deletePolygon(camId, index) {
-        const polygons = this.test.get(camId);
-        polygons.splice(index, 1);
+        this.saveDataTest[camId].splice(index, 1);
+
+        // const polygons = this.test.get(camId);
+        // polygons.splice(index, 1);
     }
 }
 

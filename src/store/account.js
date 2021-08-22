@@ -8,6 +8,7 @@ import VideoCam from '@material-ui/icons/Videocam';
 import {mdiFerry} from '@mdi/js';
 import PaymentIcon from '@material-ui/icons/Payment';
 import {AutoSave} from "./AutoSave";
+import {makePersistable} from "mobx-persist-store";
 
 
 export const PERSONAL_INFORMATION = "Personal Information";
@@ -77,8 +78,16 @@ class account {
 
 
     constructor() {
-        makeAutoObservable(this);
+        // makeAutoObservable(this);
+
+        makeAutoObservable(this, {}, { autoBind: true });
         this.myFleet = this.testFleet();
+
+        makePersistable(this, {
+            name: "AccountStore",
+            properties: ["selectedItem", "selectedItemIndex"],
+            storage: window.localStorage
+        });
         // AutoSave(this, "account");
     }
 

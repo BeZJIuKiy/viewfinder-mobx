@@ -27,7 +27,9 @@ export const SetTypeAction = observer(() => {
 
     useEffect((e) => {
         if (Number.isInteger(canvasState.currentPolygonNum)) {
-            const curType = canvasState.test.get(ports.selectedObjects.camera.id)[canvasState.currentPolygonNum].getAttributeType();
+            console.log(canvasState.saveDataTest[ports.selectedObjects.camera.id])
+            // const curType = canvasState.test.get(ports.selectedObjects.camera.id)[canvasState.currentPolygonNum].getAttributeType();
+            const curType = canvasState.saveDataTest[ports.selectedObjects.camera.id][canvasState.currentPolygonNum].getAttributeType();
             switch (curType) {
                 case ZONE_TYPE_IN_OUT: {
                     setType(ZONE_TYPE_IN_OUT);
@@ -54,22 +56,24 @@ export const SetTypeAction = observer(() => {
     const handleChange = (e) => {
         switch (e.target.value) {
             case ZONE_TYPE_IN_OUT: {
-                canvasState.test.get(ports.selectedObjects.camera.id)[canvasState.currentPolygonNum].setAttributeType(ZONE_TYPE_IN_OUT)
+                canvasState.saveDataTest[ports.selectedObjects.camera.id][canvasState.currentPolygonNum].setAttributeType(ZONE_TYPE_IN_OUT)
+                // canvasState.test.get(ports.selectedObjects.camera.id)[canvasState.currentPolygonNum].setAttributeType(ZONE_TYPE_IN_OUT)
                 break;
             }
 
             case ZONE_TYPE_PARKING: {
-                canvasState.test.get(ports.selectedObjects.camera.id)[canvasState.currentPolygonNum].setAttributeType(ZONE_TYPE_PARKING)
+                canvasState.saveDataTest[ports.selectedObjects.camera.id][canvasState.currentPolygonNum].setAttributeType(ZONE_TYPE_PARKING)
+                // canvasState.test.get(ports.selectedObjects.camera.id)[canvasState.currentPolygonNum].setAttributeType(ZONE_TYPE_PARKING)
                 break;
             }
 
             case ZONE_TYPE_RESTRICTED_AREA: {
-                canvasState.test.get(ports.selectedObjects.camera.id)[canvasState.currentPolygonNum].setAttributeType(ZONE_TYPE_RESTRICTED_AREA)
+                canvasState.saveDataTest[ports.selectedObjects.camera.id][canvasState.currentPolygonNum].setAttributeType(ZONE_TYPE_RESTRICTED_AREA)
                 break;
             }
 
             default: {
-                canvasState.test.get(ports.selectedObjects.camera.id)[canvasState.currentPolygonNum].setAttributeType("DEFAULT")
+                canvasState.saveDataTest[ports.selectedObjects.camera.id][canvasState.currentPolygonNum].setAttributeType("DEFAULT")
             }
         }
 

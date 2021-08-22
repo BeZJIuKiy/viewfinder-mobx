@@ -71,6 +71,7 @@ const useStyles = makeStyles((theme) => {
 		},
 
 		forPreview: {
+			width: 360,
 			minWidth: "100%",
 			height: 184,
 		},
@@ -99,12 +100,17 @@ export const Events20 = observer(() => {
 		setCurrentBoat(event.typeVessel);
 		ports.setVisibleSelectedImage(false);
 		ports.setImageId(-1);
+	}, []);
+	useEffect(() => {
+		setCurrentBoat(event.typeVessel);
+		ports.setVisibleSelectedImage(false);
+		ports.setImageId(-1);
 	}, [event]);
 	useEffect(() => {
 		setSelectedEvent(findImageId())
 	}, [imageId]);
 	useEffect(() => {
-		setOtherCameras(port.cameras.map(({id, description, events, link}, i) => {
+		setOtherCameras(port.cameras.map(({id, description, events, link, previewLink}, i) => {
 			if (id !== camera.id) {
 				const notifications = camerasNewNote[i]
 					? (
@@ -140,7 +146,7 @@ export const Events20 = observer(() => {
 						{/*	allowFullScreen*/}
 						{/*/>*/}
 
-						<img className={classes.forPreview} src={link} alt="123"/>
+						<img className={classes.forPreview} src={previewLink} alt="123"/>
 					</div>
 				)
 			}
@@ -221,7 +227,8 @@ export const Events20 = observer(() => {
 	}
 	const createChangePolygon = () => {
 		canvasState.setCreatePolygon(true);
-		canvasState.tempPolygons = canvasState.test.get(camera.id);
+		canvasState.tempPolygons = canvasState.saveDataTest[camera.id];
+		// canvasState.tempPolygons = canvasState.test.get(camera.id);
 
 		if (canvasState.tempPolygons.length) {
 			canvasState.tempPolygons = canvasState.tempPolygons.map(polygon => {
@@ -247,7 +254,8 @@ export const Events20 = observer(() => {
 		canvasState.setZoneAction("");
 	}
 	const deleteNewPolygonsData = () => {
-		canvasState.test.set(camera.id, canvasState.tempPolygons);
+		// canvasState.test.set(camera.id, canvasState.tempPolygons);
+		canvasState.saveDataTest[camera.id] = canvasState.tempPolygons;
 		canvasState.setCreatePolygon(false);
 		canvasState.setZoneAction("");
 	}
@@ -283,7 +291,7 @@ export const Events20 = observer(() => {
 	}
 
 
-	const getPoints = () => {
+	const getPoints = (url) => {
 		try {
 			// const url = "http://192.168.250.183:8080/api/positions";
 			const url = "http://192.168.250.183:5001/api/zones";
@@ -296,7 +304,8 @@ export const Events20 = observer(() => {
 		}
 	};
 	const postPoints = async () => {
-		const polygons = canvasState.test.get(ports.selectedObjects.camera.id).map((polygon) => ({
+		// const polygons = canvasState.test.get(ports.selectedObjects.camera.id).map((polygon) => ({
+		const polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id].map((polygon) => ({
 				name: "111",
 				color: polygon.getAttributeFillColor(),
 				points: polygon.getPoints().map((point) => ({
@@ -370,6 +379,9 @@ export const Events20 = observer(() => {
 	const btnControlName = canvasState.isVisibleCameraCanvas ? "Control Camera" : "Show Detected Areas";
 	const btnControlZonesName = canvasState.isCreatePolygon ? "Draw detected areas " : "Create control zones";
 
+	// console.log(window.localStorage);
+
+	// if (camera.id)
 
 	return (
 		<div className='events'>

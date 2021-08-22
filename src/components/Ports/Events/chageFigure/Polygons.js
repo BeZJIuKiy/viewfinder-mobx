@@ -30,7 +30,11 @@ export default class Polygons {
 
 		this.ctx = canvas.getContext('2d');
 
-		this.polygons = canvasState.test.get(ports.selectedObjects.camera.id);
+		console.log(ports.selectedObjects.camera.id);
+		console.log(canvasState.saveDataTest);
+		// this.polygons = [];
+		// this.polygons = canvasState.test.get(ports.selectedObjects.camera.id);
+		this.polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id];
 
 		/* DELETE */
 		// if (this.polygons.length) {
@@ -133,6 +137,8 @@ export default class Polygons {
 	}
 
 	lmbUp = (e) => {
+		console.log("lmbUp");
+
 		if (this.isCreateRect) this.createNewPolygon();
 
 		this.isDrag = false;
@@ -143,7 +149,7 @@ export default class Polygons {
 		this.polygons = this.showCenterPoint();
 		this.selectPolygon() ? this.polygonSelection() : this.drawPolygons();
 
-		this.postPolygon("https://lockalhost:5000", this.polygons);
+		// this.postPolygon("https://lockalhost:5000", this.polygons);
 		// .then((data) => {
 		// 	console.log(data);  // JSON data parsed by `response.json()` call
 		// })
@@ -171,6 +177,7 @@ export default class Polygons {
 			this.polygons = this.showCenterPoint();
 		}
 
+		console.log("rmbUp");
 		this.drawPolygons();
 	}
 
@@ -178,7 +185,8 @@ export default class Polygons {
 	createNewPolygon = () => {
 		this.isCreateRect = false;
 		canvasState.addPolygon(this.cameraId, new Polygon(canvasState.readyRectCounter, this.startX, this.startY, this.width, this.height));
-		this.polygons = canvasState.test.get(this.cameraId);
+		// this.polygons = canvasState.test.get(this.cameraId);
+		this.polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id];
 	}
 
 
@@ -219,10 +227,13 @@ export default class Polygons {
 			points: this.polygons[this.curPolygon].getPoints()
 		};
 
+		console.log("redrawPoint");
 		this.drawPolygons(pointsWithId);
 		this.preparationPoints(pointsWithId[this.curPolygon], pointsWithId[this.curPolygon].points);
 	}
 	polygonSelection = () => {
+		console.log("polygonSelection");
+
 		this.drawPolygons();
 		const polygon = this.polygons[this.curPolygon];
 		const points = this.polygons[this.curPolygon].getPoints();
@@ -299,7 +310,11 @@ export default class Polygons {
 		}
 	}
 	selectPolygon = () => {
+		if (this.polygons.length === 0) return;
+
 		let findedPolygon = false;
+		console.log(this.polygons[0]);
+
 		for (let i = 0; i < this.polygons.length; ++i) {
 			const points = this.polygons[i].getPoints();
 			this.ctx.beginPath();
@@ -318,6 +333,8 @@ export default class Polygons {
 	}
 
 	drawPolygons(polygons = this.polygons) {
+		console.log("drawPolygons");
+
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		canvasState.setPolygonSelect(this.selectPolygon());
 
