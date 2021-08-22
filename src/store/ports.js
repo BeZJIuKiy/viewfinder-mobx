@@ -371,6 +371,11 @@ class ports {
         this.selectedObjects.event = {};
     };
 
+    setEvents = (events) => {
+        // this.selectedObjects.camera.events = events;
+        this.data[0].cameras[0].events = events;
+    }
+
     setVisibleSelectedImage = (isVisible) => {
         this.selectedObjects.shipImage.isVisible = isVisible;
     };

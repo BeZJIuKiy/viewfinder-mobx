@@ -39,7 +39,7 @@ export const TestImage = () => {
 		typeof event.id !== "undefined"
 			? setData(camera.events.filter(item => item.typeVessel === event.typeVessel))
 			: setData(camera.events);
-	}, [event, camera]);
+	}, [event, camera, camera.events]);
 
 	const boatImage = data.map(({id, imageLink, typeVessel}) => {
 		return (
@@ -51,7 +51,8 @@ export const TestImage = () => {
 			>
 				<img
 					style={{cursor: 'pointer'}}
-					src={imageLink} alt={typeVessel}
+					src={"data:image/png;base64," + imageLink} alt={typeVessel}
+					// src={imageLink} alt={typeVessel}
 				/>
 				<GridListTileBar
 					className={classes.titleBar}

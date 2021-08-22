@@ -256,7 +256,7 @@ export const BoatEvents = observer(() => {
 		);
 
 		setSelected([]);
-	}, [event, camera]);
+	}, [event, camera, camera.events]);
 
 	useEffect(() => {
 		if (imageId >= 0) setSelected([imageId]);
