@@ -1,6 +1,7 @@
 // Icons
 import mIcon_ports from '../components/Ports/Drawer/images/harborIcon02.png';
 import mIcon_cameras from '../components/Ports/Drawer/images/camIcon.png';
+import previewImg from '../img/preView̆.jpg';
 
 // Boath
 import boat1_03 from '../components/Ports/Events/images/b1-03.jpg'
@@ -72,7 +73,7 @@ class ports {
                     coordinates: [59.977915, 30.240934],
                     zoom: 15,
                     link: 'http://192.168.250.240:8080/bgr',
-                    previewLink: boat1_01,
+                    previewLink: previewImg,
                     // link: 'https://rtsp.me/embed/ayAby5ia',
 
                     events: [
@@ -136,7 +137,7 @@ class ports {
                     coordinates: [59.977913, 30.240952],
                     zoom: 15,
                     link: 'http://192.168.250.240:8080/bgr',
-                    previewLink: boat1_03,
+                    previewLink: previewImg,
                     // link: 'https://rtsp.me/embed/hitQb4bf',
 
                     events: [
