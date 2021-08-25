@@ -1,11 +1,26 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {AccordionFromTable} from "./Account30/Items/Accordion";
-import account from "../../store/account";
-import ports from "../../store/ports";
-import canvasState from "../../store/canvasState";
+import YaMap from "./YaMap/YaMap";
+import {Drawer} from "./Drawer/Drawer";
+import {Header} from "./Header/Header";
 
-const useStyles = makeStyles({});
+const useStyles = makeStyles({
+	header: {
+		width: "100%",
+	},
+
+	content: {
+		display: "flex",
+	},
+
+	contentItem: {
+		flexGrow: 2,
+
+		"&.map": {
+			flexGrow: 5,
+		}
+	},
+});
 
 // export const Test = () => {
 // 	const allFleetShort = () => {
@@ -79,54 +94,15 @@ const useStyles = makeStyles({});
 // }
 
 export const Test = () => {
-	ports.setSelectedPort(0);
-	ports.setSelectedCamera(0);
+	const classes = useStyles();
 
-	const getPoints = () => {
-		try {
-			const url = "http://192.168.250.183:8080/api/positions";
-			// const url = "https://jsonplaceholder.typicode.com/users";
-			fetch(url)
-				.then(response => response.json())
-				.then(data => console.log(data));
-
-		} catch (e) {
-			console.log(e)
-		}
-	};
-	const postPoints = async () => {
-		// const pointsToSend = this.polygons.map((polygon) =>
-		const pointsToSend = canvasState.test.get(ports.selectedObjects.camera.id).map((polygon) =>
-			polygon.getPoints().map((point) => ({
-				...point, x: point.x * canvasState.pointCoefficient, y: point.y * canvasState.pointCoefficient
-			}))
-		);
-
-		console.log(pointsToSend);
-
-		try {
-			const url = "http://192.168.250.183:8080/api/positions";
-
-			// const response = await fetch(url, {
-			// 	method: "POST", // *GET, POST, PUT, DELETE, etc.
-			// 	mode: "cors", // no-cors, *cors, same-origin
-			// 	cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-			// 	credentials: "same-origin", // include, *same-origin, omit
-			// 	headers: {
-			// 		"Content-Type": "application/json"
-			// 		// 'Content-Type': 'application/x-www-form-urlencoded',
-			// 	},
-			// 	redirect: "follow", // manual, *follow, error
-			// 	referrerPolicy: "no-referrer", // no-referrer, *client
-			// 	body: JSON.stringify(pointsToSend), // body data type must match "Content-Type" header
-			// })
-		} catch (e) {
-			console.log(e)
-		}
-	}
-
-	postPoints();
-	// getPoints();
-
-	return <div>123</div>
+	return (
+		<div>
+			<Header/>
+			<div className={classes.content}>
+				<div className={`${classes.contentItem}`}><Drawer/></div>
+				<div className={`${classes.contentItem} map`}><YaMap isVisible={true}/></div>
+			</div>
+		</div>
+	)
 }

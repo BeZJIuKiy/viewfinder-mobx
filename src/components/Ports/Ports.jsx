@@ -78,7 +78,7 @@ export const Ports = () => {
 		.then(response => response.json())
 		.then(item => console.log(item));
 
-	console.log(width, height)
+	// console.log(width, height)
 
 	return (
 		<div className={classes.main}>

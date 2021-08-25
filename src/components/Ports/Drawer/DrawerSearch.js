@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import {makeStyles} from "@material-ui/core/styles";
-import account from "../../../../store/account";
-import {useWindowDimensions} from "../../../../useHooks/useWindowDimensions";
+import {useWindowDimensions} from "../../../useHooks/useWindowDimensions";
+import ports from "../../../store/ports";
+
 
 const useStyles = makeStyles((theme) => ({
 	autoComplete: {
-		width: 250,
+		// width: 290,
+		width: "99%",
 		backgroundColor: "#fff",
 		borderRadius: 5,
 
@@ -17,27 +19,65 @@ const useStyles = makeStyles((theme) => ({
 	}
 }))
 
-export const Search = ({data, search, label, secretTitle}) => {
+export const DrawerSearch = ({data, search, label, secretTitle}) => {
 	const classes = useStyles();
 
 	const {width} = useWindowDimensions();
 
-	const handleChange = (e, value) => {
-		account.setSearchQuery(secretTitle, value ? [value] : []);
+	const [value, setValue] = useState("");
+
+	useEffect(() => {
+		console.log("useEffect")
+		setValue("");
+	}, [ports.selectedObjects.port])
+
+	const handleChange = (event, values, reason) => {
+		console.log(reason);
+		// console.log(values.description);
+		// console.log(event.currentTarget);
+
+		// setValue(values ? event.target.innerText : "");
+		setValue(values ? values.description : "");
+
+		ports.setSearchQuery(secretTitle, values ? [values] : []);
 	}
 
-	// console.log(data);
+	const handleChangeInput = (e, values) => {
+		console.log(values);
+		setValue(e.target.value);
+	}
+	const pressEnterInput = (e, values) => {
+		// console.log(e.target.value);
+
+		if (e.keyCode === 13 && e.target.value) {
+			console.log(e.target.value)
+			setValue(e.target.value);
+		}
+	}
+
+	console.log(value)
 
 	return (
 		<Autocomplete
 			id="combo-box-demo"
 			className={`${classes.autoComplete}`}
+			inputValue={value}
 			options={data}
 			getOptionLabel={(option) => option[search]}
+			clearOnEscape={true}
 			renderInput={(params) => {
-				return (<TextField {...params} label={width <= 425 ? "Search" : label} variant="outlined"/>)
+				return (
+					<TextField
+						{...params}
+						label={width <= 425 ? "Search" : label}
+						variant="outlined"
+						onChange={handleChangeInput}
+						onKeyDown={pressEnterInput}
+					/>
+				)
 			}}
 			onChange={handleChange}
+			// onKeyDown={pressEnter}
 		/>
 	);
 }
