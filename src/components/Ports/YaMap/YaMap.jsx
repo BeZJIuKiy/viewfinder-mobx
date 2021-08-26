@@ -96,7 +96,6 @@ const YaMap = observer(({isVisible, style}) => {
 
 		if (portId) {
 			setAllData(selectedObjects.port.cameras);
-			console.log(selectedObjects.port)
 			mapData(selectedObjects.port.coordinates, selectedObjects.port.cameras[0].zoom, controls);
 		} else {
 			setAllData(data);
@@ -105,10 +104,14 @@ const YaMap = observer(({isVisible, style}) => {
 	}, [selectedObjects.port]);
 
 	const mapData = (center, zoom, controls) => setMapCenter({center, zoom, controls});
-	const clickOnCamera = (camera, i) => {
-		ports.setSelectedCamera(i);
+	const clickOnCamera = (id) => {
+		ports.setSelectedCamera(id);
 
-		const {name, description, type, coordinates, link} = camera;
+		const port = `port ${selectedObjects.port.id}`;
+		const camera = `camera ${id}`;
+
+
+		const {name, description, type, coordinates, link} = allData[port][camera];
 		setBalContent(`
 		    <div class="yamap__balloon__content">
 		        <iframe width="400" height="300"
@@ -133,30 +136,36 @@ const YaMap = observer(({isVisible, style}) => {
 		`);
 	}
 
-	const portsCoordinates = allData.map((c, i) => {
-		return (
-			<Placemark
-				onClick={() => (!c.link) ? ports.setSelectedPort(i) : clickOnCamera(c, i)}
-				key={c.description}
-				geometry={c.coordinates}
-				properties={{
-					hintContent: `${c.description} cameras`,
-					balloonContent: balContent,
-				}}
-				options={{
-					preset: !c.link ? portIcon.map : cameraIcon.map,
-					iconColor: '#ffba00',
-				}}
-				modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
-			/>
-		)
-	});
+	const portsCoordinates = () => {
+		const pointsId = [];
+
+		for (const key in allData) pointsId.push(key);
+
+		return pointsId.map((itemId) => {
+			const {id, description, link, coordinates} = allData[itemId];
+
+			return (
+				<Placemark
+					key={`placemark--${id}--${description}`}
+					onClick={() => (!link) ? ports.setSelectedPort(id) : clickOnCamera(id)}
+					geometry={coordinates}
+					properties={{
+						hintContent: `${description} cameras`,
+						balloonContent: balContent,
+					}}
+					options={{
+						preset: !link ? portIcon.map : cameraIcon.map,
+						iconColor: '#ffba00',
+					}}
+					modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
+				/>
+			)
+		})
+	}
 
 	return (
-		// <div className={`yamap ${isVisible ? 'show' : 'hide'}`} style={{...style}}>
 		<div className={`${classes.yamap} ${isVisible ? 'show' : 'hide'}`} style={{...style}}>
 			<YMaps query={{lang: "en_US"}}>
-				{/*<Map className='yamap__item'*/}
 				<Map className={`${classes.item}`}
 				     state={mapCenter}
 				     modules={[

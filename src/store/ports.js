@@ -17,402 +17,515 @@ import {makePersistable} from "mobx-persist-store";
 export const userAvatar = 'https://diletant.media/upload/medialibrary/75f/75fc56318cbdcf69f479b48892351a73.jpg';
 
 class ports {
-    windowSize = {
-        width: null,
-        height: null,
-    };
+	windowSize = {
+		width: null,
+		height: null,
+	};
 
-    counter = {
-        portsId: 0,
-        camerasId: 10,
-        eventsId: 0,
-    };
+	counter = {
+		portsId: 0,
+		camerasId: 10,
+		eventsId: 0,
+	};
 
-    portIcon = {
-        map: 'islands#blueWaterwayIcon',
-        drawer: mIcon_ports,
-    };
+	portIcon = {
+		map: 'islands#blueWaterwayIcon',
+		drawer: mIcon_ports,
+	};
 
-    cameraIcon = {
-        map: 'islands#blueVideoIcon',
-        drawer: mIcon_cameras,
-    };
+	cameraIcon = {
+		map: 'islands#blueVideoIcon',
+		drawer: mIcon_cameras,
+	};
 
-    selectedObjects = {
-        port: {},
-        camera: {},
-        event: {},
-        shipImage: {
-            index: 0,
-            isVisible: false,
-            id: -1,
-        },
-    };
+	selectedObjects = {
+		port: {},
+		camera: {},
+		event: {},
+		shipImage: {
+			index: 0,
+			isVisible: false,
+			id: -1,
+		},
+	};
 
-    data = [
-        {
-            id: this.counter.portsId++,
-            country: 'Russia',
-            city: 'Saint Petersburg',
-            description: 'Saint Petersburg',
-            coordinates: [59.977915, 30.240934],
-            // zoom: 3.3,
-            zoom: 5,
-            link: '',
+	// data = [
+	// 	{
+	// 		id: this.counter.portsId++,
+	// 		country: 'Russia',
+	// 		city: 'Saint Petersburg',
+	// 		description: 'Saint Petersburg',
+	// 		coordinates: [59.977915, 30.240934],
+	// 		// zoom: 3.3,
+	// 		zoom: 5,
+	// 		link: '',
+	//
+	// 		cameras: [
+	// 			{
+	// 				id: this.counter.camerasId++,
+	// 				country: 'Russia',
+	// 				city: 'Saint Petersburg',
+	// 				name: 'Camera 1',
+	// 				type: 'Hikvision',
+	// 				move: 'STATIC',
+	// 				viewingAngle: '130',
+	// 				description: 'Club Parking STATIC',
+	// 				coordinates: [59.977915, 30.240934],
+	// 				zoom: 15,
+	// 				link: 'http://192.168.250.193:8080/bgr',
+	// 				previewLink: previewImg,
+	// 				// link: 'https://rtsp.me/embed/ayAby5ia',
+	//
+	// 				events: [
+	// 					{
+	// 						id: this.counter.eventsId++,
+	// 						// typeError: 'Regular',
+	// 						typeError: 'Warning',
+	// 						typeVessel: "Tugboat",
+	// 						location: 'Russia',
+	// 						city: 'Saint Petersburg',
+	// 						camera: 'Camera 1',
+	// 						date: '2020-12-21',
+	// 						time: '10:20:08',
+	// 						timezone: '+0300',
+	// 						imageLink: boat1_03,
+	// 						newEvent: true,
+	// 						description: 'Nothing interesting, keep moving on',
+	// 					},
+	//
+	// 					{
+	// 						id: this.counter.eventsId++,
+	// 						typeError: 'Regular',
+	// 						typeVessel: "Dry Cargo Ship",
+	// 						location: 'Russia',
+	// 						city: 'Saint Petersburg',
+	// 						camera: 'Camera 1',
+	// 						date: '2020-12-21',
+	// 						time: '10:22:31',
+	// 						timezone: '+0300',
+	// 						imageLink: boat1_01,
+	// 						newEvent: true,
+	// 						description: 'Nothing interesting, keep moving on',
+	// 					},
+	//
+	// 					{
+	// 						id: this.counter.eventsId++,
+	// 						typeError: 'Critical',
+	// 						typeVessel: "Dry Cargo Ship",
+	// 						location: 'Russia',
+	// 						city: 'Saint Petersburg',
+	// 						camera: 'Camera 1',
+	// 						date: '2020-12-21',
+	// 						time: '10:24:16',
+	// 						timezone: '+0300',
+	// 						imageLink: boat1_04,
+	// 						newEvent: true,
+	// 						description: 'Nothing interesting, keep moving on',
+	// 					},
+	// 				],
+	// 			},
+	//
+	// 			{
+	// 				id: this.counter.camerasId++,
+	// 				country: 'Russia',
+	// 				city: 'Saint Petersburg',
+	// 				name: 'Camera 2',
+	// 				type: 'Hikvision',
+	// 				move: 'PTZ',
+	// 				viewingAngle: '80',
+	// 				description: 'Club Parking PTZ',
+	// 				coordinates: [59.977913, 30.240952],
+	// 				zoom: 15,
+	// 				link: 'http://192.168.250.193:8080/bgr',
+	// 				previewLink: previewImg,
+	// 				// link: 'https://rtsp.me/embed/hitQb4bf',
+	//
+	// 				events: [
+	// 					{
+	// 						id: this.counter.eventsId++,
+	// 						typeError: 'Regular',
+	// 						typeVessel: "Dry Cargo Ship",
+	// 						location: 'Russia',
+	// 						city: 'Saint Petersburg',
+	// 						camera: 'Camera 2',
+	// 						date: '2020-12-21',
+	// 						time: '10:22:31',
+	// 						timezone: '+0300',
+	// 						imageLink: boat1_04,
+	// 						newEvent: true,
+	// 						description: 'Nothing interesting, keep moving on',
+	// 					},
+	// 				],
+	// 			},
+	//
+	// 			// {
+	// 			// 	id: this.counter.camerasId++,
+	// 			// 	country: 'Russia',
+	// 			// 	city: 'Saint Petersburg',
+	// 			// 	name: 'Camera 2',
+	// 			// 	type: 'Hikvision',
+	// 			// 	move: 'PTZ',
+	// 			// 	viewingAngle: '80',
+	// 			// 	description: 'Club Parking PTZ',
+	// 			// 	coordinates: [59.977913, 30.240952],
+	// 			// 	zoom: 15,
+	// 			// 	link: 'https://rtsp.me/embed/hitQb4bf/',
+	// 			//
+	// 			// 	events: [
+	// 			// 		{
+	// 			// 			id: this.counter.eventsId++,
+	// 			// 			typeError: 'Regular',
+	// 			// 			typeVessel: "Dry Cargo Ship",
+	// 			// 			location: 'Russia',
+	// 			// 			city: 'Saint Petersburg',
+	// 			// 			camera: 'Camera 2',
+	// 			// 			date: '2020-12-21',
+	// 			// 			time: '10:22:31',
+	// 			// 			timezone: '+0300',
+	// 			// 			imageLink: boat1_04,
+	// 			// 			newEvent: true,
+	// 			// 			description: 'Nothing interesting, keep moving on',
+	// 			// 		},
+	// 			// 	],
+	// 			// },
+	// 		],
+	// 	},
+	//
+	// 	{
+	// 		id: this.counter.portsId++,
+	// 		country: 'Russia',
+	// 		city: 'Saint Petersburg 2',
+	// 		description: 'Saint Petersburg 2',
+	// 		coordinates: [59.977915, 30.240934],
+	// 		// zoom: 3.3,
+	// 		zoom: 5,
+	// 		link: '',
+	//
+	// 		cameras: [
+	// 			{
+	// 				id: this.counter.camerasId++,
+	// 				country: 'Russia',
+	// 				city: 'Saint Petersburg 2',
+	// 				name: 'Camera 1',
+	// 				type: 'Hikvision',
+	// 				move: 'STATIC',
+	// 				viewingAngle: '130',
+	// 				description: 'Club Parking STATIC 2',
+	// 				coordinates: [59.977915, 30.240934],
+	// 				zoom: 15,
+	// 				link: 'http://192.168.250.193:8080/bgr',
+	// 				previewLink: previewImg,
+	// 				// link: 'https://rtsp.me/embed/ayAby5ia',
+	//
+	// 				events: [
+	// 					{
+	// 						id: this.counter.eventsId++,
+	// 						// typeError: 'Regular',
+	// 						typeError: 'Warning',
+	// 						typeVessel: "Tugboat",
+	// 						location: 'Russia',
+	// 						city: 'Saint Petersburg',
+	// 						camera: 'Camera 1',
+	// 						date: '2020-12-21',
+	// 						time: '10:20:08',
+	// 						timezone: '+0300',
+	// 						imageLink: boat1_03,
+	// 						newEvent: true,
+	// 						description: 'Nothing interesting, keep moving on',
+	// 					},
+	//
+	// 					{
+	// 						id: this.counter.eventsId++,
+	// 						typeError: 'Regular',
+	// 						typeVessel: "Dry Cargo Ship",
+	// 						location: 'Russia',
+	// 						city: 'Saint Petersburg',
+	// 						camera: 'Camera 1',
+	// 						date: '2020-12-21',
+	// 						time: '10:22:31',
+	// 						timezone: '+0300',
+	// 						imageLink: boat1_01,
+	// 						newEvent: true,
+	// 						description: 'Nothing interesting, keep moving on',
+	// 					},
+	//
+	// 					{
+	// 						id: this.counter.eventsId++,
+	// 						typeError: 'Critical',
+	// 						typeVessel: "Dry Cargo Ship",
+	// 						location: 'Russia',
+	// 						city: 'Saint Petersburg',
+	// 						camera: 'Camera 1',
+	// 						date: '2020-12-21',
+	// 						time: '10:24:16',
+	// 						timezone: '+0300',
+	// 						imageLink: boat1_04,
+	// 						newEvent: true,
+	// 						description: 'Nothing interesting, keep moving on',
+	// 					},
+	// 				],
+	// 			},
+	//
+	// 			{
+	// 				id: this.counter.camerasId++,
+	// 				country: 'Russia',
+	// 				city: 'Saint Petersburg',
+	// 				name: 'Camera 2',
+	// 				type: 'Hikvision',
+	// 				move: 'PTZ',
+	// 				viewingAngle: '80',
+	// 				description: 'Club Parking PTZ 2',
+	// 				coordinates: [59.977913, 30.240952],
+	// 				zoom: 15,
+	// 				link: 'http://192.168.250.193:8080/bgr',
+	// 				previewLink: previewImg,
+	// 				// link: 'https://rtsp.me/embed/hitQb4bf',
+	//
+	// 				events: [
+	// 					{
+	// 						id: this.counter.eventsId++,
+	// 						typeError: 'Regular',
+	// 						typeVessel: "Dry Cargo Ship",
+	// 						location: 'Russia',
+	// 						city: 'Saint Petersburg',
+	// 						camera: 'Camera 2',
+	// 						date: '2020-12-21',
+	// 						time: '10:22:31',
+	// 						timezone: '+0300',
+	// 						imageLink: boat1_04,
+	// 						newEvent: true,
+	// 						description: 'Nothing interesting, keep moving on',
+	// 					},
+	// 				],
+	// 			},
+	//
+	// 			// {
+	// 			// 	id: this.counter.camerasId++,
+	// 			// 	country: 'Russia',
+	// 			// 	city: 'Saint Petersburg',
+	// 			// 	name: 'Camera 2',
+	// 			// 	type: 'Hikvision',
+	// 			// 	move: 'PTZ',
+	// 			// 	viewingAngle: '80',
+	// 			// 	description: 'Club Parking PTZ',
+	// 			// 	coordinates: [59.977913, 30.240952],
+	// 			// 	zoom: 15,
+	// 			// 	link: 'https://rtsp.me/embed/hitQb4bf/',
+	// 			//
+	// 			// 	events: [
+	// 			// 		{
+	// 			// 			id: this.counter.eventsId++,
+	// 			// 			typeError: 'Regular',
+	// 			// 			typeVessel: "Dry Cargo Ship",
+	// 			// 			location: 'Russia',
+	// 			// 			city: 'Saint Petersburg',
+	// 			// 			camera: 'Camera 2',
+	// 			// 			date: '2020-12-21',
+	// 			// 			time: '10:22:31',
+	// 			// 			timezone: '+0300',
+	// 			// 			imageLink: boat1_04,
+	// 			// 			newEvent: true,
+	// 			// 			description: 'Nothing interesting, keep moving on',
+	// 			// 		},
+	// 			// 	],
+	// 			// },
+	// 		],
+	// 	},
+	// ];
 
-            cameras: [
-                {
-                    id: this.counter.camerasId++,
-                    country: 'Russia',
-                    city: 'Saint Petersburg',
-                    name: 'Camera 1',
-                    type: 'Hikvision',
-                    move: 'STATIC',
-                    viewingAngle: '130',
-                    description: 'Club Parking STATIC',
-                    coordinates: [59.977915, 30.240934],
-                    zoom: 15,
-                    link: 'http://192.168.250.193:8080/bgr',
-                    previewLink: previewImg,
-                    // link: 'https://rtsp.me/embed/ayAby5ia',
+	data = {
+		[`port ${this.counter.portsId++}`]: {
+			id: this.counter.portsId,
+			country: 'Russia',
+			city: 'Saint Petersburg',
+			description: 'Saint Petersburg',
+			coordinates: [59.977915, 30.240934],
+			// zoom: 3.3,
+			zoom: 5,
+			link: '',
 
-                    events: [
-                        {
-                            id: this.counter.eventsId++,
-                            // typeError: 'Regular',
-                            typeError: 'Warning',
-                            typeVessel: "Tugboat",
-                            location: 'Russia',
-                            city: 'Saint Petersburg',
-                            camera: 'Camera 1',
-                            date: '2020-12-21',
-                            time: '10:20:08',
-                            timezone: '+0300',
-                            imageLink: boat1_03,
-                            newEvent: true,
-                            description: 'Nothing interesting, keep moving on',
-                        },
+			[`camera ${this.counter.camerasId++}`]: {
+				id: this.counter.camerasId,
+				country: 'Russia',
+				city: 'Saint Petersburg',
+				name: 'Camera 1',
+				type: 'Hikvision',
+				move: 'STATIC',
+				viewingAngle: '130',
+				description: 'Club Parking STATIC',
+				coordinates: [59.977915, 30.240934],
+				zoom: 15,
+				link: 'http://192.168.250.193:8080/bgr',
+				previewLink: previewImg,
+				// link: 'https://rtsp.me/embed/ayAby5ia',
 
-                        {
-                            id: this.counter.eventsId++,
-                            typeError: 'Regular',
-                            typeVessel: "Dry Cargo Ship",
-                            location: 'Russia',
-                            city: 'Saint Petersburg',
-                            camera: 'Camera 1',
-                            date: '2020-12-21',
-                            time: '10:22:31',
-                            timezone: '+0300',
-                            imageLink: boat1_01,
-                            newEvent: true,
-                            description: 'Nothing interesting, keep moving on',
-                        },
+				[`event ${this.counter.camerasId++}`]: {
+					id: this.counter.eventsId,
+					// typeError: 'Regular',
+					typeError: 'Warning',
+					typeVessel: "Tugboat",
+					location: 'Russia',
+					city: 'Saint Petersburg',
+					camera: 'Camera 1',
+					date: '2020-12-21',
+					time: '10:20:08',
+					timezone: '+0300',
+					imageLink: boat1_03,
+					newEvent: true,
+					description: 'Nothing interesting, keep moving on',
+				},
 
-                        {
-                            id: this.counter.eventsId++,
-                            typeError: 'Critical',
-                            typeVessel: "Dry Cargo Ship",
-                            location: 'Russia',
-                            city: 'Saint Petersburg',
-                            camera: 'Camera 1',
-                            date: '2020-12-21',
-                            time: '10:24:16',
-                            timezone: '+0300',
-                            imageLink: boat1_04,
-                            newEvent: true,
-                            description: 'Nothing interesting, keep moving on',
-                        },
-                    ],
-                },
+				[`event ${this.counter.camerasId++}`]: {
+					id: this.counter.eventsId,
+					typeError: 'Regular',
+					typeVessel: "Dry Cargo Ship",
+					location: 'Russia',
+					city: 'Saint Petersburg',
+					camera: 'Camera 1',
+					date: '2020-12-21',
+					time: '10:22:31',
+					timezone: '+0300',
+					imageLink: boat1_01,
+					newEvent: true,
+					description: 'Nothing interesting, keep moving on',
+				},
 
-                {
-                    id: this.counter.camerasId++,
-                    country: 'Russia',
-                    city: 'Saint Petersburg',
-                    name: 'Camera 2',
-                    type: 'Hikvision',
-                    move: 'PTZ',
-                    viewingAngle: '80',
-                    description: 'Club Parking PTZ',
-                    coordinates: [59.977913, 30.240952],
-                    zoom: 15,
-                    link: 'http://192.168.250.193:8080/bgr',
-                    previewLink: previewImg,
-                    // link: 'https://rtsp.me/embed/hitQb4bf',
+				[`event ${this.counter.camerasId++}`]: {
+					id: this.counter.eventsId,
+					typeError: 'Critical',
+					typeVessel: "Dry Cargo Ship",
+					location: 'Russia',
+					city: 'Saint Petersburg',
+					camera: 'Camera 1',
+					date: '2020-12-21',
+					time: '10:24:16',
+					timezone: '+0300',
+					imageLink: boat1_04,
+					newEvent: true,
+					description: 'Nothing interesting, keep moving on',
+				},
+			},
+			[`camera ${this.counter.camerasId++}`]: {
+				id: this.counter.camerasId,
+				country: 'Russia',
+				city: 'Saint Petersburg',
+				name: 'Camera 2',
+				type: 'Hikvision',
+				move: 'PTZ',
+				viewingAngle: '80',
+				description: 'Club Parking PTZ',
+				coordinates: [59.977913, 30.240952],
+				zoom: 15,
+				link: 'http://192.168.250.193:8080/bgr',
+				previewLink: previewImg,
+				// link: 'https://rtsp.me/embed/hitQb4bf',
 
-                    events: [
-                        {
-                            id: this.counter.eventsId++,
-                            typeError: 'Regular',
-                            typeVessel: "Dry Cargo Ship",
-                            location: 'Russia',
-                            city: 'Saint Petersburg',
-                            camera: 'Camera 2',
-                            date: '2020-12-21',
-                            time: '10:22:31',
-                            timezone: '+0300',
-                            imageLink: boat1_04,
-                            newEvent: true,
-                            description: 'Nothing interesting, keep moving on',
-                        },
-                    ],
-                },
+				[`event ${this.counter.camerasId++}`]: {
+					id: this.counter.eventsId,
+					typeError: 'Regular',
+					typeVessel: "Dry Cargo Ship",
+					location: 'Russia',
+					city: 'Saint Petersburg',
+					camera: 'Camera 2',
+					date: '2020-12-21',
+					time: '10:22:31',
+					timezone: '+0300',
+					imageLink: boat1_04,
+					newEvent: true,
+					description: 'Nothing interesting, keep moving on',
+				},
+			},
+		}
 
-                // {
-                // 	id: this.counter.camerasId++,
-                // 	country: 'Russia',
-                // 	city: 'Saint Petersburg',
-                // 	name: 'Camera 2',
-                // 	type: 'Hikvision',
-                // 	move: 'PTZ',
-                // 	viewingAngle: '80',
-                // 	description: 'Club Parking PTZ',
-                // 	coordinates: [59.977913, 30.240952],
-                // 	zoom: 15,
-                // 	link: 'https://rtsp.me/embed/hitQb4bf/',
-                //
-                // 	events: [
-                // 		{
-                // 			id: this.counter.eventsId++,
-                // 			typeError: 'Regular',
-                // 			typeVessel: "Dry Cargo Ship",
-                // 			location: 'Russia',
-                // 			city: 'Saint Petersburg',
-                // 			camera: 'Camera 2',
-                // 			date: '2020-12-21',
-                // 			time: '10:22:31',
-                // 			timezone: '+0300',
-                // 			imageLink: boat1_04,
-                // 			newEvent: true,
-                // 			description: 'Nothing interesting, keep moving on',
-                // 		},
-                // 	],
-                // },
-            ],
-        },
 
-        {
-            id: this.counter.portsId++,
-            country: 'Russia',
-            city: 'Saint Petersburg 2',
-            description: 'Saint Petersburg 2',
-            coordinates: [59.977915, 30.240934],
-            // zoom: 3.3,
-            zoom: 5,
-            link: '',
+	}
 
-            cameras: [
-                {
-                    id: this.counter.camerasId++,
-                    country: 'Russia',
-                    city: 'Saint Petersburg 2',
-                    name: 'Camera 1',
-                    type: 'Hikvision',
-                    move: 'STATIC',
-                    viewingAngle: '130',
-                    description: 'Club Parking STATIC 2',
-                    coordinates: [59.977915, 30.240934],
-                    zoom: 15,
-                    link: 'http://192.168.250.193:8080/bgr',
-                    previewLink: previewImg,
-                    // link: 'https://rtsp.me/embed/ayAby5ia',
+	searchQuery = {};
 
-                    events: [
-                        {
-                            id: this.counter.eventsId++,
-                            // typeError: 'Regular',
-                            typeError: 'Warning',
-                            typeVessel: "Tugboat",
-                            location: 'Russia',
-                            city: 'Saint Petersburg',
-                            camera: 'Camera 1',
-                            date: '2020-12-21',
-                            time: '10:20:08',
-                            timezone: '+0300',
-                            imageLink: boat1_03,
-                            newEvent: true,
-                            description: 'Nothing interesting, keep moving on',
-                        },
+	constructor() {
+		makeAutoObservable(this, {}, {autoBind: true});
 
-                        {
-                            id: this.counter.eventsId++,
-                            typeError: 'Regular',
-                            typeVessel: "Dry Cargo Ship",
-                            location: 'Russia',
-                            city: 'Saint Petersburg',
-                            camera: 'Camera 1',
-                            date: '2020-12-21',
-                            time: '10:22:31',
-                            timezone: '+0300',
-                            imageLink: boat1_01,
-                            newEvent: true,
-                            description: 'Nothing interesting, keep moving on',
-                        },
+		// makePersistable(this, {
+		//     name: "PortsStore",
+		//     properties: ["data", "selectedObjects"],
+		//     storage: window.localStorage
+		// });
 
-                        {
-                            id: this.counter.eventsId++,
-                            typeError: 'Critical',
-                            typeVessel: "Dry Cargo Ship",
-                            location: 'Russia',
-                            city: 'Saint Petersburg',
-                            camera: 'Camera 1',
-                            date: '2020-12-21',
-                            time: '10:24:16',
-                            timezone: '+0300',
-                            imageLink: boat1_04,
-                            newEvent: true,
-                            description: 'Nothing interesting, keep moving on',
-                        },
-                    ],
-                },
+		// makePersistable(
+		//     this,
+		//     {
+		//         name: "PortsStore",
+		//         properties: ["selectedObjects", "data"],
+		//         storage: window.localStorage,  // localForage, window.localStorage, AsyncStorage all have the same interface
+		//         expireIn: 86400000, // One day in millsesconds
+		//         removeOnExpiration: true,
+		//         stringify: false,
+		//         debugMode: true,
+		//     },
+		// );
 
-                {
-                    id: this.counter.camerasId++,
-                    country: 'Russia',
-                    city: 'Saint Petersburg',
-                    name: 'Camera 2',
-                    type: 'Hikvision',
-                    move: 'PTZ',
-                    viewingAngle: '80',
-                    description: 'Club Parking PTZ 2',
-                    coordinates: [59.977913, 30.240952],
-                    zoom: 15,
-                    link: 'http://192.168.250.193:8080/bgr',
-                    previewLink: previewImg,
-                    // link: 'https://rtsp.me/embed/hitQb4bf',
+	};
 
-                    events: [
-                        {
-                            id: this.counter.eventsId++,
-                            typeError: 'Regular',
-                            typeVessel: "Dry Cargo Ship",
-                            location: 'Russia',
-                            city: 'Saint Petersburg',
-                            camera: 'Camera 2',
-                            date: '2020-12-21',
-                            time: '10:22:31',
-                            timezone: '+0300',
-                            imageLink: boat1_04,
-                            newEvent: true,
-                            description: 'Nothing interesting, keep moving on',
-                        },
-                    ],
-                },
+	setSelectedPort = (portId) => {
+		this.selectedObjects.port = this.data.find((port) => port.id === portId);
+	};
+	setSelectedCamera = (camId) => {
+		if (Number.isInteger(this.selectedObjects.port.id) === false) {
+			this.selectedObjects.port = this.data[0];
+		}
 
-                // {
-                // 	id: this.counter.camerasId++,
-                // 	country: 'Russia',
-                // 	city: 'Saint Petersburg',
-                // 	name: 'Camera 2',
-                // 	type: 'Hikvision',
-                // 	move: 'PTZ',
-                // 	viewingAngle: '80',
-                // 	description: 'Club Parking PTZ',
-                // 	coordinates: [59.977913, 30.240952],
-                // 	zoom: 15,
-                // 	link: 'https://rtsp.me/embed/hitQb4bf/',
-                //
-                // 	events: [
-                // 		{
-                // 			id: this.counter.eventsId++,
-                // 			typeError: 'Regular',
-                // 			typeVessel: "Dry Cargo Ship",
-                // 			location: 'Russia',
-                // 			city: 'Saint Petersburg',
-                // 			camera: 'Camera 2',
-                // 			date: '2020-12-21',
-                // 			time: '10:22:31',
-                // 			timezone: '+0300',
-                // 			imageLink: boat1_04,
-                // 			newEvent: true,
-                // 			description: 'Nothing interesting, keep moving on',
-                // 		},
-                // 	],
-                // },
-            ],
-        },
-    ];
+		this.selectedObjects.camera = this.selectedObjects.port.cameras.find((camera) => camera.id === camId);
+		canvasState.setPolygonInCamera(this.selectedObjects.camera.id);
+	};
 
-    searchQuery = {};
+	setSelectedEvent = (id) => {
+		// this.selectedObjects.event = this.selectedObjects.camera.events[index];
+		this.selectedObjects.event = this.selectedObjects.camera.events.find(event => event.id === id);
+	};
+	clearSelectedEvent = () => {
+		this.selectedObjects.event = {};
+	};
 
-    constructor() {
-        makeAutoObservable(this, {}, { autoBind: true });
+	setEvents = (events) => {
+		// this.selectedObjects.camera.events = events;
+		this.data[0].cameras[0].events = events;
+	}
 
-        // makePersistable(this, {
-        //     name: "PortsStore",
-        //     properties: ["data", "selectedObjects"],
-        //     storage: window.localStorage
-        // });
+	setIsNewNotif = (id, isNew) => {
+		const event = this.selectedObjects.camera.events.find(event => event.id === id);
+		event.newEvent = isNew;
+	}
 
-        // makePersistable(
-        //     this,
-        //     {
-        //         name: "PortsStore",
-        //         properties: ["selectedObjects", "data"],
-        //         storage: window.localStorage,  // localForage, window.localStorage, AsyncStorage all have the same interface
-        //         expireIn: 86400000, // One day in millsesconds
-        //         removeOnExpiration: true,
-        //         stringify: false,
-        //         debugMode: true,
-        //     },
-        // );
+	setVisibleSelectedImage = (isVisible) => {
+		this.selectedObjects.shipImage.isVisible = isVisible;
+	};
+	setImageIndex = (index) => {
+		this.selectedObjects.shipImage.index = index;
+	};
+	setImageId = (id) => {
+		this.selectedObjects.shipImage.id = id;
+	};
 
-    };
+	clearSelectedObjects = () => {
+		this.selectedObjects = {
+			port: {},
+			camera: {},
+			event: {},
+			shipImage: {
+				index: 0,
+				isVisible: false,
+				id: -1,
+			},
+		};
+	};
 
-    setSelectedPort = (portId) => {
-        this.selectedObjects.port = this.data.find((port) => port.id === portId);
-    };
-    setSelectedCamera = (camId) => {
-        if (Number.isInteger(this.selectedObjects.port.id) === false) {
-            this.selectedObjects.port = this.data[0];
-        }
+	setSearchQuery = (secretTitle, data) => {
+		this.searchQuery[secretTitle] = [...data];
+	}
 
-        this.selectedObjects.camera = this.selectedObjects.port.cameras.find((camera) => camera.id === camId);
-        canvasState.setPolygonInCamera(this.selectedObjects.camera.id);
-    };
-
-    setSelectedEvent = (index) => {
-        this.selectedObjects.event = this.selectedObjects.camera.events[index];
-    };
-    clearSelectedEvent = () => {
-        this.selectedObjects.event = {};
-    };
-
-    setEvents = (events) => {
-        // this.selectedObjects.camera.events = events;
-        this.data[0].cameras[0].events = events;
-    }
-
-    setVisibleSelectedImage = (isVisible) => {
-        this.selectedObjects.shipImage.isVisible = isVisible;
-    };
-    setImageIndex = (index) => {
-        this.selectedObjects.shipImage.index = index;
-    };
-    setImageId = (id) => {
-        this.selectedObjects.shipImage.id = id;
-    };
-
-    clearSelectedObjects = () => {
-        this.selectedObjects = {
-            port: {},
-            camera: {},
-            event: {},
-            shipImage: {
-                index: 0,
-                isVisible: false,
-                id: -1,
-            },
-        };
-    };
-
-    setSearchQuery = (secretTitle, data) => {
-        this.searchQuery[secretTitle] = [...data];
-    }
-
-    clearSearchQuery = () => {
-        this.searchQuery = {};
-    }
+	clearSearchQuery = () => {
+		this.searchQuery = {};
+	}
 }
 
 export default new ports();

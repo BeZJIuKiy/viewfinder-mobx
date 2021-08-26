@@ -257,7 +257,6 @@ export const Events20 = observer(() => {
 		canvasState.setZoneAction("");
 	}
 	const deleteNewPolygonsData = () => {
-		// canvasState.test.set(camera.id, canvasState.tempPolygons);
 		canvasState.saveDataTest[camera.id] = canvasState.tempPolygons;
 		canvasState.setCreatePolygon(false);
 		canvasState.setZoneAction("");
