@@ -1,22 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import './drawer.css';
-import {SimpleList} from './SimpleList';
-
 import {makeStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import {Icon} from '@material-ui/core';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import {NavLink, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {observer} from "mobx-react-lite";
 import ports from "../../../store/ports";
 import header from "../../../store/header";
 import {DrawerSearch} from "./DrawerSearch";
+import {DrawerItems} from "./DrawerItems";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -61,28 +52,26 @@ export const Drawer = observer(({isMobile}) => {
 	const classes = useStyles();
 	const history = useHistory();
 
+	const search = "description";
+	const searchLabel = "Camera Name";
+	const secretTitle = `Drawer--${Number.isInteger(ports.selectedObjects.port.id) ? "camera" : "port"}`;
+
 
 	const {data, portIcon, cameraIcon, selectedObjects, searchQuery} = ports;
-	const {portsNewNote, camerasNewNote} = header;
+	const {portsNoteTest, camerasNoteTest} = header;
 
 
 	const [allData, setAllData] = useState(data)
-	const [notes, setNotes] = useState(data.map(() => 0));
+	const [notes, setNotes] = useState({});
 	const [icon, setIcon] = useState();
-
-	// const rowsData = allData;
-	const search = "description";
-	const searchLabel = "Camera Name";
-	const secretTitle = "Drawer"
-
 
 	useEffect(() => {
 		const {id, cameras} = selectedObjects.port;
 		const portId = Number.isInteger(id);
 
 		portId
-			? setData(cameras, camerasNewNote, cameraIcon.drawer)
-			: setData(data, portsNewNote, portIcon.drawer);
+			? setData(cameras, camerasNoteTest, cameraIcon.drawer)
+			: setData(data, portsNoteTest, portIcon.drawer);
 	}, [selectedObjects.port]);
 	useEffect(() => {
 		const {id, cameras} = selectedObjects.port;
@@ -91,10 +80,9 @@ export const Drawer = observer(({isMobile}) => {
 		searchQuery[secretTitle]?.length
 			? setAllData(searchQuery[secretTitle])
 			: portId
-				? setData(cameras, camerasNewNote, cameraIcon.drawer)
-				: setData(data, portsNewNote, portIcon.drawer);
+				? setData(cameras, camerasNoteTest, cameraIcon.drawer)
+				: setData(data, portsNoteTest, portIcon.drawer);
 	}, [searchQuery[secretTitle]]);
-
 
 	const changeDataPorts = (id) => {
 		ports.setSelectedPort(id);
@@ -104,40 +92,44 @@ export const Drawer = observer(({isMobile}) => {
 		ports.clearSearchQuery();
 		history.push('/events');
 	}
-	const setData = (data, note, icon) => {
+	const setData = (data, notif, icon) => {
 		setAllData(data);
-		setNotes(note);
+		setNotes(notif);
 		setIcon(icon);
 	}
 
-	// console.log(allData)
-
-	const camData = allData.map(({id, link, description}, i) => {
+	const items = allData.map(({id, description}, i) => {
 		const portId = Number.isInteger(selectedObjects.port.id);
 
 		return (
-			<div key={id}>
-				<ListItem button
-				          onClick={() => portId ? changeDataCamera(id) : changeDataPorts(id)}
-				          // onClick={() => portId ? changeDataCamera(i) : changeDataPorts(i)}
-				>
-					<ListItemIcon>
-						<Icon>
-							<img src={icon} height={25} width={25} alt=""/>
-						</Icon>
-					</ListItemIcon>
-					<ListItemText primary={description}/>
-
-					<NavLink to="/events">
-						<IconButton aria-label="show 17 new notifications" color="default">
-							<Badge badgeContent={notes[i]} color="secondary">
-								<NotificationsIcon/>
-							</Badge>
-						</IconButton>
-					</NavLink>
-				</ListItem>
-				<Divider/>
-			</div>
+			<DrawerItems
+				key={`${id}-${description}`}
+				icon={icon}
+				description={description}
+				notes={notes[id]}
+				onClick={() => portId ? changeDataCamera(id) : changeDataPorts(id)}
+			/>
+			// <div key={id}>
+			// 	<ListItem button
+			// 	          onClick={() => portId ? changeDataCamera(id) : changeDataPorts(id)}
+			// 	>
+			// 		<ListItemIcon>
+			// 			<Icon>
+			// 				<img src={icon} height={25} width={25} alt=""/>
+			// 			</Icon>
+			// 		</ListItemIcon>
+			// 		<ListItemText primary={description}/>
+			//
+			// 		<NavLink to="/events">
+			// 			<IconButton aria-label="show 17 new notifications" color="default">
+			// 				<Badge badgeContent={notes[i]} color="secondary">
+			// 					<NotificationsIcon/>
+			// 				</Badge>
+			// 			</IconButton>
+			// 		</NavLink>
+			// 	</ListItem>
+			// 	<Divider/>
+			// </div>
 		)
 	});
 
@@ -148,7 +140,7 @@ export const Drawer = observer(({isMobile}) => {
 					<DrawerSearch data={allData} search={search} label={`Search ${searchLabel}`}
 					              secretTitle={secretTitle}/>
 				</div>
-				{camData}
+				{items}
 			</List>
 		</div>
 	);

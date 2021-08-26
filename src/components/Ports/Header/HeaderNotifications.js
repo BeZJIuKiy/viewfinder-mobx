@@ -104,7 +104,7 @@ export const HeaderNotifications = () => {
 													<NavLink className={`${classes.navLink} ${event.typeError.toLowerCase()}`} to={"/events"}>
 														<ListItemText
 															primary={`${event.date} ${event.time} ${camera.description}`}
-															onClick={() => onClickHandle(portIndex, cameraIndex)}/>
+															onClick={() => handleSelectItem(id, camera.id)}/>
 													</NavLink>
 												</ListItem>
 											)
@@ -123,7 +123,7 @@ export const HeaderNotifications = () => {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-	const onClickHandle = (portIndex, cameraIndex) => {
+	const handleSelectItem = (portIndex, cameraIndex) => {
 		ports.setSelectedPort(portIndex);
 		ports.setSelectedCamera(cameraIndex);
 	}

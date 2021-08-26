@@ -127,7 +127,7 @@ export const Events20 = observer(() => {
 				return (
 					<div className='events__live__another__cameras__item' key={id}>
 						<div className="events__live__go__another__camera"
-						     onClick={() => otherCameraClick(i)}
+						     onClick={() => otherCameraClick(id)}
 						/>
 
 						<div className={`events__live__another__cameras title`}>
@@ -221,8 +221,8 @@ export const Events20 = observer(() => {
 		setSelectedEvent(cameraEvent[imgNum]);
 		ports.setImageId(cameraEvent[imgNum].id);
 	}
-	const otherCameraClick = (i) => {
-		ports.setSelectedCamera(i);
+	const otherCameraClick = (id) => {
+		ports.setSelectedCamera(id);
 	}
 	const closeImage = () => {
 		ports.setVisibleSelectedImage(false);
@@ -310,7 +310,6 @@ export const Events20 = observer(() => {
 		}
 	};
 	const postPoints = async () => {
-		// const polygons = canvasState.test.get(ports.selectedObjects.camera.id).map((polygon) => ({
 		const polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id].map((polygon) => ({
 				name: "111",
 				color: polygon.getAttributeFillColor(),
@@ -319,12 +318,6 @@ export const Events20 = observer(() => {
 				}))
 			})
 		);
-
-		// const polygons = canvasState.test.get(ports.selectedObjects.camera.id).map((polygon) =>
-		// 	polygon.getPoints().map((point) => ({
-		// 		...point, x: point.x * canvasState.pointCoefficient, y: point.y * canvasState.pointCoefficient
-		// 	}))
-		// );
 
 		const sendData = {
 			portId: port.id,
@@ -354,7 +347,9 @@ export const Events20 = observer(() => {
 	}
 
 
-	if (!Number.isInteger(camera.id)) ports.setSelectedCamera(0);
+	if (!Number.isInteger(camera.id)) {
+		ports.setSelectedCamera(ports.data[0].cameras[0].id);
+	}
 
 	const visible = !!camera.events?.length ? "show" : "hide";
 	const eventsTitle = !!camera.events?.length ? "Detected Objects" : "No Detected Objects";

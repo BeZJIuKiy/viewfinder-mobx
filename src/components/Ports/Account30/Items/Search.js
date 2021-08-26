@@ -30,7 +30,7 @@ export const Search = ({data, search, label, secretTitle}) => {
 
 	return (
 		<Autocomplete
-			id="combo-box-demo"
+			id={`combo-box-demo--${secretTitle}`}
 			className={`${classes.autoComplete}`}
 			options={data}
 			getOptionLabel={(option) => option[search]}

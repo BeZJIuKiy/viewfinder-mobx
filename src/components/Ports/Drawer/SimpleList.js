@@ -63,36 +63,6 @@ export const SimpleList = observer(() => {
 		setIcon(icon);
 	}
 
-
-	// const camData = allData.map(({id, link, description}, i) => {
-	// 	const portId = Number.isInteger(selectedObjects.port.id);
-	//
-	// 	return (
-	// 		<div key={id}>
-	// 			<List component="nav" aria-label="main mailbox folders">
-	// 				<ListItem button
-	// 				          onClick={() => portId ? changeDataCamera(i) : changeDataPorts(i)}
-	// 				>
-	// 					<ListItemIcon>
-	// 						<Icon>
-	// 							<img src={icon} height={25} width={25} alt=""/>
-	// 						</Icon>
-	// 					</ListItemIcon>
-	// 					<ListItemText primary={description}/>
-	//
-	// 					<IconButton aria-label="show 17 new notifications" color="default">
-	// 						<Badge badgeContent={notes[i]} color="secondary">
-	// 							<NavLink to="/events">
-	// 								<NotificationsIcon/>
-	// 							</NavLink>
-	// 						</Badge>
-	// 					</IconButton>
-	// 				</ListItem>
-	// 			</List>
-	// 			<Divider/>
-	// 		</div>
-	// 	)
-	// });
 	const camData = allData.map(({id, link, description}, i) => {
 		const portId = Number.isInteger(selectedObjects.port.id);
 

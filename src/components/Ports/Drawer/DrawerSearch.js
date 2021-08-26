@@ -27,39 +27,22 @@ export const DrawerSearch = ({data, search, label, secretTitle}) => {
 	const [value, setValue] = useState("");
 
 	useEffect(() => {
-		console.log("useEffect")
 		setValue("");
 	}, [ports.selectedObjects.port])
 
-	const handleChange = (event, values, reason) => {
-		console.log(reason);
-		// console.log(values.description);
-		// console.log(event.currentTarget);
-
-		// setValue(values ? event.target.innerText : "");
+	const handleChange = (event, values) => {
 		setValue(values ? values.description : "");
 
 		ports.setSearchQuery(secretTitle, values ? [values] : []);
 	}
 
-	const handleChangeInput = (e, values) => {
-		console.log(values);
+	const handleChangeInput = (e) => {
 		setValue(e.target.value);
 	}
-	const pressEnterInput = (e, values) => {
-		// console.log(e.target.value);
-
-		if (e.keyCode === 13 && e.target.value) {
-			console.log(e.target.value)
-			setValue(e.target.value);
-		}
-	}
-
-	console.log(value)
 
 	return (
 		<Autocomplete
-			id="combo-box-demo"
+			id={`drawer--search--${secretTitle}`}
 			className={`${classes.autoComplete}`}
 			inputValue={value}
 			options={data}
@@ -72,12 +55,10 @@ export const DrawerSearch = ({data, search, label, secretTitle}) => {
 						label={width <= 425 ? "Search" : label}
 						variant="outlined"
 						onChange={handleChangeInput}
-						onKeyDown={pressEnterInput}
 					/>
 				)
 			}}
 			onChange={handleChange}
-			// onKeyDown={pressEnter}
 		/>
 	);
 }

@@ -60,6 +60,7 @@ export const MobileDrawer = () => {
 	const drawerItems = (anchor) => account.drawerItems.map(({id, icon, title}, i) => {
 		return (
 			<div
+				key={`drawerItems--${id}--${title}`}
 				className={clsx(classes.list, {
 					[classes.fullList]: anchor === 'top' || anchor === 'bottom',
 				})}

@@ -4,8 +4,10 @@ import './yaMap.css';
 import ports from "../../../store/ports";
 import {observer} from "mobx-react-lite";
 import {makeStyles} from "@material-ui/core/styles";
+import {useWindowDimensions} from "../../../useHooks/useWindowDimensions";
 
 const useStyles = makeStyles((theme) => {
+	const {width, height} = useWindowDimensions();
 	const scrollHeight = Math.max(
 		document.body.scrollHeight, document.documentElement.scrollHeight,
 		document.body.offsetHeight, document.documentElement.offsetHeight,

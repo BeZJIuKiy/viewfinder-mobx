@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => {
 export const Header = observer(() => {
 	const classes = useStyles();
 
-	const {allNewNote, portsNewNote} = header;
+	const {allNewNote, portsNewNote, portsNoteTest} = header;
 	const {data, selectedObjects: {port, camera, event}} = ports;
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
@@ -240,31 +240,8 @@ export const Header = observer(() => {
 		// 	}
 		// ]
 		getPoints("http://192.168.250.183:8080/api/boats");
-		console.log(notifications)
+		// console.log(notifications)
 
-		ports.setEvents(notifications.map(note => {
-			const img = note.img?.length
-				? note.img.replace(":", "")
-				: note.img;
-
-			return ({
-				id: note.id,
-				typeError: 'Regular',
-				typeVessel: "Unknown",
-				location: 'Russia',
-				city: 'Saint Petersburg',
-				camera: note.name,
-				date: 'Unknown',
-				time: 'Unknown',
-				timezone: 'Unknown',
-				imageLink: img,
-				newEvent: true,
-				description: 'NO DESCRIPTION',
-			})
-		}))
-	}, []);
-
-	useEffect(() => {
 		ports.setEvents(notifications.map(note => {
 			const img = note.img?.length
 				? note.img.replace(":", "")
@@ -286,26 +263,35 @@ export const Header = observer(() => {
 			})
 		}))
 	}, [notifications]);
-	useEffect(() => {
-		console.log(camera.events)
-		data.forEach((port) => {
-			port.cameras.forEach((camera) =>{
-				console.log(camera);
-			})
-		})
 
+	// useEffect(() => {
+	// 	ports.setEvents(notifications.map(note => {
+	// 		const img = note.img?.length
+	// 			? note.img.replace(":", "")
+	// 			: note.img;
+	//
+	// 		return ({
+	// 			id: note.id,
+	// 			typeError: 'Regular',
+	// 			typeVessel: "Unknown",
+	// 			location: 'Russia',
+	// 			city: 'Saint Petersburg',
+	// 			camera: note.name,
+	// 			date: 'Unknown',
+	// 			time: 'Unknown',
+	// 			timezone: 'Unknown',
+	// 			imageLink: img,
+	// 			newEvent: true,
+	// 			description: 'NO DESCRIPTION',
+	// 		})
+	// 	}))
+	// }, [notifications]);
+	useEffect(() => {
 		setPortNotes();
 		if (port.id >= 0) setCameraNotes();
 
-		header.addAllNewNotifications(portsNewNote);
+		header.addAllNewNotifications();
 	}, [port, camera, event, camera.events]);
-	// useEffect(() => {
-	// 	setPortNotes();
-	// 	if (port.id >= 0) setCameraNotes();
-	//
-	// 	header.addAllNewNotifications(portsNewNote);
-	// // }, [port, camera, event, camera.events]);
-	// }, [camera.events]);
 
 	const handleProfileMenuOpen = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -321,19 +307,19 @@ export const Header = observer(() => {
 		setMobileMoreAnchorEl(event.currentTarget);
 	};
 	const setPortNotes = () => {
-		data.forEach(({cameras}, portIndex) => {
+		data.forEach(({id, cameras}, portIndex) => {
 			let num = 0;
 			cameras.forEach(({events}) => {
 				const temp = (events.filter(({newEvent}) => newEvent === true).length);
 				num += temp;
 			})
-			header.addNewPortsNotifications(portIndex, num);
+			header.addNewPortsNotifications(id, num);
 		})
 	};
 	const setCameraNotes = () => {
-		port.cameras.forEach(({events}, i) => {
+		port.cameras.forEach(({id, events}, i) => {
 			const notif = (events.filter(({newEvent}) => newEvent)).length;
-			header.addNewCamerasNotifications(i, notif);
+			header.addNewCamerasNotifications(id, notif);
 		})
 	};
 	const renderMenu = () => {
@@ -377,7 +363,7 @@ export const Header = observer(() => {
 	const isMenuOpen = Boolean(anchorEl);
 	// const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-	console.log(notifications);
+	// console.log(notifications);
 
 	return (
 		<div className={classes.grow}>
