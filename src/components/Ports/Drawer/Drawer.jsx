@@ -98,60 +98,60 @@ export const Drawer = observer(({isMobile}) => {
 		setIcon(icon);
 	}
 
-	// const items = allData.map(({id, description}, i) => {
-	// 	const portId = Number.isInteger(selectedObjects.port.id);
-	//
-	// 	return (
-	// 		<DrawerItems
-	// 			key={`${id}-${description}`}
-	// 			icon={icon}
-	// 			description={description}
-	// 			notes={notes[id]}
-	// 			onClick={() => portId ? changeDataCamera(id) : changeDataPorts(id)}
-	// 		/>
-	// 		// <div key={id}>
-	// 		// 	<ListItem button
-	// 		// 	          onClick={() => portId ? changeDataCamera(id) : changeDataPorts(id)}
-	// 		// 	>
-	// 		// 		<ListItemIcon>
-	// 		// 			<Icon>
-	// 		// 				<img src={icon} height={25} width={25} alt=""/>
-	// 		// 			</Icon>
-	// 		// 		</ListItemIcon>
-	// 		// 		<ListItemText primary={description}/>
-	// 		//
-	// 		// 		<NavLink to="/events">
-	// 		// 			<IconButton aria-label="show 17 new notifications" color="default">
-	// 		// 				<Badge badgeContent={notes[i]} color="secondary">
-	// 		// 					<NotificationsIcon/>
-	// 		// 				</Badge>
-	// 		// 			</IconButton>
-	// 		// 		</NavLink>
-	// 		// 	</ListItem>
-	// 		// 	<Divider/>
-	// 		// </div>
-	// 	)
-	// });
-	const items = () => {
+	const items = allData.map(({id, description}, i) => {
 		const portId = Number.isInteger(selectedObjects.port.id);
-		const pointsId = [];
 
-		for (const key in allData) pointsId.push(key);
+		return (
+			<DrawerItems
+				key={`${id}-${description}`}
+				icon={icon}
+				description={description}
+				notes={notes[id]}
+				onClick={() => portId ? changeDataCamera(id) : changeDataPorts(id)}
+			/>
+			// <div key={id}>
+			// 	<ListItem button
+			// 	          onClick={() => portId ? changeDataCamera(id) : changeDataPorts(id)}
+			// 	>
+			// 		<ListItemIcon>
+			// 			<Icon>
+			// 				<img src={icon} height={25} width={25} alt=""/>
+			// 			</Icon>
+			// 		</ListItemIcon>
+			// 		<ListItemText primary={description}/>
+			//
+			// 		<NavLink to="/events">
+			// 			<IconButton aria-label="show 17 new notifications" color="default">
+			// 				<Badge badgeContent={notes[i]} color="secondary">
+			// 					<NotificationsIcon/>
+			// 				</Badge>
+			// 			</IconButton>
+			// 		</NavLink>
+			// 	</ListItem>
+			// 	<Divider/>
+			// </div>
+		)
+	});
 
-		return pointsId.map((itemId) => {
-			const {id, description} = allData[itemId];
-
-			return (
-				<DrawerItems
-					key={`${id}-${description}`}
-					icon={icon}
-					description={description}
-					notes={notes[id]}
-					onClick={() => id ? changeDataCamera(id) : changeDataPorts(id)}
-				/>
-			)
-		})
-	}
+	// const items = () => {
+	// 	const portId = Number.isInteger(selectedObjects.port.id);
+	//	const pointsId = [];
+	//	for (const key in allData) pointsId.push(key);
+	//
+	// 	return pointsId.map((itemId) => {
+	// 		const {id, description} = allData[itemId];
+	//
+	// 		return (
+	// 			<DrawerItems
+	// 				key={`${id}-${description}`}
+	//				icon={icon}
+	// 				description={description}
+	// 				notes={notes[id]}
+	// 				onClick={() => id ? changeDataCamera(id) : changeDataPorts(id)}
+	// 			/>
+	// 		)
+	// 	})
+	// }
 
 	return (
 		<div className={classes.root}>

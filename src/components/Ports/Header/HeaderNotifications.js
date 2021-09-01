@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from "@material-ui/core/Button";
 import Popover from "@material-ui/core/Popover";
 import LocalPhoneIcon from "@material-ui/icons/LocalPhone";
@@ -83,17 +83,21 @@ export const HeaderNotifications = () => {
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
 
+	// const str = "camera 123";
+	// const regExp = /[a-zA-Z]+/g;
+
+
 	const notificationList = () => {
 		return (
 			<List className={classes.root} subheader={<li/>}>
-				{data.map(({id, city, cameras}, portIndex) => {
+				{data.map(({id, city, cameras}) => {
 					return (
 						<li key={`section-${id}`} className={classes.listSection}>
 							<ul className={classes.ul}>
 								<Divider/>
 								<ListSubheader>{`Port in ${city}`}</ListSubheader>
 								<Divider/>
-								{cameras.map((camera, cameraIndex) =>
+								{cameras.map((camera) =>
 									camera.events.filter((event) => event.newEvent)
 										.map((event) => {
 											return (
@@ -101,7 +105,9 @@ export const HeaderNotifications = () => {
 													key={`item-${id}-${camera.id}-${event.id}`}
 													className={`${classes.item} ${event.typeError.toLowerCase()}`}
 												>
-													<NavLink className={`${classes.navLink} ${event.typeError.toLowerCase()}`} to={"/events"}>
+													<NavLink
+														className={`${classes.navLink} ${event.typeError.toLowerCase()}`}
+														to={"/events"}>
 														<ListItemText
 															primary={`${event.date} ${event.time} ${camera.description}`}
 															onClick={() => handleSelectItem(id, camera.id, event.id)}/>
@@ -126,10 +132,37 @@ export const HeaderNotifications = () => {
 	const handleSelectItem = (portId, cameraId, eventId) => {
 		ports.setSelectedPort(portId);
 		ports.setSelectedCamera(cameraId);
-		// ports.setSelectedEvent(eventId);
 
 		ports.setIsNewNotif(eventId, false);
 	}
+
+	// const getAllNotifications = () => {
+	// 	const eventCounter = [];
+	// 	for (const port in data) {
+	// 		const regExp = /[a-zA-Z]+/g;
+	//
+	// 		for (const portItem in data[port]) {
+	// 			const [name] = portItem.match(regExp);
+	//
+	// 			if (name === "camera") {
+	// 				for (const cameraItem in data[port][portItem]) {
+	// 					const [name] = cameraItem.match(regExp);
+	//
+	// 					if (name === "event") {
+	// 						if (data[port][portItem][cameraItem].newEvent) {
+	// 							eventCounter.push({
+	// 								port,
+	// 								camera: portItem,
+	// 								event: cameraItem,
+	// 							});
+	// 						}
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// 	return eventCounter;
+	// };
 
 	const open = Boolean(anchorEl);
 	const id = open ? 'simple-popover' : undefined;
