@@ -73,6 +73,10 @@ const useStyles = makeStyles((theme) => ({
 			color: "#fff",
 		},
 	},
+
+	icon: {
+		fontSize: 28,
+	},
 }))
 
 export const HeaderNotifications = () => {
@@ -136,34 +140,6 @@ export const HeaderNotifications = () => {
 		ports.setIsNewNotif(eventId, false);
 	}
 
-	// const getAllNotifications = () => {
-	// 	const eventCounter = [];
-	// 	for (const port in data) {
-	// 		const regExp = /[a-zA-Z]+/g;
-	//
-	// 		for (const portItem in data[port]) {
-	// 			const [name] = portItem.match(regExp);
-	//
-	// 			if (name === "camera") {
-	// 				for (const cameraItem in data[port][portItem]) {
-	// 					const [name] = cameraItem.match(regExp);
-	//
-	// 					if (name === "event") {
-	// 						if (data[port][portItem][cameraItem].newEvent) {
-	// 							eventCounter.push({
-	// 								port,
-	// 								camera: portItem,
-	// 								event: cameraItem,
-	// 							});
-	// 						}
-	// 					}
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// 	return eventCounter;
-	// };
-
 	const open = Boolean(anchorEl);
 	const id = open ? 'simple-popover' : undefined;
 
@@ -171,7 +147,7 @@ export const HeaderNotifications = () => {
 		<span>
 			<IconButton aria-label="show 17 new notifications" color="inherit" onClick={handleClick}>
 				<Badge badgeContent={allNewNote} color="secondary">
-					<NotificationsIcon className='header__icons'/>
+					<NotificationsIcon className={classes.icon}/>
 				</Badge>
 			</IconButton>
 

@@ -17,6 +17,19 @@ const useStyles = makeStyles((theme) => {
 	const {miniAvatar} = header
 
 	return ({
+		test: {
+			// width: "calc(100% - 300px)",
+			minHeight: 92,
+			flexShrink: 0,
+			position: "fixed",
+			top: 0,
+			left: "auto",
+			right: 0,
+			zIndex: 1100,
+			backgroundColor: '#2d2d2d',
+
+			justifyContent: "center",
+		},
 		grow: {
 			flexGrow: 1,
 		},
@@ -24,19 +37,14 @@ const useStyles = makeStyles((theme) => {
 			marginRight: theme.spacing(2),
 		},
 		accountIcon: {
-			width: "40px",
-			height: "40px",
+			width: 50,
+			height: 50,
 			borderRadius: "50%",
 
 			backgroundImage: `url(${miniAvatar})`,
 			backgroundPosition: 'center',
 			backgroundSize: 'cover',
 			backgroundRepeat: 'no-repeat',
-		},
-		icon: {
-			width: 40,
-			height: 40,
-			borderRadius: "50%",
 		},
 		mobileDrawer: {
 			display: "none",
@@ -363,11 +371,9 @@ export const Header = observer(() => {
 	const isMenuOpen = Boolean(anchorEl);
 	// const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-	// console.log(notifications);
-
 	return (
-		<div className={classes.grow}>
-			<AppBar position="static" style={{background: '#2d2d2d'}}>
+		// <div className={classes.grow}>
+			<AppBar position="static" classes={{root: classes.test}}>
 				<Toolbar>
 					<span className={classes.mobileDrawer}><MobileDrawer/></span>
 					<NavLink className={'navButtonsHome'}
@@ -397,9 +403,8 @@ export const Header = observer(() => {
 					<div className={classes.sectionMobile}>
 					</div>
 				</Toolbar>
+				{renderMenu()}
 			</AppBar>
-			{/* {renderNewMenu} */}
-			{renderMenu()}
-		</div>
+		// </div>
 	);
 });

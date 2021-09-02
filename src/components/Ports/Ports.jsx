@@ -17,12 +17,19 @@ const useStyles = makeStyles((theme) => {
 
 	return ({
 		main: {
-			width: "100%",
-			height: scrollHeight,
+			height: "100%",
+
+			"@media(max-width: 425px)": {
+				height: scrollHeight,
+			},
 		},
 
 		drawer: {
-			width: "100%",
+			width: 300,
+			minHeight: "100%",
+			flexShrink: 0,
+
+			paddingTop: 98,
 
 			"@media(max-width: 425px)": {
 				display: "none",
@@ -31,6 +38,7 @@ const useStyles = makeStyles((theme) => {
 
 		mobileDrawer: {
 			display: "none",
+
 
 			"@media(max-width: 425px)": {
 				width: "100%",
@@ -41,25 +49,39 @@ const useStyles = makeStyles((theme) => {
 				bottom: 0,
 				left: 0,
 				zIndex: 1,
+
+				overflowX: "auto",
 			},
 		},
 
 		changeMap: {
 			display: "flex",
 
+			width: 95,
+			height: 28,
+
+			borderRadius: 3,
+			borderColor: "transparent",
+
+			boxShadow: "0 1px 2px 1px rgba(0,0,0,.15),0 2px 5px -3px rgba(0,0,0,.15)",
+
 			position: "absolute",
-			top: 70,
+			top: 112,
 			left: 320,
 			zIndex: 1,
 
+			backgroundColor: "white",
+
 			"@media(max-width: 425px)": {
-				top: 72,
+				top: 102,
 				left: 10,
 			},
 		},
 		drawerContent: {
 			display: "flex",
 			position: "relative",
+
+			minHeight: "100%",
 		},
 	})
 })
@@ -94,14 +116,9 @@ export const Ports = () => {
 				<Drawer/>
 			</div>
 
-			<div className={`${classes.changeMap}`}>
-				<select
-					onChange={handlerMapChange}
-					className="browser-default custom-select">{
-					addtype.map((address, key) => <option value={key} key={key}>{address}</option>)
-				}
-				</select>
-			</div>
+			<select className={`${classes.changeMap}`} onChange={handlerMapChange}>
+				{addtype.map((address, key) => <option value={key} key={key}>{address}</option>)}
+			</select>
 		</div>
 	)
 }

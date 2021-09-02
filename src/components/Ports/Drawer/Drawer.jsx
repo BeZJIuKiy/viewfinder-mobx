@@ -11,18 +11,17 @@ import {DrawerItems} from "./DrawerItems";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		width: '100%',
 		height: "100%",
 
-		maxWidth: "360px",
+		flex: "0 0 auto",
 		backgroundColor: theme.palette.background.paper,
 		overflow: "auto",
 
-		"@media(max-width: 425px)": {
-			maxWidth: 99999,
-			// backgroundColor: "gold",
-			overflowY: "hidden",
-		}
+		// "@media(max-width: 425px)": {
+		// 	// maxWidth: 99999,
+		// 	// backgroundColor: "gold",
+		// 	// overflowY: "hidden",
+		// }
 	},
 
 	main: {
@@ -102,6 +101,7 @@ export const Drawer = observer(({isMobile}) => {
 		const portId = Number.isInteger(selectedObjects.port.id);
 
 		return (
+
 			<DrawerItems
 				key={`${id}-${description}`}
 				icon={icon}

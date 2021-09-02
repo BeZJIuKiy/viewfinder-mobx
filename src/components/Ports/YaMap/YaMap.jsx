@@ -20,10 +20,18 @@ const useStyles = makeStyles((theme) => {
 
 			"&.show": {
 				display: "flex",
-				height: `calc(100vh - 64px)`,
+				minHeight: "100%",
+
+				paddingTop: 92,
+
+				flexGrow: 1,
+				// height: `calc(100vh - 64px)`,
 
 				"@media(max-width: 425px)": {
-					height: `calc(${scrollHeight}px - 124px)`,
+					// height: `calc(${scrollHeight}px - 124px)`,
+					// height: scrollHeight,
+					// minHeight: "100%",
+					minHeight: scrollHeight,
 				}
 			},
 
@@ -34,7 +42,8 @@ const useStyles = makeStyles((theme) => {
 		},
 
 		item: {
-			width: "calc(100vw - 300px)",
+			// width: "calc(100vw - 300px)",
+			width: "100%",
 			height: "100%",
 
 			"@media(max-width: 425px)": {
@@ -109,11 +118,6 @@ const YaMap = observer(({isVisible, style}) => {
 
 		const {name, description, type, coordinates, link} = camera;
 
-		// const port = `port ${selectedObjects.port.id}`;
-		// const camera = `camera ${id}`;
-
-
-		// const {name, description, type, coordinates, link} = allData[port][camera];
 		setBalContent(`
 		    <div class="yamap__balloon__content">
 		        <iframe width="400" height="300"
