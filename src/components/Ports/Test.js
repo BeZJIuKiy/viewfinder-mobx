@@ -172,63 +172,76 @@ export const Test = () => {
 	const classes = useStyles();
 
 	return (
-		<div className={classes.container}>
-			{/*<div className={`${classes.item01} one`}>First</div>*/}
-			{/*<div className={`${classes.item01} two`}>Second</div>*/}
-			{/*<div className={`${classes.item01} three`}>Third</div>*/}
-			{/*<div className={`${classes.item01} four`}>Fourth</div>*/}
-			{/*<div className={`${classes.item01} five`}>Fifth</div>*/}
-			{/*<div className={`${classes.item01} six`}>Sixth</div>*/}
-			{/*<div className={`${classes.item01} seven`}>Seventh</div>*/}
+		// // <div className={classes.container}>
+		// 	{/*<div className={`${classes.item01} one`}>First</div>*/}
+		// 	{/*<div className={`${classes.item01} two`}>Second</div>*/}
+		// 	{/*<div className={`${classes.item01} three`}>Third</div>*/}
+		// 	{/*<div className={`${classes.item01} four`}>Fourth</div>*/}
+		// 	{/*<div className={`${classes.item01} five`}>Fifth</div>*/}
+		// 	{/*<div className={`${classes.item01} six`}>Sixth</div>*/}
+		// 	{/*<div className={`${classes.item01} seven`}>Seventh</div>*/}
+		//
+		// 	{/*<div className={`${classes.item02}`}>1</div>*/}
+		// 	{/*<div className={`${classes.item02}`}>2</div>*/}
+		// 	{/*<div className={`${classes.item02}`}>3</div>*/}
+		//
+		// 	{/*<div className={`${classes.item03} one`}>1</div>*/}
+		// 	{/*<div className={`${classes.item03} two`}>2</div>*/}
+		// 	{/*<div className={`${classes.item03} three`}>3</div>*/}
+		// 	{/*<div className={`${classes.item03} four`}>4</div>*/}
+		//
+		// 	{/*<div className={`${classes.item03} five`}>5</div>*/}
+		// 	{/*<div className={`${classes.item03} six`}>6</div>*/}
+		//
+		// 	{/*<Grid container spacing={3}>*/}
+		// 	{/*	<Grid item xs={12} sm={6} md={3}>*/}
+		// 	{/*		<div className={`${classes.item03}`}>1</div>*/}
+		// 	{/*	</Grid>*/}
+		// 	{/*	<Grid item xs={12} sm={6} md={3}>*/}
+		// 	{/*		<div className={`${classes.item03}`}>2</div>*/}
+		// 	{/*	</Grid>*/}
+		// 	{/*	<Grid item xs={12} sm={6} md={3}>*/}
+		// 	{/*		<div className={`${classes.item03}`}>3</div>*/}
+		// 	{/*	</Grid>*/}
+		// 	{/*	<Grid item xs={12} sm={6} md={3}>*/}
+		// 	{/*		<div className={`${classes.item03}`}>4</div>*/}
+		// 	{/*	</Grid>*/}
+		//
+		// 	{/*	<Grid item xs={12} sm={6} md={8}>*/}
+		// 	{/*		<div className={`${classes.item03} five`}>5</div>*/}
+		// 	{/*	</Grid>*/}
+		//
+		// 	{/*	<Grid item xs={12} sm={6} md={4}>*/}
+		// 	{/*		<div className={`${classes.item03}`}>6</div>*/}
+		// 	{/*	</Grid>*/}
+		//
+		// 	{/*	<Grid item xs={12} sm={6} md={8}>*/}
+		// 	{/*		<div className={`${classes.item03}`}>7</div>*/}
+		// 	{/*	</Grid>*/}
+		// 	{/*	<Grid item xs={12} sm={6} md={4}>*/}
+		// 	{/*		<div className={`${classes.item03} eight`}>8</div>*/}
+		// 	{/*	</Grid>*/}
+		//
+		// 	{/*	<Grid item xs={12} sm={6} md={4}>*/}
+		// 	{/*		<div className={`${classes.item03}`}>9</div>*/}
+		// 	{/*	</Grid>*/}
+		// 	{/*	<Grid item xs={12} sm={6} md={8}>*/}
+		// 	{/*		<div className={`${classes.item03}`}>10</div>*/}
+		// 	{/*	</Grid>*/}
+		// 	{/*</Grid>*/}
+		// {/*</div>*/}
+		<div style={{minHeight: "100%"}}>
+			<Header/>
+			<div style={{
+				display: "flex",
+				height: "100%",
+				minHeight: "100%",
 
-			{/*<div className={`${classes.item02}`}>1</div>*/}
-			{/*<div className={`${classes.item02}`}>2</div>*/}
-			{/*<div className={`${classes.item02}`}>3</div>*/}
-
-			{/*<div className={`${classes.item03} one`}>1</div>*/}
-			{/*<div className={`${classes.item03} two`}>2</div>*/}
-			{/*<div className={`${classes.item03} three`}>3</div>*/}
-			{/*<div className={`${classes.item03} four`}>4</div>*/}
-
-			{/*<div className={`${classes.item03} five`}>5</div>*/}
-			{/*<div className={`${classes.item03} six`}>6</div>*/}
-
-			<Grid container spacing={3}>
-				<Grid item xs={12} sm={6} md={3}>
-					<div className={`${classes.item03}`}>1</div>
-				</Grid>
-				<Grid item xs={12} sm={6} md={3}>
-					<div className={`${classes.item03}`}>2</div>
-				</Grid>
-				<Grid item xs={12} sm={6} md={3}>
-					<div className={`${classes.item03}`}>3</div>
-				</Grid>
-				<Grid item xs={12} sm={6} md={3}>
-					<div className={`${classes.item03}`}>4</div>
-				</Grid>
-
-				<Grid item xs={12} sm={6} md={8}>
-					<div className={`${classes.item03} five`}>5</div>
-				</Grid>
-
-				<Grid item xs={12} sm={6} md={4}>
-					<div className={`${classes.item03}`}>6</div>
-				</Grid>
-
-				<Grid item xs={12} sm={6} md={8}>
-					<div className={`${classes.item03}`}>7</div>
-				</Grid>
-				<Grid item xs={12} sm={6} md={4}>
-					<div className={`${classes.item03} eight`}>8</div>
-				</Grid>
-
-				<Grid item xs={12} sm={6} md={4}>
-					<div className={`${classes.item03}`}>9</div>
-				</Grid>
-				<Grid item xs={12} sm={6} md={8}>
-					<div className={`${classes.item03}`}>10</div>
-				</Grid>
-			</Grid>
+				paddingTop: 102,
+			}}>
+				<Drawer/>
+				<YaMap isVisible={true}/>
+			</div>
 		</div>
 	)
 }

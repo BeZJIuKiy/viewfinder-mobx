@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => {
         main: {
             display: "flex",
             flexDirection: "column",
+            marginTop: 92,
         },
 
         drawer: {
