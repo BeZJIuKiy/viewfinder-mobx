@@ -20,18 +20,22 @@ const useStyles = makeStyles((theme) => {
 
 			"&.show": {
 				display: "flex",
+				// height: "100%",
 				minHeight: "100%",
+				// minHeight: scrollHeight,
 
 				paddingTop: 92,
+				// marginTop: 102,
 
 				flexGrow: 1,
-				// height: `calc(100vh - 64px)`,
+				height: `100vh`,
+				// height: `calc(100vh - 92px)`,
 
 				"@media(max-width: 425px)": {
 					// height: `calc(${scrollHeight}px - 124px)`,
-					// height: scrollHeight,
+					height: scrollHeight,
 					// minHeight: "100%",
-					minHeight: scrollHeight,
+					// minHeight: scrollHeight,
 				}
 			},
 
@@ -43,8 +47,10 @@ const useStyles = makeStyles((theme) => {
 
 		item: {
 			// width: "calc(100vw - 300px)",
+			// width: "100%",
+			// height: "100%",
 			width: "100%",
-			height: "100%",
+			minHeight: "100%",
 
 			"@media(max-width: 425px)": {
 				width: "100%",
@@ -113,10 +119,10 @@ const YaMap = observer(({isVisible, style}) => {
 	}, [selectedObjects.port]);
 
 	const mapData = (center, zoom, controls) => setMapCenter({center, zoom, controls});
-	const clickOnCamera = (camera, id) => {
+	const clickOnCamera = (id) => {
 		ports.setSelectedCamera(id);
 
-		const {name, description, type, coordinates, link} = camera;
+		const {name, description, type, coordinates, link} = ports.selectedObjects.camera;
 
 		setBalContent(`
 		    <div class="yamap__balloon__content">
@@ -142,21 +148,21 @@ const YaMap = observer(({isVisible, style}) => {
 		`);
 	}
 
-	const portsCoordinates = allData.map((c, i) => {
+	const mapPlaceMark = allData.map(({id, coordinates, description, link}, i) => {
 		return (
 			<Placemark
-				onClick={() => (!c.link) ? ports.setSelectedPort(i) : clickOnCamera(c, i)}
-				key={c.description}
-				geometry={c.coordinates}
+				key={`HandlePlaceMark-${id}-${description}`}
+				geometry={coordinates}
 				properties={{
-					hintContent: `${c.description} cameras`,
+					hintContent: `${description} cameras`,
 					balloonContent: balContent,
 				}}
 				options={{
-					preset: !c.link ? portIcon.map : cameraIcon.map,
+					preset: !link ? portIcon.mapIcon : cameraIcon.mapIcon,
 					iconColor: '#ffba00',
 				}}
 				modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
+				onClick={() => !link ? ports.setSelectedPort(id) : clickOnCamera(id)}
 			/>
 		)
 	});
@@ -179,7 +185,7 @@ const YaMap = observer(({isVisible, style}) => {
 							groupByCoordinates: false,
 						}}
 					>
-					{portsCoordinates}
+						{mapPlaceMark}
 					</Clusterer>
 				</Map>
 

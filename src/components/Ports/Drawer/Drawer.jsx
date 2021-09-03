@@ -69,8 +69,8 @@ export const Drawer = observer(({isMobile}) => {
 		const portId = Number.isInteger(id);
 
 		portId
-			? setData(cameras, camerasNoteTest, cameraIcon.drawer)
-			: setData(data, portsNoteTest, portIcon.drawer);
+			? setData(cameras, camerasNoteTest, cameraIcon.drawerIcon)
+			: setData(data, portsNoteTest, portIcon.drawerIcon);
 	}, [selectedObjects.port]);
 	useEffect(() => {
 		const {id, cameras} = selectedObjects.port;
@@ -79,8 +79,8 @@ export const Drawer = observer(({isMobile}) => {
 		searchQuery[secretTitle]?.length
 			? setAllData(searchQuery[secretTitle])
 			: portId
-				? setData(cameras, camerasNoteTest, cameraIcon.drawer)
-				: setData(data, portsNoteTest, portIcon.drawer);
+				? setData(cameras, camerasNoteTest, cameraIcon.drawerIcon)
+				: setData(data, portsNoteTest, portIcon.drawerIcon);
 	}, [searchQuery[secretTitle]]);
 
 	const changeDataPorts = (id) => {

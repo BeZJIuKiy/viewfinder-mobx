@@ -6,6 +6,8 @@ import './ports.css';
 import {NewMap} from './NewMap/NewMap';
 import {useWindowDimensions} from "../../useHooks/useWindowDimensions";
 import {makeStyles} from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import {Hidden} from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => {
@@ -25,6 +27,17 @@ const useStyles = makeStyles((theme) => {
 		},
 
 		drawer: {
+			// width: 300,
+			// minHeight: "100%",
+			// flexShrink: 0,
+
+			paddingTop: 98,
+
+			// "@media(max-width: 425px)": {
+			// 	display: "none",
+			// },
+		},
+		drawerOld: {
 			width: 300,
 			minHeight: "100%",
 			flexShrink: 0,
@@ -101,24 +114,39 @@ export const Ports = () => {
 		.then(item => console.log(item));
 
 	return (
-		<div className={classes.main}>
-			<Header/>
-			<div className={`${classes.drawerContent}`}>
-				<div className={classes.drawer}>
-					<Drawer/>
-				</div>
-
-				<YaMap isVisible={mapVisible}/>
-				<NewMap isVisible={!mapVisible}/>
-			</div>
-
-			<div className={classes.mobileDrawer}>
-				<Drawer/>
-			</div>
-
-			<select className={`${classes.changeMap}`} onChange={handlerMapChange}>
-				{addtype.map((address, key) => <option value={key} key={key}>{address}</option>)}
-			</select>
-		</div>
+		<Grid container>
+			<Grid item xs={12} sm={12} md={12}>
+				<Header/>
+			</Grid>
+			<Hidden xsDown>
+				<Grid item xs={12} sm={3} md={4} lg={3} xl={2}>
+					<div className={classes.drawer}><Drawer/></div>
+				</Grid>
+			</Hidden>
+			<Grid item xs={12} sm={9} md={8} lg={9} xl={10}>
+				<YaMap isVisible={true}/>
+			</Grid>
+		</Grid>
 	)
+	// return (
+	// 	<div className={classes.main}>
+	// 		<Header/>
+	// 		<div className={`${classes.drawerContent}`}>
+	// 			<div className={classes.drawer}>
+	// 				<Drawer/>
+	// 			</div>
+	//
+	// 			<YaMap isVisible={mapVisible}/>
+	// 			<NewMap isVisible={!mapVisible}/>
+	// 		</div>
+	//
+	// 		<div className={classes.mobileDrawer}>
+	// 			<Drawer/>
+	// 		</div>
+	//
+	// 		<select className={`${classes.changeMap}`} onChange={handlerMapChange}>
+	// 			{addtype.map((address, key) => <option value={key} key={key}>{address}</option>)}
+	// 		</select>
+	// 	</div>
+	// )
 }

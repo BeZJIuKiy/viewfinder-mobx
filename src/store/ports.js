@@ -29,13 +29,13 @@ class ports {
 	};
 
 	portIcon = {
-		map: 'islands#blueWaterwayIcon',
-		drawer: mIcon_ports,
+		mapIcon: 'islands#blueWaterwayIcon',
+		drawerIcon: mIcon_ports,
 	};
 
 	cameraIcon = {
-		map: 'islands#blueVideoIcon',
-		drawer: mIcon_cameras,
+		mapIcon: 'islands#blueVideoIcon',
+		drawerIcon: mIcon_cameras,
 	};
 
 	selectedObjects = {
