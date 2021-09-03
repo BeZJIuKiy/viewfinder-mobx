@@ -51,8 +51,8 @@ export const TestImage = () => {
 			>
 				<img
 					style={{cursor: 'pointer'}}
-					src={"data:image/png;base64," + imageLink} alt={typeVessel}
-					// src={imageLink} alt={typeVessel}
+					// src={"data:image/png;base64," + imageLink} alt={typeVessel}
+					src={imageLink} alt={typeVessel}
 				/>
 				<GridListTileBar
 					className={classes.titleBar}

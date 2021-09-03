@@ -31,15 +31,20 @@ export const TestList = observer(() => {
 	const cameraEvents = camera.events.length ? `All Detects ${camera.name}` : `No events`;
 	const vesselTypes = camera.events.map(b => b.typeVessel)
 		.filter((type, index, arr) => arr.indexOf(type) === index)
-		.map((type, i) =>
-			<div className={classes.root} key={i * 2}>
-				<List component="nav" aria-label="main mailbox folders">
-					<ListItem button onClick={() => ports.setSelectedEvent(i)}>
-						<ListItemText primary={type} align="center"/>
-					</ListItem>
-				</List>
-				<Divider/>
-			</div>
+		.map((type, i) => {
+			const typeV = camera.events.find((event) => event.typeVessel === type);
+
+			return (
+					<div className={classes.root} key={i * 2}>
+						<List component="nav" aria-label="main mailbox folders">
+							<ListItem button onClick={() => ports.setSelectedEvent(typeV.id)}>
+								<ListItemText primary={type} align="center"/>
+							</ListItem>
+						</List>
+						<Divider/>
+					</div>
+				)
+			}
 		);
 
 	return (
