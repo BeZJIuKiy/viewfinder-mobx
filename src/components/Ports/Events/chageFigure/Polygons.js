@@ -32,9 +32,12 @@ export default class Polygons {
 
 		console.log(ports.selectedObjects.camera.id);
 		console.log(canvasState.saveDataTest);
+		console.log(canvasState.saveDataTest[ports.selectedObjects.camera.id])
 		// this.polygons = [];
 		// this.polygons = canvasState.test.get(ports.selectedObjects.camera.id);
+
 		this.polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id];
+		console.log(this.polygons)
 
 		/* DELETE */
 		// if (this.polygons.length) {

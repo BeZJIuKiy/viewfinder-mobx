@@ -259,7 +259,7 @@ export const Events20 = observer(() => {
 	const saveNewPolygonsData = () => {
 		// fetchPostPolygon(canvasState.test.get(camera.id), "http://192.168.250.183:8080/api/positions");
 		// postPoints();
-
+		// console.log(canvasState.saveDataTest)
 		canvasState.setCreatePolygon(false);
 		canvasState.setZoneAction("");
 	}

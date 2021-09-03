@@ -155,7 +155,7 @@ class CanvasState {
     }
 
     setPolygonInCamera = (id) => {
-        // console.log(this.test);
+        if (Number.isInteger(this.saveDataTest[id]?.length)) return;
         this.saveDataTest[id] = [];
 
         // if (this.test.has(id)) return;
