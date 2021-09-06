@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
 	btn: {
 		fontSize: "1.2vw",
 		color: "#ccc",
-		fontWeight: 900,
+		fontWeight: 500,
 		fontFamily: `"Quicksand", sans-serif`,
 
 		backgroundColor: "transparent",
