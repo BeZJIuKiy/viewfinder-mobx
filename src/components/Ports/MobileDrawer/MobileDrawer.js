@@ -21,6 +21,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import {observer} from "mobx-react-lite";
 import header from "../../../store/header";
 import {DrawerSearch} from "../Drawer/DrawerSearch";
+import {DrawerItems} from "../Drawer/DrawerItems";
 
 const useStyles = makeStyles({
 	list: {
@@ -115,73 +116,20 @@ export const MobileDrawer = observer(() => {
 		account.setSelectedItem(index);
 	}
 
-	// const drawerItems = () => account.drawerItems.map(({id, icon, title}, i) => {
-	// 	return (
-	// 		<ListItem
-	// 			key={`drawerItems--${id}--${title}`}
-	// 			className={`${classes.active} ${i === account.selectedItemIndex ? "isActive" : "noActive"}`}
-	// 			button
-	// 			onClick={() => handleSelectItem(i)}
-	// 		>
-	// 			<ListItemIcon>
-	// 				<Icon>
-	// 					{icon}
-	// 				</Icon>
-	// 			</ListItemIcon>
-	//
-	// 			<ListItemText
-	// 				primary={title}
-	// 			/>
-	// 		</ListItem>
-	// 	)
-	// });
-
-	const drawerPortItem = () => allData.map(({id, description}) => {
+	const drawerMapPoints = () => allData.map(({id, description}) => {
 		return (
-			<ListItem button onClick={() => handleClickPortItem(id)}>
-				<ListItemIcon>
-					<Icon>
-						<img src={icon} height={25} width={25} alt=""/>
-					</Icon>
-				</ListItemIcon>
-				<ListItemText primary={description}/>
-
-				<NavLink to="/events">
-					<IconButton aria-label="show new notifications" color="default">
-						<Badge badgeContent={notes[id]} color="secondary">
-							<NotificationsIcon/>
-							{/*<ListItemText primary={description}/>*/}
-						</Badge>
-					</IconButton>
-				</NavLink>
-			</ListItem>
+			<DrawerItems
+				key={`DrawerMapPoints--${id}--${description}`}
+				icon={icon}
+				description={description}
+				notes={notes[id]}
+				onClick={() => portId ? handleClickCameraItem(id) : handleClickPortItem(id)}
+			/>
 		)
 	})
 	const handleClickPortItem = (id) => {
 		ports.setSelectedPort(id);
 	}
-
-	const drawerCameraItem = () => allData.map(({id, description}) => {
-		return (
-			<ListItem button onClick={() => handleClickCameraItem(id)}>
-				<ListItemIcon>
-					<Icon>
-						<img src={icon} height={25} width={25} alt=""/>
-					</Icon>
-				</ListItemIcon>
-				<ListItemText primary={description}/>
-
-				<NavLink to="/events">
-					<IconButton aria-label="show new notifications" color="default">
-					<Badge badgeContent={notes[id]} color="secondary">
-						<NotificationsIcon/>
-						{/*<ListItemText primary={description}/>*/}
-					</Badge>
-					</IconButton>
-				</NavLink>
-			</ListItem>
-		)
-	})
 	const handleClickCameraItem = (id) => {
 		ports.setSelectedCamera(id);
 		ports.clearSearchQuery();
@@ -191,7 +139,7 @@ export const MobileDrawer = observer(() => {
 	const drawerAccountItem = () => account.drawerItems.map(({id, icon, title}, i) => {
 		return (
 			<ListItem
-				key={`drawerItems--${id}--${title}`}
+				key={`drawerAccountItem--${id}--${title}`}
 				className={`${classes.active} ${i === account.selectedItemIndex ? "isActive" : "noActive"}`}
 				button
 				onClick={() => handleSelectItem(i)}
@@ -202,9 +150,7 @@ export const MobileDrawer = observer(() => {
 					</Icon>
 				</ListItemIcon>
 
-				<ListItemText
-					primary={title}
-				/>
+				<ListItemText primary={title}/>
 			</ListItem>
 		)
 	});
@@ -212,11 +158,10 @@ export const MobileDrawer = observer(() => {
 	const anchor = 'right';
 	const curData = () => {
 		switch (history.location.pathname) {
-			case "/ports": return portId ? drawerCameraItem() : drawerPortItem();
+			case "/ports": return drawerMapPoints();
 			case "/account": return drawerAccountItem();
 
-			default:
-				return [];
+			default: return [];
 		}
 	}
 
@@ -235,7 +180,8 @@ export const MobileDrawer = observer(() => {
 					// onKeyDown={toggleDrawer(anchor, false)}
 				>
 					<List component="nav" aria-label="main mailbox folders">
-						<div className={`${classes.search} ${history.location.pathname === "/ports" ? "show" : "hide"}`}>
+						<div
+							className={`${classes.search} ${history.location.pathname === "/ports" ? "show" : "hide"}`}>
 							<DrawerSearch data={allData} search={search} label={`Mobile--Search ${searchLabel}`}
 							              secretTitle={secretTitle}/>
 						</div>

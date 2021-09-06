@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:alpine
+FROM node:14.17.4-alpine
 
 # set working directory
 WORKDIR /app
@@ -12,12 +12,12 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package*.json ./
 #COPY package-lock.json ./
 
-RUN yarn install
+RUN yarn add dependencies
 
 # add app
 COPY . ./
 
-EXPOSE 8000
+EXPOSE 80
 
 # start app
 CMD ["yarn", "start"]

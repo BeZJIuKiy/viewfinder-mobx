@@ -26,6 +26,8 @@ export const DrawerSearch = ({data, search, label, secretTitle}) => {
 
 	const [value, setValue] = useState("");
 
+	console.log()
+
 	useEffect(() => {
 		setValue("");
 	}, [ports.selectedObjects.port])
