@@ -189,11 +189,11 @@ export const ContactUs = () => {
 				}}
 			>
 				<div style={{display: "flex", backgroundColor: "transparent"}}>
-					<a href="tel:+71112223344">
+					<a href="tel:88002500104">
 						<LocalPhoneIcon className={`${classes.icons} phone`}/>
 					</a>
 
-					<a href="mailto:servise.soft@somemail.com" target="_blanc">
+					<a href="mailto:lookout@ssoft24.com" target="_blanc">
 						<EmailIcon className={`${classes.icons} email`}/>
 					</a>
 
