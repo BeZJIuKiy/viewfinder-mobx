@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: 5,
 
 		"@media(max-width: 425px)": {
-			width: 175,
+			width: "98%",
 		},
 	}
 }))

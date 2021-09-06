@@ -5,13 +5,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useHistory} from 'react-router-dom';
 import './Header.css';
 import {observer} from "mobx-react-lite";
 import header from "../../../store/header";
 import ports from "../../../store/ports";
 import {HeaderNotifications} from "./HeaderNotifications";
-import {MobileDrawer} from "../Account30/MobileDrawer";
+import {MobileDrawer} from "../MobileDrawer/MobileDrawer";
 
 const useStyles = makeStyles((theme) => {
 	const {miniAvatar} = header
@@ -46,13 +46,26 @@ const useStyles = makeStyles((theme) => {
 			backgroundSize: 'cover',
 			backgroundRepeat: 'no-repeat',
 		},
+		btnHome: {
+			fontSize: 22,
+			fontWeight: 400,
+
+			margin: 0,
+			textDecoration: "none",
+			color: "inherit",
+
+			"@media(max-width: 425px)": {
+				// margin: 0,
+			},
+		},
 		mobileDrawer: {
 			display: "none",
 
 			"@media(max-width: 425px)": {
 				display: "flex",
 
-				marginRight: -20,
+				marginRight: -30,
+				paddingLeft: 5,
 			},
 		},
 	})
@@ -67,6 +80,7 @@ export const Header = observer(() => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 	const [notifications, setNotifications] = React.useState([]);
+	const [pageName, setPageName] = React.useState("");
 
 
 	useEffect(() => {
@@ -100,6 +114,7 @@ export const Header = observer(() => {
 
 		header.addAllNewNotifications();
 	}, [port, camera, event, camera.events]);
+
 
 	const handleProfileMenuOpen = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -170,40 +185,40 @@ export const Header = observer(() => {
 	const isMenuOpen = Boolean(anchorEl);
 	// const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+
 	return (
-		// <div className={classes.grow}>
-			<AppBar position="static" classes={{root: classes.test}}>
-				<Toolbar>
-					<span className={classes.mobileDrawer}><MobileDrawer/></span>
-					<NavLink className={'navButtonsHome'}
-					         to="/ports"
-					         onClick={() => ports.clearSelectedObjects()}
-					> ViewFinder
+		<AppBar position="static" classes={{root: classes.test}}>
+			<Toolbar>
+				<NavLink className={`${classes.btnHome}`}
+				         to="/ports"
+				         onClick={() => ports.clearSelectedObjects()}
+				> ViewFinder
+				</NavLink>
+
+				<div className={classes.grow}/>
+				<div className={classes.sectionDesktop}>
+					<HeaderNotifications/>
+
+					<NavLink to='/account'>
+						<IconButton
+							edge="end"
+							aria-label="account of current user"
+							aria-controls={menuId}
+							aria-haspopup="true"
+							// onClick={handleProfileMenuOpen}
+							color="inherit"
+						>
+							<span className={`${classes.accountIcon}`}/>
+						</IconButton>
 					</NavLink>
 
-					<div className={classes.grow}/>
-					<div className={classes.sectionDesktop}>
-						<HeaderNotifications/>
+				</div>
 
-						<NavLink to='/account'>
-							<IconButton
-								edge="end"
-								aria-label="account of current user"
-								aria-controls={menuId}
-								aria-haspopup="true"
-								// onClick={handleProfileMenuOpen}
-								color="inherit"
-							>
-								<span className={`${classes.accountIcon}`}/>
-							</IconButton>
-						</NavLink>
-
-					</div>
-					<div className={classes.sectionMobile}>
-					</div>
-				</Toolbar>
-				{renderMenu()}
-			</AppBar>
-		// </div>
+				<span className={classes.mobileDrawer}>
+					<MobileDrawer pageName={pageName} data={[]}/>
+				</span>
+			</Toolbar>
+			{renderMenu()}
+		</AppBar>
 	);
 });

@@ -28,8 +28,6 @@ const useStyles = makeStyles((theme) => {
 			backgroundSize: 'cover',
 			backgroundRepeat: 'no-repeat',
 
-			// fontFamily: `"Bitter", serif`,
-
 			position: "relative",
 
 
@@ -61,8 +59,6 @@ const useStyles = makeStyles((theme) => {
 			fontSize: "4vw",
 			fontWeight: 300,
 			userSelect: "none",
-			// textTransform: "uppercase",
-			// marginBottom: "1vw",
 
 			'@media(max-width: 425px)': {
 				fontSize: "14vw",
@@ -208,8 +204,7 @@ export const Auth_2_0 = () => {
 
 				console.log('Успешно: ', JSON.stringify(json));
 			} catch (error) {
-				console.log('Ошибка');
-				// console.error('Ошибка: ', error);
+				console.error('Ошибка');
 			}
 		}
 		const demoBtn = () => {
@@ -251,14 +246,6 @@ export const Auth_2_0 = () => {
 				</Button>
 			)
 		}
-
-		const scrollHeight = Math.max(
-			document.body.scrollHeight, document.documentElement.scrollHeight,
-			document.body.offsetHeight, document.documentElement.offsetHeight,
-			document.body.clientHeight, document.documentElement.clientHeight
-		);
-
-		console.log('Полная высота документа с прокручиваемой частью: ' + scrollHeight);
 
 		return (
 			<div className={classes.main}>
