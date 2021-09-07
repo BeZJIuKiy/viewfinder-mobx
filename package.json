@@ -1,5 +1,6 @@
 {
-  "name": "first-npx",
+  "name": "ViewFinder",
+  "author": "BeZJIuKiy",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

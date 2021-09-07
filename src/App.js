@@ -6,6 +6,7 @@ import {Signin_2_0} from "./components/Auth/SinginIn/Signin_2.0";
 import {Events20} from "./components/Ports/Events/Events2_0";
 import {Account30} from "./components/Ports/Account30/Account30";
 import {Test} from "./components/Ports/Test";
+import {Events30} from "./components/Ports/Events/Events3.0";
 
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
 			<Route path='/signin' component={Signin_2_0}/>
 			<Route path='/ports' component={Ports}/>
 			<Route path='/account' component={Account30}/>
-			<Route path='/events' component={Events20}/>
+			<Route path='/events' component={Events30}/>
+			{/*<Route path='/events' component={Events20}/>*/}
 			<Route path='/canvas' component={Canvas}/>
 			<Route path='/test' component={Test}/>
 			{/*<Route path='/events' render={() => <Events /> } /> так можно*/}

@@ -24,8 +24,6 @@ import {ConfirmDeletePolygon} from "./ZoneActions/ConfirmDeletePolygon";
 import boat1_04 from "./images/b1-04.jpg";
 
 const useStyles = makeStyles((theme) => {
-
-
 	return ({
 		events: {
 			height: "100vh",
