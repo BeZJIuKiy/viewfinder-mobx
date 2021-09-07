@@ -6,8 +6,10 @@ import {Header} from "./Header/Header";
 import Grid from "@material-ui/core/Grid";
 import {Box, Card, Hidden} from "@material-ui/core";
 import {Clusterer, Map, YMaps} from "react-yandex-maps";
+import backgroundImage from "../Auth/images/backgroundNew.jpg"
+import Button from "@material-ui/core/Button";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
 	container: {
 		// display: "flex",
 		// height: 500,
@@ -228,7 +230,83 @@ const useStyles = makeStyles({
 			backgroundColor: "blue",
 		},
 	},
-});
+
+
+	main: {
+		width: "100%",
+		height: "100%",
+
+		display: "flex",
+		fontFamily: `"Quicksand", sans-serif`,
+
+		backgroundImage: `url(${backgroundImage})`,
+		backgroundPosition: 'center',
+		backgroundSize: 'cover',
+		backgroundRepeat: 'no-repeat',
+	},
+
+	leftHalf: {
+		width: "50%",
+
+		position: "relative",
+		background: "rgba(51, 51, 51, 0.7)",
+
+		"@media(max-width: 425px)": {
+			width: "100%",
+		}
+	},
+
+	gridContainer: {
+		// textAlign: "center",
+
+		position: "absolute",
+		top: "50%",
+		left: "0px",
+		zIndex: 1,
+
+		transform: "translate(0, -50%)",
+	},
+
+	gridItem: {
+		fontFamily: `"Quicksand", sans-serif`,
+
+		color: "#ddd",
+		borderColor: "none",
+		fontSize: 24,
+
+		// marginBottom: theme.spacing(2),
+
+		"&.title": {
+			textAlign: "center",
+			fontSize: 52,
+			fontWeight: 300,
+		},
+
+		"&.demo": {
+			width: "100%",
+			// width: "10vw",
+			maxWidth: "200px",
+			marginLeft: "auto",
+			backgroundColor: "#9e2b4b",
+
+			"&:hover": {
+				backgroundColor: "#e22157",
+			}
+		},
+
+		"&.login": {
+			width: "100%",
+			// width: "10vw",
+			maxWidth: "200px",
+			marginRight: "auto",
+			backgroundColor: "#3d4772",
+
+			"&:hover": {
+				backgroundColor: "#374fb9",
+			}
+		},
+	},
+}));
 
 export const Test = () => {
 	const classes = useStyles();
@@ -293,19 +371,19 @@ export const Test = () => {
 		// 	{/*</Grid>*/}
 		// {/*</div>*/}
 
-		<Grid container>
-			<Grid item xs={12} sm={12} md={12}>
-				<Header/>
-			</Grid>
-			<Hidden xsDown>
-				<Grid item xs={12} sm={3} md={4} lg={3} xl={2}>
-					<div style={{paddingTop: 92}}><Drawer/></div>
-				</Grid>
-			</Hidden>
-			<Grid item xs={12} sm={9} md={8} lg={9} xl={10}>
-				<YaMap isVisible={true}/>
-			</Grid>
-		</Grid>
+		// <Grid container>
+		// 	<Grid item xs={12} sm={12} md={12}>
+		// 		<Header/>
+		// 	</Grid>
+		// 	<Hidden xsDown>
+		// 		<Grid item xs={12} sm={3} md={4} lg={3} xl={2}>
+		// 			<div style={{paddingTop: 92}}><Drawer/></div>
+		// 		</Grid>
+		// 	</Hidden>
+		// 	<Grid item xs={12} sm={9} md={8} lg={9} xl={10}>
+		// 		<YaMap isVisible={true}/>
+		// 	</Grid>
+		// </Grid>
 
 		// <div style={{minHeight: "100%"}}>
 		// 	<Header/>
@@ -356,5 +434,36 @@ export const Test = () => {
 		//         <div className={`${classes.item05} six`}>8</div>
 		//     </Grid>
 		// </Grid>
+
+		<div className={classes.main}>
+			<div className={classes.leftHalf}>
+				<Grid className={classes.gridContainer} container justify={"center"}>
+					<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+						<div className={`${classes.gridItem} title`}>ViewFinder</div>
+					</Grid>
+					<Grid item xs={4} sm={3} md={3} lg={3} xl={3}>
+						<Button
+							className={`${classes.gridItem} demo`}
+							variant="outlined"
+							color="secondary"
+							type={"submit"}
+							// disabled={isSubmitting}
+						>
+							DEMO
+						</Button>
+					</Grid>
+					<Grid item xs={4} sm={3} md={3} lg={3} xl={3}>
+						<Button
+							className={`${classes.gridItem} login`}
+							// variant="contained"
+							variant="outlined"
+							color="primary"
+						>
+							Log in
+						</Button>
+					</Grid>
+				</Grid>
+			</div>
+		</div>
 	)
 }

@@ -26,10 +26,11 @@ export const DrawerSearch = ({data, search, label, secretTitle}) => {
 
 	const [value, setValue] = useState("");
 
-	console.log()
+	// console.log(ports.searchQuery[secretTitle]?.find(el => Number.isInteger(el.id)))
 
 	useEffect(() => {
 		setValue("");
+		ports.setSearchQuery(secretTitle, []);
 	}, [ports.selectedObjects.port])
 
 	const handleChange = (event, values) => {
