@@ -27,16 +27,6 @@ const useStyles = makeStyles((theme) => ({
 
 		position: "relative",
 	},
-	container: {
-		width: "100%",
-		// height: "100%",
-		// marginTop: 92,
-		// paddingTop: 92,
-		padding: theme.spacing(4),
-		marginLeft: theme.spacing(-3),
-
-		margin: 'auto',
-	},
 	paper: {
 		// width: "100%",
 		height: "100%",
@@ -49,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 	gridContainer: {
 		// width: "100%",
 		// height: "100%",
+		flexGrow: 1,
 		margin: 0,
 	},
 
@@ -142,9 +133,8 @@ export const Events30 = () => {
 		<div className={`${classes.root}`}>
 			<Header/>
 			{/*<Container maxWidth="xl" style={{width: "100%", height: "100%"}}>*/}
-			{/*<Container maxWidth="xl" className={classes.container}>*/}
 			<Container maxWidth="xl">
-				<div style={{paddingTop: 92, background: "rgba(51, 51, 51, 1)",}}>
+				<div style={{paddingTop: 92,}}>
 					<Grid className={classes.gridContainer} container spacing={3}>
 						<Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
 							<FirstPart/>
