@@ -139,7 +139,7 @@ class ports {
 					zoom: 15,
 					// link: 'https://rtsp.me/embed/hitQb4bf',
 					// previewLink: "http://192.168.250.210:8000/bgr",
-					previewLink: "http://87.244.33.186:8081/bgr",
+					previewLink: "http://87.244.33.186:8001/bgr",
 					// link: 'http://87.244.33.186:8081/bgr',
 					link: 'http://192.168.250.210:8000/bgr',
 					// link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
