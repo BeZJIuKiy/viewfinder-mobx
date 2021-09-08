@@ -41,8 +41,8 @@ const useStyles = makeStyles((theme) => {
 			width: 800,
 			height: 450,
 
-			backgroundImage: `url(${camera.link})`,
-			// backgroundImage: `url(${camera.previewLink})`,
+			// backgroundImage: `url(${camera.link})`,
+			backgroundImage: `url(${camera.previewLink})`,
 			backgroundPosition: 'center',
 			backgroundSize: 'cover',
 			backgroundRepeat: 'no-repeat',
@@ -68,7 +68,6 @@ export const Canvas = observer(() => {
 				console.log('1.25');
 				break;
 			}
-
 			case 1.333: {
 				setWidth(800);
 				setHeight(600);
@@ -76,7 +75,6 @@ export const Canvas = observer(() => {
 				console.log('1.333');
 				break;
 			}
-
 			case 1.5: {
 				setWidth(720);
 				setHeight(480);
@@ -84,7 +82,6 @@ export const Canvas = observer(() => {
 				console.log('1.5');
 				break;
 			}
-
 			case 1.6: {
 				setWidth(800);
 				setHeight(500);
@@ -92,7 +89,6 @@ export const Canvas = observer(() => {
 				console.log('1.6');
 				break;
 			}
-
 			case 1.667: {
 				setWidth(800);
 				setHeight(480);
@@ -100,7 +96,6 @@ export const Canvas = observer(() => {
 				console.log('1.667');
 				break;
 			}
-
 			case 1.778: {
 				setWidth(800);
 				setHeight(450);
@@ -128,15 +123,15 @@ export const Canvas = observer(() => {
 	return (
 		<div className={classes.main}>
 			<div className={classes.canvasDraw}>
-				<iframe
-					// src="https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1"
-					src={ports.selectedObjects.camera.link}
-					width={width} height={height} title="YouTube video player"
-					ref={iframeRef}
-					frameBorder="0"
-					allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-					allowFullScreen/>
-				{/*<div className={classes.forPreview}/>*/}
+				{/*<iframe*/}
+				{/*	// src="https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1"*/}
+				{/*	src={ports.selectedObjects.camera.link}*/}
+				{/*	width={width} height={height} title="YouTube video player"*/}
+				{/*	ref={iframeRef}*/}
+				{/*	frameBorder="0"*/}
+				{/*	allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
+				{/*	allowFullScreen/>*/}
+				<div className={classes.forPreview}/>
 				<canvas
 					className={`${classes.canvas} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}
 					ref={canvasRef} width={width} height={height}
