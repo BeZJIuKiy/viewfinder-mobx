@@ -1,15 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import YaMap from "./YaMap/YaMap";
 import {Drawer} from "./Drawer/Drawer";
 import {Header} from "./Header/Header";
 import Grid from "@material-ui/core/Grid";
-import {Box, Card, Hidden} from "@material-ui/core";
+import {Box, Card, Container, Hidden} from "@material-ui/core";
 import {Clusterer, Map, YMaps} from "react-yandex-maps";
 import backgroundImage from "../Auth/images/backgroundNew.jpg"
 import Button from "@material-ui/core/Button";
+import test from "../../store/test";
+import {observer} from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => ({
+	test: {
+		width: "100%",
+		height: "100%",
+	},
+
 	container: {
 		// display: "flex",
 		// height: 500,
@@ -244,7 +251,6 @@ const useStyles = makeStyles((theme) => ({
 		backgroundSize: 'cover',
 		backgroundRepeat: 'no-repeat',
 	},
-
 	leftHalf: {
 		width: "50%",
 
@@ -255,7 +261,6 @@ const useStyles = makeStyles((theme) => ({
 			width: "100%",
 		}
 	},
-
 	gridContainer: {
 		// textAlign: "center",
 
@@ -266,7 +271,6 @@ const useStyles = makeStyles((theme) => ({
 
 		transform: "translate(0, -50%)",
 	},
-
 	gridItem: {
 		fontFamily: `"Quicksand", sans-serif`,
 
@@ -307,163 +311,206 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 }));
+const useControlCameraButtonStyles = makeStyles((theme) => ({
+	controlCameraButton: {
+		maxWidth: 250,
+		padding: 10
+	},
+	btn: {
+		width: "100%",
+	},
+}));
+
+const ControlCameraButton = observer(() => {
+	const classes = useControlCameraButtonStyles();
+	const buttons = [
+		{name: "plus", variant: "contained", color: "secondary", command: "Closer"},
+		{name: "up", variant: "contained", color: "primary", command: "Above"},
+		{name: "minus", variant: "contained", color: "secondary", command: "Farther"},
+		{name: "left", variant: "contained", color: "primary", command: "To the left"},
+		{name: "down", variant: "contained", color: "primary", command: "Below"},
+		{name: "right", variant: "contained", color: "primary", command: "To the right"},
+	];
+
+	const [intervalId, setIntervalId] = useState("")
+
+	const post = (command) => {
+		console.log(`Посылаю команду: ${command}`);
+	}
+	const handleClickDown = (command) => {
+		setIntervalId(setInterval(() => post(command), 500));
+	}
+	const handleClickUp = () => {
+		clearInterval(intervalId);
+	}
+
+	const keyDown = (e) => {
+		switch (e.key) {
+			case "ArrowUp": {
+				handleClickDown(buttons.find((el) => el.name === "up").command);
+				// console.log("Нажата ArrowUp")
+				break;
+			}
+			case "ArrowDown": {
+				console.log("Нажата ArrowDown");
+				break;
+			}
+			case "ArrowLeft": {
+				console.log("Нажата ArrowLeft");
+				break;
+			}
+			case "ArrowRight": {
+				console.log("Нажата ArrowRight");
+				break;
+			}
+			case "+": {
+				console.log("Нажат +");
+				break;
+			}
+			case "-": {
+				console.log("Нажата -");
+				break;
+			}
+			default:
+				return;
+		}
+	}
+	const keyUp = () => {
+		clearInterval(intervalId);
+	}
+
+	window.addEventListener("keydown", keyDown);
+	window.addEventListener("keyup", keyUp);
+
+	const gridItems = buttons.map(({name, variant, color, command}, index) => {
+		return (
+			<Grid item xs={4} sm={4} md={4} lg={4} xl={4} key={`Control--Camera--Button--${name}--${index}`}>
+				<Button
+					className={classes.btn}
+					variant={variant}
+					color={color}
+					onMouseDown={() => handleClickDown(command)}
+					onMouseUp={handleClickUp}
+				>
+					{name}
+				</Button>
+			</Grid>
+		)
+	})
+
+	return (
+		<div className={classes.controlCameraButton}>
+			<Grid container spacing={1}>
+				{gridItems}
+			</Grid>
+		</div>
+	)
+})
 
 export const Test = () => {
 	const classes = useStyles();
+	const gridTest = () => {
+		return (
+			<div className={classes.container}>
+				<div className={`${classes.item01} one`}>First</div>
+				<div className={`${classes.item01} two`}>Second</div>
+				<div className={`${classes.item01} three`}>Third</div>
+				<div className={`${classes.item01} four`}>Fourth</div>
+				<div className={`${classes.item01} five`}>Fifth</div>
+				<div className={`${classes.item01} six`}>Sixth</div>
+				<div className={`${classes.item01} seven`}>Seventh</div>
+
+				<div className={`${classes.item02}`}>1</div>
+				<div className={`${classes.item02}`}>2</div>
+				<div className={`${classes.item02}`}>3</div>
+
+				<div className={`${classes.item03} one`}>1</div>
+				<div className={`${classes.item03} two`}>2</div>
+				<div className={`${classes.item03} three`}>3</div>
+				<div className={`${classes.item03} four`}>4</div>
+
+				<div className={`${classes.item03} five`}>5</div>
+				<div className={`${classes.item03} six`}>6</div>
+
+				{/*<Grid container spacing={3}>*/}
+				{/*	<Grid item xs={12} sm={6} md={3}>*/}
+				{/*		<div className={`${classes.item03}`}>1</div>*/}
+				{/*	</Grid>*/}
+				{/*	<Grid item xs={12} sm={6} md={3}>*/}
+				{/*		<div className={`${classes.item03}`}>2</div>*/}
+				{/*	</Grid>*/}
+				{/*	<Grid item xs={12} sm={6} md={3}>*/}
+				{/*		<div className={`${classes.item03}`}>3</div>*/}
+				{/*	</Grid>*/}
+				{/*	<Grid item xs={12} sm={6} md={3}>*/}
+				{/*		<div className={`${classes.item03}`}>4</div>*/}
+				{/*	</Grid>*/}
+
+				{/*	<Grid item xs={12} sm={6} md={8}>*/}
+				{/*		<div className={`${classes.item03} five`}>5</div>*/}
+				{/*	</Grid>*/}
+
+				{/*	<Grid item xs={12} sm={6} md={4}>*/}
+				{/*		<div className={`${classes.item03}`}>6</div>*/}
+				{/*	</Grid>*/}
+
+				{/*	<Grid item xs={12} sm={6} md={8}>*/}
+				{/*		<div className={`${classes.item03}`}>7</div>*/}
+				{/*	</Grid>*/}
+				{/*	<Grid item xs={12} sm={6} md={4}>*/}
+				{/*		<div className={`${classes.item03} eight`}>8</div>*/}
+				{/*	</Grid>*/}
+
+				{/*	<Grid item xs={12} sm={6} md={4}>*/}
+				{/*		<div className={`${classes.item03}`}>9</div>*/}
+				{/*	</Grid>*/}
+				{/*	<Grid item xs={12} sm={6} md={8}>*/}
+				{/*		<div className={`${classes.item03}`}>10</div>*/}
+				{/*	</Grid>*/}
+				{/*</Grid>*/}
+			</div>
+		)
+	}
+	const mainPage = () => {
+		return (
+			<div className={classes.main}>
+				<div className={classes.leftHalf}>
+					<Grid className={classes.gridContainer} container justify={"center"}>
+						<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+							<div className={`${classes.gridItem} title`}>ViewFinder</div>
+						</Grid>
+
+						<Grid item xs={4} sm={3} md={3} lg={3} xl={3}>
+							<Button
+								className={`${classes.gridItem} demo`}
+								variant="outlined"
+								color="secondary"
+								type={"submit"}
+								// disabled={isSubmitting}
+							>
+								DEMO
+							</Button>
+						</Grid>
+
+						<Grid item xs={4} sm={3} md={3} lg={3} xl={3}>
+							<Button
+								className={`${classes.gridItem} login`}
+								// variant="contained"
+								variant="outlined"
+								color="primary"
+							>
+								Log in
+							</Button>
+						</Grid>
+					</Grid>
+				</div>
+			</div>
+		)
+	}
 
 	return (
-		// // <div className={classes.container}>
-		// 	{/*<div className={`${classes.item01} one`}>First</div>*/}
-		// 	{/*<div className={`${classes.item01} two`}>Second</div>*/}
-		// 	{/*<div className={`${classes.item01} three`}>Third</div>*/}
-		// 	{/*<div className={`${classes.item01} four`}>Fourth</div>*/}
-		// 	{/*<div className={`${classes.item01} five`}>Fifth</div>*/}
-		// 	{/*<div className={`${classes.item01} six`}>Sixth</div>*/}
-		// 	{/*<div className={`${classes.item01} seven`}>Seventh</div>*/}
-		//
-		// 	{/*<div className={`${classes.item02}`}>1</div>*/}
-		// 	{/*<div className={`${classes.item02}`}>2</div>*/}
-		// 	{/*<div className={`${classes.item02}`}>3</div>*/}
-		//
-		// 	{/*<div className={`${classes.item03} one`}>1</div>*/}
-		// 	{/*<div className={`${classes.item03} two`}>2</div>*/}
-		// 	{/*<div className={`${classes.item03} three`}>3</div>*/}
-		// 	{/*<div className={`${classes.item03} four`}>4</div>*/}
-		//
-		// 	{/*<div className={`${classes.item03} five`}>5</div>*/}
-		// 	{/*<div className={`${classes.item03} six`}>6</div>*/}
-		//
-		// 	{/*<Grid container spacing={3}>*/}
-		// 	{/*	<Grid item xs={12} sm={6} md={3}>*/}
-		// 	{/*		<div className={`${classes.item03}`}>1</div>*/}
-		// 	{/*	</Grid>*/}
-		// 	{/*	<Grid item xs={12} sm={6} md={3}>*/}
-		// 	{/*		<div className={`${classes.item03}`}>2</div>*/}
-		// 	{/*	</Grid>*/}
-		// 	{/*	<Grid item xs={12} sm={6} md={3}>*/}
-		// 	{/*		<div className={`${classes.item03}`}>3</div>*/}
-		// 	{/*	</Grid>*/}
-		// 	{/*	<Grid item xs={12} sm={6} md={3}>*/}
-		// 	{/*		<div className={`${classes.item03}`}>4</div>*/}
-		// 	{/*	</Grid>*/}
-		//
-		// 	{/*	<Grid item xs={12} sm={6} md={8}>*/}
-		// 	{/*		<div className={`${classes.item03} five`}>5</div>*/}
-		// 	{/*	</Grid>*/}
-		//
-		// 	{/*	<Grid item xs={12} sm={6} md={4}>*/}
-		// 	{/*		<div className={`${classes.item03}`}>6</div>*/}
-		// 	{/*	</Grid>*/}
-		//
-		// 	{/*	<Grid item xs={12} sm={6} md={8}>*/}
-		// 	{/*		<div className={`${classes.item03}`}>7</div>*/}
-		// 	{/*	</Grid>*/}
-		// 	{/*	<Grid item xs={12} sm={6} md={4}>*/}
-		// 	{/*		<div className={`${classes.item03} eight`}>8</div>*/}
-		// 	{/*	</Grid>*/}
-		//
-		// 	{/*	<Grid item xs={12} sm={6} md={4}>*/}
-		// 	{/*		<div className={`${classes.item03}`}>9</div>*/}
-		// 	{/*	</Grid>*/}
-		// 	{/*	<Grid item xs={12} sm={6} md={8}>*/}
-		// 	{/*		<div className={`${classes.item03}`}>10</div>*/}
-		// 	{/*	</Grid>*/}
-		// 	{/*</Grid>*/}
-		// {/*</div>*/}
-
-		// <Grid container>
-		// 	<Grid item xs={12} sm={12} md={12}>
-		// 		<Header/>
-		// 	</Grid>
-		// 	<Hidden xsDown>
-		// 		<Grid item xs={12} sm={3} md={4} lg={3} xl={2}>
-		// 			<div style={{paddingTop: 92}}><Drawer/></div>
-		// 		</Grid>
-		// 	</Hidden>
-		// 	<Grid item xs={12} sm={9} md={8} lg={9} xl={10}>
-		// 		<YaMap isVisible={true}/>
-		// 	</Grid>
-		// </Grid>
-
-		// <div style={{minHeight: "100%"}}>
-		// 	<Header/>
-		// 	<div style={{
-		// 		display: "flex",
-		// 		height: "100%",
-		// 		minHeight: "100%",
-		//
-		// 		// paddingTop: 102,
-		// 	}}>
-		// 		<Drawer/>
-		// 		<YaMap isVisible={true}/>
-		// 	</div>
-		// </div>
-
-		// <div className={classes.container01}>
-		//     <div className={`${classes.item04} _01`}>1</div>
-		//     <div className={`${classes.item04} _02`}>2</div>
-		//     <div className={`${classes.item04} _03`}>3</div>
-		//     <div className={`${classes.item04} _04`}>4</div>
-		// </div>
-
-		// <Grid container spacing={3}>
-		//     <Grid item xs={12}  sm={6} md={3}>
-		//         <div className={`${classes.item05}`}>1</div>
-		//     </Grid>
-		//     <Grid item xs={12}  sm={6} md={3}>
-		//         <div className={`${classes.item05}`}>2</div>
-		//     </Grid>
-		//     <Grid item xs={12}  sm={6} md={3}>
-		//         <div className={`${classes.item05}`}>3</div>
-		//     </Grid>
-		//     <Grid item xs={12}  sm={6} md={3}>
-		//         <div className={`${classes.item05}`}>4</div>
-		//     </Grid>
-		//
-		//     <Grid item xs={12}  sm={6} md={8}>
-		//         <div className={`${classes.item05} five`}>5</div>
-		//     </Grid>
-		//     <Grid item xs={12}  sm={6} md={4}>
-		//         <div className={`${classes.item05}`}>6</div>
-		//     </Grid>
-		//
-		//     <Grid item xs={12}  sm={6} md={8}>
-		//         <div className={`${classes.item05}`}>7</div>
-		//     </Grid>
-		//     <Grid item xs={12}  sm={6} md={4}>
-		//         <div className={`${classes.item05} six`}>8</div>
-		//     </Grid>
-		// </Grid>
-
-		<div className={classes.main}>
-			<div className={classes.leftHalf}>
-				<Grid className={classes.gridContainer} container justify={"center"}>
-					<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-						<div className={`${classes.gridItem} title`}>ViewFinder</div>
-					</Grid>
-					<Grid item xs={4} sm={3} md={3} lg={3} xl={3}>
-						<Button
-							className={`${classes.gridItem} demo`}
-							variant="outlined"
-							color="secondary"
-							type={"submit"}
-							// disabled={isSubmitting}
-						>
-							DEMO
-						</Button>
-					</Grid>
-					<Grid item xs={4} sm={3} md={3} lg={3} xl={3}>
-						<Button
-							className={`${classes.gridItem} login`}
-							// variant="contained"
-							variant="outlined"
-							color="primary"
-						>
-							Log in
-						</Button>
-					</Grid>
-				</Grid>
-			</div>
+		<div className={classes.test}>
+			<ControlCameraButton/>
 		</div>
 	)
 }
