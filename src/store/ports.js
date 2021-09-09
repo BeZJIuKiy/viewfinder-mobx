@@ -93,7 +93,6 @@ class ports {
 							newEvent: true,
 							description: 'Nothing interesting, keep moving on',
 						},
-
 						{
 							id: this.counter.eventsId++,
 							typeError: 'Regular',
@@ -108,7 +107,6 @@ class ports {
 							newEvent: true,
 							description: 'Nothing interesting, keep moving on',
 						},
-
 						{
 							id: this.counter.eventsId++,
 							typeError: 'Critical',

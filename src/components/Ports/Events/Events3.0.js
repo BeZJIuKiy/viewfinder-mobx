@@ -2,7 +2,6 @@ import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import {Paper} from "@material-ui/core";
 import {Header} from "../Header/Header";
 import {TestImage} from "./TestImage";
 import {TestList} from "./TestList";
@@ -10,9 +9,7 @@ import {Canvas} from "./Canvas";
 import {BoatEvents} from "./BoatEvents";
 
 const useStyles = makeStyles((theme) => ({
-	root: {
-		// width: "100%",
-		// height: "100%",
+	event: {
 		flexGrow: 1,
 
 		color: "#ddd",
@@ -27,24 +24,14 @@ const useStyles = makeStyles((theme) => ({
 
 		position: "relative",
 	},
-	paper: {
-		// width: "100%",
-		height: "100%",
-		padding: theme.spacing(4),
-		marginLeft: theme.spacing(-3),
-
-		// margin: 'auto',
-		// maxWidth: 500,
-	},
 	gridContainer: {
-		// width: "100%",
-		// height: "100%",
 		flexGrow: 1,
 		margin: 0,
 	},
 
 	secondGridContainer: {
 		height: "100%",
+		margin: 0,
 	},
 
 	types: {
@@ -55,20 +42,14 @@ const useStyles = makeStyles((theme) => ({
 		margin: "0 auto",
 		padding: 10,
 
-		background: "rgba(240, 240, 240, 0.5)",
-		borderRadius: 10,
-
-
-		"&.cameras": {
-			// height: 1700,
-			// overflowY: "auto",
-		},
-
-		"&.table": {
-			// height: 500,
-			// overflowY: "auto",
-		},
+		background: "rgba(51, 51, 51, 0.5)",
+		borderRadius: 5,
 	},
+	correctingPosition: {
+		paddingTop: 92,
+		marginRight: 24,
+		marginLeft: -24,
+	}
 }));
 
 const FirstPart = () => {
@@ -130,11 +111,10 @@ export const Events30 = () => {
 	const classes = useStyles();
 
 	return (
-		<div className={`${classes.root}`}>
+		<div className={`${classes.event}`}>
 			<Header/>
-			{/*<Container maxWidth="xl" style={{width: "100%", height: "100%"}}>*/}
 			<Container maxWidth="xl">
-				<div style={{paddingTop: 92,}}>
+				<div className={classes.correctingPosition}>
 					<Grid className={classes.gridContainer} container spacing={3}>
 						<Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
 							<FirstPart/>
@@ -152,7 +132,6 @@ export const Events30 = () => {
 							<ForthPart/>
 						</Grid>
 					</Grid>
-					{/*</Paper>*/}
 				</div>
 			</Container>
 		</div>

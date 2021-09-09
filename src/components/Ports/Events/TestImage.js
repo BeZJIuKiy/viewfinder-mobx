@@ -14,8 +14,13 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.background.paper,
 	},
 	gridList: {
-		width: 230,
-		height: 400,
+		width: "100%",
+		height: "100%",
+		maxHeight: 450,
+
+		// width: 230,
+		// height: 400,
+
 		// Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
 		transform: 'translateZ(0)',
 	},

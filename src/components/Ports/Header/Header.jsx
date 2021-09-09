@@ -107,7 +107,6 @@ export const Header = observer(() => {
 		// 	})
 		// }))
 	}, [notifications]);
-
 	useEffect(() => {
 		setPortNotes();
 		if (port.id >= 0) setCameraNotes();
@@ -215,7 +214,7 @@ export const Header = observer(() => {
 				</div>
 
 				<span className={classes.mobileDrawer}>
-					<MobileDrawer pageName={pageName} data={[]}/>
+					<MobileDrawer/>
 				</span>
 			</Toolbar>
 			{renderMenu()}
