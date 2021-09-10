@@ -19,7 +19,7 @@ function App() {
 			{/*<Route path='/events' component={Events30}/>*/}
 			<Route path='/events' component={Events20}/>
 			<Route path='/canvas' component={Canvas}/>
-			{/*<Route path='/test' component={Test}/>*/}
+			<Route path='/test' component={Test}/>
 			{/*<Route path='/events' render={() => <Events /> } /> так можно*/}
 		</BrowserRouter>
 	);

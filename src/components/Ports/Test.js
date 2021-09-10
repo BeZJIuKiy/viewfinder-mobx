@@ -10,6 +10,7 @@ import backgroundImage from "../Auth/images/backgroundNew.jpg"
 import Button from "@material-ui/core/Button";
 import test from "../../store/test";
 import {observer} from "mobx-react-lite";
+import dgram from "dgram";
 
 const useStyles = makeStyles((theme) => ({
 	test: {
@@ -322,56 +323,96 @@ const useControlCameraButtonStyles = makeStyles((theme) => ({
 }));
 
 const ControlCameraButton = observer(() => {
+	// const dgram = require("dgram");
+	// const keypress = require('keypress');
+
 	const classes = useControlCameraButtonStyles();
 	const buttons = [
-		{name: "plus", variant: "contained", color: "secondary", command: "Closer"},
-		{name: "up", variant: "contained", color: "primary", command: "Above"},
-		{name: "minus", variant: "contained", color: "secondary", command: "Farther"},
-		{name: "left", variant: "contained", color: "primary", command: "To the left"},
-		{name: "down", variant: "contained", color: "primary", command: "Below"},
-		{name: "right", variant: "contained", color: "primary", command: "To the right"},
+		{name: "plus", variant: "contained", color: "secondary", command: "+"},
+		{name: "up", variant: "contained", color: "primary", command: "up"},
+		{name: "minus", variant: "contained", color: "secondary", command: "-"},
+		{name: "left", variant: "contained", color: "primary", command: "left"},
+		{name: "down", variant: "contained", color: "primary", command: "down"},
+		{name: "right", variant: "contained", color: "primary", command: "right"},
 	];
 
 	const [intervalId, setIntervalId] = useState(null);
 
-	let isTest = false;
+	// const PORT = 3000;
+	const PORT = 8080;
+	const HOST = '192.168.250.183';
+
+	const socket = new WebSocket(`ws://${HOST}:${PORT}`);
+	socket.onopen = () => {
+		console.log("Connect");
+	}
+	socket.onmessage = (message) => {
+		console.log(message.data)
+	}
 
 	const post = (command) => {
 		console.log(`Посылаю команду: ${command}`);
 	}
+	const sendMsg = (command) => {
+		const message = Buffer.from(command, 'utf8')
+		socket.send(message)
+	}
 	const handleClickDown = (command) => {
-		setIntervalId(setInterval(() => post(command), 500));
+		setIntervalId(setInterval(() => sendMsg(command), 50));
 	}
 	const handleClickUp = () => {
 		clearInterval(intervalId);
 	}
 
+	const keyState = {name: ""};
+
 	const keyDown = (e) => {
 		switch (e.key) {
 			case "ArrowUp": {
+				// console.log(buttons[1].command);
+				// post(buttons[1].command)
+				sendMsg(buttons[1].command);
 
-				console.log(buttons[1].command);
-				post(buttons[1].command)
 				break;
 			}
 			case "ArrowDown": {
-				console.log("Нажата ArrowDown");
+				// console.log("Нажата ArrowDown");
+				sendMsg(buttons[4].command);
 				break;
 			}
 			case "ArrowLeft": {
-				console.log("Нажата ArrowLeft");
+				// console.log("Нажата ArrowLeft");
+				sendMsg(buttons[3].command);
 				break;
 			}
 			case "ArrowRight": {
-				console.log("Нажата ArrowRight");
+				// console.log("Нажата ArrowRight");
+				sendMsg(buttons[5].command);
 				break;
 			}
 			case "+": {
-				console.log("Нажат +");
+				// console.log("Нажат +");
+				sendMsg(buttons[0].command);
 				break;
 			}
 			case "-": {
-				console.log("Нажата -");
+				// console.log("Нажата -");
+				sendMsg(buttons[2].command);
+				break;
+			}
+			case "=": {
+				// console.log("Нажата -");
+				sendMsg("Stop MF");
+				break;
+			}
+			case "q": {
+				// console.log("Нажата -");
+				window.removeEventListener("keydown", keyDown);
+				break;
+			}
+			case "c": {
+				// console.log("Нажата -");
+				sendMsg("c");
 				break;
 			}
 			default:
@@ -379,16 +420,13 @@ const ControlCameraButton = observer(() => {
 		}
 	}
 	const keyUp = () => {
-		console.log(intervalId);
+		// console.log(intervalId);
 		clearInterval(intervalId);
 		setIntervalId(null);
-		isTest = false;
 	}
 
 	window.addEventListener("keydown", keyDown);
-	window.addEventListener("keyup", keyUp);
-
-	console.log(intervalId)
+	// window.addEventListener("keyup", keyUp);
 
 	const gridItems = buttons.map(({name, variant, color, command}, index) => {
 		return (
@@ -405,6 +443,15 @@ const ControlCameraButton = observer(() => {
 			</Grid>
 		)
 	})
+
+	// =================================================
+
+
+	// client.on("message", (message, remote) => {
+	// 	console.log(`UDP message received from: ${remote.address}:${remote.port} - ${message}`);
+	// });
+
+	// =================================================
 
 	return (
 		<div className={classes.controlCameraButton}>

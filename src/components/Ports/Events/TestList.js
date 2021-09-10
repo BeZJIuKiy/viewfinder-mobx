@@ -11,11 +11,13 @@ import {observer} from "mobx-react-lite";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		// width: '100%',
-		// width: 250,
-		height: "100%",
+		width: 250,
+		// height: "100%",
 
 		maxWidth: 360,
+		maxHeight: 400,
 		// maxHeight: 400,
+
 		backgroundColor: theme.palette.background.paper,
 		overflowY: 'auto',
 	},
