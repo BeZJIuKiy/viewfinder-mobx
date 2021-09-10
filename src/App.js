@@ -16,8 +16,8 @@ function App() {
 			<Route path='/signin' component={Signin_2_0}/>
 			<Route path='/ports' component={Ports}/>
 			<Route path='/account' component={Account30}/>
-			{/*<Route path='/events' component={Events30}/>*/}
-			<Route path='/events' component={Events20}/>
+			<Route path='/events' component={Events30}/>
+			{/*<Route path='/events' component={Events20}/>*/}
 			<Route path='/canvas' component={Canvas}/>
 			<Route path='/test' component={Test}/>
 			{/*<Route path='/events' render={() => <Events /> } /> так можно*/}

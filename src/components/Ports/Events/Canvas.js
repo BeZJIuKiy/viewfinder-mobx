@@ -130,8 +130,8 @@ export const Canvas = observer(() => {
 				<iframe
 					// src="https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1"
 					src={ports.selectedObjects.camera.link}
-					width={width} height={height} title="YouTube video player"
-					// width={"100%"} height={"100%"} title="YouTube video player"
+					// width={width} height={height} title="YouTube video player"
+					width={"100%"} height={"100%"} title="YouTube video player"
 					ref={iframeRef}
 					frameBorder="0"
 					allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -139,8 +139,8 @@ export const Canvas = observer(() => {
 				{/*<div className={classes.forPreview}/>*/}
 				<canvas
 					className={`${classes.canvas} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}
-					// ref={canvasRef} width={"100%"} height={"100%"}
-					ref={canvasRef} width={width} height={height}
+					ref={canvasRef} width={"100%"} height={"100%"}
+					// ref={canvasRef} width={width} height={height}
 				/>
 			</div>
 		</div>
