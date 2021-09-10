@@ -332,7 +332,9 @@ const ControlCameraButton = observer(() => {
 		{name: "right", variant: "contained", color: "primary", command: "To the right"},
 	];
 
-	const [intervalId, setIntervalId] = useState("")
+	const [intervalId, setIntervalId] = useState(null);
+
+	let isTest = false;
 
 	const post = (command) => {
 		console.log(`Посылаю команду: ${command}`);
@@ -347,8 +349,9 @@ const ControlCameraButton = observer(() => {
 	const keyDown = (e) => {
 		switch (e.key) {
 			case "ArrowUp": {
-				handleClickDown(buttons.find((el) => el.name === "up").command);
-				// console.log("Нажата ArrowUp")
+
+				console.log(buttons[1].command);
+				post(buttons[1].command)
 				break;
 			}
 			case "ArrowDown": {
@@ -376,11 +379,16 @@ const ControlCameraButton = observer(() => {
 		}
 	}
 	const keyUp = () => {
+		console.log(intervalId);
 		clearInterval(intervalId);
+		setIntervalId(null);
+		isTest = false;
 	}
 
 	window.addEventListener("keydown", keyDown);
 	window.addEventListener("keyup", keyUp);
+
+	console.log(intervalId)
 
 	const gridItems = buttons.map(({name, variant, color, command}, index) => {
 		return (
