@@ -8,6 +8,7 @@ import {TestList} from "./TestList";
 import {Canvas} from "./Canvas";
 import {BoatEvents} from "./BoatEvents";
 import {Hidden} from "@material-ui/core";
+import {CameraControlPanel} from "./CameraControlPanel/CameraControlPanel";
 
 const useStyles = makeStyles((theme) => ({
 	event: {
@@ -33,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
 	secondGridContainer: {
 		height: "100%",
 		margin: 0,
+
+		"&.camera": {
+			// alignItems: "center",
+		},
 	},
 
 	types: {
@@ -43,14 +48,33 @@ const useStyles = makeStyles((theme) => ({
 		margin: "0 auto",
 		padding: 10,
 
+		alignItems: "center",
+
 		background: "rgba(51, 51, 51, 0.5)",
 		borderRadius: 5,
+
+		position: "relative",
+
+		"&.aaa": {
+
+		},
+	},
+	cameraControlPanel: {
+		position: "absolute",
+		left: "50%",
+		bottom: 10,
+		// right: 10,
+		// bottom: 50,
+		zIndex: 1,
+
+		transform: "translate(-50%, 0)",
+
 	},
 	correctingPosition: {
 		paddingTop: 92,
 		marginRight: 24,
 		marginLeft: -24,
-	}
+	},
 }));
 
 const FirstPart = () => {
@@ -75,10 +99,11 @@ const SecondPart = () => {
 	const classes = useStyles();
 
 	return (
-		<Grid className={`${classes.secondGridContainer}`} container spacing={3}>
+		<Grid className={`${classes.secondGridContainer} camera`} container spacing={3}>
 			<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-				<div className={classes.types}>
+				<div className={`${classes.types} aaa`}>
 					<Canvas/>
+					<span className={classes.cameraControlPanel}><CameraControlPanel/></span>
 				</div>
 			</Grid>
 		</Grid>

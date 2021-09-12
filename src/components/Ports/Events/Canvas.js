@@ -15,23 +15,28 @@ const useStyles = makeStyles((theme) => {
 		main: {
 			width: "100%",
 			height: "100%",
-			display: "flex",
-			justifyContent: "center",
 		},
 
 		canvasDraw: {
 			width: "100%",
 			height: "100%",
 			position: "relative",
+
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
 		},
 
 		canvas: {
 			background: "none",
 
 			position: "absolute",
-			top: 0,
-			left: 0,
+			top: "50%",
+			left: "50%",
+			// bottom: 0,
+			// right: 0,
 			display: "block",
+			transform: "translate(-50%, -50%)",
 
 			"&.show": {
 				zIndex: 2,
@@ -101,8 +106,19 @@ export const Canvas = observer(() => {
 				break;
 			}
 			case 1.778: {
-				setWidth(800);
-				setHeight(450);
+				// 2160p: 3840 x 2160
+				// 1440p: 2560 x 1440
+				// 1080p: 1920 x 1080
+				// 720p: 1280 x 720
+				// 480p: 854 x 480
+				// 360p: 640 x 360
+				// 240p: 426 x 240
+
+				// setWidth(800);
+				// setHeight(450);
+
+				setWidth(720);
+				setHeight(405);
 
 				canvasState.pointCoefficient = canvasState.size.width / 800;
 				console.log('1.778');
@@ -130,17 +146,18 @@ export const Canvas = observer(() => {
 				<iframe
 					// src="https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1"
 					src={ports.selectedObjects.camera.link}
-					// width={width} height={height} title="YouTube video player"
-					width={"100%"} height={"100%"} title="YouTube video player"
+					width={width} height={height} title="YouTube video player"
+					// width={"100%"} height={"100%"} title="YouTube video player"
 					ref={iframeRef}
 					frameBorder="0"
 					allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 					allowFullScreen/>
 				{/*<div className={classes.forPreview}/>*/}
 				<canvas
-					className={`${classes.canvas} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}
-					ref={canvasRef} width={"100%"} height={"100%"}
-					// ref={canvasRef} width={width} height={height}
+					// className={`${classes.canvas} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}
+					className={`${classes.canvas} show`}
+					// ref={canvasRef} width={"100%"} height={"100%"}
+					ref={canvasRef} width={width} height={height}
 				/>
 			</div>
 		</div>
