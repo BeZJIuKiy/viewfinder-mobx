@@ -66,7 +66,6 @@ export const CameraControlPanel = observer(() => {
     const classes = useStyles();
 
     const buttons = [
-        // {name: "plus", variant: "contained", color: "secondary", command: "+", icon: <ZoomInIcon className={`${classes.arrow} zoomIn`}/>, disabled: false, xs:4, sm:4, md:4, lg:4, xl:4},
         {
             name: "up",
             variant: "contained",
@@ -80,7 +79,6 @@ export const CameraControlPanel = observer(() => {
             lg: 12,
             xl: 12
         },
-        // {name: "minus", variant: "contained", color: "secondary", command: "-", icon: <ZoomOutIcon className={`${classes.arrow} zoomOut`}/>, disabled: false, xs:4, sm:4, md:4, lg:4, xl:4},
         {
             name: "left",
             variant: "contained",
@@ -179,8 +177,8 @@ export const CameraControlPanel = observer(() => {
 
     const sendMsg = (command) => {
         const message = Buffer.from(command, 'utf8')
-        console.log(`Послал: ${command} (socket - off)`);
-        // socket.send(message);
+        // console.log(`Послал: ${command} (socket - off)`);
+        socket.send(message);
     }
     const handleClickDown = (command) => {
         setIntervalId(setInterval(() => sendMsg(command), 50));
@@ -192,7 +190,7 @@ export const CameraControlPanel = observer(() => {
     const keyDown = (e) => {
         switch (e.key) {
             case "ArrowUp": {
-                sendMsg(buttons[1].command);
+                sendMsg(buttons[0].command);
                 break;
             }
             case "ArrowDown": {
@@ -200,11 +198,11 @@ export const CameraControlPanel = observer(() => {
                 break;
             }
             case "ArrowLeft": {
-                sendMsg(buttons[3].command);
+                sendMsg(buttons[1].command);
                 break;
             }
             case "ArrowRight": {
-                sendMsg(buttons[5].command);
+                sendMsg(buttons[3].command);
                 break;
             }
             case "+": {
@@ -224,7 +222,7 @@ export const CameraControlPanel = observer(() => {
                 break;
             }
             case "c": {
-                sendMsg("c");
+                sendMsg("stop");
                 break;
             }
             default:

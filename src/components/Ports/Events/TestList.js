@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		width: '100%',
 		// width: 250,
-		height: "100%",
+		// height: "100%",
 
 		// maxWidth: 360,
 		// maxHeight: 400,

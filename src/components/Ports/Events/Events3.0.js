@@ -35,8 +35,9 @@ const useStyles = makeStyles((theme) => ({
 		height: "100%",
 		margin: 0,
 
-		"&.camera": {
-			// alignItems: "center",
+		"&.controlPanel": {
+			marginTop: theme.spacing(-3),
+			marginLeft: 12,
 		},
 	},
 
@@ -54,21 +55,6 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: 5,
 
 		position: "relative",
-
-		"&.aaa": {
-
-		},
-	},
-	cameraControlPanel: {
-		position: "absolute",
-		left: "50%",
-		bottom: 10,
-		// right: 10,
-		// bottom: 50,
-		zIndex: 1,
-
-		transform: "translate(-50%, 0)",
-
 	},
 	correctingPosition: {
 		paddingTop: 92,
@@ -103,7 +89,6 @@ const SecondPart = () => {
 			<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
 				<div className={`${classes.types} aaa`}>
 					<Canvas/>
-					<span className={classes.cameraControlPanel}><CameraControlPanel/></span>
 				</div>
 			</Grid>
 		</Grid>
@@ -121,6 +106,17 @@ const ThirdPart = () => {
 	)
 }
 const ForthPart = () => {
+	const classes = useStyles();
+
+	return (
+		<Grid className={`${classes.secondGridContainer} controlPanel`} container>
+			<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+				<div className={`${classes.types}`}>ControlPanel</div>
+			</Grid>
+		</Grid>
+	)
+}
+const FifthPart = () => {
 	const classes = useStyles();
 
 	return (
@@ -158,8 +154,12 @@ export const Events30 = () => {
 							</Grid>
 						</Hidden>
 
-						<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+						<Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
 							<ForthPart/>
+						</Grid>
+
+						<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+							<FifthPart/>
 						</Grid>
 					</Grid>
 				</div>

@@ -7,6 +7,7 @@ import canvasState from "../../../store/canvasState";
 import ports from "../../../store/ports";
 import {makeStyles} from "@material-ui/core/styles";
 import backgroundImage320px from "../../Auth/images/background320px.jpg";
+import {CameraControlPanel} from "./CameraControlPanel/CameraControlPanel";
 
 const useStyles = makeStyles((theme) => {
 	const {camera} = ports.selectedObjects
@@ -16,17 +17,27 @@ const useStyles = makeStyles((theme) => {
 			width: "100%",
 			height: "100%",
 		},
-
 		canvasDraw: {
 			width: "100%",
 			height: "100%",
-			position: "relative",
 
 			display: "flex",
 			justifyContent: "center",
 			alignItems: "center",
-		},
 
+			position: "relative",
+		},
+		cameraControlPanel: {
+			position: "absolute",
+			left: "50%",
+			bottom: 10,
+			// right: 10,
+			// bottom: 50,
+			zIndex: 1,
+
+			transform: "translate(-50%, 0)",
+
+		},
 		canvas: {
 			background: "none",
 
@@ -45,7 +56,6 @@ const useStyles = makeStyles((theme) => {
 				zIndex: -2,
 			}
 		},
-
 		forPreview: {
 			width: 800,
 			height: 450,
@@ -143,22 +153,26 @@ export const Canvas = observer(() => {
 	return (
 		<div className={classes.main}>
 			<div className={classes.canvasDraw}>
-				<iframe
-					// src="https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1"
-					src={ports.selectedObjects.camera.link}
-					width={width} height={height} title="YouTube video player"
-					// width={"100%"} height={"100%"} title="YouTube video player"
-					ref={iframeRef}
-					frameBorder="0"
-					allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-					allowFullScreen/>
-				{/*<div className={classes.forPreview}/>*/}
+				{/*<iframe*/}
+				{/*	// src="https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1"*/}
+				{/*	src={ports.selectedObjects.camera.link}*/}
+				{/*	width={width} height={height} title="YouTube video player"*/}
+				{/*	// width={"100%"} height={"100%"} title="YouTube video player"*/}
+				{/*	ref={iframeRef}*/}
+				{/*	frameBorder="0"*/}
+				{/*	allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
+				{/*	allowFullScreen/>*/}
+				<div className={classes.forPreview}/>
+
 				<canvas
 					// className={`${classes.canvas} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}
-					className={`${classes.canvas} show`}
+					className={`${classes.canvas} hide`}
+					// className={`${classes.canvas} show`}
 					// ref={canvasRef} width={"100%"} height={"100%"}
 					ref={canvasRef} width={width} height={height}
 				/>
+
+				<span className={classes.cameraControlPanel}><CameraControlPanel/></span>
 			</div>
 		</div>
 	)

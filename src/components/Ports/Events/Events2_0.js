@@ -367,8 +367,7 @@ export const Events20 = observer(() => {
 									</div>
 
 									<div className={classes.mainCameraControl}>
-										<div
-											className={`${classes.mainControlItems} ${!canvasState.isCreatePolygon ? "show" : "hide"}`}>
+										<div className={`${classes.mainControlItems} ${!canvasState.isCreatePolygon ? "show" : "hide"}`}>
 											<Button
 												variant="contained"
 												color="primary"
@@ -377,8 +376,7 @@ export const Events20 = observer(() => {
 												{btnControlName}
 											</Button>
 										</div>
-										<div
-											className={`${classes.mainControlItems} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}>
+										<div className={`${classes.mainControlItems} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}>
 											<Button
 												className={`${classes.controlBtn} ${canvasState.isCreatePolygon ? "createDetectedZone" : ""}`}
 												variant="contained"
@@ -389,15 +387,13 @@ export const Events20 = observer(() => {
 											</Button>
 										</div>
 
-										<div
-											className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+										<div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
 											<ZoneActions/>
 										</div>
 
 										{action}
 
-										<div
-											className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+										<div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
 											<Button
 												className={`${classes.controlBtn} save`}
 												variant="contained"
@@ -406,8 +402,7 @@ export const Events20 = observer(() => {
 												Save
 											</Button>
 										</div>
-										<div
-											className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+										<div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
 											<Button
 												className={`${classes.controlBtn} cancel`}
 												variant="contained"
