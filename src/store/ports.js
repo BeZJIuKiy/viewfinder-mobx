@@ -72,10 +72,10 @@ class ports {
 					description: 'Club Parking STATIC',
 					coordinates: [59.977915, 30.240934],
 					zoom: 15,
-					link: 'https://rtsp.me/embed/ayAby5ia',
+					// link: 'https://rtsp.me/embed/ayAby5ia',
 					// previewLink: "http://87.244.33.186:8001/bgr",
 					previewLink: "http://192.168.250.210:8000/bgr",
-					// link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
+					link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
 					// link: 'http://87.244.33.186:8001/bgr',
 
 					events: [
@@ -135,12 +135,12 @@ class ports {
 					description: 'Club Parking PTZ',
 					coordinates: [59.977913, 30.240952],
 					zoom: 15,
-					link: 'https://rtsp.me/embed/hitQb4bf',
+					link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
+					// link: 'https://rtsp.me/embed/hitQb4bf',
 					// previewLink: "http://87.244.33.186:8001/bgr",
 					previewLink: "http://192.168.250.210:8000/bgr",
 					// link: 'http://87.244.33.186:8081/bgr',
 					// link: 'http://192.168.250.210:8000/bgr',
-					// link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
 
 					events: [
 						{
@@ -157,7 +157,6 @@ class ports {
 							newEvent: true,
 							description: 'Nothing interesting, keep moving on',
 						},
-
 						{
 							id: this.counter.eventsId++,
 							typeError: 'Warning',

@@ -31,12 +31,16 @@ const useStyles = makeStyles((theme) => {
 			position: "absolute",
 			left: "50%",
 			bottom: 10,
-			// right: 10,
-			// bottom: 50,
 			zIndex: 1,
 
 			transform: "translate(-50%, 0)",
 
+			"&.show": {
+				zIndex: 2,
+			},
+			"&.hide": {
+				zIndex: -2,
+			}
 		},
 		canvas: {
 			background: "none",
@@ -154,25 +158,24 @@ export const Canvas = observer(() => {
 		<div className={classes.main}>
 			<div className={classes.canvasDraw}>
 				{/*<iframe*/}
-				{/*	// src="https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1"*/}
 				{/*	src={ports.selectedObjects.camera.link}*/}
 				{/*	width={width} height={height} title="YouTube video player"*/}
-				{/*	// width={"100%"} height={"100%"} title="YouTube video player"*/}
 				{/*	ref={iframeRef}*/}
 				{/*	frameBorder="0"*/}
 				{/*	allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
-				{/*	allowFullScreen/>*/}
+				{/*	allowFullScreen*/}
+				{/*/>*/}
 				<div className={classes.forPreview}/>
 
 				<canvas
-					// className={`${classes.canvas} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}
-					className={`${classes.canvas} hide`}
+					className={`${classes.canvas} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}
+					// className={`${classes.canvas} hide`}
 					// className={`${classes.canvas} show`}
 					// ref={canvasRef} width={"100%"} height={"100%"}
 					ref={canvasRef} width={width} height={height}
 				/>
 
-				<span className={classes.cameraControlPanel}><CameraControlPanel/></span>
+				<span className={`${classes.cameraControlPanel} ${canvasState.isVisibleCameraCanvas ? "hide" : "show"}`}><CameraControlPanel/></span>
 			</div>
 		</div>
 	)

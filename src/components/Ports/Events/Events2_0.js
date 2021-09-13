@@ -141,21 +141,21 @@ export const Events20 = observer(() => {
 							{notifications}
 						</div>
 
-						<iframe
-							width="100%" height="auto"
-							src={link}
-							title="YouTube video player"
-							frameBorder="0"
-							allow="accelerometer;
-						           autoplay;
-						           clipboard-write;
-						           encrypted-media;
-						           gyroscope;
-						           picture-in-picture"
-							allowFullScreen
-						/>
+						{/*<iframe*/}
+						{/*	width="100%" height="auto"*/}
+						{/*	src={link}*/}
+						{/*	title="YouTube video player"*/}
+						{/*	frameBorder="0"*/}
+						{/*	allow="accelerometer;*/}
+						{/*           autoplay;*/}
+						{/*           clipboard-write;*/}
+						{/*           encrypted-media;*/}
+						{/*           gyroscope;*/}
+						{/*           picture-in-picture"*/}
+						{/*	allowFullScreen*/}
+						{/*/>*/}
 
-						{/*<img className={classes.forPreview} src={previewLink} alt="123"/>*/}
+						<img className={classes.forPreview} src={previewLink} alt="123"/>
 					</div>
 				)
 			}
