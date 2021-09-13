@@ -38,15 +38,16 @@
 .yamap__balloon__link__item {
     border-radius: 5px;
 
-    color: inherit;
+    color: white;
+    background-color: #1976d2;
     text-decoration: none;
     
     font-size: 18px;
     padding: 10px;
 
-    transition: background-color 0.2s linear;
+    transition: background-color 0.1s linear;
 }
 
 .yamap__balloon__link__item:hover {
-    background-color: #eee;
+    background-color: #1230ab;
 }

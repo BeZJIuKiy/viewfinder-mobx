@@ -4,7 +4,7 @@ export const ZONE_TYPE_RESTRICTED_AREA = "ZONE_TYPE_RESTRICTED_AREA";
 export const DEFAULT = "DEFAULT";
 
 export default class Polygon {
-	#id = null;
+	id = null;
 	#idCounter = 0;
 
 	#points = [];
@@ -24,7 +24,7 @@ export default class Polygon {
 	}
 
 	constructor(id, x, y, w, h) {
-		this.#id = id;
+		this.id = id;
 		this.#points = this.setPolygonData(x, y, w, h);
 		this.#lineWidth = 2;
 		this.#lineColor = "#000";
@@ -36,7 +36,7 @@ export default class Polygon {
 		this.#centerPointColor = "gold";
 	}
 
-	getId = () => this.#id;
+	getId = () => this.id;
 
 	incCounter = () => {
 		++this.#idCounter;

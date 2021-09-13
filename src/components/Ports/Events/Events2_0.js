@@ -255,8 +255,8 @@ export const Events20 = observer(() => {
 		new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
 	}
 	const saveNewPolygonsData = () => {
-		// fetchPostPolygon(canvasState.test.get(camera.id), "http://192.168.250.183:8080/api/positions");
-		// postPoints();
+		// fetchPostPolygon(canvasState.tempPolygons[camera.id], "http://192.168.250.183:5001/api/zones");
+		postPoints();
 		// console.log(canvasState.saveDataTest)
 		canvasState.setCreatePolygon(false);
 		canvasState.setZoneAction("");
@@ -284,14 +284,18 @@ export const Events20 = observer(() => {
 		}
 	};
 	const postPoints = async () => {
-		const polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id].map((polygon) => ({
-				name: "111",
-				color: polygon.getAttributeFillColor(),
+		const polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id].map((polygon, index) => ({
+				// name: ports.selectedObjects.camera.description,
+				id: polygon.id,
+				// color: polygon.getAttributeFillColor(),
+
 				points: polygon.getPoints().map((point) => ({
 					...point, x: point.x * canvasState.pointCoefficient, y: point.y * canvasState.pointCoefficient
 				}))
 			})
 		);
+
+		// console.log(polygons);
 
 		const sendData = {
 			portId: port.id,
@@ -367,7 +371,8 @@ export const Events20 = observer(() => {
 									</div>
 
 									<div className={classes.mainCameraControl}>
-										<div className={`${classes.mainControlItems} ${!canvasState.isCreatePolygon ? "show" : "hide"}`}>
+										<div
+											className={`${classes.mainControlItems} ${!canvasState.isCreatePolygon ? "show" : "hide"}`}>
 											<Button
 												variant="contained"
 												color="primary"
@@ -376,7 +381,8 @@ export const Events20 = observer(() => {
 												{btnControlName}
 											</Button>
 										</div>
-										<div className={`${classes.mainControlItems} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}>
+										<div
+											className={`${classes.mainControlItems} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}>
 											<Button
 												className={`${classes.controlBtn} ${canvasState.isCreatePolygon ? "createDetectedZone" : ""}`}
 												variant="contained"
@@ -387,13 +393,15 @@ export const Events20 = observer(() => {
 											</Button>
 										</div>
 
-										<div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+										<div
+											className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
 											<ZoneActions/>
 										</div>
 
 										{action}
 
-										<div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+										<div
+											className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
 											<Button
 												className={`${classes.controlBtn} save`}
 												variant="contained"
@@ -402,7 +410,8 @@ export const Events20 = observer(() => {
 												Save
 											</Button>
 										</div>
-										<div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+										<div
+											className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
 											<Button
 												className={`${classes.controlBtn} cancel`}
 												variant="contained"

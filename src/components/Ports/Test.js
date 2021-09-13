@@ -599,11 +599,13 @@ const DrawControl = () => {
 	const [action, setAction] = useState(<div/>);
 
 	useEffect(() => {
+		console.log("123")
 		switch (canvasState.zoneAction) {
 			case SET_NAME: {
 				console.log("SET_NAME");
 				setAction(
-					<div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+					// <div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+					<div className={`${classes.mainControlItems} "show"`}>
 
 					</div>
 				);
@@ -613,7 +615,8 @@ const DrawControl = () => {
 			case SET_TYPE: {
 				console.log("SET_TYPE");
 				setAction(
-					<div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+					// <div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+					<div className={`${classes.mainControlItems} "show"`}>
 						<SetTypeAction/>
 					</div>
 				);
@@ -623,7 +626,8 @@ const DrawControl = () => {
 			case SET_COLOR: {
 				console.log("SET_COLOR");
 				setAction(
-					<div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+					// <div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+					<div className={`${classes.mainControlItems} "show"`}>
 
 					</div>
 				);
@@ -658,25 +662,34 @@ const DrawControl = () => {
 	const btnControlZonesName = canvasState.isCreatePolygon ? "Draw detected areas " : "Create control zones";
 
 	return (
-		<div>
-			<Button variant="contained" color="primary" onClick={canvasState.reVisibleCameraCanvas}>
-				{btnControlName}
-			</Button>
-			<Button variant="contained" color="secondary" onClick={createChangePolygon}>
-				{btnControlZonesName}
-			</Button>
-
-			<ZoneActions/>
-
-			{action}
-
-			<Button variant="contained" onClick={saveNewPolygonsData}>
-				Save
-			</Button>
-			<Button variant="contained" onClick={deleteNewPolygonsData}>
-				Cancel
-			</Button>
-		</div>
+		<Grid style={{margin: 0}} container spacing={1} justify={"center"}>
+			<Grid item xs={2} sm={2} md={2} lg={2} xl={2} style={{margin: "0 auto"}}>
+				<Button variant="contained" color="primary" onClick={canvasState.reVisibleCameraCanvas}>
+					{btnControlName}
+				</Button>
+			</Grid>
+			<Grid item xs={2} sm={2} md={2} lg={2} xl={2}>
+				<Button variant="contained" color="secondary" onClick={createChangePolygon}>
+					{btnControlZonesName}
+				</Button>
+			</Grid>
+			<Grid item xs={2} sm={2} md={2} lg={2} xl={2}>
+				<ZoneActions/>
+			</Grid>
+			<Grid item xs={2} sm={2} md={2} lg={2} xl={2}>
+				{action}
+			</Grid>
+			<Grid item xs={2} sm={2} md={2} lg={2} xl={2}>
+				<Button variant="contained" onClick={saveNewPolygonsData}>
+					Save
+				</Button>
+			</Grid>
+			<Grid item xs={2} sm={2} md={2} lg={2} xl={2}>
+				<Button variant="contained" onClick={deleteNewPolygonsData}>
+					Cancel
+				</Button>
+			</Grid>
+		</Grid>
 	)
 }
 
@@ -780,11 +793,10 @@ export const Test = () => {
 			</div>
 		)
 	}
-
-
 	return (
 		<div>
-			<DrawControl/>
+			{/*<DrawControl/>*/}
+			<canvas id={"canvasTest"}></canvas>
 		</div>
 	)
 }

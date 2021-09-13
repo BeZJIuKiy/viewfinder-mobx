@@ -30,14 +30,14 @@ export default class Polygons {
 
 		this.ctx = canvas.getContext('2d');
 
-		console.log(ports.selectedObjects.camera.id);
-		console.log(canvasState.saveDataTest);
-		console.log(canvasState.saveDataTest[ports.selectedObjects.camera.id])
+		// console.log(ports.selectedObjects.camera.id);
+		// console.log(canvasState.saveDataTest);
+		// console.log(canvasState.saveDataTest[ports.selectedObjects.camera.id])
 		// this.polygons = [];
 		// this.polygons = canvasState.test.get(ports.selectedObjects.camera.id);
 
 		this.polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id];
-		console.log(this.polygons)
+		// console.log(this.polygons)
 
 		/* DELETE */
 		// if (this.polygons.length) {
@@ -147,15 +147,11 @@ export default class Polygons {
 		this.isDrag = false;
 		this.curPolygon = null;
 		canvasState.setCurrentPolygonNum(this.curPolygon);
+		canvasState.incReadyRectCounter();
 		this.currentHandle = -1;
 
 		this.polygons = this.showCenterPoint();
 		this.selectPolygon() ? this.polygonSelection() : this.drawPolygons();
-
-		// this.postPolygon("https://lockalhost:5000", this.polygons);
-		// .then((data) => {
-		// 	console.log(data);  // JSON data parsed by `response.json()` call
-		// })
 	}
 	cmbUp = (e) => {
 		console.log("Отпущена СКМ");
@@ -316,7 +312,7 @@ export default class Polygons {
 		if (this.polygons.length === 0) return;
 
 		let findedPolygon = false;
-		console.log(this.polygons[0]);
+		// console.log(this.polygons[0]);
 
 		for (let i = 0; i < this.polygons.length; ++i) {
 			const points = this.polygons[i].getPoints();

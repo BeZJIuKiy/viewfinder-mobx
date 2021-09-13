@@ -8,6 +8,7 @@ import ports from "../../../store/ports";
 import {makeStyles} from "@material-ui/core/styles";
 import backgroundImage320px from "../../Auth/images/background320px.jpg";
 import {CameraControlPanel} from "./CameraControlPanel/CameraControlPanel";
+// import JSMpeg from "../../../../public/jsmpeg/jsmpeg.min"
 
 const useStyles = makeStyles((theme) => {
 	const {camera} = ports.selectedObjects
@@ -75,7 +76,6 @@ const useStyles = makeStyles((theme) => {
 
 export const Canvas = observer(() => {
 	const canvasRef = useRef();
-	const iframeRef = useRef();
 	const params = useParams();
 	const classes = useStyles();
 
@@ -128,11 +128,11 @@ export const Canvas = observer(() => {
 				// 360p: 640 x 360
 				// 240p: 426 x 240
 
-				// setWidth(800);
-				// setHeight(450);
+				setWidth(800);
+				setHeight(450);
 
-				setWidth(720);
-				setHeight(405);
+				// setWidth(720);
+				// setHeight(405);
 
 				canvasState.pointCoefficient = canvasState.size.width / 800;
 				console.log('1.778');
@@ -165,7 +165,10 @@ export const Canvas = observer(() => {
 				{/*	allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
 				{/*	allowFullScreen*/}
 				{/*/>*/}
-				<div className={classes.forPreview}/>
+
+				<canvas id={"canvasTest"} style={{width: 800, height: 450}}/>
+
+				{/*<div className={classes.forPreview}/>*/}
 
 				<canvas
 					className={`${classes.canvas} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}

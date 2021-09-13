@@ -88,6 +88,10 @@ const useStyles = makeStyles((theme) => {
 		},
 		balloonText: {},
 		balloonLink: {},
+		test: {
+			fontSize: 36,
+			backgroundColor: "red",
+		},
 	})
 })
 
@@ -126,24 +130,24 @@ const YaMap = observer(({isVisible, style}) => {
 
 		setBalContent(`
 		    <div class="yamap__balloon__content">
-		        <iframe width="400" height="300"
+		        <iframe width="384" height="216"
 		            src=${link}?controls=0&autoplay=1&mute=1"
 		            frameBorder="0" allow="accelerometer;
 		            clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen>
 		        </iframe>
 
 		        <div class="yamap__balloon__text">
-		            <div>Camera name: ${name}</div>
+		            <div>Name: ${name}</div>
 		            <div>Description: ${description}</div>
-		            <div>Model: ${type}</div>
-		            <div>Coordinates: ${coordinates[0]} ${coordinates[1]}</div>
+		            <!--<div>Model: ${type}</div>-->
+		            <div>Position: ${coordinates[0]} ${coordinates[1]}</div>
 		        </div>
-		        <div class="yamap__balloon__link">
+<!--		        <div class="yamap__balloon__link">-->
 		            <a class="yamap__balloon__link__item"
 		                href='/events'}>
-		                Move to ${name}
+		                Details
 		            </a>
-		        </div>
+<!--		        </div>-->
 		    </div>
 		`);
 	}

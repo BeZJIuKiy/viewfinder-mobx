@@ -206,11 +206,11 @@ export const CameraControlPanel = observer(() => {
                 break;
             }
             case "+": {
-                sendMsg(buttons[0].command);
+                sendMsg(symbols[0].command);
                 break;
             }
             case "-": {
-                sendMsg(buttons[2].command);
+                sendMsg(symbols[1].command);
                 break;
             }
             case "=": {
@@ -245,6 +245,20 @@ export const CameraControlPanel = observer(() => {
         )
     }
 
+    const handleFocusControlArea = (e) => {
+        console.log("handleFocusControlArea")
+        window.addEventListener("keydown", function(e) {
+            if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+                e.preventDefault();
+            }
+        }, false);
+
+        window.addEventListener("keydown", keyDown);
+        if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+            e.preventDefault();
+        }
+    }
+
     const gridItems = buttons.map(({name, command, icon, disabled, xs, sm, md, lg, xl}, index) => {
         return (
             <Grid className={classes.item} item xs={xs} sm={sm} md={md} lg={lg} xl={xl}
@@ -254,10 +268,8 @@ export const CameraControlPanel = observer(() => {
         )
     })
 
-    window.addEventListener("keydown", keyDown);
-
     return (
-        <div className={classes.controlCameraButton}>
+        <div className={classes.controlCameraButton} onClick={handleFocusControlArea}>
             <Grid container justify={"center"} className={`${classes.container} controlPanel`}>
                 {gridItems}
             </Grid>
