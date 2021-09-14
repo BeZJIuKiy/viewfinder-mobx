@@ -51,20 +51,20 @@ class CanvasState {
     pointCoefficient = 1;
 
     /* Размеры элемента Canvas */
-    canvasSize = {
-        oldS: {
-            width: 0,
-            height: 0,
+    canvasReSize = {
+        coefficient: {
+            width: 1,
+            height: 1,
         },
 
-        newS: {
-            width: 0,
-            height: 0,
+        oldSize: {
+            width: 1,
+            height: 1,
         },
 
-        difS: {
-            width: 0,
-            height: 0,
+        newSize: {
+            width: 1,
+            height: 1,
         },
     }
 
@@ -75,13 +75,14 @@ class CanvasState {
     currentPolygonNum = null;
 
     saveDataTest = {};
+
     // test = new Map();
 
 
     constructor() {
         // makeAutoObservable(this);
 
-        makeAutoObservable(this, {}, { autoBind: true });
+        makeAutoObservable(this, {}, {autoBind: true});
 
         // makePersistable(this, {
         //     name: "CanvasStore",
@@ -111,7 +112,38 @@ class CanvasState {
         // if (ports.selectedObjects.camera.id)
     }
 
-    getCanvasDif = () => this.canvasSize.difS;
+    setCanvasReSize = (width, height) => {
+        console.log(this.canvasReSize)
+
+        this.canvasReSize.oldSize.width = this.canvasReSize.newSize.width;
+        this.canvasReSize.oldSize.height = this.canvasReSize.newSize.height;
+
+        this.canvasReSize.newSize.width = width;
+        this.canvasReSize.newSize.height = height;
+
+
+
+        this.canvasReSize.coefficient.width = this.canvasReSize.newSize.width / this.canvasReSize.oldSize.width;
+        this.canvasReSize.coefficient.height = this.canvasReSize.newSize.height / this.canvasReSize.oldSize.height;
+
+        // console.log(this.saveDataTest)
+        for (const id in this.saveDataTest) {
+            this.saveDataTest[id].forEach((polygon) => {
+                const points = polygon.getPoints();
+                const newPoints = [];
+
+                for (let i = 0; i < points.length; ++i) {
+                    newPoints.push({
+                        id: points[i].id,
+                        x: points[i].x * this.canvasReSize.coefficient.width,
+                        y: points[i].y * this.canvasReSize.coefficient.height,
+                    })
+                }
+
+                polygon.setPoints(newPoints);
+            })
+        }
+    }
 
 
     /* To EVENTS */
@@ -186,12 +218,17 @@ class CanvasState {
         this.currentPolygonNum = number;
     }
 
+    setPointCoefficient = (coefficient) => {
+        this.pointCoefficient = coefficient;
+    }
+
     deletePolygon(camId, index) {
         this.saveDataTest[camId].splice(index, 1);
 
         // const polygons = this.test.get(camId);
         // polygons.splice(index, 1);
     }
+
 }
 
 export default new CanvasState();

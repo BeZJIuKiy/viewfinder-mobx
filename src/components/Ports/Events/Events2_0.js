@@ -141,21 +141,21 @@ export const Events20 = observer(() => {
 							{notifications}
 						</div>
 
-						{/*<iframe*/}
-						{/*	width="100%" height="auto"*/}
-						{/*	src={link}*/}
-						{/*	title="YouTube video player"*/}
-						{/*	frameBorder="0"*/}
-						{/*	allow="accelerometer;*/}
-						{/*           autoplay;*/}
-						{/*           clipboard-write;*/}
-						{/*           encrypted-media;*/}
-						{/*           gyroscope;*/}
-						{/*           picture-in-picture"*/}
-						{/*	allowFullScreen*/}
-						{/*/>*/}
+						<iframe
+							width="100%" height="auto"
+							src={link}
+							title="YouTube video player"
+							frameBorder="0"
+							allow="accelerometer;
+						           autoplay;
+						           clipboard-write;
+						           encrypted-media;
+						           gyroscope;
+						           picture-in-picture"
+							allowFullScreen
+						/>
 
-						<img className={classes.forPreview} src={previewLink} alt="123"/>
+						{/*<img className={classes.forPreview} src={previewLink} alt="123"/>*/}
 					</div>
 				)
 			}
@@ -270,9 +270,6 @@ export const Events20 = observer(() => {
 
 	const getPoints = (url) => {
 		try {
-			// const url = "http://192.168.250.183:8080/api/positions";
-			// const url = "http://192.168.250.183:5001/api/zones";
-
 			const test = fetch(url)
 				.then(response => response.json())
 				.then(data => console.log(data));
@@ -295,33 +292,35 @@ export const Events20 = observer(() => {
 			})
 		);
 
-		// console.log(polygons);
-
 		const sendData = {
-			portId: port.id,
-			cameraId: camera.id,
+			port_id: port.id,
+			camera_id: camera.id,
 			polygons,
 		}
 
-		try {
-			const url = "http://192.168.250.183:5001/api/zones";
+		console.log(sendData)
 
-			await fetch(url, {
-				method: "POST", // *GET, POST, PUT, DELETE, etc.
-				mode: "cors", // no-cors, *cors, same-origin
-				cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-				credentials: "same-origin", // include, *same-origin, omit
-				headers: {
-					"Content-Type": "application/json"
-					// 'Content-Type': 'application/x-www-form-urlencoded',
-				},
-				redirect: "follow", // manual, *follow, error
-				referrerPolicy: "no-referrer", // no-referrer, *client
-				body: JSON.stringify(sendData), // body data type must match "Content-Type" header
-			})
-		} catch (e) {
-			console.log(e)
-		}
+
+
+		// try {
+		// 	const url = "http://192.168.250.183:5001/api/zones";
+		//
+		// 	await fetch(url, {
+		// 		method: "POST", // *GET, POST, PUT, DELETE, etc.
+		// 		mode: "cors", // no-cors, *cors, same-origin
+		// 		cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+		// 		credentials: "same-origin", // include, *same-origin, omit
+		// 		headers: {
+		// 			"Content-Type": "application/json"
+		// 			// 'Content-Type': 'application/x-www-form-urlencoded',
+		// 		},
+		// 		redirect: "follow", // manual, *follow, error
+		// 		referrerPolicy: "no-referrer", // no-referrer, *client
+		// 		body: JSON.stringify(sendData), // body data type must match "Content-Type" header
+		// 	})
+		// } catch (e) {
+		// 	console.log(e)
+		// }
 	}
 
 

@@ -150,7 +150,7 @@ const EnhancedTableToolbar = (props) => {
 	const {numSelected} = props;
 	const {selectedObjects: {camera, event}} = ports;
 
-	console.log(ports.selectedObjects);
+	// console.log(ports.selectedObjects);
 	const tableTitle = Number.isInteger(event.id)
 		? `ALL EVENTS ${event.typeVessel}`
 		: (camera.events.length ? `ALL EVENTS ${camera.description}` : "NO EVENTS");
