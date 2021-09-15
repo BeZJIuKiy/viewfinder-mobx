@@ -164,8 +164,10 @@ export const CameraControlPanel = observer(() => {
     const [intervalId, setIntervalId] = useState(null);
 
     // const PORT = 3000;
-    const PORT = 8080;
-    const HOST = '192.168.250.183';
+    // const PORT = 8080;
+    const PORT = 7000;
+    const HOST = 'localhost';
+    // const HOST = '192.168.250.183';
 
     const socket = new WebSocket(`ws://${HOST}:${PORT}`);
     socket.onopen = () => {

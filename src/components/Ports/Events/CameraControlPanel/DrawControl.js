@@ -202,27 +202,28 @@ export const DrawControl = observer(() => {
 			polygons,
 		}
 
-		console.log(sendData)
+		// console.log(sendData)
 
-		// try {
-		// 	const url = "http://192.168.250.183:5001/api/zones";
-		//
-		// 	await fetch(url, {
-		// 		method: "POST", // *GET, POST, PUT, DELETE, etc.
-		// 		mode: "cors", // no-cors, *cors, same-origin
-		// 		cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-		// 		credentials: "same-origin", // include, *same-origin, omit
-		// 		headers: {
-		// 			"Content-Type": "application/json"
-		// 			// 'Content-Type': 'application/x-www-form-urlencoded',
-		// 		},
-		// 		redirect: "follow", // manual, *follow, error
-		// 		referrerPolicy: "no-referrer", // no-referrer, *client
-		// 		body: JSON.stringify(sendData), // body data type must match "Content-Type" header
-		// 	})
-		// } catch (e) {
-		// 	console.log(e)
-		// }
+		try {
+			// const url = "http://192.168.250.183:5001/api/zones";
+			const url = "http://localhost:5001/api/zones";
+
+			await fetch(url, {
+				method: "POST", // *GET, POST, PUT, DELETE, etc.
+				mode: "cors", // no-cors, *cors, same-origin
+				cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+				credentials: "same-origin", // include, *same-origin, omit
+				headers: {
+					"Content-Type": "application/json"
+					// 'Content-Type': 'application/x-www-form-urlencoded',
+				},
+				redirect: "follow", // manual, *follow, error
+				referrerPolicy: "no-referrer", // no-referrer, *client
+				body: JSON.stringify(sendData), // body data type must match "Content-Type" header
+			})
+		} catch (e) {
+			console.log(e)
+		}
 	}
 
 	const btnControlName = canvasState.isVisibleCameraCanvas ? "Control Camera" : "Show Detected Areas";
