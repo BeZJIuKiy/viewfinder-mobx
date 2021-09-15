@@ -167,26 +167,42 @@ export const DrawControl = observer(() => {
 		}
 	};
 	const postPoints = async () => {
-		const polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id].map((polygon, index) => ({
-				// name: ports.selectedObjects.camera.description,
-				id: polygon.id,
-				// color: polygon.getAttributeFillColor(),
+		const polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id].map((polygon, index) => {
+				return ({
+					// name: ports.selectedObjects.camera.description,
+					id: polygon.id,
+					// color: polygon.getAttributeFillColor(),
 
-				points: polygon.getPoints().map((point) => ({
-					...point, x: point.x * canvasState.pointCoefficient, y: point.y * canvasState.pointCoefficient
-				}))
-			})
+					points: polygon.getPoints().map((point) => ({
+						...point,
+						x: +(point.x * canvasState.pointCoefficient).toFixed(),
+						y: +(point.y * canvasState.pointCoefficient).toFixed(),
+					}))
+				})
+			}
 		);
 
+		if (polygons.length === 0) {
+			polygons.push({
+					id: 0,
+					points: [
+						{id: 0, x: 0, y: 0},
+						{id: 1, x: 1, y: 0},
+						{id: 2, x: 1, y: 1},
+						{id: 3, x: 0, y: 1}
+					]
+				}
+			)
+		}
+
 		const sendData = {
-			port_id: port.id,
-			camera_id: camera.id,
+			// port_id: port.id,
+			// camera_id: camera.id,
+			camera_id: 2,
 			polygons,
 		}
 
 		console.log(sendData)
-
-
 
 		// try {
 		// 	const url = "http://192.168.250.183:5001/api/zones";
@@ -209,11 +225,6 @@ export const DrawControl = observer(() => {
 		// }
 	}
 
-
-	if (!Number.isInteger(camera.id)) {
-		ports.setSelectedCamera(ports.data[0].cameras[0].id);
-	}
-
 	const btnControlName = canvasState.isVisibleCameraCanvas ? "Control Camera" : "Show Detected Areas";
 	const btnControlZonesName = canvasState.isCreatePolygon ? "Draw detected areas " : "Create control zones";
 
@@ -222,13 +233,13 @@ export const DrawControl = observer(() => {
 			<Grid container spacing={1}>
 				<Grid item xs={6} sm={6} md={6} lg={6} xl={6} className={`${classes.confirmItem} save`}>
 					<Button className={`${classes.confirmButton} save`} variant="contained" color={"primary"}
-							onClick={saveNewPolygonsData}>
+					        onClick={saveNewPolygonsData}>
 						Save
 					</Button>
 				</Grid>
 				<Grid item xs={6} sm={6} md={6} lg={6} xl={6} className={`${classes.confirmItem} cancel`}>
 					<Button className={`${classes.confirmButton} cancel`} variant="contained" color={"secondary"}
-							onClick={deleteNewPolygonsData}>
+					        onClick={deleteNewPolygonsData}>
 						Cancel
 					</Button>
 				</Grid>

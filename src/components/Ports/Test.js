@@ -22,307 +22,318 @@ import Polygons from "./Events/chageFigure/Polygons";
 import {SetTypeAction} from "./Events/ZoneActions/SetTypeAction";
 import {ConfirmDeletePolygon} from "./Events/ZoneActions/ConfirmDeletePolygon";
 import {DrawControl} from "./Events/CameraControlPanel/DrawControl";
+import ports from "../../store/ports";
 
 const useStyles = makeStyles((theme) => ({
-    test: {
-        width: "100%",
-        height: "100%",
-    },
+	test: {
+		width: "100%",
+		height: "100%",
+	},
 
-    container: {
-        // display: "flex",
-        // height: 500,
-        // color: "white",
-        // fontSize: "2.6em",
-        // flexFlow: "column wrap",    // Расположение в виде колонок
+	container: {
+		// display: "flex",
+		// height: 500,
+		// color: "white",
+		// fontSize: "2.6em",
+		// flexFlow: "column wrap",    // Расположение в виде колонок
 
-        // display: "flex",
-        // flexWrap: "wrap",
-        // padding: 0,
-        // margin: 0,
-        // listStyle: "none",
+		// display: "flex",
+		// flexWrap: "wrap",
+		// padding: 0,
+		// margin: 0,
+		// listStyle: "none",
 
-        display: "flex",
-        // flexFlow: "row wrap",
-        maxWidth: 1200,
-        marginTop: 10,
-        margin: "0 auto",
-    },
+		display: "flex",
+		// flexFlow: "row wrap",
+		maxWidth: 1200,
+		marginTop: 10,
+		margin: "0 auto",
+	},
 
-    item01: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-
-
-        "&.one": {
-            backgroundColor: "#508694",
-            marginRight: 10,
-            flexBasis: "100%",
-            order: 1, // Первый блок
-        },
-
-        "&.two": {
-            backgroundColor: "#BB844C",
-            marginBottom: 10,
-            flex: "1 1 0",
-            order: 2, // Второй блок
-        },
-
-        "&.three": {
-            backgroundColor: "#929D79",
-            flex: "1 1 0",
-            order: 3, // Третий блок
-        },
-
-        "&.four": {
-            backgroundColor: "#929D79",
-            flexBasis: "100%",
-            margin: "0 10px",
-            order: 4, // Четвертый блок
-        },
-
-        "&.five": {
-            backgroundColor: "#929D79",
-            marginBottom: 10,
-            flex: "1 1 0",
-            order: 5, // Пятый блок
-        },
-
-        "&.six": {
-            backgroundColor: "#929D79",
-            marginBottom: 10,
-            flex: "1 1 0",
-            order: 6, // Шестой блок
-        },
-
-        "&.seven": {
-            backgroundColor: "#929D79",
-            // marginTop: 10,
-            flex: "1 1 0",
-            order: 7, // Седьмой блок
-        },
-    },
-    item02: {
-        flex: "1 1 0",
-
-        padding: 100,
-        background: "#f0f0f0",
-        borderRadius: 5,
-        margin: "1rem",
-        textAlign: "center",
-    },
-
-    item03: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: 200,
-        backgroundColor: "#508694",
-
-        borderRadius: 16,
-        boxShadow: "0 0 2px 0 rgba(145, 158, 171, 0.24),0 16px 32px -4px rgba(145, 158, 171, 0.24)",
-
-        "&.one": {
-            height: 200,
-
-            backgroundColor: "#508694",
-            marginRight: 10,
-            flex: "1 1 0",
-            order: 1, // Первый блок
-        },
-
-        "&.two": {
-            height: 200,
-
-            backgroundColor: "#508694",
-            marginRight: 10,
-            flex: "1 1 0",
-            order: 2, // Первый блок
-        },
-
-        "&.three": {
-            height: 200,
-
-            backgroundColor: "#508694",
-            marginRight: 10,
-            flex: "1 1 0",
-            order: 3, // Первый блок
-        },
-
-        "&.four": {
-            height: 200,
-
-            backgroundColor: "#508694",
-            marginBottom: 10,
-            flex: "1 1 0",
-            order: 4, // Первый блок
-        },
-
-        "&.five": {
-            // width: 1000,
-            height: 300,
-
-            backgroundColor: "#333",
-            marginBottom: 10,
-            // flexBasis: "80%",
-
-            // flex: "1 1 80%",
-            order: 5, // Первый блок
-        },
-
-        "&.six": {
-            height: 200,
-
-            backgroundColor: "#508694",
-            marginBottom: 10,
-            flex: "1 1 0",
-            order: 6, // Первый блок
-        },
-        "&.eight": {
-            height: 300,
-
-            backgroundColor: "#e5e5e5",
-            marginBottom: 10,
-            flex: "1 1 0",
-            order: 6, // Первый блок
-        },
-    },
-
-    container01: {
-        display: "flex",
-        flexFlow: "column wrap",
-    },
-    item04: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-
-        "&._01": {
-            backgroundColor: "red",
-            flexBasis: "100%",
-            marginRight: 10,
-            order: 1,
-        },
-
-        flexGrow: 1,
-        flexShrink: 1,
-        flexBasis: "100%",
-        "&._02": {
-            backgroundColor: "#777",
-            flex: "1 1 0",
-            marginBottom: 5,
-            order: 2,
-        },
-
-        "&._03": {
-            backgroundColor: "gold",
-            flex: "1 1 0",
-            marginTop: 5,
-            order: 3,
-        },
-
-        "&._04": {
-            backgroundColor: "blue",
-            flexBasis: "100%",
-            marginLeft: 10,
-            order: 4,
-        },
-    },
-
-    container02: {
-        display: "flex",
-        flexWrap: "wrap",
-    },
-    item05: {
-        padding: 100,
-        backgroundColor: "gold",
-        textAlign: "center",
-
-        "&.five": {
-            height: 150,
-            backgroundColor: "red",
-        },
-
-        "&.six": {
-            height: 250,
-            backgroundColor: "blue",
-        },
-    },
+	item01: {
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
 
 
-    main: {
-        width: "100%",
-        height: "100%",
+		"&.one": {
+			backgroundColor: "#508694",
+			marginRight: 10,
+			flexBasis: "100%",
+			order: 1, // Первый блок
+		},
 
-        display: "flex",
-        fontFamily: `"Quicksand", sans-serif`,
+		"&.two": {
+			backgroundColor: "#BB844C",
+			marginBottom: 10,
+			flex: "1 1 0",
+			order: 2, // Второй блок
+		},
 
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-    },
-    leftHalf: {
-        width: "50%",
+		"&.three": {
+			backgroundColor: "#929D79",
+			flex: "1 1 0",
+			order: 3, // Третий блок
+		},
 
-        position: "relative",
-        background: "rgba(51, 51, 51, 0.7)",
+		"&.four": {
+			backgroundColor: "#929D79",
+			flexBasis: "100%",
+			margin: "0 10px",
+			order: 4, // Четвертый блок
+		},
 
-        "@media(max-width: 425px)": {
-            width: "100%",
-        }
-    },
-    gridContainer: {
-        // textAlign: "center",
+		"&.five": {
+			backgroundColor: "#929D79",
+			marginBottom: 10,
+			flex: "1 1 0",
+			order: 5, // Пятый блок
+		},
 
-        position: "absolute",
-        top: "50%",
-        left: "0px",
-        zIndex: 1,
+		"&.six": {
+			backgroundColor: "#929D79",
+			marginBottom: 10,
+			flex: "1 1 0",
+			order: 6, // Шестой блок
+		},
 
-        transform: "translate(0, -50%)",
-    },
-    gridItem: {
-        fontFamily: `"Quicksand", sans-serif`,
+		"&.seven": {
+			backgroundColor: "#929D79",
+			// marginTop: 10,
+			flex: "1 1 0",
+			order: 7, // Седьмой блок
+		},
+	},
+	item02: {
+		flex: "1 1 0",
 
-        color: "#ddd",
-        borderColor: "none",
-        fontSize: 24,
+		padding: 100,
+		background: "#f0f0f0",
+		borderRadius: 5,
+		margin: "1rem",
+		textAlign: "center",
+	},
 
-        // marginBottom: theme.spacing(2),
+	item03: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		height: 200,
+		backgroundColor: "#508694",
 
-        "&.title": {
-            textAlign: "center",
-            fontSize: 52,
-            fontWeight: 300,
-        },
+		borderRadius: 16,
+		boxShadow: "0 0 2px 0 rgba(145, 158, 171, 0.24),0 16px 32px -4px rgba(145, 158, 171, 0.24)",
 
-        "&.demo": {
-            width: "100%",
-            // width: "10vw",
-            maxWidth: "200px",
-            marginLeft: "auto",
-            backgroundColor: "#9e2b4b",
+		"&.one": {
+			height: 200,
 
-            "&:hover": {
-                backgroundColor: "#e22157",
-            }
-        },
+			backgroundColor: "#508694",
+			marginRight: 10,
+			flex: "1 1 0",
+			order: 1, // Первый блок
+		},
 
-        "&.login": {
-            width: "100%",
-            // width: "10vw",
-            maxWidth: "200px",
-            marginRight: "auto",
-            backgroundColor: "#3d4772",
+		"&.two": {
+			height: 200,
 
-            "&:hover": {
-                backgroundColor: "#374fb9",
-            }
-        },
-    },
+			backgroundColor: "#508694",
+			marginRight: 10,
+			flex: "1 1 0",
+			order: 2, // Первый блок
+		},
+
+		"&.three": {
+			height: 200,
+
+			backgroundColor: "#508694",
+			marginRight: 10,
+			flex: "1 1 0",
+			order: 3, // Первый блок
+		},
+
+		"&.four": {
+			height: 200,
+
+			backgroundColor: "#508694",
+			marginBottom: 10,
+			flex: "1 1 0",
+			order: 4, // Первый блок
+		},
+
+		"&.five": {
+			// width: 1000,
+			height: 300,
+
+			backgroundColor: "#333",
+			marginBottom: 10,
+			// flexBasis: "80%",
+
+			// flex: "1 1 80%",
+			order: 5, // Первый блок
+		},
+
+		"&.six": {
+			height: 200,
+
+			backgroundColor: "#508694",
+			marginBottom: 10,
+			flex: "1 1 0",
+			order: 6, // Первый блок
+		},
+		"&.eight": {
+			height: 300,
+
+			backgroundColor: "#e5e5e5",
+			marginBottom: 10,
+			flex: "1 1 0",
+			order: 6, // Первый блок
+		},
+	},
+
+	container01: {
+		display: "flex",
+		flexFlow: "column wrap",
+	},
+	item04: {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+
+		"&._01": {
+			backgroundColor: "red",
+			flexBasis: "100%",
+			marginRight: 10,
+			order: 1,
+		},
+
+		flexGrow: 1,
+		flexShrink: 1,
+		flexBasis: "100%",
+		"&._02": {
+			backgroundColor: "#777",
+			flex: "1 1 0",
+			marginBottom: 5,
+			order: 2,
+		},
+
+		"&._03": {
+			backgroundColor: "gold",
+			flex: "1 1 0",
+			marginTop: 5,
+			order: 3,
+		},
+
+		"&._04": {
+			backgroundColor: "blue",
+			flexBasis: "100%",
+			marginLeft: 10,
+			order: 4,
+		},
+	},
+
+	container02: {
+		display: "flex",
+		flexWrap: "wrap",
+	},
+	item05: {
+		padding: 100,
+		backgroundColor: "gold",
+		textAlign: "center",
+
+		"&.five": {
+			height: 150,
+			backgroundColor: "red",
+		},
+
+		"&.six": {
+			height: 250,
+			backgroundColor: "blue",
+		},
+	},
+
+
+	main: {
+		width: "100%",
+		height: "100%",
+
+		display: "flex",
+		fontFamily: `"Quicksand", sans-serif`,
+
+		backgroundImage: `url(${backgroundImage})`,
+		backgroundPosition: 'center',
+		backgroundSize: 'cover',
+		backgroundRepeat: 'no-repeat',
+	},
+	leftHalf: {
+		width: "50%",
+
+		position: "relative",
+		background: "rgba(51, 51, 51, 0.7)",
+
+		"@media(max-width: 425px)": {
+			width: "100%",
+		}
+	},
+	gridContainer: {
+		// textAlign: "center",
+
+		position: "absolute",
+		top: "50%",
+		left: "0px",
+		zIndex: 1,
+
+		transform: "translate(0, -50%)",
+	},
+	gridItem: {
+		fontFamily: `"Quicksand", sans-serif`,
+
+		color: "#ddd",
+		borderColor: "none",
+		fontSize: 24,
+
+		// marginBottom: theme.spacing(2),
+
+		"&.title": {
+			textAlign: "center",
+			fontSize: 52,
+			fontWeight: 300,
+		},
+
+		"&.demo": {
+			width: "100%",
+			// width: "10vw",
+			maxWidth: "200px",
+			marginLeft: "auto",
+			backgroundColor: "#9e2b4b",
+
+			"&:hover": {
+				backgroundColor: "#e22157",
+			}
+		},
+
+		"&.login": {
+			width: "100%",
+			// width: "10vw",
+			maxWidth: "200px",
+			marginRight: "auto",
+			backgroundColor: "#3d4772",
+
+			"&:hover": {
+				backgroundColor: "#374fb9",
+			}
+		},
+	},
 }));
+const useOtherCamerasStyles = makeStyles((theme) => ({
+	otherCameras: {
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+		// justifyContent: "center",
+		// textAlign: "center",
+		flexGrow: 1,
+	}
+}))
 // const useControlCameraButtonStyles = makeStyles((theme) => ({
 //     controlCameraButton: {
 //         display: "flex",
@@ -593,254 +604,157 @@ const useStyles = makeStyles((theme) => ({
 //     )
 // })
 
-// const useDrawControlStyles = makeStyles((theme) => ({
-//     container: {
-//         width: "100%",
-//
-//         justifyContent: "center",
-//         alignItems: "center",
-//
-//
-//         margin: 0,
-//         padding: 0,
-//         paddingTop: theme.spacing(1),
-//
-//         // textAlign: "center",
-//     },
-//
-//     item: {},
-//
-//     confirmContainer: {
-//         margin: 0,
-//         padding: 0,
-//     },
-//
-//     confirmItem: {
-//         "&.save": {
-//             textAlign: "right",
-//         },
-//
-//         "&.cancel": {
-//             textAlign: "left",
-//         },
-//     },
-//
-//     confirmButton: {
-//         width: 100,
-//
-//         "&.save": {},
-//
-//         "&.cancel": {},
-//     },
-//
-// }));
-// const DrawControl = observer(() => {
-//     const classes = useDrawControlStyles();
-//
-//     const [action, setAction] = useState(<div/>);
-//
-//     useEffect(() => {
-//         switch (canvasState.zoneAction) {
-//             case SET_NAME: {
-//                 setAction(
-//                     <div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
-//
-//                     </div>
-//                 );
-//                 break;
-//             }
-//
-//             case SET_TYPE: {
-//                 setAction(
-//                     <div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
-//                         <SetTypeAction/>
-//                     </div>
-//                 );
-//                 break;
-//             }
-//
-//             case SET_COLOR: {
-//                 setAction(
-//                     <div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
-//
-//                     </div>
-//                 );
-//                 break;
-//             }
-//
-//             case DELETE: {
-//                 setAction(
-//                     <ConfirmDeletePolygon/>
-//                 );
-//                 break;
-//             }
-//             default: {
-//                 setAction(<div/>);
-//             }
-//
-//         }
-//     }, [canvasState.zoneAction, canvasState.isCreatePolygon]);
-//
-//     const createChangePolygon = () => {
-//         console.log("createChangePolygon");
-//     }
-//     const saveNewPolygonsData = () => {
-//         console.log("saveNewPolygonsData");
-//     }
-//     const deleteNewPolygonsData = () => {
-//         console.log("deleteNewPolygonsData");
-//     }
-//
-//     const btnControlName = canvasState.isVisibleCameraCanvas ? "Control Camera" : "Show Detected Areas";
-//     const btnControlZonesName = canvasState.isCreatePolygon ? "Draw detected areas " : "Create control zones";
-//
-//     const confirmButtons = () => {
-//         return (
-//             <Grid container spacing={1}>
-//                 <Grid item xs={6} sm={6} md={6} lg={6} xl={6} className={`${classes.confirmItem} save`}>
-//                     <Button className={`${classes.confirmButton} save`} variant="contained" color={"primary"}
-//                             onClick={saveNewPolygonsData}>
-//                         Save
-//                     </Button>
-//                 </Grid>
-//                 <Grid item xs={6} sm={6} md={6} lg={6} xl={6} className={`${classes.confirmItem} cancel`}>
-//                     <Button className={`${classes.confirmButton} cancel`} variant="contained" color={"secondary"}
-//                             onClick={deleteNewPolygonsData}>
-//                         Cancel
-//                     </Button>
-//                 </Grid>
-//             </Grid>
-//         )
-//     }
-//
-//     return (
-//         <Grid container className={classes.container} spacing={1}>
-//             <Grid item>
-//                 <Button variant="contained" color="primary" onClick={canvasState.reVisibleCameraCanvas}>
-//                     {btnControlName}
-//                 </Button>
-//             </Grid>
-//             <Grid item>
-//                 <Button variant="contained" color="secondary" onClick={createChangePolygon}>
-//                     {btnControlZonesName}
-//                 </Button>
-//             </Grid>
-//             <Grid item>
-//                 <ZoneActions/>
-//             </Grid>
-//             <Grid item style={{flexGrow: 1}}>
-//                 {action}
-//             </Grid>
-//             <Grid item>
-//                 {confirmButtons()}
-//             </Grid>
-//         </Grid>
-//     )
-// })
+const OtherCameras = observer(() => {
+	const classes = useOtherCamerasStyles();
+	// const [eventSource] = useState(new EventSource('http://192.168.250.183:5001/sse'));
+	// useEffect(() => {
+	// 	eventSource.onmessage = ({data}) => {
+	// 		console.log(`New message: ${data}`)
+	// 	}
+	// }, [eventSource?.onmessage]);
+
+	const {port, camera} = ports.selectedObjects;
+
+	const [cameras, setCameras] = useState([])
+
+	useEffect(() => {
+		if (!!camera.id === false) return;
+
+		setCameras(port.cameras.filter(({id}) => id !== camera.id)
+			.map(camera => {
+				return (
+					<div key={`Other--Cameras--${camera.id}`} className={classes.otherCameras}>
+						{camera.description}
+						<iframe
+							src={camera.link}
+							width={"100%"} height={"100%"}
+							title="Other cameras"
+							frameBorder="0"
+							allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+							allowFullScreen
+						/>
+					</div>
+				)
+			}))
+	}, [port, camera]);
+
+	if (!Number.isInteger(camera.id)) {
+		ports.setSelectedCamera(ports.data[0].cameras[0].id);
+	}
+
+	// const cameras = port.cameras.filter(({id}) => id !== camera.id)
+
+	return (
+		<div>
+			{cameras}
+		</div>
+
+	)
+})
 
 export const Test = observer(() => {
-    const classes = useStyles();
-    const gridTest = () => {
-        return (
-            <div className={classes.container}>
-                <div className={`${classes.item01} one`}>First</div>
-                <div className={`${classes.item01} two`}>Second</div>
-                <div className={`${classes.item01} three`}>Third</div>
-                <div className={`${classes.item01} four`}>Fourth</div>
-                <div className={`${classes.item01} five`}>Fifth</div>
-                <div className={`${classes.item01} six`}>Sixth</div>
-                <div className={`${classes.item01} seven`}>Seventh</div>
+	const classes = useStyles();
+	const gridTest = () => {
+		return (
+			<div className={classes.container}>
+				<div className={`${classes.item01} one`}>First</div>
+				<div className={`${classes.item01} two`}>Second</div>
+				<div className={`${classes.item01} three`}>Third</div>
+				<div className={`${classes.item01} four`}>Fourth</div>
+				<div className={`${classes.item01} five`}>Fifth</div>
+				<div className={`${classes.item01} six`}>Sixth</div>
+				<div className={`${classes.item01} seven`}>Seventh</div>
 
-                <div className={`${classes.item02}`}>1</div>
-                <div className={`${classes.item02}`}>2</div>
-                <div className={`${classes.item02}`}>3</div>
+				<div className={`${classes.item02}`}>1</div>
+				<div className={`${classes.item02}`}>2</div>
+				<div className={`${classes.item02}`}>3</div>
 
-                <div className={`${classes.item03} one`}>1</div>
-                <div className={`${classes.item03} two`}>2</div>
-                <div className={`${classes.item03} three`}>3</div>
-                <div className={`${classes.item03} four`}>4</div>
+				<div className={`${classes.item03} one`}>1</div>
+				<div className={`${classes.item03} two`}>2</div>
+				<div className={`${classes.item03} three`}>3</div>
+				<div className={`${classes.item03} four`}>4</div>
 
-                <div className={`${classes.item03} five`}>5</div>
-                <div className={`${classes.item03} six`}>6</div>
+				<div className={`${classes.item03} five`}>5</div>
+				<div className={`${classes.item03} six`}>6</div>
 
-                {/*<Grid container spacing={3}>*/}
-                {/*	<Grid item xs={12} sm={6} md={3}>*/}
-                {/*		<div className={`${classes.item03}`}>1</div>*/}
-                {/*	</Grid>*/}
-                {/*	<Grid item xs={12} sm={6} md={3}>*/}
-                {/*		<div className={`${classes.item03}`}>2</div>*/}
-                {/*	</Grid>*/}
-                {/*	<Grid item xs={12} sm={6} md={3}>*/}
-                {/*		<div className={`${classes.item03}`}>3</div>*/}
-                {/*	</Grid>*/}
-                {/*	<Grid item xs={12} sm={6} md={3}>*/}
-                {/*		<div className={`${classes.item03}`}>4</div>*/}
-                {/*	</Grid>*/}
+				{/*<Grid container spacing={3}>*/}
+				{/*	<Grid item xs={12} sm={6} md={3}>*/}
+				{/*		<div className={`${classes.item03}`}>1</div>*/}
+				{/*	</Grid>*/}
+				{/*	<Grid item xs={12} sm={6} md={3}>*/}
+				{/*		<div className={`${classes.item03}`}>2</div>*/}
+				{/*	</Grid>*/}
+				{/*	<Grid item xs={12} sm={6} md={3}>*/}
+				{/*		<div className={`${classes.item03}`}>3</div>*/}
+				{/*	</Grid>*/}
+				{/*	<Grid item xs={12} sm={6} md={3}>*/}
+				{/*		<div className={`${classes.item03}`}>4</div>*/}
+				{/*	</Grid>*/}
 
-                {/*	<Grid item xs={12} sm={6} md={8}>*/}
-                {/*		<div className={`${classes.item03} five`}>5</div>*/}
-                {/*	</Grid>*/}
+				{/*	<Grid item xs={12} sm={6} md={8}>*/}
+				{/*		<div className={`${classes.item03} five`}>5</div>*/}
+				{/*	</Grid>*/}
 
-                {/*	<Grid item xs={12} sm={6} md={4}>*/}
-                {/*		<div className={`${classes.item03}`}>6</div>*/}
-                {/*	</Grid>*/}
+				{/*	<Grid item xs={12} sm={6} md={4}>*/}
+				{/*		<div className={`${classes.item03}`}>6</div>*/}
+				{/*	</Grid>*/}
 
-                {/*	<Grid item xs={12} sm={6} md={8}>*/}
-                {/*		<div className={`${classes.item03}`}>7</div>*/}
-                {/*	</Grid>*/}
-                {/*	<Grid item xs={12} sm={6} md={4}>*/}
-                {/*		<div className={`${classes.item03} eight`}>8</div>*/}
-                {/*	</Grid>*/}
+				{/*	<Grid item xs={12} sm={6} md={8}>*/}
+				{/*		<div className={`${classes.item03}`}>7</div>*/}
+				{/*	</Grid>*/}
+				{/*	<Grid item xs={12} sm={6} md={4}>*/}
+				{/*		<div className={`${classes.item03} eight`}>8</div>*/}
+				{/*	</Grid>*/}
 
-                {/*	<Grid item xs={12} sm={6} md={4}>*/}
-                {/*		<div className={`${classes.item03}`}>9</div>*/}
-                {/*	</Grid>*/}
-                {/*	<Grid item xs={12} sm={6} md={8}>*/}
-                {/*		<div className={`${classes.item03}`}>10</div>*/}
-                {/*	</Grid>*/}
-                {/*</Grid>*/}
-            </div>
-        )
-    }
-    const mainPage = () => {
-        return (
-            <div className={classes.main}>
-                <div className={classes.leftHalf}>
-                    <Grid className={classes.gridContainer} container justify={"center"}>
-                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <div className={`${classes.gridItem} title`}>ViewFinder</div>
-                        </Grid>
+				{/*	<Grid item xs={12} sm={6} md={4}>*/}
+				{/*		<div className={`${classes.item03}`}>9</div>*/}
+				{/*	</Grid>*/}
+				{/*	<Grid item xs={12} sm={6} md={8}>*/}
+				{/*		<div className={`${classes.item03}`}>10</div>*/}
+				{/*	</Grid>*/}
+				{/*</Grid>*/}
+			</div>
+		)
+	}
+	const mainPage = () => {
+		return (
+			<div className={classes.main}>
+				<div className={classes.leftHalf}>
+					<Grid className={classes.gridContainer} container justify={"center"}>
+						<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+							<div className={`${classes.gridItem} title`}>ViewFinder</div>
+						</Grid>
 
-                        <Grid item xs={4} sm={3} md={3} lg={3} xl={3}>
-                            <Button
-                                className={`${classes.gridItem} demo`}
-                                variant="outlined"
-                                color="secondary"
-                                type={"submit"}
-                                // disabled={isSubmitting}
-                            >
-                                DEMO
-                            </Button>
-                        </Grid>
+						<Grid item xs={4} sm={3} md={3} lg={3} xl={3}>
+							<Button
+								className={`${classes.gridItem} demo`}
+								variant="outlined"
+								color="secondary"
+								type={"submit"}
+								// disabled={isSubmitting}
+							>
+								DEMO
+							</Button>
+						</Grid>
 
-                        <Grid item xs={4} sm={3} md={3} lg={3} xl={3}>
-                            <Button
-                                className={`${classes.gridItem} login`}
-                                // variant="contained"
-                                variant="outlined"
-                                color="primary"
-                            >
-                                Log in
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </div>
-            </div>
-        )
-    }
-    return (
-        <div>
-            <DrawControl/>
-        </div>
-    )
+						<Grid item xs={4} sm={3} md={3} lg={3} xl={3}>
+							<Button
+								className={`${classes.gridItem} login`}
+								// variant="contained"
+								variant="outlined"
+								color="primary"
+							>
+								Log in
+							</Button>
+						</Grid>
+					</Grid>
+				</div>
+			</div>
+		)
+	}
+	return (
+		<div>
+			<OtherCameras/>
+		</div>
+	)
 })

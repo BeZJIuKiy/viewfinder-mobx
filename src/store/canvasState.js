@@ -76,9 +76,6 @@ class CanvasState {
 
     saveDataTest = {};
 
-    // test = new Map();
-
-
     constructor() {
         // makeAutoObservable(this);
 
@@ -122,11 +119,9 @@ class CanvasState {
         this.canvasReSize.newSize.height = height;
 
 
-
         this.canvasReSize.coefficient.width = this.canvasReSize.newSize.width / this.canvasReSize.oldSize.width;
         this.canvasReSize.coefficient.height = this.canvasReSize.newSize.height / this.canvasReSize.oldSize.height;
 
-        // console.log(this.saveDataTest)
         for (const id in this.saveDataTest) {
             this.saveDataTest[id].forEach((polygon) => {
                 const points = polygon.getPoints();

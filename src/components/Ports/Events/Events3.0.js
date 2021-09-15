@@ -16,6 +16,8 @@ import header from "../../../store/header";
 const useStyles = makeStyles((theme) => ({
     event: {
         flexGrow: 1,
+        // flexShrink: 1,
+        height: "100%",
 
         color: "#ddd",
         fontWeight: 500,
@@ -30,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
         position: "relative",
     },
     gridContainer: {
+        height: "100%",
+
         flexGrow: 1,
         margin: 0,
     },
@@ -41,6 +45,14 @@ const useStyles = makeStyles((theme) => ({
         "&.controlPanel": {
             marginTop: theme.spacing(-3),
             marginLeft: 12,
+        },
+
+        "&.thirdPart": {
+            overflowY: "auto",
+        },
+
+        "&.fourthPart": {
+            overflowY: "auto",
         },
     },
 
@@ -60,9 +72,14 @@ const useStyles = makeStyles((theme) => ({
         position: "relative",
     },
     correctingPosition: {
+        height: "100%",
+
         paddingTop: 92,
         marginRight: 24,
         marginLeft: -24,
+    },
+    container: {
+        height: "100%",
     },
 }));
 
@@ -88,7 +105,7 @@ const SecondPart = () => {
     const classes = useStyles();
 
     return (
-        <Grid className={`${classes.secondGridContainer} camera`} container spacing={3}>
+        <Grid className={`${classes.secondGridContainer}`} container spacing={3}>
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                 <div className={`${classes.types}`}>
                     <Canvas/>
@@ -101,14 +118,14 @@ const ThirdPart = () => {
     const classes = useStyles();
 
     return (
-        <Grid className={`${classes.secondGridContainer}`} container spacing={3} style={{overflowY: "auto"}}>
+        <Grid className={`${classes.secondGridContainer} thirdPart`} container spacing={3}>
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                 <div className={`${classes.types} cameras`}>img</div>
             </Grid>
         </Grid>
     )
 }
-const ForthPart = () => {
+const FourthPart = () => {
     const classes = useStyles();
 
     return (
@@ -152,7 +169,7 @@ export const Events30 = () => {
     return (
         <div className={`${classes.event}`}>
             <Header/>
-            <Container maxWidth="xl">
+            <Container maxWidth="xl" className={classes.container}>
                 <div className={classes.correctingPosition}>
                     <Grid className={classes.gridContainer} container spacing={3} justify={"center"}>
                         <Hidden smDown>
@@ -173,7 +190,7 @@ export const Events30 = () => {
 
                         <Hidden smDown>
                             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                                <ForthPart/>
+                                <FourthPart/>
                             </Grid>
                         </Hidden>
 
