@@ -90,53 +90,47 @@ export const Canvas = observer(() => {
     const displayResolution = (result) => {
         switch (Number(result.toFixed(3))) {
             case 1.25: {
-                setWidth(800);
-                setHeight(640);
-                canvasState.pointCoefficient = canvasState.size.width / 800;
+                setRatio({width: 5, height: 4});
+                // setWidth(800);
+                // setHeight(640);
+                // canvasState.pointCoefficient = canvasState.size.width / 800;
                 console.log('1.25');
                 break;
             }
             case 1.333: {
-                setWidth(800);
-                setHeight(600);
-                canvasState.pointCoefficient = canvasState.size.width / 800;
+                setRatio({width: 4, height: 3});
+                // setWidth(800);
+                // setHeight(600);
+                // canvasState.pointCoefficient = canvasState.size.width / 800;
                 console.log('1.333');
                 break;
             }
             case 1.5: {
-                setWidth(720);
-                setHeight(480);
-                canvasState.pointCoefficient = canvasState.size.width / 720;
+                setRatio({width: 3, height: 2});
+                // setWidth(720);
+                // setHeight(480);
+                // canvasState.pointCoefficient = canvasState.size.width / 720;
                 console.log('1.5');
                 break;
             }
             case 1.6: {
-                setWidth(800);
-                setHeight(500);
-                canvasState.pointCoefficient = canvasState.size.width / 800;
+                setRatio({width: 16, height: 10});
+                // setWidth(800);
+                // setHeight(500);
+                // canvasState.pointCoefficient = canvasState.size.width / 800;
                 console.log('1.6');
                 break;
             }
             case 1.667: {
-                setWidth(800);
-                setHeight(480);
-                canvasState.pointCoefficient = canvasState.size.width / 800;
+                setRatio({width: 5, height: 3});
+                // setWidth(800);
+                // setHeight(480);
+                // canvasState.pointCoefficient = canvasState.size.width / 800;
                 console.log('1.667');
                 break;
             }
             case 1.778: {
-                // 2160p: 3840 x 2160
-                // 1440p: 2560 x 1440
-                // 1080p: 1920 x 1080
-                // 720p: 1280 x 720
-                // 480p: 854 x 480
-                // 360p: 640 x 360
-                // 240p: 426 x 240
-
-                setRatio({
-                    width: 16,
-                    height: 9
-                });
+                setRatio({width: 16, height: 9});
 
                 // setWidth(800);
                 // setHeight(450);
@@ -145,33 +139,9 @@ export const Canvas = observer(() => {
                 // console.log('1.778');
                 break;
             }
+            default: setRatio({width: 1, height: 1});
         }
     }
-
-    useEffect(() => {
-        // console.log(ratio);
-        // console.log(iframeRef.current?.scrollWidth, iframeRef.current?.scrollHeight);
-
-        const coefficient = iframeRef.current?.scrollWidth / ratio.width;
-        const w = coefficient * ratio.width;
-        const h = coefficient * ratio.height;
-
-        // canvasState.setPointCoefficient((canvasState.size.width / w).toFixed(3))
-        canvasState.setPointCoefficient(canvasState.size.width / w)
-
-        setWidth(w);
-        setHeight(h);
-
-        canvasState.setCanvasReSize(w, h);
-        // console.log(canvasState.canvasReSize.coefficient);
-
-        // console.log(w, h, (w / h).toFixed(3), canvasState.pointCoefficient);
-
-    }, [iframeRef.current?.offsetWidth, windowSize.width, ratio]);
-
-    // useEffect(() => {
-    //     console.log(11111);
-    // }, [canvasState.canvasReSize.newSize.width]);
 
     useEffect(() => {
         canvasState.setCanvas(canvasRef.current);
@@ -187,6 +157,23 @@ export const Canvas = observer(() => {
         new Polygons(canvasRef.current, "", params.id);
         // new Polygons(canvasRef.current, socket, params.id);
     }, [width, ports.selectedObjects.camera]);
+    useEffect(() => {
+        const isSide = iframeRef.current?.offsetHeight < (iframeRef.current?.scrollWidth / ratio.width * ratio.height);
+        const widthSide = iframeRef.current?.scrollWidth / ratio.width;
+        const heightSide = iframeRef.current?.scrollHeight / ratio.height;
+        reSizeCanvas(isSide ? heightSide : widthSide);
+    }, [iframeRef.current?.offsetWidth, iframeRef.current?.offsetHeight, windowSize.width, windowSize.height, ratio]);
+
+    const reSizeCanvas = (coefficient) => {
+        const width = coefficient * ratio.width;
+        const height = coefficient * ratio.height;
+
+        setWidth(width);
+        setHeight(height);
+
+        canvasState.setPointCoefficient(canvasState.size.width / width);
+        canvasState.setCanvasReSize(width, height);
+    };
 
     return (
         <div className={classes.main}>
