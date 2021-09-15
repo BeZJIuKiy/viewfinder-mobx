@@ -23,6 +23,7 @@ import {SetTypeAction} from "./Events/ZoneActions/SetTypeAction";
 import {ConfirmDeletePolygon} from "./Events/ZoneActions/ConfirmDeletePolygon";
 import {DrawControl} from "./Events/CameraControlPanel/DrawControl";
 import ports from "../../store/ports";
+import {OtherCameras} from "./Events/OtherCameras";
 
 const useStyles = makeStyles((theme) => ({
 	test: {
@@ -324,16 +325,6 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 }));
-const useOtherCamerasStyles = makeStyles((theme) => ({
-	otherCameras: {
-		display: "flex",
-		flexDirection: "column",
-		alignItems: "center",
-		// justifyContent: "center",
-		// textAlign: "center",
-		flexGrow: 1,
-	}
-}))
 // const useControlCameraButtonStyles = makeStyles((theme) => ({
 //     controlCameraButton: {
 //         display: "flex",
@@ -604,53 +595,61 @@ const useOtherCamerasStyles = makeStyles((theme) => ({
 //     )
 // })
 
-const OtherCameras = observer(() => {
-	const classes = useOtherCamerasStyles();
-	// const [eventSource] = useState(new EventSource('http://192.168.250.183:5001/sse'));
-	// useEffect(() => {
-	// 	eventSource.onmessage = ({data}) => {
-	// 		console.log(`New message: ${data}`)
-	// 	}
-	// }, [eventSource?.onmessage]);
-
-	const {port, camera} = ports.selectedObjects;
-
-	const [cameras, setCameras] = useState([])
-
-	useEffect(() => {
-		if (!!camera.id === false) return;
-
-		setCameras(port.cameras.filter(({id}) => id !== camera.id)
-			.map(camera => {
-				return (
-					<div key={`Other--Cameras--${camera.id}`} className={classes.otherCameras}>
-						{camera.description}
-						<iframe
-							src={camera.link}
-							width={"100%"} height={"100%"}
-							title="Other cameras"
-							frameBorder="0"
-							allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-							allowFullScreen
-						/>
-					</div>
-				)
-			}))
-	}, [port, camera]);
-
-	if (!Number.isInteger(camera.id)) {
-		ports.setSelectedCamera(ports.data[0].cameras[0].id);
-	}
-
-	// const cameras = port.cameras.filter(({id}) => id !== camera.id)
-
-	return (
-		<div>
-			{cameras}
-		</div>
-
-	)
-})
+// const useOtherCamerasStyles = makeStyles((theme) => ({
+// 	otherCameras: {
+// 		display: "flex",
+// 		flexDirection: "column",
+// 		alignItems: "center",
+// 		flexGrow: 1,
+// 	}
+// }))
+// const OtherCameras = observer(() => {
+// 	const classes = useOtherCamerasStyles();
+// 	// const [eventSource] = useState(new EventSource('http://192.168.250.183:5001/sse'));
+// 	// useEffect(() => {
+// 	// 	eventSource.onmessage = ({data}) => {
+// 	// 		console.log(`New message: ${data}`)
+// 	// 	}
+// 	// }, [eventSource?.onmessage]);
+//
+// 	const {port, camera} = ports.selectedObjects;
+//
+// 	const [cameras, setCameras] = useState([])
+//
+// 	useEffect(() => {
+// 		if (!!camera.id === false) return;
+//
+// 		setCameras(port.cameras.filter(({id}) => id !== camera.id)
+// 			.map(camera => {
+// 				return (
+// 					<div key={`Other--Cameras--${camera.id}`} className={classes.otherCameras}>
+// 						{camera.description}
+// 						<iframe
+// 							src={camera.link}
+// 							width={"100%"} height={"100%"}
+// 							title="Other cameras"
+// 							frameBorder="0"
+// 							allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+// 							allowFullScreen
+// 						/>
+// 					</div>
+// 				)
+// 			}))
+// 	}, [port, camera]);
+//
+// 	if (!Number.isInteger(camera.id)) {
+// 		ports.setSelectedCamera(ports.data[0].cameras[0].id);
+// 	}
+//
+// 	// const cameras = port.cameras.filter(({id}) => id !== camera.id)
+//
+// 	return (
+// 		<div>
+// 			{cameras}
+// 		</div>
+//
+// 	)
+// })
 
 export const Test = observer(() => {
 	const classes = useStyles();

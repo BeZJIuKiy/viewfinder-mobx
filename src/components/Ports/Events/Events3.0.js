@@ -12,6 +12,7 @@ import {CameraControlPanel} from "./CameraControlPanel/CameraControlPanel";
 import {DrawControl} from "./CameraControlPanel/DrawControl";
 import ports from "../../../store/ports";
 import header from "../../../store/header";
+import {OtherCameras} from "./OtherCameras";
 
 const useStyles = makeStyles((theme) => ({
     event: {
@@ -48,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
         },
 
         "&.thirdPart": {
-            overflowY: "auto",
+            // maxHeight: 450,
+            // overflowY: "auto",
         },
 
         "&.fourthPart": {
@@ -120,7 +122,11 @@ const ThirdPart = () => {
     return (
         <Grid className={`${classes.secondGridContainer} thirdPart`} container spacing={3}>
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                <div className={`${classes.types} cameras`}>img</div>
+                {/*<div className={`${classes.types} cameras`}>img</div>*/}
+                <div className={`${classes.types} cameras`}>
+                    <OtherCameras/>
+                </div>
+
             </Grid>
         </Grid>
     )
