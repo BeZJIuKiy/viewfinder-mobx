@@ -7,6 +7,7 @@ import ports from "../../../store/ports";
 import {makeStyles} from "@material-ui/core/styles";
 import {CameraControlPanel} from "./CameraControlPanel/CameraControlPanel";
 import {useWindowDimensions} from "../../../useHooks/useWindowDimensions";
+import eventsState from "../../../store/eventsState";
 
 const useStyles = makeStyles((theme) => {
     const {camera} = ports.selectedObjects
@@ -82,15 +83,11 @@ export const Canvas = observer(() => {
 
     const windowSize = useWindowDimensions();
 
-    // const [width, setWidth] = useState(canvasState.size.width);
-    // const [height, setHeight] = useState(canvasState.size.height);
-    // const [width, setWidth] = useState(16);
-    // const [height, setHeight] = useState(9);
-
     const [width, setWidth] = useState(1);
     const [height, setHeight] = useState(1);
-
     const [ratio, setRatio] = useState({width: 1, height: 1});
+
+    const {isShowControlCameraMove, isVisibleCameraCanvas, isCreatePolygon, zoneAction} = eventsState;
 
     const displayResolution = (result) => {
         switch (Number(result.toFixed(3))) {
@@ -196,19 +193,17 @@ export const Canvas = observer(() => {
                 {/*    allowFullScreen*/}
                 {/*/>*/}
 
-                {/*<canvas id={"canvasTest"} style={{width: 800, height: 450}}/>*/}
-
                 <div className={classes.forPreview} ref={iframeRef}>
                     <img style={{width: width, height: height}} src={ports.selectedObjects.camera.previewLink} alt={"jpg stream"} />
                     {/*<canvas id={"canvasTest"} style={{width: width, height: height}}/>*/}
                 </div>
 
                 <canvas
-                    className={`${classes.canvas} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}
+                    className={`${classes.canvas} ${isVisibleCameraCanvas ? "show" : "hide"}`}
                     ref={canvasRef} width={width} height={height}
                 />
 
-                <span className={`${classes.cameraControlPanel} ${canvasState.isVisibleCameraCanvas ? "hide" : "show"}`}><CameraControlPanel/></span>
+                <span className={`${classes.cameraControlPanel} ${isVisibleCameraCanvas ? "hide" : "show"}`}><CameraControlPanel/></span>
             </div>
         </div>
     )

@@ -2,6 +2,7 @@
 import mIcon_ports from '../components/Ports/Drawer/images/harborIcon02.png';
 import mIcon_cameras from '../components/Ports/Drawer/images/camIcon.png';
 import previewImg from '../img/preView̆.jpg';
+import previewImg2 from '../img/preView̆02.jpg';
 
 // Boath
 import boat1_03 from '../components/Ports/Events/images/b1-03.jpg'
@@ -72,12 +73,12 @@ class ports {
 					description: 'Club Parking STATIC',
 					coordinates: [59.977915, 30.240934],
 					zoom: 15,
-					link: 'https://rtsp.me/embed/ayAby5ia',
-					// link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
+					// link: 'https://rtsp.me/embed/ayAby5ia',
+					link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
 					// link: "http://192.168.250.183:63342/vf-ptz/rtsp/client.html?_ijt=3bma91crvde9ai0smaj26qmv3q",
 					// previewLink: "http://87.244.33.186:8001/bgr",
-					// previewLink: "http://192.168.250.210:8000/bgr",
-					previewLink: "http://192.168.240.121:8000/bgr",
+					previewLink: "http://192.168.250.210:8000/bgr",
+					// previewLink: previewImg,
 					// link: 'http://87.244.33.186:8001/bgr',
 
 					events: [
@@ -140,8 +141,9 @@ class ports {
 					// link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
 					// link: "http://192.168.250.183:63342/vf-ptz/rtsp/client.html?_ijt=3bma91crvde9ai0smaj26qmv3q",
 					// previewLink: "http://87.244.33.186:8001/bgr",
-					previewLink: "http://192.168.250.210:8000/bgr",
-					// previewLink: "http://192.168.240.121:8000/bgr",
+					// previewLink: previewImg2,
+					// previewLink: "https://rtsp.me/embed/hitQb4bf",
+					previewLink: "http://192.168.240.121:8000/bgr",
 					// link: 'http://87.244.33.186:8081/bgr',
 					// link: 'http://192.168.250.210:8000/bgr',
 

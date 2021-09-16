@@ -7,6 +7,7 @@ import ZoomOutIcon from "@material-ui/icons/ZoomOut";
 import React, {useState} from "react";
 import {IconButton} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import connects from "../../../../store/connects";
 
 const useStyles = makeStyles((theme) => ({
     controlCameraButton: {
@@ -165,22 +166,30 @@ export const CameraControlPanel = observer(() => {
 
     // const PORT = 3000;
     // const PORT = 8080;
-    const PORT = 7000;
-    const HOST = 'localhost';
     // const HOST = '192.168.250.183';
 
-    const socket = new WebSocket(`ws://${HOST}:${PORT}`);
-    socket.onopen = () => {
+    // const PORT = 7000;
+    // const HOST = 'localhost';
+    //
+    // const socket = new WebSocket(`ws://${HOST}:${PORT}`);
+    // socket.onopen = () => {
+    //     console.log("Connect");
+    // }
+    // socket.onmessage = (message) => {
+    //     console.log(message.data)
+    // }
+
+    connects.wsCameraControl.onopen = () => {
         console.log("Connect");
     }
-    socket.onmessage = (message) => {
+    connects.wsCameraControl.onmessage = (message) => {
         console.log(message.data)
     }
 
     const sendMsg = (command) => {
         const message = Buffer.from(command, 'utf8')
-        // console.log(`Послал: ${command} (socket - off)`);
-        socket.send(message);
+        // socket.send(message);
+        connects.wsCameraControl.send(message);
     }
     const handleClickDown = (command) => {
         setIntervalId(setInterval(() => sendMsg(command), 50));

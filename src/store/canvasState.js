@@ -1,6 +1,5 @@
 import {makeAutoObservable} from "mobx";
 import {makePersistable} from "mobx-persist-store";
-import ports from "./ports";
 
 class CanvasState {
     canvas = null;
@@ -10,9 +9,9 @@ class CanvasState {
     userName = "alex";
 
     /* To EVENTS */
-    isVisibleCameraCanvas = false;
-    isCreatePolygon = false;
-    zoneAction = "";
+    // isVisibleCameraCanvas = false;
+    // isCreatePolygon = false;
+    // zoneAction = "";
 
     tempPolygons = [];
 
@@ -110,8 +109,6 @@ class CanvasState {
     }
 
     setCanvasReSize = (width, height) => {
-        console.log(this.canvasReSize)
-
         this.canvasReSize.oldSize.width = this.canvasReSize.newSize.width;
         this.canvasReSize.oldSize.height = this.canvasReSize.newSize.height;
 
@@ -142,23 +139,23 @@ class CanvasState {
 
 
     /* To EVENTS */
-    setVisibleCameraCanvas = (isVisible) => {
-        this.isVisibleCameraCanvas = isVisible;
-    }
-    reVisibleCameraCanvas = () => {
-        this.isVisibleCameraCanvas = !this.isVisibleCameraCanvas;
-    }
-
-    setCreatePolygon = (isVisible) => {
-        this.isCreatePolygon = isVisible;
-    }
-    reCreatePolygon = () => {
-        this.isCreatePolygon = !this.isCreatePolygon;
-    }
-
-    setZoneAction = (action) => {
-        this.zoneAction = action;
-    }
+    // setVisibleCameraCanvas = (isVisible) => {
+    //     this.isVisibleCameraCanvas = isVisible;
+    // }
+    // reVisibleCameraCanvas = () => {
+    //     this.isVisibleCameraCanvas = !this.isVisibleCameraCanvas;
+    // }
+    //
+    // setCreatePolygon = (isVisible) => {
+    //     this.isCreatePolygon = isVisible;
+    // }
+    // reCreatePolygon = () => {
+    //     this.isCreatePolygon = !this.isCreatePolygon;
+    // }
+    //
+    // setZoneAction = (action) => {
+    //     this.zoneAction = action;
+    // }
 
 
     setSessionId(id) {
@@ -193,16 +190,10 @@ class CanvasState {
 
     addPolygon(camId, polygon) {
         this.saveDataTest[camId].push(polygon);
-
-        // const polygons = this.test.get(camId);
-        // polygons.push(polygon);
     }
 
     changePolygon(camId, index, polygon) {
         this.saveDataTest[camId].splice(index, 1, polygon);
-
-        // const polygons = this.test.get(camId);
-        // polygons.splice(index, 1, polygon);
     }
 
     setPolygonSelect = (isSelect) => {

@@ -14,6 +14,7 @@ import header from "../../../../store/header";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import eventsState from "../../../../store/eventsState";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -28,7 +29,15 @@ const useStyles = makeStyles((theme) => ({
 
 		// textAlign: "center",
 	},
-	item: {},
+	item: {
+		"&.show": {
+			display: "flex",
+		},
+
+		"&.hide": {
+			display: "none",
+		},
+	},
 
 	mainControlItems: {
 		"&.show": {
@@ -63,49 +72,43 @@ const useStyles = makeStyles((theme) => ({
 export const DrawControl = observer(() => {
 	const classes = useStyles();
 
-	const {
-		selectedObjects: {
-			port, camera,
-		},
-	} = ports;
+	const {port, camera} = ports.selectedObjects;
+	const {isShowControlCameraMove, isVisibleCameraCanvas, isCreatePolygon, zoneAction} = eventsState;
 
 	const [action, setAction] = useState(<div/>);
 
 	useEffect(() => {
 		new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
-	}, [camera, canvasState.isCreatePolygon, canvasState.isVisibleCameraCanvas]);
+	}, [camera, isCreatePolygon, isVisibleCameraCanvas]);
 	useEffect(() => {
-		switch (canvasState.zoneAction) {
+		switch (eventsState.zoneAction) {
 			case SET_NAME: {
 				console.log("SET_NAME");
 				setAction(
-					<div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+					<div className={`${classes.mainControlItems} ${isCreatePolygon ? "show" : "hide"}`}>
 
 					</div>
 				);
 				break;
 			}
-
 			case SET_TYPE: {
 				console.log("SET_TYPE");
 				setAction(
-					<div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+					<div className={`${classes.mainControlItems} ${isCreatePolygon ? "show" : "hide"}`}>
 						<SetTypeAction/>
 					</div>
 				);
 				break;
 			}
-
 			case SET_COLOR: {
 				console.log("SET_COLOR");
 				setAction(
-					<div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+					<div className={`${classes.mainControlItems} ${isCreatePolygon ? "show" : "hide"}`}>
 
 					</div>
 				);
 				break;
 			}
-
 			case DELETE: {
 				console.log("DELETE");
 				setAction(
@@ -118,10 +121,10 @@ export const DrawControl = observer(() => {
 			}
 
 		}
-	}, [canvasState.zoneAction, canvasState.isCreatePolygon]);
+	}, [zoneAction, isCreatePolygon]);
 
 	const createChangePolygon = () => {
-		canvasState.setCreatePolygon(true);
+		eventsState.setCreatePolygon(true);
 		canvasState.tempPolygons = canvasState.saveDataTest[camera.id];
 
 		if (canvasState.tempPolygons.length) {
@@ -140,19 +143,39 @@ export const DrawControl = observer(() => {
 		}
 		new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
 	}
+	const controlMovePanelCamera = () => {
+		eventsState.reShowControlCameraMove();
+	}
+	const confirmButtons = () => {
+		return (
+			<Grid container spacing={1}>
+				<Grid item xs={6} sm={6} md={6} lg={6} xl={6} className={`${classes.confirmItem} save`}>
+					<Button className={`${classes.confirmButton} save`} variant="contained" color={"primary"}
+					        onClick={saveNewPolygonsData}>
+						Save
+					</Button>
+				</Grid>
+				<Grid item xs={6} sm={6} md={6} lg={6} xl={6} className={`${classes.confirmItem} cancel`}>
+					<Button className={`${classes.confirmButton} cancel`} variant="contained" color={"secondary"}
+					        onClick={deleteNewPolygonsData}>
+						Cancel
+					</Button>
+				</Grid>
+			</Grid>
+		)
+	}
+
 	const saveNewPolygonsData = () => {
 		// fetchPostPolygon(canvasState.tempPolygons[camera.id], "http://192.168.250.183:5001/api/zones");
 		postPoints();
-		// console.log(canvasState.saveDataTest)
-		canvasState.setCreatePolygon(false);
-		canvasState.setZoneAction("");
+		eventsState.setCreatePolygon(false);
+		eventsState.setZoneAction("");
 	}
 	const deleteNewPolygonsData = () => {
 		canvasState.saveDataTest[camera.id] = canvasState.tempPolygons;
-		canvasState.setCreatePolygon(false);
-		canvasState.setZoneAction("");
+		eventsState.setCreatePolygon(false);
+		eventsState.setZoneAction("");
 	}
-
 
 	const getPoints = (url) => {
 		try {
@@ -196,7 +219,6 @@ export const DrawControl = observer(() => {
 		}
 
 		const sendData = {
-			// port_id: port.id,
 			// camera_id: camera.id,
 			camera_id: 2,
 			polygons,
@@ -213,10 +235,7 @@ export const DrawControl = observer(() => {
 				mode: "cors", // no-cors, *cors, same-origin
 				cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
 				credentials: "same-origin", // include, *same-origin, omit
-				headers: {
-					"Content-Type": "application/json"
-					// 'Content-Type': 'application/x-www-form-urlencoded',
-				},
+				headers: {"Content-Type": "application/json"},
 				redirect: "follow", // manual, *follow, error
 				referrerPolicy: "no-referrer", // no-referrer, *client
 				body: JSON.stringify(sendData), // body data type must match "Content-Type" header
@@ -226,43 +245,32 @@ export const DrawControl = observer(() => {
 		}
 	}
 
-	const btnControlName = canvasState.isVisibleCameraCanvas ? "Control Camera" : "Show Detected Areas";
-	const btnControlZonesName = canvasState.isCreatePolygon ? "Draw detected areas " : "Create control zones";
-
-	const confirmButtons = () => {
-		return (
-			<Grid container spacing={1}>
-				<Grid item xs={6} sm={6} md={6} lg={6} xl={6} className={`${classes.confirmItem} save`}>
-					<Button className={`${classes.confirmButton} save`} variant="contained" color={"primary"}
-					        onClick={saveNewPolygonsData}>
-						Save
-					</Button>
-				</Grid>
-				<Grid item xs={6} sm={6} md={6} lg={6} xl={6} className={`${classes.confirmItem} cancel`}>
-					<Button className={`${classes.confirmButton} cancel`} variant="contained" color={"secondary"}
-					        onClick={deleteNewPolygonsData}>
-						Cancel
-					</Button>
-				</Grid>
-			</Grid>
-		)
-	}
+	const btnControlName = isVisibleCameraCanvas ? "Control Camera" : "Show Detected Areas";
+	const btnControlZonesName = isCreatePolygon ? "Draw detected areas " : "Create control zones";
+	const controlButtons = isShowControlCameraMove ? "Hide control camera move" : "Show control camera move";
 
 	return (
 		<Grid container className={classes.container} spacing={1}>
-			<Grid item>
+			<Grid item className={`${classes.item} ${!isCreatePolygon && !isShowControlCameraMove ? "show" : "hide"}`}>
 				<Button
-					className={`${classes.mainControlItems} ${!canvasState.isCreatePolygon ? "show" : "hide"}`}
 					variant="contained"
 					color="primary"
-					onClick={canvasState.reVisibleCameraCanvas}
+					onClick={eventsState.reVisibleCameraCanvas}
 				>
 					{btnControlName}
 				</Button>
 			</Grid>
-			<Grid item>
+			<Grid item className={`${classes.mainControlItems} ${isVisibleCameraCanvas ? "hide" : "show"}`}>
 				<Button
-					className={`${classes.mainControlItems} ${canvasState.isVisibleCameraCanvas ? "show" : "hide"}`}
+					variant="contained"
+					color="primary"
+					onClick={controlMovePanelCamera}
+				>
+					{controlButtons}
+				</Button>
+			</Grid>
+			<Grid item className={`${classes.mainControlItems} ${isVisibleCameraCanvas ? "show" : "hide"}`}>
+				<Button
 					variant="contained"
 					color="secondary"
 					onClick={createChangePolygon}
@@ -270,18 +278,16 @@ export const DrawControl = observer(() => {
 					{btnControlZonesName}
 				</Button>
 			</Grid>
-			<Grid item>
-				<div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
+			<Grid item className={`${classes.mainControlItems} ${isCreatePolygon ? "show" : "hide"}`}>
+				<div className={`${classes.mainControlItems} ${isCreatePolygon ? "show" : "hide"}`}>
 					<ZoneActions/>
 				</div>
 			</Grid>
 			<Grid item style={{flexGrow: 1}}>
 				{action}
 			</Grid>
-			<Grid item>
-				<div className={`${classes.mainControlItems} ${canvasState.isCreatePolygon ? "show" : "hide"}`}>
-					{confirmButtons()}
-				</div>
+			<Grid item className={`${classes.mainControlItems} ${isCreatePolygon ? "show" : "hide"}`}>
+				{confirmButtons()}
 			</Grid>
 		</Grid>
 	)

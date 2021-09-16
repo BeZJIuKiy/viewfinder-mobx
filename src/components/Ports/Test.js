@@ -24,6 +24,8 @@ import {ConfirmDeletePolygon} from "./Events/ZoneActions/ConfirmDeletePolygon";
 import {DrawControl} from "./Events/CameraControlPanel/DrawControl";
 import ports from "../../store/ports";
 import {OtherCameras} from "./Events/OtherCameras";
+import connects from "../../store/connects";
+import {NavLink} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
 	test: {
@@ -604,13 +606,13 @@ const useStyles = makeStyles((theme) => ({
 // 	}
 // }))
 // const OtherCameras = observer(() => {
-// 	const classes = useOtherCamerasStyles();
-// 	// const [eventSource] = useState(new EventSource('http://192.168.250.183:5001/sse'));
-// 	// useEffect(() => {
-// 	// 	eventSource.onmessage = ({data}) => {
-// 	// 		console.log(`New message: ${data}`)
-// 	// 	}
-// 	// }, [eventSource?.onmessage]);
+// // 	const classes = useOtherCamerasStyles();
+// const [eventSource] = useState(new EventSource('http://192.168.250.183:5001/sse'));
+// useEffect(() => {
+// 	eventSource.onmessage = ({data}) => {
+// 		console.log(`New message: ${data}`)
+// 	}
+// }, [eventSource?.onmessage]);
 //
 // 	const {port, camera} = ports.selectedObjects;
 //
@@ -650,6 +652,25 @@ const useStyles = makeStyles((theme) => ({
 //
 // 	)
 // })
+
+const TestConnectWithLuckeR = () => {
+	useEffect(() => {
+		connects.serverEvents.onmessage = ({id, data, type, retry}) => {
+			const msg = JSON.parse(data);
+			// console.log(`${data}`)
+
+			for (const key in msg) {
+				console.log(`${key} - ${msg[key]}`)
+			}
+		}
+	}, [connects.serverEvents.onmessage]);
+
+	return (
+		<NavLink to="/ports" onClick={() => ports.clearSelectedObjects()}>
+			ViewFinder
+		</NavLink>
+	)
+}
 
 export const Test = observer(() => {
 	const classes = useStyles();
@@ -753,7 +774,7 @@ export const Test = observer(() => {
 	}
 	return (
 		<div>
-			<OtherCameras/>
+			<TestConnectWithLuckeR/>
 		</div>
 	)
 })

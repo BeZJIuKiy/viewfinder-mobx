@@ -1,6 +1,7 @@
 import Polygon from "./Polygon";
 import canvasState from "../../../../store/canvasState";
 import ports from "../../../../store/ports";
+import eventsState from "../../../../store/eventsState";
 
 export default class Polygons {
 	canvas = null;
@@ -88,7 +89,7 @@ export default class Polygons {
 	}
 
 	mouseDownHandler(e) {
-		if (!canvasState.isCreatePolygon) return;
+		if (!eventsState.isCreatePolygon) return;
 		switch (e.which) {
 			case 1: {
 				this.lmbDown(e);
@@ -159,7 +160,7 @@ export default class Polygons {
 	rmbUp = (e) => {
 		if (this.currentHandle < 0
 			|| this.polygons[this.curPolygon].points[this.currentHandle].id === null
-			|| !canvasState.isCreatePolygon) return;
+			|| !eventsState.isCreatePolygon) return;
 
 		const id = this.polygons[this.curPolygon].points[this.currentHandle].id;
 		this.polygons[this.curPolygon].deletePoint(id);
@@ -194,7 +195,7 @@ export default class Polygons {
 		this.mousePos = {x: e.offsetX, y: e.offsetY};
 
 		if (!this.isDrag) this.findAnyPoint();
-		if (!canvasState.isCreatePolygon) return;
+		if (!eventsState.isCreatePolygon) return;
 
 		if (this.isDrag && this.currentHandle < 0) this.isCreateRect = true;
 		if (this.isDrag && this.isCreateRect) this.drawNewRect();

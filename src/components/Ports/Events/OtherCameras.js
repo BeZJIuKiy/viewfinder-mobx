@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
 		maxHeight: 450,
 		overflowY: "auto"
 	},
-
 	otherCamerasAll: {
 		display: "flex",
 		flexDirection: "column",
@@ -24,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 
 		position: "relative",
 	},
-
 	pressLayout: {
 		position: "absolute",
 		top: 0,
@@ -46,22 +44,21 @@ export const OtherCameras = observer(() => {
 		if (!!camera.id === false) return;
 
 		setCameras(port.cameras.filter(({id}) => id !== camera.id)
-			.map(camera => {
-				return (
-					<div key={`Other--Cameras--${camera.id}`} className={classes.otherCamerasAll}>
-						{camera.description}
-						<iframe
-							src={camera.link}
-							width={"100%"} height={"100%"}
-							title="Other cameras"
-							frameBorder="0"
-							allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-							allowFullScreen
-						/>
-						<div className={classes.pressLayout} onClick={() => goToNextCam(camera.id)}/>
-					</div>
-				)
-			}))
+			.map(camera => (
+				<div key={`Other--Cameras--${camera.id}`} className={classes.otherCamerasAll}>
+					{/*{camera.description}*/}
+					{/*<iframe*/}
+					{/*	src={camera.link}*/}
+					{/*	width={"100%"} height={"100%"}*/}
+					{/*	title="Other cameras"*/}
+					{/*	frameBorder="0"*/}
+					{/*	allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
+					{/*	allowFullScreen*/}
+					{/*/>*/}
+					<img style={{width: "100%", height: "100%"}} src={ports.selectedObjects.camera.previewLink} alt={"jpg stream"} />
+					<div className={classes.pressLayout} onClick={() => goToNextCam(camera.id)}/>
+				</div>
+			)))
 	}, [port, camera]);
 
 	const goToNextCam = (camId) => {

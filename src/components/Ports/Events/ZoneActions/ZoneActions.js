@@ -6,14 +6,15 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import canvasState from "../../../../store/canvasState";
 import {observer} from "mobx-react-lite";
+import eventsState from "../../../../store/eventsState";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
-        // margin: theme.spacing(1),
         minWidth: 140,
     },
 
     text: {
+        padding: 0,
         fontWeight: 500,
         textTransform: "uppercase",
     }
@@ -28,7 +29,7 @@ export const ZoneActions = observer(() => {
     const classes = useStyles();
 
     const handleChange = (e) => {
-        canvasState.setZoneAction(e.target.value);
+        eventsState.setZoneAction(e.target.value);
     };
 
     return (
@@ -39,7 +40,7 @@ export const ZoneActions = observer(() => {
                     className={classes.text}
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
-                    value={canvasState.zoneAction}
+                    value={eventsState.zoneAction}
                     onChange={handleChange}
                     label="Zone Actions"
                 >
