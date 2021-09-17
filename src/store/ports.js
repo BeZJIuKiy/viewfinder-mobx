@@ -140,7 +140,7 @@ class ports {
 					description: 'Club Parking PTZ',
 					coordinates: [59.977913, 30.240952],
 					zoom: 15,
-					link: 'http://192.168.250.210:8000/bgr',
+					link: 'http://87.244.33.186:8001/bgr',
 					previewLink: previewSPbPort,
 
 					// link: 'https://rtsp.me/embed/hitQb4bf',

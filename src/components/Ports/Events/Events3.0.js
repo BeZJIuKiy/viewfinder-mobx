@@ -21,8 +21,6 @@ const useStyles = makeStyles((theme) => ({
 		// flexShrink: 1,
 		height: "100%",
 
-		// marginTop: theme.spacing(-4),
-
 		color: "#ddd",
 		fontWeight: 500,
 		fontFamily: `"Quicksand", sans-serif`,

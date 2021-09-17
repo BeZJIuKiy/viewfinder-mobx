@@ -87,7 +87,7 @@ export const Canvas = observer(() => {
     const [height, setHeight] = useState(1);
     const [ratio, setRatio] = useState({width: 1, height: 1});
 
-    const {isShowControlCameraMove, isVisibleCameraCanvas, isCreatePolygon, zoneAction} = eventsState;
+    const {isVisibleCameraCanvas} = eventsState;
 
     const displayResolution = (result) => {
         switch (Number(result.toFixed(3))) {
@@ -163,12 +163,22 @@ export const Canvas = observer(() => {
         const isSide = iframeRef.current?.scrollHeight < (iframeRef.current?.scrollWidth / ratio.width * ratio.height);
         const widthSide = iframeRef.current?.scrollWidth / ratio.width;
         const heightSide = iframeRef.current?.scrollHeight / ratio.height;
+
+        console.log(iframeRef.current?.scrollHeight, iframeRef.current?.scrollWidth / ratio.width * ratio.height);
+
+        console.log(widthSide, heightSide);
+
         reSizeCanvas(isSide ? heightSide : widthSide);
+        // reSizeCanvas(widthSide);
         }, [iframeRef.current?.scrollWidth, iframeRef.current?.scrollHeight, windowSize.width, windowSize.height, ratio, ports.selectedObjects.camera]);
 
     const reSizeCanvas = (coefficient) => {
         const width = coefficient * ratio.width;
         const height = coefficient * ratio.height;
+
+        console.log(ratio.width, coefficient)
+
+        console.log(width, height)
 
         setWidth(width);
         setHeight(height);
