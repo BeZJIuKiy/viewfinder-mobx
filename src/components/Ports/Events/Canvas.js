@@ -164,7 +164,7 @@ export const Canvas = observer(() => {
         const widthSide = iframeRef.current?.scrollWidth / ratio.width;
         const heightSide = iframeRef.current?.scrollHeight / ratio.height;
         reSizeCanvas(isSide ? heightSide : widthSide);
-    }, [iframeRef.current?.scrollWidth, iframeRef.current?.scrollHeight, windowSize.width, windowSize.height, ratio, ports.selectedObjects.camera]);
+        }, [iframeRef.current?.scrollWidth, iframeRef.current?.scrollHeight, windowSize.width, windowSize.height, ratio, ports.selectedObjects.camera]);
 
     const reSizeCanvas = (coefficient) => {
         const width = coefficient * ratio.width;

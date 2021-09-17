@@ -21,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
 		// flexShrink: 1,
 		height: "100%",
 
+		marginTop: theme.spacing(-2),
+
 		color: "#ddd",
 		fontWeight: 500,
 		fontFamily: `"Quicksand", sans-serif`,
@@ -81,7 +83,11 @@ const useStyles = makeStyles((theme) => ({
 		position: "relative",
 
 		"&.show": {
-			display: "flex",
+			display: "block",
+			"@media(max-width: 960)": {
+				marginTop: theme.spacing(-2),
+			}
+			// marginBottom: theme.spacing(10),
 		},
 		"&.hide": {
 			display: "none",
@@ -135,6 +141,7 @@ export const Events30 = () => {
 			<Grid className={`${classes.secondGridContainer}`} container spacing={3}>
 				<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
 					<div className={`${classes.types} ${eventsState.isShowImage ? "hide" : "show"}`}>
+						<span style={{display: "none", "@media(max-width: 960)": {display: "flex", opacity: 0} }}>123</span>
 						<Canvas/>
 					</div>
 
@@ -169,7 +176,7 @@ export const Events30 = () => {
 	}
 	const tableEvents = () => {
 		return (
-			<Grid className={`${classes.secondGridContainer} tableEvents`} container>
+			<Grid className={`${classes.secondGridContainer} tableEvents`} container spacing={3}>
 				<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
 					<BoatEvents/>
 				</Grid>

@@ -74,7 +74,7 @@ class ports {
 					description: 'Club Parking STATIC',
 					coordinates: [59.977915, 30.240934],
 					zoom: 15,
-					link: "http://192.168.250.210:8000/bgr",
+					link: "http://192.168.250.147:8000/bgr",
 					previewLink: previewSPb,
 
 					// link: 'https://rtsp.me/embed/ayAby5ia',
@@ -184,7 +184,7 @@ class ports {
 					],
 				},
 
-				/* В случае необходимости */
+				/* В случае необходимости доп камеры */
 				// {
 				// 	id: this.counter.camerasId++,
 				// 	country: 'Russia',
