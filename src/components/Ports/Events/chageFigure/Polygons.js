@@ -333,7 +333,7 @@ export default class Polygons {
 	}
 
 	drawPolygons(polygons = this.polygons) {
-		console.log("drawPolygons");
+		// console.log("drawPolygons");
 
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		canvasState.setPolygonSelect(this.selectPolygon());

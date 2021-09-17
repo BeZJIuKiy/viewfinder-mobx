@@ -653,24 +653,24 @@ const useStyles = makeStyles((theme) => ({
 // 	)
 // })
 
-const TestConnectWithLuckeR = () => {
-	useEffect(() => {
-		connects.serverEvents.onmessage = ({id, data, type, retry}) => {
-			const msg = JSON.parse(data);
-			// console.log(`${data}`)
-
-			for (const key in msg) {
-				console.log(`${key} - ${msg[key]}`)
-			}
-		}
-	}, [connects.serverEvents.onmessage]);
-
-	return (
-		<NavLink to="/ports" onClick={() => ports.clearSelectedObjects()}>
-			ViewFinder
-		</NavLink>
-	)
-}
+// const TestConnectWithLuckeR = () => {
+// 	useEffect(() => {
+// 		connects.serverEvents.onmessage = ({id, data, type, retry}) => {
+// 			const msg = JSON.parse(data);
+// 			// console.log(`${data}`)
+//
+// 			for (const key in msg) {
+// 				console.log(`${key} - ${msg[key]}`)
+// 			}
+// 		}
+// 	}, [connects.serverEvents.onmessage]);
+//
+// 	return (
+// 		<NavLink to="/ports" onClick={() => ports.clearSelectedObjects()}>
+// 			ViewFinder
+// 		</NavLink>
+// 	)
+// }
 
 export const Test = observer(() => {
 	const classes = useStyles();
@@ -774,7 +774,7 @@ export const Test = observer(() => {
 	}
 	return (
 		<div>
-			<TestConnectWithLuckeR/>
+			{/*<TestConnectWithLuckeR/>*/}
 		</div>
 	)
 })

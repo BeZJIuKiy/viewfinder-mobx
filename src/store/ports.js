@@ -3,6 +3,7 @@ import mIcon_ports from '../components/Ports/Drawer/images/harborIcon02.png';
 import mIcon_cameras from '../components/Ports/Drawer/images/camIcon.png';
 import previewImg from '../img/preView̆.jpg';
 import previewImg2 from '../img/preView̆02.jpg';
+import previewImg3 from '../img/preView̆03.jpg';
 
 // Boath
 import boat1_03 from '../components/Ports/Events/images/b1-03.jpg'
@@ -141,9 +142,8 @@ class ports {
 					// link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
 					// link: "http://192.168.250.183:63342/vf-ptz/rtsp/client.html?_ijt=3bma91crvde9ai0smaj26qmv3q",
 					// previewLink: "http://87.244.33.186:8001/bgr",
-					// previewLink: previewImg2,
-					// previewLink: "https://rtsp.me/embed/hitQb4bf",
-					previewLink: "http://192.168.240.121:8000/bgr",
+					previewLink: "http://192.168.250.210:8000/bgr",
+					// previewLink: "http://192.168.240.121:8000/bgr",
 					// link: 'http://87.244.33.186:8081/bgr',
 					// link: 'http://192.168.250.210:8000/bgr',
 
@@ -179,18 +179,27 @@ class ports {
 					],
 				},
 
+				/* В случае необходимости */
 				// {
 				// 	id: this.counter.camerasId++,
 				// 	country: 'Russia',
 				// 	city: 'Saint Petersburg',
-				// 	name: 'Camera 2',
+				// 	name: 'Camera 3',
 				// 	type: 'Hikvision',
 				// 	move: 'PTZ',
 				// 	viewingAngle: '80',
-				// 	description: 'Club Parking PTZ',
+				// 	description: 'Club Parking PTZ 3',
 				// 	coordinates: [59.977913, 30.240952],
 				// 	zoom: 15,
-				// 	link: 'https://rtsp.me/embed/hitQb4bf/',
+				// 	link: 'https://rtsp.me/embed/hitQb4bf',
+				// 	// link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
+				// 	// link: "http://192.168.250.183:63342/vf-ptz/rtsp/client.html?_ijt=3bma91crvde9ai0smaj26qmv3q",
+				// 	// previewLink: "http://87.244.33.186:8001/bgr",
+				// 	previewLink: previewImg3,
+				// 	// previewLink: "https://rtsp.me/embed/hitQb4bf",
+				// 	// previewLink: "http://192.168.240.121:8000/bgr",
+				// 	// link: 'http://87.244.33.186:8081/bgr',
+				// 	// link: 'http://192.168.250.210:8000/bgr',
 				//
 				// 	events: [
 				// 		{
@@ -204,6 +213,20 @@ class ports {
 				// 			time: '10:22:31',
 				// 			timezone: '+0300',
 				// 			imageLink: boat1_04,
+				// 			newEvent: true,
+				// 			description: 'Nothing interesting, keep moving on',
+				// 		},
+				// 		{
+				// 			id: this.counter.eventsId++,
+				// 			typeError: 'Warning',
+				// 			typeVessel: "Tugboat",
+				// 			location: 'Russia',
+				// 			city: 'Saint Petersburg',
+				// 			camera: 'Camera 1',
+				// 			date: '2020-12-21',
+				// 			time: '10:20:08',
+				// 			timezone: '+0300',
+				// 			imageLink: boat1_03,
 				// 			newEvent: true,
 				// 			description: 'Nothing interesting, keep moving on',
 				// 		},
