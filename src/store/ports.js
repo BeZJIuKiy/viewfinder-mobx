@@ -1,7 +1,7 @@
 // Icons
 import mIcon_ports from '../components/Ports/Drawer/images/harborIcon02.png';
 import mIcon_cameras from '../components/Ports/Drawer/images/camIcon.png';
-import previewSPb from '../img/preView̆.jpg';
+import previewSPbPort from '../img/preView̆.jpg';
 import previewImg2 from '../img/preView̆02.jpg';
 import previewImg3 from '../img/preView̆03.jpg';
 
@@ -75,7 +75,7 @@ class ports {
 					coordinates: [59.977915, 30.240934],
 					zoom: 15,
 					link: "http://192.168.250.147:8000/bgr",
-					previewLink: previewSPb,
+					previewLink: previewImg2,
 
 					// link: 'https://rtsp.me/embed/ayAby5ia',
 					// link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
@@ -141,7 +141,7 @@ class ports {
 					coordinates: [59.977913, 30.240952],
 					zoom: 15,
 					link: 'http://192.168.250.210:8000/bgr',
-					previewLink: previewImg2,
+					previewLink: previewSPbPort,
 
 					// link: 'https://rtsp.me/embed/hitQb4bf',
 					// link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
