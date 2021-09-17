@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 		// flexShrink: 1,
 		height: "100%",
 
-		marginTop: theme.spacing(-4),
+		// marginTop: theme.spacing(-4),
 
 		color: "#ddd",
 		fontWeight: 500,
@@ -84,10 +84,7 @@ const useStyles = makeStyles((theme) => ({
 
 		"&.show": {
 			display: "block",
-			"@media(max-width: 960)": {
-				// marginTop: theme.spacing(-2),
-			}
-			// marginBottom: theme.spacing(10),
+			marginBottom: 2,
 		},
 		"&.hide": {
 			display: "none",
@@ -141,8 +138,6 @@ export const Events30 = () => {
 			<Grid className={`${classes.secondGridContainer}`} container spacing={3}>
 				<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
 					<div className={`${classes.types} ${eventsState.isShowImage ? "hide" : "show"}`}>
-						{/*<span style={{display: "none", "@media(max-width: 960)": {display: "flex", opacity: 0} }}>123</span>*/}
-						<span style={{opacity: 0}}>123</span>
 						<Canvas/>
 					</div>
 
