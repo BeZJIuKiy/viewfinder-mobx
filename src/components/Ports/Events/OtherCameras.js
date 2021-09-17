@@ -22,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1,
 
 		position: "relative",
+
+		color: "#333",
 	},
 	pressLayout: {
 		position: "absolute",
@@ -47,7 +49,7 @@ export const OtherCameras = observer(() => {
 			.map(camera => {
 				return (
 					<div key={`Other--Cameras--${camera.id}`} className={classes.otherCamerasAll}>
-						{/*{camera.description}*/}
+						{camera.description}
 						{/*<iframe*/}
 						{/*	src={camera.link}*/}
 						{/*	width={"100%"} height={"100%"}*/}

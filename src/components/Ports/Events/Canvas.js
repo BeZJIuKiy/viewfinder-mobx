@@ -194,7 +194,8 @@ export const Canvas = observer(() => {
                 {/*/>*/}
 
                 <div className={classes.forPreview} ref={iframeRef}>
-                    <img style={{width: width, height: height}} src={ports.selectedObjects.camera.previewLink} alt={"jpg stream"} />
+                    <img style={{width: width, height: height}} src={ports.selectedObjects.camera.link} alt={"jpg stream"} />
+                    {/*<img style={{width: width, height: height}} src={ports.selectedObjects.camera.previewLink} alt={"jpg stream"} />*/}
                     {/*<canvas id={"canvasTest"} style={{width: width, height: height}}/>*/}
                 </div>
 

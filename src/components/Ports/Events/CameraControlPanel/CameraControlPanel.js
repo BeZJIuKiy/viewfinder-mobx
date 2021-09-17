@@ -1,3 +1,8 @@
+//59.76262552060334, 30.35579027419917
+
+
+
+
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
