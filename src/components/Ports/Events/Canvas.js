@@ -37,11 +37,9 @@ const useStyles = makeStyles((theme) => {
 
             "&.show": {
                 display: "flex",
-                // zIndex: 2,
             },
             "&.hide": {
                 display: "none",
-                // zIndex: -2,
             }
         },
         canvas: {
@@ -164,9 +162,9 @@ export const Canvas = observer(() => {
         const widthSide = iframeRef.current?.scrollWidth / ratio.width;
         const heightSide = iframeRef.current?.scrollHeight / ratio.height;
 
-        console.log(iframeRef.current?.scrollHeight, iframeRef.current?.scrollWidth / ratio.width * ratio.height);
+        // console.log(iframeRef.current?.scrollHeight, iframeRef.current?.scrollWidth / ratio.width * ratio.height);
 
-        console.log(widthSide, heightSide);
+        // console.log(widthSide, heightSide, iframeRef.current?.scrollWidth, iframeRef.current?.scrollHeight);
 
         reSizeCanvas(isSide ? heightSide : widthSide);
         // reSizeCanvas(widthSide);
@@ -176,9 +174,9 @@ export const Canvas = observer(() => {
         const width = coefficient * ratio.width;
         const height = coefficient * ratio.height;
 
-        console.log(ratio.width, coefficient)
-
-        console.log(width, height)
+        // console.log(ratio.width, coefficient)
+        //
+        // console.log(width, height)
 
         setWidth(width);
         setHeight(height);

@@ -114,12 +114,12 @@ export const Ports = () => {
 		.then(item => console.log(item));
 
 	return (
-		<Grid container>
+		<Grid container style={{overflow: "hidden",}}>
 			<Grid item xs={12} sm={12} md={12}>
 				<Header/>
 			</Grid>
 			<Hidden xsDown>
-				<Grid item xs={12} sm={3} md={4} lg={3} xl={2}>
+				<Grid item xs={12} sm={3} md={4} lg={3} xl={2} >
 					<div className={classes.drawer}><Drawer/></div>
 				</Grid>
 			</Hidden>

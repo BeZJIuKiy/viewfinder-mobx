@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => {
 
 	return ({
 		yamap: {
-			width: "100%",
+			// width: "100%",
+			// height: "100%",
 
 			"&.show": {
 				display: "flex",
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => {
 				// minHeight: scrollHeight,
 
 				paddingTop: 92,
-				// marginTop: 102,
+				// marginTop: 92,
 
 				flexGrow: 1,
 				height: `100vh`,

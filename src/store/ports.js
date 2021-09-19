@@ -288,9 +288,10 @@ class ports {
 		this.selectedObjects.event = {};
 	};
 
+	// setEvents = (portId, cameraId, events) => {
 	setEvents = (events) => {
-		// this.selectedObjects.camera.events = events;
 		this.data[0].cameras[0].events = events;
+		// this.data[portId].cameras[cameraId].events = events;
 	}
 
 	setIsNewNotif = (id, isNew) => {

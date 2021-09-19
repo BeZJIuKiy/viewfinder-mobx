@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {userAvatar} from "./ports";
+import ports, {userAvatar} from "./ports";
 
 class header {
 	allNewNote = null;
@@ -31,6 +31,23 @@ class header {
 	// 		? this.camerasNewNote[index] = notif
 	// 		: this.camerasNewNote.push(notif);
 	// }
+	checkNewNotifications = () => {
+		let allNewNote = 0;
+		ports.data.forEach((port) => {
+			let allPortsNotifications = 0;
+			port.cameras.forEach((camera) => {
+				const allCameraNotifications = camera.events.filter(({newEvent}) => newEvent).length;
+				allPortsNotifications += allCameraNotifications;
+				this.camerasNoteTest[camera.id] = allCameraNotifications;
+				allNewNote += allCameraNotifications;
+			})
+
+			this.portsNoteTest[port.id] = allPortsNotifications;
+		})
+
+		this.allNewNote = allNewNote;
+		// console.log(allNewNote);
+	}
 	addAllNewNotifications = () => {
 		let allNewNote = 0;
 		for (const key in this.portsNoteTest) allNewNote += this.portsNoteTest[key]
@@ -38,6 +55,7 @@ class header {
 	}
 	addNewPortsNotifications = (id, notif) => {
 		this.portsNoteTest[id] = notif;
+
 	}
 	addNewCamerasNotifications = (id, notif) => {
 		this.camerasNoteTest[id] = notif;

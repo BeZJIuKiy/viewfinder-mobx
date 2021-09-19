@@ -3,6 +3,7 @@ import {makeAutoObservable} from "mobx";
 class connects {
 	serverEvents = "";
 	wsCameraControl = "";
+	wsSound = "";
 
 	constructor() {
 		makeAutoObservable(this);
@@ -14,6 +15,10 @@ class connects {
 
 	setWSCameraCameraControl = (ws) => {
 		this.wsCameraControl = ws;
+	}
+
+	setWSSound = (ws) => {
+		this.wsSound = ws;
 	}
 }
 

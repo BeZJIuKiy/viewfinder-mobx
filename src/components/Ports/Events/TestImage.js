@@ -4,6 +4,8 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ports from "../../../store/ports";
+import header from "../../../store/header";
+import {observer} from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -35,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export const TestImage = () => {
+export const TestImage = observer(() => {
 	const classes = useStyles();
 	const {selectedObjects: {camera, event}} = ports;
 	const [data, setData] = useState(camera.events);
@@ -45,6 +47,7 @@ export const TestImage = () => {
 			? setData(camera.events.filter(item => item.typeVessel === event.typeVessel))
 			: setData(camera.events);
 	}, [event, camera, camera.events]);
+
 
 	const boatImage = data.map(({id, imageLink, typeVessel}) => {
 		return (
@@ -76,4 +79,4 @@ export const TestImage = () => {
 			</GridList>
 		</div>
 	);
-}
+})

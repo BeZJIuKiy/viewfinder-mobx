@@ -43,9 +43,10 @@ const useStyles = makeStyles((theme) => ({
 	secondGridContainer: {
 		height: "100%",
 		margin: 0,
+		// padding: 0,
 
 		"&.controlMovePanel": {
-			marginTop: theme.spacing(-5),
+			marginTop: theme.spacing(-3),
 			marginLeft: 12,
 
 			"&.show": {
@@ -70,7 +71,8 @@ const useStyles = makeStyles((theme) => ({
 
 		textAlign: "center",
 		margin: "0 auto",
-		padding: 10,
+		// padding: 10,
+		// margin: 10,
 
 		alignItems: "center",
 
@@ -79,6 +81,11 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: 5,
 
 		position: "relative",
+
+		"&.drawControl": {
+			// marginTop: 18,
+			// marginBottom: 12,
+		},
 
 		"&.show": {
 			display: "block",
@@ -91,7 +98,8 @@ const useStyles = makeStyles((theme) => ({
 	correctingPosition: {
 		height: "100%",
 
-		paddingTop: 92,
+		// paddingTop: 92,
+		marginTop: 92,
 		marginRight: 24,
 		marginLeft: -24,
 	},
@@ -161,7 +169,7 @@ export const Events30 = () => {
 		return (
 			<Grid className={`${classes.secondGridContainer} controlMovePanel`} container>
 				<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-					<div className={`${classes.types}`}>
+					<div className={`${classes.types} drawControl`}>
 						<DrawControl/>
 					</div>
 				</Grid>

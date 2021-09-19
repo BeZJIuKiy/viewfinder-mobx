@@ -61,7 +61,7 @@ export const Drawer = observer(({isMobile}) => {
 
 
 	const [allData, setAllData] = useState(data)
-	const [notes, setNotes] = useState({});
+	const [notes, setNotes] = useState("");
 	const [icon, setIcon] = useState();
 
 	useEffect(() => {
