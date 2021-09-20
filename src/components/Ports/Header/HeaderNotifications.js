@@ -117,7 +117,7 @@ export const HeaderNotifications = observer(() => {
                                                         className={`${classes.navLink} ${event.typeError.toLowerCase()}`}
                                                         to={"/events"}>
                                                         <ListItemText
-                                                            primary={`${event.date} ${event.time} ${camera.description}`}
+                                                            primary={`${event.date} ${camera.description}`}
                                                             onClick={() => handleSelectItem(id, camera.id, event.id)}/>
                                                     </NavLink>
                                                 </ListItem>

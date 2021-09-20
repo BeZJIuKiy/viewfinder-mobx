@@ -26,6 +26,7 @@ import ports from "../../store/ports";
 import {OtherCameras} from "./Events/OtherCameras";
 import connects from "../../store/connects";
 import {NavLink} from "react-router-dom";
+import {ShipScreen} from "./Events/ShipScreen";
 
 const useStyles = makeStyles((theme) => ({
 	test: {
@@ -773,8 +774,9 @@ export const Test = observer(() => {
 		)
 	}
 	return (
-		<div>
+		<div style={{width: "100%", height: "100%"}}>
 			{/*<TestConnectWithLuckeR/>*/}
+			<ShipScreen/>
 		</div>
 	)
 })

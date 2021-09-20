@@ -162,21 +162,12 @@ export const Canvas = observer(() => {
         const widthSide = iframeRef.current?.scrollWidth / ratio.width;
         const heightSide = iframeRef.current?.scrollHeight / ratio.height;
 
-        // console.log(iframeRef.current?.scrollHeight, iframeRef.current?.scrollWidth / ratio.width * ratio.height);
-
-        // console.log(widthSide, heightSide, iframeRef.current?.scrollWidth, iframeRef.current?.scrollHeight);
-
         reSizeCanvas(isSide ? heightSide : widthSide);
-        // reSizeCanvas(widthSide);
         }, [iframeRef.current?.scrollWidth, iframeRef.current?.scrollHeight, windowSize.width, windowSize.height, ratio, ports.selectedObjects.camera]);
 
     const reSizeCanvas = (coefficient) => {
         const width = coefficient * ratio.width;
         const height = coefficient * ratio.height;
-
-        // console.log(ratio.width, coefficient)
-        //
-        // console.log(width, height)
 
         setWidth(width);
         setHeight(height);
@@ -190,22 +181,22 @@ export const Canvas = observer(() => {
     return (
         <div className={classes.main}>
             <div className={classes.canvasDraw}>
-                {/*<iframe*/}
-                {/*    src={ports.selectedObjects.camera.link}*/}
-                {/*    width={"100%"} height={"100%"}*/}
-                {/*    // width={width} height={height}*/}
-                {/*    title="YouTube video player"*/}
-                {/*    ref={iframeRef}*/}
-                {/*    frameBorder="0"*/}
-                {/*    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
-                {/*    allowFullScreen*/}
-                {/*/>*/}
+                <iframe
+                    src={ports.selectedObjects.camera.link}
+                    width={"100%"} height={"100%"}
+                    // width={width} height={height}
+                    title="YouTube video player"
+                    ref={iframeRef}
+                    frameBorder="0"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                />
 
-                <div className={classes.forPreview} ref={iframeRef}>
-                    <img style={{width: width, height: height}} src={ports.selectedObjects.camera.link} alt={"jpg stream"} />
-                    {/*<img style={{width: width, height: height}} src={ports.selectedObjects.camera.previewLink} alt={"jpg stream"} />*/}
-                    {/*<canvas id={"canvasTest"} style={{width: width, height: height}}/>*/}
-                </div>
+                {/*<div className={classes.forPreview} ref={iframeRef}>*/}
+                {/*    <img style={{width: width, height: height}} src={ports.selectedObjects.camera.link} alt={"jpg stream"} />*/}
+                {/*    /!*<img style={{width: width, height: height}} src={ports.selectedObjects.camera.previewLink} alt={"jpg stream"} />*!/*/}
+                {/*    /!*<canvas id={"canvasTest"} style={{width: width, height: height}}/>*!/*/}
+                {/*</div>*/}
 
                 <canvas
                     className={`${classes.canvas} ${isVisibleCameraCanvas ? "show" : "hide"}`}

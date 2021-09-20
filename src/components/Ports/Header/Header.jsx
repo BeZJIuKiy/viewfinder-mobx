@@ -91,17 +91,12 @@ export const Header = observer(() => {
 
 	useEffect(() => {
 		/* Set Events from Server */
-
-		// getNewNotifications();
-		// getPoints("http://192.168.250.183:5001/api/boats");
-
-
-		setHandleInterval(
-			setInterval(() => {
-				// getNewNotifications();
-				getPoints("http://192.168.250.183:5001/api/boats");
-			}, 1000)
-		)
+		// setHandleInterval(
+		// 	setInterval(() => {
+		// 		// getNewNotifications();
+		// 		getPoints("http://192.168.250.183:5001/api/boats");
+		// 	}, 1000)
+		// )
 	}, []);
 
 
@@ -129,7 +124,7 @@ export const Header = observer(() => {
 		// 	})
 		// }))
 
-		getNewNotifications();
+		// getNewNotifications();
 	}, [notifications]);
 	useEffect(() => {
 		setPortNotes();
