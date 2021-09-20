@@ -74,7 +74,7 @@ class ports {
 					description: 'Club Parking STATIC',
 					coordinates: [59.977915, 30.240934],
 					zoom: 15,
-					link: "https://rtsp.me/embed/ayAby5ia",     // Site
+					link: "http://87.244.33.186:8001/bgr",     // Site
 					// link: "http://192.168.250.210:8000/bgr",
 					// link: "http://192.168.250.147:8000/bgr", //MSI
 					previewLink: previewSPbPort,
@@ -141,7 +141,7 @@ class ports {
 					description: 'Club Parking PTZ',
 					coordinates: [59.977915, 30.240934],
 					zoom: 15,
-					link: 'https://rtsp.me/embed/hitQb4bf',
+					link: 'http://87.244.33.186:8001/bgr',
 					previewLink: previewSPbPort,
 
 					// link: 'https://rtsp.me/embed/hitQb4bf',
