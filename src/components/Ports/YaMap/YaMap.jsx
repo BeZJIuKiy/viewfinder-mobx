@@ -116,7 +116,8 @@ const YaMap = observer(({isVisible, style}) => {
 
 		if (portId) {
 			setAllData(selectedObjects.port.cameras);
-			mapData(selectedObjects.port.coordinates, selectedObjects.port.cameras[0].zoom, controls);
+			mapData(selectedObjects.camera.coordinates, selectedObjects.port.cameras[0].zoom, controls);
+			// mapData(selectedObjects.port.coordinates, selectedObjects.port.cameras[0].zoom, controls);
 		} else {
 			setAllData(data);
 			mapData(data[0].cameras[0].coordinates, data[0].zoom, controls);

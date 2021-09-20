@@ -52,11 +52,20 @@ function stableSort(array, comparator) {
 
 const headCells = [
 	{id: 'typeError', numeric: false, disablePadding: true, label: 'Type'},
+	{id: 'date', numeric: false, disablePadding: true, label: 'Date'},
+	{id: 'imo', numeric: false, disablePadding: false, label: 'IMO'},
+	{id: 'mmsi', numeric: false, disablePadding: false, label: 'MMSI'},
+	{id: 'callSign', numeric: false, disablePadding: false, label: 'Call Sign'},
 	{id: 'typeVessel', numeric: false, disablePadding: true, label: 'Type Vessel'},
-	{id: 'date', numeric: false, disablePadding: false, label: 'Date (YYYY-MM-DD)'},
-	{id: 'time', numeric: false, disablePadding: false, label: 'Time (HH:MM:SS)'},
-	{id: 'timezone', numeric: false, disablePadding: false, label: 'Timezone'},
+	// {id: 'country', numeric: false, disablePadding: false, label: 'Country'},
 	{id: 'description', numeric: false, disablePadding: false, label: 'Description'},
+
+	// {id: 'typeError', numeric: false, disablePadding: true, label: 'Type'},
+	// {id: 'typeVessel', numeric: false, disablePadding: true, label: 'Type Vessel'},
+	// {id: 'date', numeric: false, disablePadding: false, label: 'Date (YYYY-MM-DD)'},
+	// {id: 'time', numeric: false, disablePadding: false, label: 'Time (HH:MM:SS)'},
+	// {id: 'timezone', numeric: false, disablePadding: false, label: 'Timezone'},
+	// {id: 'description', numeric: false, disablePadding: false, label: 'Description'},
 ];
 
 function EnhancedTableHead(props) {
@@ -68,16 +77,6 @@ function EnhancedTableHead(props) {
 	return (
 		<TableHead>
 			<TableRow>
-
-				{/*<TableCell align="center">*/}
-				{/*	<FormControlLabel*/}
-				{/*		control={<Checkbox icon={<RadioButtonUncheckedIcon fontSize="small"/>}*/}
-				{/*		                   checkedIcon={<RadioButtonCheckedIcon fontSize="small"/>}*/}
-				{/*		                   name="checkedH"/>*/}
-				{/*		}*/}
-				{/*	/>*/}
-				{/*</TableCell>*/}
-
 				<TableCell padding="checkbox">
 					<Checkbox
 						indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -243,7 +242,7 @@ export const BoatEvents = observer(() => {
 
 	const [data, setData] = useState(camera.events);
 	const [order, setOrder] = React.useState('asc');
-	const [orderBy, setOrderBy] = React.useState('typeVessel');
+	const [orderBy, setOrderBy] = React.useState('date');
 	const [selected, setSelected] = React.useState([]);
 	const [page, setPage] = React.useState(0);
 	// const [dense, setDense] = React.useState(false);
@@ -267,12 +266,23 @@ export const BoatEvents = observer(() => {
 	const rows = [];
 	data.forEach(row => {
 		rows.push({
+			// id: row.id,
+			// typeError: row.typeError,
+			// typeVessel: row.typeVessel,
+			// date: row.date,
+			// time: row.time,
+			// timezone: row.timezone,
+			// description: row.description,
+
 			id: row.id,
+			imo: row.imo,
+			mmsi: row.mmsi,
+			date: row.date,
+			callSign: row.callSign,
 			typeError: row.typeError,
 			typeVessel: row.typeVessel,
-			date: row.date,
-			time: row.time,
-			timezone: row.timezone,
+			country: row.country,
+			imageLink: row.img,
 			description: row.description,
 		})
 	});
@@ -364,7 +374,7 @@ export const BoatEvents = observer(() => {
 								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 								.map((row, index) => {
 
-									const {id, typeError, typeVessel, date, time, timezone, description} = row;
+									const {id, typeError, typeVessel, date, imo, mmsi, callSign, country, description} = row;
 									const isItemSelected = isSelected(id);
 									const labelId = `enhanced-table-checkbox-${index}`;
 									const notifType = `events__type__notification ${typeError.toLowerCase()}`;
@@ -379,16 +389,6 @@ export const BoatEvents = observer(() => {
 											key={id}
 											selected={isItemSelected}
 										>
-											{/*<TableCell align="center">*/}
-											{/*	<FormControlLabel*/}
-											{/*		// onChange={() => setSelected([])}*/}
-											{/*		control={<Checkbox icon={<RadioButtonUncheckedIcon fontSize="small"/>}*/}
-											{/*		                   checkedIcon={<RadioButtonCheckedIcon fontSize="small"/>}*/}
-											{/*		                   name="checkedH"/>*/}
-											{/*		}*/}
-											{/*	/>*/}
-											{/*</TableCell>*/}
-
 											<TableCell padding="checkbox">
 												<Checkbox
 													checked={isItemSelected}
@@ -399,10 +399,12 @@ export const BoatEvents = observer(() => {
 											<TableCell component="th" id={labelId} scope="row" padding="none"
 											           align="center"
 											           className={notifType}>{typeError}</TableCell>
-											<TableCell align="left">{typeVessel}</TableCell>
 											<TableCell align="left">{date}</TableCell>
-											<TableCell align="left">{time}</TableCell>
-											<TableCell align="left">{timezone}</TableCell>
+											<TableCell align="left">{imo}</TableCell>
+											<TableCell align="left">{mmsi}</TableCell>
+											<TableCell align="left">{callSign}</TableCell>
+											<TableCell align="left">{typeVessel}</TableCell>
+											{/*<TableCell align="left">{country}</TableCell>*/}
 											<TableCell align="left">{description}</TableCell>
 										</TableRow>
 									);
