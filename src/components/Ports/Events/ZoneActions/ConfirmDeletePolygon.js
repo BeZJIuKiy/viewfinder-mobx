@@ -5,6 +5,7 @@ import canvasState from "../../../../store/canvasState";
 import Button from "@material-ui/core/Button";
 import ports from "../../../../store/ports";
 import Polygons from "../chageFigure/Polygons";
+import eventsState from "../../../../store/eventsState";
 
 function rand() {
     return Math.round(Math.random() * 20) - 10;
@@ -63,7 +64,7 @@ export const ConfirmDeletePolygon = () => {
 
     const handleClose = () => {
         setOpen(false);
-        canvasState.setZoneAction("");
+        eventsState.setZoneAction("")
     };
 
     const handleDeleteDetectedArea = () => {
@@ -74,7 +75,7 @@ export const ConfirmDeletePolygon = () => {
         new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
 
         setOpen(false);
-        canvasState.setZoneAction("");
+        eventsState.setZoneAction("")
     }
 
 
