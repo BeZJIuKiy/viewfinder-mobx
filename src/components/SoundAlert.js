@@ -141,6 +141,8 @@ export const SoundAlert = observer(() => {
                 if (tempWord?.length) foundWord.push(tempWord);
             });
 
+            console.log(msg);
+
             if (foundWord.length) {
                 setTriggerWords(foundWord);
                 setVoice(msg);
