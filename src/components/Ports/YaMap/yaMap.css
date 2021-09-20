@@ -27,6 +27,11 @@
     padding: 10px;
 }
 
+yamap__balloon__content__img {
+    width: 384px;
+    height: 216px;
+}
+
 .yamap__balloon__link {
     text-align: end;
 }
