@@ -14,6 +14,8 @@ import ports from "../../../store/ports";
 import header from "../../../store/header";
 import {OtherCameras} from "./OtherCameras";
 import eventsState from "../../../store/eventsState";
+import {ShipScreen} from "./ShipScreen";
+import {observer} from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => ({
 	event: {
@@ -106,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export const Events30 = () => {
+export const Events30 = observer(() => {
 	const classes = useStyles();
 
 	const {
@@ -141,12 +143,16 @@ export const Events30 = () => {
 		return (
 			<Grid className={`${classes.secondGridContainer}`} container spacing={3}>
 				<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-					<div className={`${classes.types} ${eventsState.isShowImage ? "hide" : "show"}`}>
+					<div className={`${classes.types} ${imageVisible ? "hide" : "show"}`}>
+					{/*<div className={`${classes.types} ${eventsState.isShowImage ? "hide" : "show"}`}>*/}
+					{/*<div className={`${classes.types} ${eventsState.isShowImage ? "show" : "hide"}`}>*/}
 						<Canvas/>
 					</div>
 
-					<div className={`${classes.types} ${eventsState.isShowImage ? "show" : "hide"}`}>
-						img
+					{/*<div className={`${classes.types} ${eventsState.isShowImage ? "hide" : "show"}`}>*/}
+					{/*<div className={`${classes.types} ${eventsState.isShowImage ? "show" : "hide"}`}>*/}
+					<div className={`${classes.types} ${imageVisible ? "show" : "hide"}`}>
+						<ShipScreen/>
 					</div>
 				</Grid>
 			</Grid>
@@ -224,4 +230,4 @@ export const Events30 = () => {
 			</Container>
 		</div>
 	);
-};
+});

@@ -132,7 +132,8 @@ const YaMap = observer(({isVisible, style}) => {
 
 		setBalContent(`
 		    <div class="yamap__balloon__content">
-		        <img class="yamap__balloon__content__img" src=${link} alt="123">
+		        <!-- <img class="yamap__balloon__content__img" src=${link} alt="123"> -->
+		         <img src=${link} alt="123" width="384" height="216">
 		        <!--<iframe width="384" height="216"
 		            src=${link}?controls=0&autoplay=1&mute=1"
 		            frameBorder="0" allow="accelerometer;

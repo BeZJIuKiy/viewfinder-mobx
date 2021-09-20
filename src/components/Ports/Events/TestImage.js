@@ -6,6 +6,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ports from "../../../store/ports";
 import header from "../../../store/header";
 import {observer} from "mobx-react-lite";
+import eventsState from "../../../store/eventsState";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -55,6 +56,7 @@ export const TestImage = observer(() => {
 			              onClick={() => {
 				              ports.setImageId(id);
 				              ports.setVisibleSelectedImage(true);
+				              // eventsState.setShowImage(true);
 			              }}
 			>
 				<img

@@ -91,40 +91,17 @@ export const Header = observer(() => {
 
 	useEffect(() => {
 		/* Set Events from Server */
-		// setHandleInterval(
-		// 	setInterval(() => {
-		// 		// getNewNotifications();
-		// 		getPoints("http://192.168.250.183:5001/api/boats");
-		// 	}, 1000)
-		// )
+		setHandleInterval(
+			setInterval(() => {
+				// getNewNotifications();
+				getPoints("http://192.168.250.183:5001/api/boats");
+			}, 1000)
+		)
 	}, []);
 
 
 	useEffect(() => {
-		/* Set Events from Server */
-		// getPoints("http://192.168.250.183:8080/api/boats");
-		// ports.setEvents(notifications.map(note => {
-		// 	const img = note.img?.length
-		// 		? note.img.replace(":", "")
-		// 		: note.img;
-		//
-		// 	return ({
-		// 		id: note.id,
-		// 		typeError: 'Regular',
-		// 		typeVessel: "Unknown",
-		// 		location: 'Russia',
-		// 		city: 'Saint Petersburg',
-		// 		camera: note.name,
-		// 		date: 'Unknown',
-		// 		time: 'Unknown',
-		// 		timezone: 'Unknown',
-		// 		imageLink: img,
-		// 		newEvent: true,
-		// 		description: 'NO DESCRIPTION',
-		// 	})
-		// }))
-
-		// getNewNotifications();
+		getNewNotifications();
 	}, [notifications]);
 	useEffect(() => {
 		setPortNotes();
