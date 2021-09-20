@@ -6,7 +6,9 @@ import connects from "../store/connects";
 const useStyles = makeStyles((theme) => ({
     soundAlert: {
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
+        alignItems: "center",
 
         overflow: "hidden",
 
@@ -20,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
         "&.show": {
             display: "flex",
+            padding: "0 10px",
 
             "&.critical": {
                 background: "rgba(255, 51, 51, 0.5)",
@@ -40,7 +43,11 @@ const useStyles = makeStyles((theme) => ({
     message: {
         fontSize: 42,
         color: "#e5e5e5",
-        marginTop: theme.spacing(10),
+        "&.context": {},
+        "&.text": {
+            fontSize: 32,
+        },
+        // marginTop: theme.spacing(10),
     },
 }));
 
@@ -48,49 +55,67 @@ export const SoundAlert = observer(() => {
     const classes = useStyles();
 
     const [isVisible, setVisible] = useState(false);
+    const [voice, setVoice] = useState("");
     const [message, setMessage] = useState(<div className={`${classes.soundAlert} ${isVisible ? "show" : "hide"}`}/>);
+    const [triggerWords, setTriggerWords] = useState([]);
+
+    const recognizer = new window.webkitSpeechRecognition();
+    const controlWords = ["перелить", "переливаем", "ночью", "пожар", "огонь", "дым", "топливо", "авария", "удар", "сольем", "слив", "слить"];
 
     useEffect(() => {
-        if (connects.wsSound.onopen === null) return;
+        if (voice.length === 0) return;
 
         setVisible(true);
-    }, [connects.wsSound.onmessage]);
-    useEffect(() => {
-        if (connects.wsSound.onopen === null) return;
-        const message = connects.wsSound.onmessage.data;
-        // const message = "critical";
-        setMessage(recognitionMessage(message));
-    }, [isVisible]);
 
-    const recognitionMessage = (message) => {
-        switch (message) {
-            case "critical": {
+    }, [voice]);
+    useEffect(() => {
+        setMessage(recognitionMessage(voice));
+    }, [isVisible, voice]);
+
+
+
+    const recognitionMessage = () => {
+        switch (voice) {
+            // case "critical": {
+            case "критическая ошибка": {
                 return (
                     <div
-                        className={`${classes.soundAlert} ${isVisible ? "show" : "hide"} ${message}`}
+                        className={`${classes.soundAlert} ${isVisible ? "show" : "hide"} critical`}
                         onClick={handleClose}
                     >
-                        <div className={classes.message}>{message}</div>
+                        <div className={classes.message}>{voice}</div>
                     </div>
                 )
             }
-            case "warning": {
+            // case "warning": {
+            case "предупреждаю": {
+                // console.log("предупреждаю")
                 return (
                     <div
-                        className={`${classes.soundAlert} ${isVisible ? "show" : "hide"} ${message}`}
+                        className={`${classes.soundAlert} ${isVisible ? "show" : "hide"} warning`}
                         onClick={handleClose}
                     >
-                        <div className={classes.message}>{message}</div>
+                        <div className={classes.message}>{voice}</div>
                     </div>
                 )
             }
-            case "text": {
+            case "текст": {
                 return (
                     <div
-                        className={`${classes.soundAlert} ${isVisible ? "show" : "hide"} ${message}`}
+                        className={`${classes.soundAlert} ${isVisible ? "show" : "hide"} text`}
                         onClick={handleClose}
                     >
-                        <div className={classes.message}>{message}</div>
+                        <div className={classes.message}>{voice}</div>
+                    </div>
+                )
+            }
+            default: {
+                return (
+                    <div
+                        className={`${classes.soundAlert} ${isVisible ? "show" : "hide"} text`}
+                        onClick={handleClose}
+                    >
+                        <div className={classes.message}>{voice}</div>
                     </div>
                 )
             }
@@ -100,9 +125,49 @@ export const SoundAlert = observer(() => {
         setVisible(false);
     }
 
+    recognizer.interimResults = true;
+    recognizer.lang = 'ru-Ru';
+
+    recognizer.onresult = (event) => {
+        const result = event.results[event.resultIndex];
+        if (result.isFinal) {
+            const msg = result[0].transcript.toLowerCase()
+            const words = msg.split(" ");
+            // console.log(words);
+
+            const foundWord = [];
+            words.forEach((word) => {
+                const tempWord = controlWords.find((cWord) => cWord === word);
+                if (tempWord?.length) foundWord.push(tempWord);
+            });
+
+            if (foundWord.length) {
+                setTriggerWords(foundWord);
+                setVoice(msg);
+            }
+
+            // setVoice(msg);
+            // console.log(`Текст: ${msg}`);
+            setTimeout(() => recognizer.start(), 100);
+        }
+    };
+
+    recognizer.start();
+
+
     return (
-        <>
-            {message}
-        </>
+        <div
+            className={`${classes.soundAlert} ${isVisible ? "show" : "hide"} critical`}
+            onClick={handleClose}
+        >
+            <div className={`${classes.message} context`}>
+                {triggerWords.map((word) => {
+                    return (
+                        <span> {word} </span>
+                    )
+                })}
+            </div>
+            <div className={`${classes.message} text`}>контекст: {voice}</div>
+        </div>
     );
 });

@@ -220,15 +220,15 @@ export const DrawControl = observer(() => {
 
 		const sendData = {
 			// camera_id: camera.id,
-			camera_id: 2,
+			camera_id: 1,
 			polygons,
 		}
 
 		// console.log(sendData)
 
 		try {
-			const url = "http://192.168.250.183:5001/api/zones";
-			// const url = "http://localhost:5001/api/zones";
+			// const url = "http://192.168.250.183:5001/api/zones";
+			const url = "http://localhost:5001/api/zones";
 
 			await fetch(url, {
 				method: "POST", // *GET, POST, PUT, DELETE, etc.

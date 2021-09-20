@@ -14,7 +14,7 @@ import {SoundAlert} from "./components/SoundAlert";
 function App() {
     // connects.setServerEvents(new EventSource('http://192.168.250.183:5001/api/boats/sse'));
     connects.setWSCameraCameraControl(new WebSocket(`ws://192.168.250.147:7000`)); //Для выставки
-    connects.setWSSound(new WebSocket(`ws://192.168.250.147:7000`)); //Для выставки
+    // connects.setWSSound(new WebSocket(`ws://192.168.250.147:7000`)); //Для выставки
     // connects.setWSCameraCameraControl(new WebSocket(`ws://localhost:7000`)); //Для выставки
     // connects.setWSCameraCameraControl(new WebSocket(`ws://192.168.250.183:8080`)); // For work with LuckeR
 

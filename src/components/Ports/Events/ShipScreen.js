@@ -137,10 +137,9 @@ export const ShipScreen = observer(() => {
 
 	return (
 		<div className={classes.shipScreen}>
-			{arrow("previous")}
-			{/*<img className={classes.shipImage} src={`data:image/png;base64, ${event.imageLink || ""}`} alt="#"/>*/}
+			{/*{arrow("previous")}*/}
 			<img className={classes.shipImage} src={"data:image/png;base64," + selectedEvent?.imageLink} alt="#"/>
-			{arrow("next")}
+			{/*{arrow("next")}*/}
 			{close()}
 		</div>
 	);

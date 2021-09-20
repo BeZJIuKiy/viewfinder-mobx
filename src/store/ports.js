@@ -26,7 +26,7 @@ class ports {
 
 	counter = {
 		portsId: 0,
-		camerasId: 2,
+		camerasId: 1,
 		eventsId: 0,
 	};
 
@@ -184,8 +184,8 @@ class ports {
 					description: 'Bench Camera PTZ',
 					coordinates: [59.762625, 30.355790],
 					zoom: 15,
-					link: "http://192.168.250.210:8000/bgr",
-					// link: "http://192.168.250.147:8000/bgr", //MSI
+					// link: "http://192.168.250.210:8000/bgr",
+					link: "http://192.168.250.147:8000/bgr", //MSI
 					previewLink: previewImg2,
 
 					// link: 'https://rtsp.me/embed/ayAby5ia',
@@ -405,7 +405,7 @@ class ports {
 
 		// makePersistable(this, {
 		//     name: "PortsStore",
-		//     properties: ["data", "selectedObjects"],
+		//     properties: ["data", "selectedObjects", "searchQuery"],
 		//     storage: window.localStorage
 		// });
 
