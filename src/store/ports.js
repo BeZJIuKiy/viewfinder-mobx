@@ -139,7 +139,7 @@ class ports {
 					move: 'PTZ',
 					viewingAngle: '80',
 					description: 'Club Parking PTZ',
-					coordinates: [59.977915, 30.240934],
+					coordinates: [59.977913, 30.240952],
 					zoom: 15,
 					link: 'http://87.244.33.186:8001/bgr',
 					previewLink: previewSPbPort,
