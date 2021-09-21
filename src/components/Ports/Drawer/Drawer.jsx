@@ -10,18 +10,12 @@ import {DrawerSearch} from "./DrawerSearch";
 import {DrawerItems} from "./DrawerItems";
 
 const useStyles = makeStyles((theme) => ({
-	root: {
+	drawer: {
 		height: "100%",
 
 		flex: "0 0 auto",
 		backgroundColor: theme.palette.background.paper,
 		overflow: "auto",
-
-		// "@media(max-width: 425px)": {
-		// 	// maxWidth: 99999,
-		// 	// backgroundColor: "gold",
-		// 	// overflowY: "hidden",
-		// }
 	},
 
 	main: {
@@ -97,12 +91,12 @@ export const Drawer = observer(({isMobile}) => {
 		setIcon(icon);
 	}
 
-	const items = allData.map(({id, description}, i) => {
+	const items = allData.map(({id, description, zoom}, i) => {
 		const portId = Number.isInteger(selectedObjects.port.id);
 
 		return (
 			<DrawerItems
-				key={`${id}-${description}`}
+				key={`${id}-${description}-${zoom}`}
 				icon={icon}
 				description={description}
 				notes={notes[id]}
@@ -111,28 +105,8 @@ export const Drawer = observer(({isMobile}) => {
 		)
 	});
 
-	// const items = () => {
-	// 	const portId = Number.isInteger(selectedObjects.port.id);
-	//	const pointsId = [];
-	//	for (const key in allData) pointsId.push(key);
-	//
-	// 	return pointsId.map((itemId) => {
-	// 		const {id, description} = allData[itemId];
-	//
-	// 		return (
-	// 			<DrawerItems
-	// 				key={`${id}-${description}`}
-	//				icon={icon}
-	// 				description={description}
-	// 				notes={notes[id]}
-	// 				onClick={() => id ? changeDataCamera(id) : changeDataPorts(id)}
-	// 			/>
-	// 		)
-	// 	})
-	// }
-
 	return (
-		<div className={classes.root}>
+		<div className={classes.drawer}>
 			<List className={`${classes.main}`} component="nav" aria-label="main mailbox folders">
 				<div className={classes.search}>
 					<DrawerSearch data={allData} search={search} label={`Search ${searchLabel}`}

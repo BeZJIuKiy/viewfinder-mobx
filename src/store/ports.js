@@ -63,7 +63,7 @@ class ports {
 			link: '',
 
 			cameras: [
-				// FOR SITE
+				/* FOR SITE */
 				// {
 				// 	id: this.counter.camerasId++,
 				// 	country: 'Russia',

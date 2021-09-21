@@ -9,8 +9,18 @@ import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import Divider from "@material-ui/core/Divider";
 import {observer} from "mobx-react-lite";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+	listItemText: {
+		fontFamily: `"Quicksand", sans-serif`,
+		fontWeight: 500,
+	},
+}));
 
 export const DrawerItems = observer(({icon, description, notes, onClick}) => {
+	const classes = useStyles();
+
 	return (
 		<div>
 			<ListItem button onClick={onClick}>
@@ -19,7 +29,7 @@ export const DrawerItems = observer(({icon, description, notes, onClick}) => {
 						<img src={icon} height={25} width={25} alt=""/>
 					</Icon>
 				</ListItemIcon>
-				<ListItemText primary={description}/>
+				<ListItemText classes={{primary: classes.listItemText}} primary={description}/>
 
 				<NavLink to="/events">
 					<IconButton aria-label="show 17 new notifications" color="default">

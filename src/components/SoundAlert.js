@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
 
         overflow: "hidden",
+        fontFamily: `"Quicksand", sans-serif`,
 
         position: "absolute",
         top: 0,
@@ -47,78 +48,26 @@ const useStyles = makeStyles((theme) => ({
         "&.text": {
             fontSize: 32,
         },
-        // marginTop: theme.spacing(10),
     },
 }));
 
 export const SoundAlert = observer(() => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const classes = useStyles();
 
     const [isVisible, setVisible] = useState(false);
     const [voice, setVoice] = useState("");
-    const [message, setMessage] = useState(<div className={`${classes.soundAlert} ${isVisible ? "show" : "hide"}`}/>);
     const [triggerWords, setTriggerWords] = useState([]);
 
-    const recognizer = new window.webkitSpeechRecognition();
+    const recognizer = new SpeechRecognition();
     const controlWords = ["перелить", "переливаем", "ночью", "пожар", "огонь", "дым", "топливо", "авария", "удар", "сольем", "слив", "слить"];
 
     useEffect(() => {
         if (voice.length === 0) return;
 
         setVisible(true);
-
     }, [voice]);
-    useEffect(() => {
-        setMessage(recognitionMessage(voice));
-    }, [isVisible, voice]);
 
-
-
-    const recognitionMessage = () => {
-        switch (voice) {
-            // case "critical": {
-            case "критическая ошибка": {
-                return (
-                    <div
-                        className={`${classes.soundAlert} ${isVisible ? "show" : "hide"} critical`}
-                        onClick={handleClose}
-                    >
-                        <div className={classes.message}>{voice}</div>
-                    </div>
-                )
-            }
-            case "предупреждаю": {
-                return (
-                    <div
-                        className={`${classes.soundAlert} ${isVisible ? "show" : "hide"} warning`}
-                        onClick={handleClose}
-                    >
-                        <div className={classes.message}>{voice}</div>
-                    </div>
-                )
-            }
-            case "текст": {
-                return (
-                    <div
-                        className={`${classes.soundAlert} ${isVisible ? "show" : "hide"} text`}
-                        onClick={handleClose}
-                    >
-                        <div className={classes.message}>{voice}</div>
-                    </div>
-                )
-            }
-            default: {
-                return (
-                    <div
-                        className={`${classes.soundAlert} ${isVisible ? "show" : "hide"} text`}
-                        onClick={handleClose}
-                    >
-                        <div className={classes.message}>{voice}</div>
-                    </div>
-                )
-            }
-        }
-    }
     const handleClose = () => {
         setVisible(false);
     }
@@ -131,7 +80,6 @@ export const SoundAlert = observer(() => {
         if (result.isFinal) {
             const msg = result[0].transcript.toLowerCase()
             const words = msg.split(" ");
-            // console.log(words);
 
             const foundWord = [];
             words.forEach((word) => {
@@ -140,18 +88,22 @@ export const SoundAlert = observer(() => {
             });
 
             // console.log(msg);
+            setTriggerWords([]);
 
             if (foundWord.length) {
                 setTriggerWords(foundWord);
                 setVoice(msg);
             }
-
-            // setVoice(msg);
-            // console.log(`Текст: ${msg}`);
-            setTimeout(() => recognizer.start(), 100);
-            // setTimeout(() => recognizer.start(), 100);
         }
     };
+
+
+    recognizer.onaudioend = () => {
+        recognizer.onend = () => {
+            recognizer.stop();
+            recognizer.start()
+        }
+    }
 
     recognizer.start();
 
@@ -161,13 +113,10 @@ export const SoundAlert = observer(() => {
             onClick={handleClose}
         >
             <div className={`${classes.message} context`}>
-                {triggerWords.map((word) => {
-                    return (
-                        <span> {word} </span>
-                    )
-                })}
+                {triggerWords.map(word => <span key={`SoundAlert--${word}`}> {word} </span>)}
             </div>
-            <div className={`${classes.message} text`}>контекст: {voice}</div>
+
+            <div className={`${classes.message} text`}>Context: {voice}</div>
         </div>
     );
 });

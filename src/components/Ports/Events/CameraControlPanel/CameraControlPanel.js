@@ -1,8 +1,3 @@
-//59.76262552060334, 30.35579027419917
-
-
-
-
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
@@ -21,9 +16,7 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: "center",
 		alignItems: "center",
 
-		// maxWidth: 250,
 		maxWidth: 180,
-		// padding: 10,
 
 		borderRadius: 5,
 		background: "rgba(200, 200, 200, 0.5)",
@@ -178,34 +171,16 @@ export const CameraControlPanel = observer(() => {
 
 	const [intervalId, setIntervalId] = useState(null);
 
-	// const PORT = 3000;
-	// const PORT = 8080;
-	// const HOST = '192.168.250.183';
-	//
-	// const PORT = 7000;
-	// const HOST = 'localhost';
-	//
-	// const socket = new WebSocket(`ws://${HOST}:${PORT}`);
-	// socket.onopen = () => {
-	//     console.log("Connect");
-	// }
-	// socket.onmessage = (message) => {
-	//     console.log(message.data)
-	// }
-
-
 	connects.wsCameraControl.onopen = () => {
 		console.log("Connect");
 	}
 	connects.wsCameraControl.onmessage = (message) => {
-		console.log(message.data)
+		console.log(message.data);
 	}
 
 	const sendMsg = (command) => {
 		try {
-			console.log(command)
 			const message = Buffer.from(command, 'utf8')
-			// socket.send(message);
 			connects.wsCameraControl.send(message);
 		} catch (e) {
 			console.error(e)
@@ -285,18 +260,9 @@ export const CameraControlPanel = observer(() => {
 			window.removeEventListener("keydown", memoizedListener, false);
 		}
 	}, [eventsState.isShowControlCameraMove])
-	const handleFocusControlArea = (e) => {
-		window.addEventListener("keydown", function (e) {
-			if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
-				e.preventDefault();
-			}
-		}, false);
-
-		window.addEventListener("keydown", keyDown);
-	}
 
 	const defaultKeyEvent = (e) => {
-		if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+		if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
 			e.preventDefault();
 		}
 	}

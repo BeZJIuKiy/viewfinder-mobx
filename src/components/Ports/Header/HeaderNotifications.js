@@ -22,10 +22,13 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
         maxWidth: 360,
+        maxHeight: 300,
+
         backgroundColor: theme.palette.background.paper,
         position: 'relative',
         overflow: 'auto',
-        maxHeight: 300,
+
+        fontFamily: `"Quicksand", sans-serif`,
 
         "@media(max-width: 425px)": {
             maxWidth: "90%",
@@ -78,6 +81,15 @@ const useStyles = makeStyles((theme) => ({
     icon: {
         fontSize: 28,
     },
+
+    listItemTextPrimary: {
+        fontFamily: `"Quicksand", sans-serif`,
+        fontWeight: 500,
+    },
+
+    listSubheader: {
+        fontFamily: `"Quicksand", sans-serif`,
+    }
 }))
 
 export const HeaderNotifications = observer(() => {
@@ -89,11 +101,7 @@ export const HeaderNotifications = observer(() => {
 
     useEffect(() => {
         header.checkNewNotifications();
-    }, [ports.data[0].cameras[0].events.length])
-
-    // const str = "camera 123";
-    // const regExp = /[a-zA-Z]+/g;
-
+    }, [ports.data[0].cameras[0].events.length]);
 
     const notificationList = () => {
         return (
@@ -103,7 +111,7 @@ export const HeaderNotifications = observer(() => {
                         <li key={`section-${id}`} className={classes.listSection}>
                             <ul className={classes.ul}>
                                 <Divider/>
-                                <ListSubheader>{`Port in ${city}`}</ListSubheader>
+                                <ListSubheader className={classes.listSubheader}>{`Port in ${city}`}</ListSubheader>
                                 <Divider/>
                                 {cameras.map((camera) =>
                                     camera.events.filter((event) => event.newEvent)
@@ -117,6 +125,7 @@ export const HeaderNotifications = observer(() => {
                                                         className={`${classes.navLink} ${event.typeError.toLowerCase()}`}
                                                         to={"/events"}>
                                                         <ListItemText
+                                                            classes={{primary: classes.listItemTextPrimary}}
                                                             primary={`${event.date} ${camera.description}`}
                                                             onClick={() => handleSelectItem(id, camera.id, event.id)}/>
                                                     </NavLink>
