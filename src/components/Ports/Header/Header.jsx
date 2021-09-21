@@ -95,15 +95,14 @@ export const Header = observer(() => {
 		setHandleInterval(
 			setInterval(() => {
 				// getNewNotifications();
-				// getPoints("https://192.168.250.183:5001/api/boats");
-				getPoints(connects.urlEvents);
+				// getPoints(connects.urlEvents);
 			}, 1000)
 		)
 	}, []);
 
 
 	useEffect(() => {
-		getNewNotifications();
+		// getNewNotifications();
 	}, [notifications]);
 	useEffect(() => {
 		setPortNotes();

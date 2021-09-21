@@ -203,6 +203,7 @@ export const CameraControlPanel = observer(() => {
 
 	const sendMsg = (command) => {
 		try {
+			console.log(command)
 			const message = Buffer.from(command, 'utf8')
 			// socket.send(message);
 			connects.wsCameraControl.send(message);
