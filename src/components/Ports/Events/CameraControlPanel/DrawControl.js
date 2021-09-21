@@ -15,6 +15,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import eventsState from "../../../../store/eventsState";
+import connects from "../../../../store/connects";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -228,9 +229,9 @@ export const DrawControl = observer(() => {
 
 		try {
 			// const url = "http://192.168.250.183:5001/api/zones";
-			const url = "http://localhost:5001/api/zones";
+			// const url = "http://localhost:5001/api/zones";
 
-			await fetch(url, {
+			await fetch(connects.urlZones, {
 				method: "POST", // *GET, POST, PUT, DELETE, etc.
 				mode: "cors", // no-cors, *cors, same-origin
 				cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached

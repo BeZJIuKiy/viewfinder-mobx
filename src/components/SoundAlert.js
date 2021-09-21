@@ -87,9 +87,7 @@ export const SoundAlert = observer(() => {
                     </div>
                 )
             }
-            // case "warning": {
             case "предупреждаю": {
-                // console.log("предупреждаю")
                 return (
                     <div
                         className={`${classes.soundAlert} ${isVisible ? "show" : "hide"} warning`}
@@ -141,7 +139,7 @@ export const SoundAlert = observer(() => {
                 if (tempWord?.length) foundWord.push(tempWord);
             });
 
-            console.log(msg);
+            // console.log(msg);
 
             if (foundWord.length) {
                 setTriggerWords(foundWord);
@@ -151,11 +149,11 @@ export const SoundAlert = observer(() => {
             // setVoice(msg);
             // console.log(`Текст: ${msg}`);
             setTimeout(() => recognizer.start(), 100);
+            // setTimeout(() => recognizer.start(), 100);
         }
     };
 
     recognizer.start();
-
 
     return (
         <div

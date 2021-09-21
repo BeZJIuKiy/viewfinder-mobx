@@ -5,6 +5,10 @@ class connects {
 	wsCameraControl = "";
 	wsSound = "";
 
+	urlEvents = "";
+	urlPortsPage = "";
+	urlZones = "";
+
 	constructor() {
 		makeAutoObservable(this);
 	}
@@ -19,6 +23,17 @@ class connects {
 
 	setWSSound = (ws) => {
 		this.wsSound = ws;
+	}
+
+
+	setUrlEvents = (url) => {
+		this.urlEvents = url;
+	}
+	setUrlPortsPage = (url) => {
+		this.urlPortsPage = url;
+	}
+	setUrlZones = (url) => {
+		this.urlZones = url;
 	}
 }
 

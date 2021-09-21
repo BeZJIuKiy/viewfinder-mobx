@@ -12,11 +12,20 @@ import {SoundAlert} from "./components/SoundAlert";
 
 
 function App() {
+    connects.setUrlEvents("https://localhost:5001/api/boats");
+    // connects.setUrlEvents("https://192.168.250.183:5001/api/boats");
+
+    connects.setUrlZones("https://localhost:5001/api/zones");
+    // connects.setUrlZones("https://192.168.250.183:5001/api/zones");
+
+    // connects.setUrlPortsPage("https://localhost:8080/api/boats");
+
+
     // connects.setServerEvents(new EventSource('http://192.168.250.183:5001/api/boats/sse'));
-    connects.setWSCameraCameraControl(new WebSocket(`ws://192.168.250.147:7000`)); //Для выставки
-    // connects.setWSSound(new WebSocket(`ws://192.168.250.147:7000`)); //Для выставки
-    // connects.setWSCameraCameraControl(new WebSocket(`ws://localhost:7000`)); //Для выставки
-    // connects.setWSCameraCameraControl(new WebSocket(`ws://192.168.250.183:8080`)); // For work with LuckeR
+    // connects.setWSCameraCameraControl(new WebSocket(`wss://192.168.250.147:7000`)); //Для выставки
+
+    connects.setWSCameraCameraControl(new WebSocket(`ws://localhost:7000`)); //Для выставки
+    // connects.setWSCameraCameraControl(new WebSocket(`wss://192.168.250.183:8080`)); // For work with LuckeR
 
     return (
         <BrowserRouter>
@@ -28,7 +37,7 @@ function App() {
             <Route path='/events' component={Events30}/>
             {/*<Route path='/events' component={Events20}/>*/}
             <Route path='/canvas' component={Canvas}/>
-            <Route path='/test' component={Test}/>
+            {/*<Route path='/test' component={Test}/>*/}
             {/*<Route path='/events' render={() => <Events /> } /> так можно*/}
         </BrowserRouter>
     );

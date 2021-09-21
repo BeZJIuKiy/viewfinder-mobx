@@ -13,6 +13,7 @@ import ports from "../../../store/ports";
 import {HeaderNotifications} from "./HeaderNotifications";
 import {MobileDrawer} from "../MobileDrawer/MobileDrawer";
 import boat1_04 from "../Events/images/b1-04.jpg";
+import connects from "../../../store/connects";
 
 const useStyles = makeStyles((theme) => {
 	const {miniAvatar} = header
@@ -94,7 +95,8 @@ export const Header = observer(() => {
 		setHandleInterval(
 			setInterval(() => {
 				// getNewNotifications();
-				getPoints("http://192.168.250.183:5001/api/boats");
+				// getPoints("https://192.168.250.183:5001/api/boats");
+				getPoints(connects.urlEvents);
 			}, 1000)
 		)
 	}, []);

@@ -8,6 +8,7 @@ import {useWindowDimensions} from "../../useHooks/useWindowDimensions";
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import {Hidden} from "@material-ui/core";
+import connects from "../../store/connects";
 
 
 const useStyles = makeStyles((theme) => {
@@ -109,9 +110,9 @@ export const Ports = () => {
 
 	const handlerMapChange = () => setmapVisible(!mapVisible);
 
-	fetch('http://192.168.250.183:8080/api/boats')
-		.then(response => response.json())
-		.then(item => console.log(item));
+	// fetch(connects.urlPortsPage)
+	// 	.then(response => response.json())
+	// 	.then(item => console.log(item));
 
 	return (
 		<Grid container style={{overflow: "hidden",}}>
