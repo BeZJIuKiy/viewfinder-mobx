@@ -3,13 +3,6 @@ import {observer} from "mobx-react-lite";
 import ports from "../../../store/ports";
 import React, {useEffect, useState} from "react";
 
-// const [eventSource] = useState(new EventSource('http://192.168.250.183:5001/sse'));
-// useEffect(() => {
-// 	eventSource.onmessage = ({data}) => {
-// 		console.log(`New message: ${data}`)
-// 	}
-// }, [eventSource?.onmessage]);
-
 const useStyles = makeStyles((theme) => ({
 	otherCameras: {
 		maxHeight: 450,
@@ -58,7 +51,7 @@ export const OtherCameras = observer(() => {
 						{/*	allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
 						{/*	allowFullScreen*/}
 						{/*/>*/}
-						<img style={{width: "100%", height: "100%"}} src={camera.previewLink} alt={"jpg stream"} />
+						<img style={{width: "100%", height: "100%"}} src={camera.previewLink} alt={"jpg stream"}/>
 						<div className={classes.pressLayout} onClick={() => goToNextCam(camera.id)}/>
 					</div>
 				)

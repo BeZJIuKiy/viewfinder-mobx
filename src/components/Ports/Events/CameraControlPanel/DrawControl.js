@@ -16,6 +16,7 @@ import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import eventsState from "../../../../store/eventsState";
 import connects from "../../../../store/connects";
+import styles from "../../../../store/styles";
 
 const useStyles = makeStyles((theme) => ({
 	container: {
@@ -64,10 +65,15 @@ const useStyles = makeStyles((theme) => ({
 	},
 	confirmButton: {
 		width: 100,
+		fontFamily: styles.fontFamily,
 
 		"&.save": {},
 
 		"&.cancel": {},
+	},
+	btn: {
+		fontFamily: styles.fontFamily,
+		fontWeight: 600,
 	},
 }));
 export const DrawControl = observer(() => {
@@ -167,7 +173,6 @@ export const DrawControl = observer(() => {
 	}
 
 	const saveNewPolygonsData = () => {
-		// fetchPostPolygon(canvasState.tempPolygons[camera.id], "http://192.168.250.183:5001/api/zones");
 		postPoints();
 		eventsState.setCreatePolygon(false);
 		eventsState.setZoneAction("");
@@ -183,17 +188,13 @@ export const DrawControl = observer(() => {
 			const test = fetch(url)
 				.then(response => response.json())
 				.then(data => console.log(data));
-
-			console.log(test)
-
 		} catch (e) {
 			console.log(e)
 		}
 	};
 	const postPoints = async () => {
-		const polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id].map((polygon, index) => {
+		const polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id].map((polygon) => {
 				return ({
-					// name: ports.selectedObjects.camera.description,
 					id: polygon.id,
 					// color: polygon.getAttributeFillColor(),
 
@@ -225,12 +226,7 @@ export const DrawControl = observer(() => {
 			polygons,
 		}
 
-		// console.log(sendData)
-
 		try {
-			// const url = "http://192.168.250.183:5001/api/zones";
-			// const url = "http://localhost:5001/api/zones";
-
 			await fetch(connects.urlZones, {
 				method: "POST", // *GET, POST, PUT, DELETE, etc.
 				mode: "cors", // no-cors, *cors, same-origin
@@ -254,6 +250,7 @@ export const DrawControl = observer(() => {
 		<Grid container className={classes.container} spacing={1}>
 			<Grid item className={`${classes.item} ${!isCreatePolygon && !isShowControlCameraMove ? "show" : "hide"}`}>
 				<Button
+					className={`${classes.btn}`}
 					variant="contained"
 					color="primary"
 					onClick={eventsState.reVisibleCameraCanvas}
@@ -263,6 +260,7 @@ export const DrawControl = observer(() => {
 			</Grid>
 			<Grid item className={`${classes.mainControlItems} ${isVisibleCameraCanvas ? "hide" : "show"}`}>
 				<Button
+					className={`${classes.btn}`}
 					variant="contained"
 					color="primary"
 					onClick={controlMovePanelCamera}
@@ -272,6 +270,7 @@ export const DrawControl = observer(() => {
 			</Grid>
 			<Grid item className={`${classes.mainControlItems} ${isVisibleCameraCanvas ? "show" : "hide"}`}>
 				<Button
+					className={`${classes.btn}`}
 					variant="contained"
 					color="secondary"
 					onClick={createChangePolygon}

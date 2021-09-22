@@ -91,52 +91,26 @@ export const Canvas = observer(() => {
         switch (Number(result.toFixed(3))) {
             case 1.25: {
                 setRatio({width: 5, height: 4});
-                // setWidth(800);
-                // setHeight(640);
-                // canvasState.pointCoefficient = canvasState.size.width / 800;
-                console.log('1.25');
                 break;
             }
             case 1.333: {
                 setRatio({width: 4, height: 3});
-                // setWidth(800);
-                // setHeight(600);
-                // canvasState.pointCoefficient = canvasState.size.width / 800;
-                console.log('1.333');
                 break;
             }
             case 1.5: {
                 setRatio({width: 3, height: 2});
-                // setWidth(720);
-                // setHeight(480);
-                // canvasState.pointCoefficient = canvasState.size.width / 720;
-                console.log('1.5');
                 break;
             }
             case 1.6: {
                 setRatio({width: 16, height: 10});
-                // setWidth(800);
-                // setHeight(500);
-                // canvasState.pointCoefficient = canvasState.size.width / 800;
-                console.log('1.6');
                 break;
             }
             case 1.667: {
                 setRatio({width: 5, height: 3});
-                // setWidth(800);
-                // setHeight(480);
-                // canvasState.pointCoefficient = canvasState.size.width / 800;
-                console.log('1.667');
                 break;
             }
             case 1.778: {
                 setRatio({width: 16, height: 9});
-
-                // setWidth(800);
-                // setHeight(450);
-                //
-                // canvasState.setPointCoefficient(canvasState.size.width / 800);
-                // console.log('1.778');
                 break;
             }
             default: setRatio({width: 1, height: 1});
@@ -148,14 +122,10 @@ export const Canvas = observer(() => {
         displayResolution(canvasState.size.width / canvasState.size.height);
     }, []);
     useEffect(() => {
-        // const socket = new WebSocket('ws://localhost:5000/');
-
-        // canvasState.setSocket(socket);
         canvasState.setSocket("");
         canvasState.setSessionId(params.id);
 
         new Polygons(canvasRef.current, "", params.id);
-        // new Polygons(canvasRef.current, socket, params.id);
     }, [width, ports.selectedObjects.camera]);
     useEffect(() => {
         const isSide = iframeRef.current?.scrollHeight < (iframeRef.current?.scrollWidth / ratio.width * ratio.height);
@@ -176,8 +146,6 @@ export const Canvas = observer(() => {
         canvasState.setCanvasReSize(width, height);
     };
 
-    // console.log(width, height);
-
     return (
         <div className={classes.main}>
             <div className={classes.canvasDraw}>
@@ -194,8 +162,6 @@ export const Canvas = observer(() => {
 
                 <div className={classes.forPreview} ref={iframeRef}>
                     <img style={{width: width, height: height}} src={ports.selectedObjects.camera.link} alt={"jpg stream"} />
-                    {/*<img style={{width: width, height: height}} src={ports.selectedObjects.camera.previewLink} alt={"jpg stream"} />*/}
-                    {/*<canvas id={"canvasTest"} style={{width: width, height: height}}/>*/}
                 </div>
 
                 <canvas

@@ -49,8 +49,8 @@ const useStyles = makeStyles((theme) => ({
 		// padding: 0,
 
 		"&.controlMovePanel": {
-			marginTop: theme.spacing(-3),
-			marginLeft: 12,
+			// marginTop: theme.spacing(-3),
+			// marginLeft: 12,
 
 			"&.show": {
 				display: "flex",
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 			},
 		},
 		"&.tableEvents": {
-			marginTop: theme.spacing(-4),
+			// marginTop: theme.spacing(-4),
 		},
 		"&.fourthPart": {
 			overflowY: "auto",
@@ -76,17 +76,14 @@ const useStyles = makeStyles((theme) => ({
 		margin: "0 auto",
 
 		alignItems: "center",
-
-		// background: "rgba(51, 51, 51, 0.5)",
-		// background: "rgba(200, 200, 200, 0.7)",
 		borderRadius: 5,
 
-		position: "relative",
-
 		"&.drawControl": {
-			// marginTop: 18,
-			// marginBottom: 12,
+			// height: 10,
+			marginLeft: 8,
 		},
+
+		position: "relative",
 
 		"&.show": {
 			display: "block",
@@ -118,7 +115,6 @@ export const Events30 = observer(() => {
 			shipImage: {isVisible: imageVisible, id: imageId},
 		},
 	} = ports;
-	const {camerasNewNote} = header;
 
 	const vesselsPack = () => {
 		return (

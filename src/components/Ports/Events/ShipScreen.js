@@ -10,6 +10,7 @@ import ports from "../../../store/ports";
 import header from "../../../store/header";
 import * as events from "events";
 import eventsState from "../../../store/eventsState";
+import styles from "../../../store/styles";
 
 const useStyles = makeStyles((theme) => ({
 	shipScreen: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 		display: "flex",
 
-		fontFamily: `"Quicksand", sans-serif`,
+		fontFamily: styles.fontFamily,
 		position: "relative",
 	},
 	shipImage: {

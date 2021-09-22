@@ -7,9 +7,10 @@ import ports from "../../../store/ports";
 import header from "../../../store/header";
 import {observer} from "mobx-react-lite";
 import eventsState from "../../../store/eventsState";
+import styles from "../../../store/styles";
 
 const useStyles = makeStyles((theme) => ({
-	root: {
+	testImage: {
 		display: 'flex',
 		flexWrap: 'wrap',
 		justifyContent: 'space-around',
@@ -21,20 +22,23 @@ const useStyles = makeStyles((theme) => ({
 		height: "100%",
 		maxHeight: 450,
 
-		// width: 230,
-		// height: 400,
-
-		// Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
 		transform: 'translateZ(0)',
 	},
 	titleBar: {
 		cursor: "pointer",
+
+		fontFamily: styles.fontFamily,
+		fontWeight: 500,
+
 		background:
 			'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
 			'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
 	},
 	icon: {
 		color: 'white',
+	},
+	image: {
+		cursor: 'pointer'
 	},
 }));
 
@@ -59,10 +63,8 @@ export const TestImage = observer(() => {
 				              // eventsState.setShowImage(true);
 			              }}
 			>
-				<img
-					style={{cursor: 'pointer'}}
-					src={"data:image/png;base64," + imageLink} alt={typeVessel}
-					// src={imageLink} alt={typeVessel}
+				<img className={classes.image}
+					src={`data:image/png;base64,${imageLink}`} alt={typeVessel}
 				/>
 				<GridListTileBar
 					className={classes.titleBar}
@@ -75,7 +77,7 @@ export const TestImage = observer(() => {
 	});
 
 	return (
-		<div className={classes.root}>
+		<div className={classes.testImage}>
 			<GridList cellHeight={70} spacing={1} className={classes.gridList}>
 				{boatImage}
 			</GridList>
