@@ -15,6 +15,7 @@ import {useFormik, Form, Formik} from "formik";
 import {useHistory} from "react-router-dom";
 
 import * as yup from 'yup';
+import styles from "../../../store/styles";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	title: {
 		fontSize: "2.5vw",
-		fontFamily: `"Quicksand", sans-serif`,
+		fontFamily: styles.fontFamily,
 
 		"@media(max-width: 1024px)": {
 			fontSize: 18,
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	rememberMe: {
-		fontFamily: `"Quicksand", sans-serif`,
+		fontFamily: styles.fontFamily,
 	},
 	avatar: {
 		backgroundColor: theme.palette.secondary.main,
@@ -45,19 +46,19 @@ const useStyles = makeStyles((theme) => ({
 		width: '100%', // Fix IE 11 issue.
 	},
 	textField: {
-		fontFamily: `"Quicksand", sans-serif`,
+		fontFamily: styles.fontFamily,
 		backgroundColor: "#e5e5e5",
 	},
 	link: {
 		color: "#e5e5e5",
-		fontFamily: `"Quicksand", sans-serif`,
+		fontFamily: styles.fontFamily,
 	},
 	submit: {
 		margin: theme.spacing(3, 0, 2),
 
 		color: "#ddd",
 		fontSize: "1.3vw",
-		fontFamily: `"Quicksand", sans-serif`,
+		fontFamily: styles.fontFamily,
 		fontWeight: 500,
 
 		backgroundColor: "#3d4772",
@@ -138,6 +139,9 @@ export const SigninForm = () => {
 						name="email"
 						autoComplete="email"
 						autoFocus
+						InputLabelProps={{
+							classes: {root: classes.textField}
+						}}
 						value={formik.values.email}
 						onChange={formik.handleChange}
 						error={formik.touched.email && Boolean(formik.errors.email)}
@@ -154,6 +158,9 @@ export const SigninForm = () => {
 						type="password"
 						id="password"
 						autoComplete="current-password"
+						InputLabelProps={{
+							classes: {root: classes.textField}
+						}}
 						value={formik.values.password}
 						onChange={formik.handleChange}
 						error={formik.touched.password && Boolean(formik.errors.password)}

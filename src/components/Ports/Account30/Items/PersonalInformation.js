@@ -26,6 +26,7 @@ import {AccountTable} from "./AccountTable";
 import ports from "../../../../store/ports";
 import {useWindowDimensions} from "../../../../useHooks/useWindowDimensions";
 import {AccordionFromTable} from "./Accordion";
+import styles from "../../../../store/styles";
 
 
 const useStyles = makeStyles((theme) => {
@@ -45,8 +46,9 @@ const useStyles = makeStyles((theme) => {
 			fontSize: theme.typography.pxToRem(11),
 			flexBasis: '33.33%',
 			flexShrink: 0,
-			fontWeight: 500,
 
+			fontFamily: styles.fontFamily,
+			fontWeight: 600,
 			color: theme.palette.text.secondary,
 			textTransform: "uppercase",
 
@@ -55,6 +57,8 @@ const useStyles = makeStyles((theme) => {
 		secondaryHeading: {
 			marginLeft: "-12%",
 
+			fontFamily: styles.fontFamily,
+			fontWeight: 600,
 			fontSize: theme.typography.pxToRem(15),
 			color: theme.palette.text.primary,
 
@@ -216,6 +220,8 @@ const useStyles = makeStyles((theme) => {
 		btn: {
 			width: "5vw",
 			margin: "0px 3px",
+			fontFamily: styles.fontFamily,
+			fontWeight: 500,
 
 			"@media(max-width: 425px)": {
 				margin: "0px 2px",
@@ -286,7 +292,7 @@ const useStyles = makeStyles((theme) => {
 		editBtn: {
 			width: "90vw",
 			marginTop: 30,
-			fontFamily: `"Quicksand", sans-serif`,
+			fontFamily: styles.fontFamily,
 
 			fontSize: "4vw",
 			color: "#f5f5f5",
@@ -299,6 +305,11 @@ const useStyles = makeStyles((theme) => {
 				border: "none",
 				backgroundColor: "#00a4d4",
 			},
+		},
+
+		text: {
+			fontFamily: styles.fontFamily,
+			fontWeight: 500,
 		},
 	})
 });
@@ -355,7 +366,7 @@ export const PersonalInformation = observer(() => {
 					</AccordionSummary>
 
 					<AccordionDetails>
-						<Typography component={'span'}>
+						<Typography className={classes.text} component={'span'}>
 							{persInfoAccordionActions(key)}
 						</Typography>
 					</AccordionDetails>
@@ -438,7 +449,7 @@ export const PersonalInformation = observer(() => {
 							<Typography component={'span'} className={classes.secondaryHeading}>{quickPay()}</Typography>
 						</AccordionSummary>
 						<AccordionDetails>
-							<Typography>
+							<Typography className={classes.text}>
 								Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
 								vitae egestas augue. Duis vel est augue.
 							</Typography>
@@ -551,7 +562,7 @@ export const PersonalInformation = observer(() => {
 				{width <= 425
 					? <AccordionFromTable tableData={allDevicesShort()} header={"Country"}/>
 					: <AccountTable secretTitle={"Personal information: short Devices"} rowsData={allDevicesShort()}
-					                search={"Camera Name"} searchLabel={"Devices Name"}/>}
+					                search={"Title"} searchLabel={"Devices Name"}/>}
 			</div>
 		)
 	};

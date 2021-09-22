@@ -9,6 +9,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import {Hidden} from "@material-ui/core";
 import connects from "../../store/connects";
+import styles from "../../store/styles";
 
 
 const useStyles = makeStyles((theme) => {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => {
 
 	return ({
 		gridContainer: {
-			fontFamily: `"Quicksand", sans-serif`,
+			fontFamily: styles.fontFamily,
 			overflow: "hidden",
 		},
 		gridItem: {

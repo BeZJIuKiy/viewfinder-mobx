@@ -14,6 +14,11 @@ const useStyles = makeStyles((theme) => ({
 		"@media(max-width: 425px)": {
 			width: 175,
 		},
+	},
+
+	text: {
+		fontFamily: `"Quicksand", sans-serif`,
+		fontWeight: 500,
 	}
 }))
 
@@ -26,16 +31,22 @@ export const Search = ({data, search, label, secretTitle}) => {
 		account.setSearchQuery(secretTitle, value ? [value] : []);
 	}
 
-	// console.log(data);
-
 	return (
 		<Autocomplete
 			id={`combo-box-demo--${secretTitle}`}
 			className={`${classes.autoComplete}`}
+			classes={{input: classes.text, listbox: classes.text}}
 			options={data}
 			getOptionLabel={(option) => option[search]}
 			renderInput={(params) => {
-				return (<TextField {...params} label={width <= 425 ? "Search" : label} variant="outlined"/>)
+				return (<TextField
+					{...params}
+					label={width <= 425 ? "Search" : label}
+					variant="outlined"
+					InputLabelProps={{
+						classes: {root: classes.text}
+					}}
+				/>)
 			}}
 			onChange={handleChange}
 		/>

@@ -8,65 +8,65 @@ import {observer} from "mobx-react-lite";
 import account from "../../../store/account";
 import {Icon} from "@material-ui/core";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
+import styles from "../../../store/styles";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        width: "15vw",
-        minWidth: 170,
-        maxWidth: 300,
+	root: {
+		width: "15vw",
+		minWidth: 170,
+		maxWidth: 300,
 
-        marginTop: "8vw",
-        marginLeft: "10vh",
+		marginTop: "8vw",
+		marginLeft: "10vh",
 
-        backgroundColor: theme.palette.background.paper,
-    },
+		backgroundColor: theme.palette.background.paper,
+	},
 
-    active: {
-        "&.isActive": {
-            color: "#333",
-        },
+	active: {
+		fontFamily: styles.fontFamily,
+		fontWeight: 500,
 
-        "&.noActive": {
-            color: "#aaa",
-        }
-    },
+		"&.isActive": {
+			color: "#333",
+		},
+
+		"&.noActive": {
+			color: "#aaa",
+		}
+	},
 }));
 
 export const Drawer = observer(() => {
-    const classes = useStyles();
+	const classes = useStyles();
 
-    const handleSelectItem = (index) => {
-        account.setSelectedItem(index);
-    }
+	const handleSelectItem = (index) => {
+		account.setSelectedItem(index);
+	}
 
-    const drawerItems = account.drawerItems.map(({id, icon, title}, i) => {
-        return (
-            <div key={`drawerItems-${title}`}>
-                <List component="nav" aria-label="main mailbox folders">
-                    <ListItem
-                        className={`${classes.active} ${i === account.selectedItemIndex ? "isActive" : "noActive"}`}
-                        button
-                        onClick={() => handleSelectItem(i)}
-                    >
-                        <ListItemIcon>
-                            <Icon>
-                                {icon}
-                            </Icon>
-                        </ListItemIcon>
+	const drawerItems = account.drawerItems.map(({id, icon, title}, i) => {
+		return (
+			<ListItem
+				key={`drawerItems-${title}`}
+				className={`${classes.active} ${i === account.selectedItemIndex ? "isActive" : "noActive"}`}
+				button
+				onClick={() => handleSelectItem(i)}
+			>
+				<ListItemIcon>
+					<Icon>
+						{icon}
+					</Icon>
+				</ListItemIcon>
 
-                        <ListItemText
+				<ListItemText classes={{primary: classes.active}}  primary={title} />
+			</ListItem>
+		)
+	});
 
-                            primary={title}
-                        />
-                    </ListItem>
-                </List>
-            </div>
-        )
-    });
-
-    return (
-        <div className={classes.root}>
-            {drawerItems}
-        </div>
-    );
+	return (
+		<div className={classes.root}>
+			<List component="nav" aria-label="main mailbox folders">
+				{drawerItems}
+			</List>
+		</div>
+	);
 })

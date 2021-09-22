@@ -6,6 +6,7 @@ import React from "react";
 import Popover from "@material-ui/core/Popover";
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import styles from "../../store/styles";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -124,7 +125,7 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: "1.2vw",
 		color: "#ccc",
 		fontWeight: 500,
-		fontFamily: `"Quicksand", sans-serif`,
+		fontFamily: styles.fontFamily,
 
 		backgroundColor: "transparent",
 		boxShadow: "none",

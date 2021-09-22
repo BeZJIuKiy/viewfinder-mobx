@@ -17,6 +17,7 @@ import header from "../../../store/header";
 import ports from "../../../store/ports";
 import Divider from "@material-ui/core/Divider";
 import {observer} from "mobx-react-lite";
+import styles from "../../../store/styles";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
         overflow: 'auto',
 
-        fontFamily: `"Quicksand", sans-serif`,
+        fontFamily: styles.fontFamily,
 
         "@media(max-width: 425px)": {
             maxWidth: "90%",
@@ -83,12 +84,12 @@ const useStyles = makeStyles((theme) => ({
     },
 
     listItemTextPrimary: {
-        fontFamily: `"Quicksand", sans-serif`,
+        fontFamily: styles.fontFamily,
         fontWeight: 500,
     },
 
     listSubheader: {
-        fontFamily: `"Quicksand", sans-serif`,
+        fontFamily: styles.fontFamily,
     }
 }))
 

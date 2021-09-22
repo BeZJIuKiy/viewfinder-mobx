@@ -2,13 +2,10 @@ version: "3.0"
 
 services:
   index:
-    container_name: index
+    container_name: vf_react
     build:
-      context: .
-    volumes:
-      - ./app
-      - /app/node_modules
+      context: vf_react
     ports:
-      - 80:80
-    command: yarn start
+      - "80:80"
+    command: npm run start
     restart: always

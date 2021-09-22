@@ -4,6 +4,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import {makeStyles} from "@material-ui/core/styles";
 import {useWindowDimensions} from "../../../useHooks/useWindowDimensions";
 import ports from "../../../store/ports";
+import styles from "../../../store/styles";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 
-	test: {
-		fontFamily: `"Quicksand", sans-serif`,
+	text: {
+		fontFamily: styles.fontFamily,
 		fontWeight: 500,
 	}
 }))
@@ -31,7 +32,6 @@ export const DrawerSearch = ({data, search, label, secretTitle}) => {
 
 	const [value, setValue] = useState("");
 
-	// console.log(ports.searchQuery[secretTitle]?.find(el => Number.isInteger(el.id)))
 
 	useEffect(() => {
 		setValue("");
@@ -52,7 +52,7 @@ export const DrawerSearch = ({data, search, label, secretTitle}) => {
 		<Autocomplete
 			id={`drawer--search--${secretTitle}`}
 			className={`${classes.autoComplete}`}
-			classes={{input: classes.test, listbox: classes.test}}
+			classes={{input: classes.text, listbox: classes.text}}
 			inputValue={value}
 			options={data}
 			getOptionLabel={(option) => option[search]}
@@ -63,6 +63,10 @@ export const DrawerSearch = ({data, search, label, secretTitle}) => {
 						{...params}
 						label={width <= 425 ? "Search" : label}
 						variant="outlined"
+						InputLabelProps={{
+							classes: {root: classes.text}
+						}}
+
 						onChange={handleChangeInput}
 					/>
 				)

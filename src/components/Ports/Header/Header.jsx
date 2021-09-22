@@ -14,6 +14,7 @@ import {HeaderNotifications} from "./HeaderNotifications";
 import {MobileDrawer} from "../MobileDrawer/MobileDrawer";
 import boat1_04 from "../Events/images/b1-04.jpg";
 import connects from "../../../store/connects";
+import styles from "../../../store/styles";
 
 const useStyles = makeStyles((theme) => {
 	const {miniAvatar} = header
@@ -57,7 +58,7 @@ const useStyles = makeStyles((theme) => {
 			textDecoration: "none",
 			color: "inherit",
 
-			fontFamily: `"Quicksand", sans-serif`,
+			fontFamily: styles.fontFamily,
 
 			"@media(max-width: 425px)": {
 				// margin: 0,

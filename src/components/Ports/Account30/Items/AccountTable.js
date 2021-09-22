@@ -25,6 +25,13 @@ import {observer} from "mobx-react-lite";
 import {Search} from "./Search";
 import account from "../../../../store/account";
 
+const useHeaderStyles = makeStyles((theme) => ({
+	headerTitle: {
+		fontFamily: `"Quicksand", sans-serif`,
+		fontWeight: 700,
+	},
+}));
+
 function descendingComparator(a, b, orderBy) {
 	if (b[orderBy] < a[orderBy]) {
 		return -1;
@@ -34,13 +41,11 @@ function descendingComparator(a, b, orderBy) {
 	}
 	return 0;
 }
-
 function getComparator(order, orderBy) {
 	return order === 'desc'
 		? (a, b) => descendingComparator(a, b, orderBy)
 		: (a, b) => -descendingComparator(a, b, orderBy);
 }
-
 function stableSort(array, comparator) {
 	const stabilizedThis = array.map((el, index) => [el, index]);
 	stabilizedThis.sort((a, b) => {
@@ -50,22 +55,6 @@ function stableSort(array, comparator) {
 	});
 	return stabilizedThis.map((el) => el[0]);
 }
-
-// const headCells = [
-// 	{id: 'imo', numeric: false, disablePadding: true, label: 'IMO'},
-// 	{id: 'name', numeric: false, disablePadding: false, label: 'Name'},
-// 	{id: 'vesselTypeGeneric', numeric: false, disablePadding: false, label: 'Vessel Type Generic'},
-// 	{id: 'vesselTypeDetailed', numeric: false, disablePadding: false, label: 'Vessel Type Detailed'},
-// 	{id: 'status', numeric: false, disablePadding: false, label: 'Status'},
-// 	{id: 'mmsi', numeric: false, disablePadding: false, label: 'MMSI'},
-// 	{id: 'callSign', numeric: false, disablePadding: false, label: 'Call Sign'},
-// 	{id: 'flag', numeric: false, disablePadding: false, label: 'Flag'},
-// 	// { id: 'grossTonnage', numeric: false, disablePadding: false, label: 'grossTonnage' },
-// 	// { id: 'summerDWT', numeric: false, disablePadding: false, label: 'summerDWT' },
-// 	// { id: 'lengthOverallBreadthExtreme', numeric: false, disablePadding: false, label: 'lengthOverallBreadthExtreme' },
-// 	{id: 'yearBuilt', numeric: true, disablePadding: false, label: 'Year Built'},
-// ];
-
 const headCells = (data) => {
 	if (data.length === 0) return;
 	const arr = [];
@@ -80,6 +69,7 @@ const headCells = (data) => {
 }
 
 function EnhancedTableHead(props) {
+	const headerClasses = useHeaderStyles();
 	const {classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headData} = props;
 	const createSortHandler = (property) => (event) => {
 		onRequestSort(event, property);
@@ -98,7 +88,8 @@ function EnhancedTableHead(props) {
 				</TableCell>
 				{headCells(headData).map((headCell) => (
 					<TableCell
-						key={headCell.id}
+						key={`Head--Cells--${headCell.id}`}
+						className={headerClasses.headerTitle}
 						align={headCell.numeric ? 'right' : 'left'}
 						padding={headCell.disablePadding ? 'none' : 'default'}
 						sortDirection={orderBy === headCell.id ? order : false}
@@ -265,6 +256,11 @@ const useStyles = makeStyles((theme) => ({
 		top: 20,
 		width: 1,
 	},
+
+	text: {
+		fontFamily: `"Quicksand", sans-serif`,
+		fontWeight: 500,
+	},
 }));
 
 export const AccountTable = observer(({rowsData, search, title, searchLabel, secretTitle}) => {
@@ -329,7 +325,7 @@ export const AccountTable = observer(({rowsData, search, title, searchLabel, sec
 		const readyRow = [];
 		for (const key in row) {
 			if (key === "id") continue;
-			readyRow.push(<TableCell align="left" key={key}>{row[key]}</TableCell>);
+			readyRow.push(<TableCell className={classes.text} align="left" key={key}>{row[key]}</TableCell>);
 		}
 		return readyRow;
 	}
@@ -406,6 +402,7 @@ export const AccountTable = observer(({rowsData, search, title, searchLabel, sec
 					count={rows.length}
 					rowsPerPage={rowsPerPage}
 					page={page}
+					classes={{caption: classes.text, select: classes.text}}
 					onChangePage={handleChangePage}
 					onChangeRowsPerPage={handleChangeRowsPerPage}
 				/>

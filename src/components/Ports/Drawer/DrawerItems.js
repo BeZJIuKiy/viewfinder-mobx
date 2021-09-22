@@ -10,10 +10,11 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import Divider from "@material-ui/core/Divider";
 import {observer} from "mobx-react-lite";
 import {makeStyles} from "@material-ui/core/styles";
+import styles from "../../../store/styles";
 
 const useStyles = makeStyles((theme) => ({
 	listItemText: {
-		fontFamily: `"Quicksand", sans-serif`,
+		fontFamily: styles.fontFamily,
 		fontWeight: 500,
 	},
 }));

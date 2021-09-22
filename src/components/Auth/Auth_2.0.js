@@ -4,6 +4,7 @@ import backgroundImage from "./images/backgroundNew.jpg"
 import backgroundImage320px from "./images/background320px.jpg"
 import Button from "@material-ui/core/Button";
 import auth from "../../store/auth";
+import styles from "../../store/styles";
 import {Form, Formik} from "formik";
 import {useHistory} from "react-router-dom";
 import {ContactUs} from "./ContactUs";
@@ -134,7 +135,7 @@ const useStyles = makeStyles((theme) => {
 		btn: {
 			width: "8vw",
 			fontSize: "1.3vw",
-			fontFamily: `"Quicksand", sans-serif`,
+			fontFamily: styles.fontFamily,
 			fontWeight: 500,
 			color: "#ddd",
 			borderColor: "none",
