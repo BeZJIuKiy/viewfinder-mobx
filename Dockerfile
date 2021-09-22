@@ -6,11 +6,15 @@ WORKDIR /app
 
 # add `/app/node_modules/.bin` to $PATH
 # ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
 # install app dependencies
+COPY yarn.lock ./
 COPY package*.json ./
 
-RUN npm run start
+RUN yarn
+RUN yarn add global react-scripts@4.0.3
+# RUN npm run start
 
 # add app
 COPY . .
@@ -18,4 +22,4 @@ COPY . .
 EXPOSE 80
 
 # start app
-CMD ["npm", "run", "start"]
+CMD ["yarn", "start"]
