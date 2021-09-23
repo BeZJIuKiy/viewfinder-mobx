@@ -10,169 +10,172 @@ import {useWindowDimensions} from "../../../useHooks/useWindowDimensions";
 import eventsState from "../../../store/eventsState";
 
 const useStyles = makeStyles((theme) => {
-    const {camera} = ports.selectedObjects
+	const {camera} = ports.selectedObjects
 
-    return ({
-        main: {
-            width: "100%",
-            height: "100%",
-        },
-        canvasDraw: {
-            width: "100%",
-            height: "100%",
+	return ({
+		main: {
+			width: "100%",
+			height: "100%",
+		},
+		canvasDraw: {
+			width: "100%",
+			height: "100%",
 
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
 
-            position: "relative",
-        },
-        cameraControlPanel: {
-            position: "absolute",
-            left: "50%",
-            bottom: 10,
-            zIndex: 1,
+			position: "relative",
+		},
+		cameraControlPanel: {
+			position: "absolute",
+			left: "50%",
+			bottom: 10,
+			zIndex: 1,
 
-            transform: "translate(-50%, 0)",
+			transform: "translate(-50%, 0)",
 
-            "&.show": {
-                display: "flex",
-            },
-            "&.hide": {
-                display: "none",
-            }
-        },
-        canvas: {
-            background: "none",
+			"&.show": {
+				display: "flex",
+			},
+			"&.hide": {
+				display: "none",
+			}
+		},
+		canvas: {
+			background: "none",
 
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            display: "block",
-            transform: "translate(-50%, -50%)",
+			position: "absolute",
+			top: "50%",
+			left: "50%",
+			display: "block",
+			transform: "translate(-50%, -50%)",
 
-            "&.show": {
-                zIndex: 2,
-            },
-            "&.hide": {
-                zIndex: -2,
-            }
-        },
-        forPreview: {
-            width: "100%",
-            height: "100%",
+			"&.show": {
+				zIndex: 2,
+			},
+			"&.hide": {
+				zIndex: -2,
+			}
+		},
+		forPreview: {
+			width: "100%",
+			height: "100%",
 
-            // maxHeight: window.innerHeight*0.45,
+			// maxHeight: window.innerHeight*0.45,
 
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+			display: "flex",
+			justifyContent: "center",
+			alignItems: "center",
 
-            overflow: "hidden",
+			overflow: "hidden",
 
-            backgroundColor: "black",
-        },
-    })
+			backgroundColor: "black",
+		},
+	})
 });
 
 export const Canvas = observer(() => {
-    const canvasRef = useRef();
-    const iframeRef = useRef();
-    const params = useParams();
-    const classes = useStyles();
+	const canvasRef = useRef();
+	const iframeRef = useRef();
+	const params = useParams();
+	const classes = useStyles();
 
-    const windowSize = useWindowDimensions();
+	const windowSize = useWindowDimensions();
 
-    const [width, setWidth] = useState(1);
-    const [height, setHeight] = useState(1);
-    const [ratio, setRatio] = useState({width: 1, height: 1});
+	const [width, setWidth] = useState(1);
+	const [height, setHeight] = useState(1);
+	const [ratio, setRatio] = useState({width: 1, height: 1});
 
-    const {isVisibleCameraCanvas} = eventsState;
+	const {isVisibleCameraCanvas} = eventsState;
 
-    const displayResolution = (result) => {
-        switch (Number(result.toFixed(3))) {
-            case 1.25: {
-                setRatio({width: 5, height: 4});
-                break;
-            }
-            case 1.333: {
-                setRatio({width: 4, height: 3});
-                break;
-            }
-            case 1.5: {
-                setRatio({width: 3, height: 2});
-                break;
-            }
-            case 1.6: {
-                setRatio({width: 16, height: 10});
-                break;
-            }
-            case 1.667: {
-                setRatio({width: 5, height: 3});
-                break;
-            }
-            case 1.778: {
-                setRatio({width: 16, height: 9});
-                break;
-            }
-            default: setRatio({width: 1, height: 1});
-        }
-    }
+	const displayResolution = (result) => {
+		switch (Number(result.toFixed(3))) {
+			case 1.25: {
+				setRatio({width: 5, height: 4});
+				break;
+			}
+			case 1.333: {
+				setRatio({width: 4, height: 3});
+				break;
+			}
+			case 1.5: {
+				setRatio({width: 3, height: 2});
+				break;
+			}
+			case 1.6: {
+				setRatio({width: 16, height: 10});
+				break;
+			}
+			case 1.667: {
+				setRatio({width: 5, height: 3});
+				break;
+			}
+			case 1.778: {
+				setRatio({width: 16, height: 9});
+				break;
+			}
+			default:
+				setRatio({width: 1, height: 1});
+		}
+	}
 
-    useEffect(() => {
-        canvasState.setCanvas(canvasRef.current);
-        displayResolution(canvasState.size.width / canvasState.size.height);
-    }, []);
-    useEffect(() => {
-        canvasState.setSocket("");
-        canvasState.setSessionId(params.id);
+	useEffect(() => {
+		canvasState.setCanvas(canvasRef.current);
+		displayResolution(canvasState.size.width / canvasState.size.height);
+	}, []);
+	useEffect(() => {
+		canvasState.setSocket("");
+		canvasState.setSessionId(params.id);
 
-        new Polygons(canvasRef.current, "", params.id);
-    }, [width, ports.selectedObjects.camera]);
-    useEffect(() => {
-        const isSide = iframeRef.current?.scrollHeight < (iframeRef.current?.scrollWidth / ratio.width * ratio.height);
-        const widthSide = iframeRef.current?.scrollWidth / ratio.width;
-        const heightSide = iframeRef.current?.scrollHeight / ratio.height;
+		new Polygons(canvasRef.current, "", params.id);
+	}, [width, ports.selectedObjects.camera]);
+	useEffect(() => {
+		const isSide = iframeRef.current?.scrollHeight < (iframeRef.current?.scrollWidth / ratio.width * ratio.height);
+		const widthSide = iframeRef.current?.scrollWidth / ratio.width;
+		const heightSide = iframeRef.current?.scrollHeight / ratio.height;
 
-        reSizeCanvas(isSide ? heightSide : widthSide);
-        }, [iframeRef.current?.scrollWidth, iframeRef.current?.scrollHeight, windowSize.width, windowSize.height, ratio, ports.selectedObjects.camera]);
+		reSizeCanvas(isSide ? heightSide : widthSide);
+	}, [iframeRef.current?.scrollWidth, iframeRef.current?.scrollHeight, windowSize.width, windowSize.height, ratio, ports.selectedObjects.camera]);
 
-    const reSizeCanvas = (coefficient) => {
-        const width = coefficient * ratio.width;
-        const height = coefficient * ratio.height;
+	const reSizeCanvas = (coefficient) => {
+		const width = coefficient * ratio.width;
+		const height = coefficient * ratio.height;
 
-        setWidth(width);
-        setHeight(height);
+		setWidth(width);
+		setHeight(height);
 
-        canvasState.setPointCoefficient(canvasState.size.width / width);
-        canvasState.setCanvasReSize(width, height);
-    };
+		canvasState.setPointCoefficient(canvasState.size.width / width);
+		canvasState.setCanvasReSize(width, height);
+	};
 
-    return (
-        <div className={classes.main}>
-            <div className={classes.canvasDraw}>
-                {/*<iframe*/}
-                {/*    src={ports.selectedObjects.camera.link}*/}
-                {/*    width={"100%"} height={"100%"}*/}
-                {/*    // width={width} height={height}*/}
-                {/*    title="YouTube video player"*/}
-                {/*    ref={iframeRef}*/}
-                {/*    frameBorder="0"*/}
-                {/*    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
-                {/*    allowFullScreen*/}
-                {/*/>*/}
+	return (
+		<div className={classes.main}>
+			<div className={classes.canvasDraw}>
+				{/*<iframe*/}
+				{/*    src={ports.selectedObjects.camera.link}*/}
+				{/*    width={"100%"} height={"100%"}*/}
+				{/*    // width={width} height={height}*/}
+				{/*    title="YouTube video player"*/}
+				{/*    ref={iframeRef}*/}
+				{/*    frameBorder="0"*/}
+				{/*    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
+				{/*    allowFullScreen*/}
+				{/*/>*/}
 
-                <div className={classes.forPreview} ref={iframeRef}>
-                    <img style={{width: width, height: height}} src={ports.selectedObjects.camera.link} alt={"jpg stream"} />
-                </div>
+				<div className={classes.forPreview} ref={iframeRef}>
+					<img style={{width: width, height: height}} src={ports.selectedObjects.camera.link}
+					     alt={"jpg stream"}/>
+				</div>
 
-                <canvas
-                    className={`${classes.canvas} ${isVisibleCameraCanvas ? "show" : "hide"}`}
-                    ref={canvasRef} width={width} height={height}
-                />
+				<canvas
+					className={`${classes.canvas} ${isVisibleCameraCanvas ? "show" : "hide"}`}
+					ref={canvasRef} width={width} height={height}
+				/>
 
-                <span className={`${classes.cameraControlPanel} ${isVisibleCameraCanvas ? "hide" : "show"}`}><CameraControlPanel/></span>
-            </div>
-        </div>
-    )
+				<span
+					className={`${classes.cameraControlPanel} ${isVisibleCameraCanvas ? "hide" : "show"}`}><CameraControlPanel/></span>
+			</div>
+		</div>
+	)
 })
