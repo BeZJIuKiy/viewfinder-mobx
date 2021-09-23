@@ -4,16 +4,12 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import {Header} from "../Header/Header";
 import {TestImage} from "./TestImage";
-import {TestList} from "./TestList";
 import {Canvas} from "./Canvas";
 import {BoatEvents} from "./BoatEvents";
 import {Hidden} from "@material-ui/core";
-import {CameraControlPanel} from "./CameraControlPanel/CameraControlPanel";
 import {DrawControl} from "./CameraControlPanel/DrawControl";
 import ports from "../../../store/ports";
-import header from "../../../store/header";
 import {OtherCameras} from "./OtherCameras";
-import eventsState from "../../../store/eventsState";
 import {ShipScreen} from "./ShipScreen";
 import {observer} from "mobx-react-lite";
 import styles from "../../../store/styles";
@@ -21,14 +17,14 @@ import styles from "../../../store/styles";
 const useStyles = makeStyles((theme) => ({
 	event: {
 		flexGrow: 1,
-		// flexShrink: 1,
-		height: "100%",
+		minHeight: "100%",
 
 		color: "#ddd",
 		fontFamily: styles.fontFamily,
 		fontWeight: 500,
 
-		// background: "rgba(51, 51, 51, 1)",
+		// background: "rgba(51,51,51,0.5)",
+
 		backgroundAttachment: "fixed",
 		backgroundPosition: 'center',
 		backgroundSize: "cover",
@@ -37,21 +33,24 @@ const useStyles = makeStyles((theme) => ({
 		position: "relative",
 	},
 	gridContainer: {
-		height: "100%",
+		minHeight: "100%",
 
 		flexGrow: 1,
 		margin: 0,
 	},
 
+	gridItem: {
+		"&.drawControl": {
+			paddingTop: 0,
+			paddingBottom: 0,
+		},
+	},
+
 	secondGridContainer: {
-		height: "100%",
+		minHeight: "100%",
 		margin: 0,
-		// padding: 0,
 
-		"&.controlMovePanel": {
-			// marginTop: theme.spacing(-3),
-			// marginLeft: 12,
-
+		"&.drawControl": {
 			"&.show": {
 				display: "flex",
 			},
@@ -60,9 +59,7 @@ const useStyles = makeStyles((theme) => ({
 				display: "none",
 			},
 		},
-		"&.tableEvents": {
-			// marginTop: theme.spacing(-4),
-		},
+		"&.tableEvents": {},
 		"&.fourthPart": {
 			overflowY: "auto",
 		},
@@ -79,8 +76,7 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: 5,
 
 		"&.drawControl": {
-			// height: 10,
-			marginLeft: 8,
+			marginLeft: -4,
 		},
 
 		position: "relative",
@@ -88,22 +84,20 @@ const useStyles = makeStyles((theme) => ({
 		"&.show": {
 			display: "block",
 			marginBottom: 2,
+
+			// [theme.breakpoints.down('sm')]: {
+			// 	marginBottom: 2,
+			// },
 		},
 		"&.hide": {
 			display: "none",
 		},
 	},
 	correctingPosition: {
-		height: "100%",
-
-		// paddingTop: 92,
-		marginTop: 92,
+		paddingTop: 92,
 		marginRight: 24,
-		marginLeft: -24,
 	},
-	container: {
-		height: "100%",
-	},
+	container: {},
 }));
 
 export const Events30 = observer(() => {
@@ -116,29 +110,21 @@ export const Events30 = observer(() => {
 		},
 	} = ports;
 
-	const vesselsPack = () => {
+	const gridContainerItem = (component, classPrefix = "", divClassPrefix = "") => {
 		return (
-			<Grid className={`${classes.secondGridContainer}`} container spacing={3}>
-				{/*<Hidden mdDown>*/}
-				{/*	<Grid item xs={6} sm={6} md={6} lg={6} xl={6}>*/}
-				{/*		<div className={classes.types}>*/}
-				{/*			<TestList/>*/}
-				{/*		</div>*/}
-				{/*	</Grid>*/}
-				{/*</Hidden>*/}
-				{/*<Grid item xs={12} sm={12} md={12} lg={6} xl={6}>*/}
-				{/*<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>*/}
+			<Grid container className={`${classes.secondGridContainer} ${classPrefix}`}>
 				<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-					<div className={classes.types}>
-						<TestImage/>
+					<div className={`${classes.types} ${divClassPrefix}`}>
+						{component}
 					</div>
 				</Grid>
 			</Grid>
 		)
 	}
+
 	const mainCamera = () => {
 		return (
-			<Grid className={`${classes.secondGridContainer}`} container spacing={3}>
+			<Grid container className={`${classes.secondGridContainer} mainCamera`}>
 				<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
 					<div className={`${classes.types} ${imageVisible ? "hide" : "show"}`}>
 						<Canvas/>
@@ -151,72 +137,44 @@ export const Events30 = observer(() => {
 			</Grid>
 		)
 	}
-	const otherCameras = () => {
-		return (
-			<Grid className={`${classes.secondGridContainer} thirdPart`} container spacing={3}>
-				<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-					<div className={`${classes.types} cameras`}>
-						<OtherCameras/>
-					</div>
-				</Grid>
-			</Grid>
-		)
-	}
-	const cameraMovePanel = () => {
-		return (
-			<Grid className={`${classes.secondGridContainer} controlMovePanel`} container>
-				<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-					<div className={`${classes.types} drawControl`}>
-						<DrawControl/>
-					</div>
-				</Grid>
-			</Grid>
-		)
-	}
-	const tableEvents = () => {
-		return (
-			<Grid className={`${classes.secondGridContainer} tableEvents`} container spacing={3}>
-				<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-					<BoatEvents/>
-				</Grid>
-			</Grid>
-		)
-	}
 
 	if (!Number.isInteger(camera.id)) {
 		ports.setSelectedCamera(ports.data[0].cameras[0].id);
 	}
+
+	console.log(imageVisible)
 
 	return (
 		<div className={`${classes.event}`}>
 			<Header/>
 			<Container maxWidth="xl" className={classes.container}>
 				<div className={classes.correctingPosition}>
-					<Grid className={classes.gridContainer} container spacing={3} justify={"center"}>
+					<Grid container spacing={3} justify={"center"} className={classes.gridContainer}>
 						<Hidden smDown>
 							<Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
-								{vesselsPack()}
+								{gridContainerItem(<TestImage/>)}
 							</Grid>
 						</Hidden>
 
 						<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
 							{mainCamera()}
+							{/*{gridContainerItem(imageVisible ? <ShipScreen/> : <Canvas/>)}*/}
 						</Grid>
 
 						<Hidden smDown>
 							<Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
-								{otherCameras()}
+								{gridContainerItem(<OtherCameras/>)}
 							</Grid>
 						</Hidden>
 
 						<Hidden smDown>
-							<Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-								{cameraMovePanel()}
+							<Grid item xs={12} sm={12} md={6} lg={6} xl={6} className={`${classes.gridItem} drawControl`}>
+								{gridContainerItem(<DrawControl/>, "drawControl", "drawControl")}
 							</Grid>
 						</Hidden>
 
 						<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-							{tableEvents()}
+							{gridContainerItem(<BoatEvents/>)}
 						</Grid>
 					</Grid>
 				</div>

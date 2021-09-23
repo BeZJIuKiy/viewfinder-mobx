@@ -76,11 +76,11 @@ export const ShipScreen = observer(() => {
 	const [selectedEvent, setSelectedEvent] = useState(camera);
 
 
-	useEffect(() => {
-		setCurrentBoat(event.typeVessel);
-		ports.setVisibleSelectedImage(false);
-		ports.setImageId(-1);
-	}, []);
+	// useEffect(() => {
+	// 	setCurrentBoat(event.typeVessel);
+	// 	ports.setVisibleSelectedImage(false);
+	// 	ports.setImageId(-1);
+	// }, []);
 	useEffect(() => {
 		setCurrentBoat(event.typeVessel);
 		ports.setVisibleSelectedImage(false);

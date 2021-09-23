@@ -10,10 +10,6 @@ import Button from "@material-ui/core/Button";
 import Polygon from "../chageFigure/Polygon";
 import Polygons from "../chageFigure/Polygons";
 import ports from "../../../../store/ports";
-import header from "../../../../store/header";
-import IconButton from "@material-ui/core/IconButton";
-import Badge from "@material-ui/core/Badge";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import eventsState from "../../../../store/eventsState";
 import connects from "../../../../store/connects";
 import styles from "../../../../store/styles";
@@ -21,15 +17,13 @@ import styles from "../../../../store/styles";
 const useStyles = makeStyles((theme) => ({
 	container: {
 		width: "100%",
+		height: "100%",
 
 		justifyContent: "center",
 		alignItems: "center",
 
-
 		margin: 0,
 		padding: 0,
-
-		// textAlign: "center",
 	},
 	item: {
 		"&.show": {

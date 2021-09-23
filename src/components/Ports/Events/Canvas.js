@@ -62,6 +62,8 @@ const useStyles = makeStyles((theme) => {
             width: "100%",
             height: "100%",
 
+            // maxHeight: window.innerHeight*0.45,
+
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

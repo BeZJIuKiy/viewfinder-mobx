@@ -266,14 +266,6 @@ export const BoatEvents = observer(() => {
 	const rows = [];
 	data.forEach(row => {
 		rows.push({
-			// id: row.id,
-			// typeError: row.typeError,
-			// typeVessel: row.typeVessel,
-			// date: row.date,
-			// time: row.time,
-			// timezone: row.timezone,
-			// description: row.description,
-
 			id: row.id,
 			imo: row.imo,
 			mmsi: row.mmsi,

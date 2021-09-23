@@ -60,7 +60,6 @@ export const TestImage = observer(() => {
 			              onClick={() => {
 				              ports.setImageId(id);
 				              ports.setVisibleSelectedImage(true);
-				              // eventsState.setShowImage(true);
 			              }}
 			>
 				<img className={classes.image}
