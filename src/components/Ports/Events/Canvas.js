@@ -123,6 +123,8 @@ export const Canvas = observer(() => {
 	useEffect(() => {
 		canvasState.setCanvas(canvasRef.current);
 		displayResolution(canvasState.size.width / canvasState.size.height);
+		// setWidth(iframeRef.current?.scrollWidth);
+		// setHeight(iframeRef.current?.scrollWidth / 16 * 9);
 	}, []);
 	useEffect(() => {
 		canvasState.setSocket("");
@@ -131,12 +133,16 @@ export const Canvas = observer(() => {
 		new Polygons(canvasRef.current, "", params.id);
 	}, [width, ports.selectedObjects.camera]);
 	useEffect(() => {
-		const isSide = iframeRef.current?.scrollHeight < (iframeRef.current?.scrollWidth / ratio.width * ratio.height);
-		const widthSide = iframeRef.current?.scrollWidth / ratio.width;
-		const heightSide = iframeRef.current?.scrollHeight / ratio.height;
+		if (ratio.width === 1 || ratio.height === 1) return;
+		const maxHeightObject = 0.4;
 
-		reSizeCanvas(isSide ? heightSide : widthSide);
-	}, [iframeRef.current?.scrollWidth, iframeRef.current?.scrollHeight, windowSize.width, windowSize.height, ratio, ports.selectedObjects.camera]);
+		const isSide = (iframeRef.current?.scrollWidth / ratio.width * ratio.height) < windowSize.height * maxHeightObject;
+		const coefficient = isSide
+			? iframeRef.current?.scrollWidth / ratio.width
+			: windowSize.height * maxHeightObject / ratio.height;
+
+		reSizeCanvas(coefficient);
+	}, [ratio, windowSize.width, windowSize.height, ports.selectedObjects.camera]);
 
 	const reSizeCanvas = (coefficient) => {
 		const width = coefficient * ratio.width;

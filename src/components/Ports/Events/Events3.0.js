@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
 
 		"&.show": {
 			display: "block",
-			marginBottom: 2,
+			// marginBottom: 2,
 
 			// [theme.breakpoints.down('sm')]: {
 			// 	marginBottom: 2,
@@ -141,8 +141,6 @@ export const Events30 = observer(() => {
 	if (!Number.isInteger(camera.id)) {
 		ports.setSelectedCamera(ports.data[0].cameras[0].id);
 	}
-
-	console.log(imageVisible)
 
 	return (
 		<div className={`${classes.event}`}>
