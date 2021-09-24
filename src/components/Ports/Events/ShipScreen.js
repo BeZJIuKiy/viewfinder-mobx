@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
 	shipImage: {
 		width: "100%",
 		height: "100%",
-		maxWidth: 800,
-		maxHeight: 450,
+		// maxWidth: 800,
+		maxHeight: window.innerHeight*0.4,
 	},
 	btn: {
 		position: "absolute",
@@ -76,11 +76,6 @@ export const ShipScreen = observer(() => {
 	const [selectedEvent, setSelectedEvent] = useState(camera);
 
 
-	// useEffect(() => {
-	// 	setCurrentBoat(event.typeVessel);
-	// 	ports.setVisibleSelectedImage(false);
-	// 	ports.setImageId(-1);
-	// }, []);
 	useEffect(() => {
 		setCurrentBoat(event.typeVessel);
 		ports.setVisibleSelectedImage(false);
@@ -91,12 +86,12 @@ export const ShipScreen = observer(() => {
 	}, [imageId]);
 
 
-	const arrow = (direction) => {
+	const arrow = (direction, num) => {
 		return (
 			<IconButton
 				className={`${classes.btn} ${direction}`}
 				aria-label="add an alarm"
-				onClick={() => changeSelectedImg(-1)}
+				onClick={() => changeSelectedImg(num)}
 			>
 				<ArrowForwardIosIcon fontSize="large"/>
 			</IconButton>
@@ -138,9 +133,9 @@ export const ShipScreen = observer(() => {
 
 	return (
 		<div className={classes.shipScreen}>
-			{/*{arrow("previous")}*/}
+			{arrow("previous", -1)}
 			<img className={classes.shipImage} src={"data:image/png;base64," + selectedEvent?.imageLink} alt="#"/>
-			{/*{arrow("next")}*/}
+			{arrow("next", +1)}
 			{close()}
 		</div>
 	);

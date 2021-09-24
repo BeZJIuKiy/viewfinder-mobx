@@ -142,7 +142,7 @@ export const Canvas = observer(() => {
 			: windowSize.height * maxHeightObject / ratio.height;
 
 		reSizeCanvas(coefficient);
-	}, [ratio, windowSize.width, windowSize.height, ports.selectedObjects.camera]);
+	}, [ratio, windowSize.width, windowSize.height, ports.selectedObjects.camera, ports.selectedObjects.shipImage.isVisible]);
 
 	const reSizeCanvas = (coefficient) => {
 		const width = coefficient * ratio.width;
