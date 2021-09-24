@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => {
 		test: {
 			// width: "calc(100% - 300px)",
 			// height: 92,
-			minHeight: 92,
+			height: styles.headerHeight,
+			// minHeight: styles.headerHeight,
 			flexShrink: 0,
 			position: "fixed",
 			top: 0,
@@ -95,15 +96,14 @@ export const Header = observer(() => {
 		/* Set Events from Server */
 		setHandleInterval(
 			setInterval(() => {
-				// getNewNotifications();
-				// getPoints(connects.urlEvents);
+				getPoints(connects.urlEvents);
 			}, 1000)
 		)
 	}, []);
 
 
 	useEffect(() => {
-		// getNewNotifications();
+		getNewNotifications();
 	}, [notifications]);
 	useEffect(() => {
 		setPortNotes();
