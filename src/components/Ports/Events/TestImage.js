@@ -11,18 +11,17 @@ import styles from "../../../store/styles";
 
 const useStyles = makeStyles((theme) => ({
 	testImage: {
+		maxHeight: window.innerHeight * eventsState.maxHeight,
+
 		display: 'flex',
 		flexWrap: 'wrap',
 		justifyContent: 'space-around',
-		overflow: 'hidden',
 		backgroundColor: theme.palette.background.paper,
-	},
-	gridList: {
-		width: "100%",
-		height: "100%",
-		maxHeight: 450,
 
-		transform: 'translateZ(0)',
+		"&.toMany": {
+			overflowY: "auto",
+			overflowX: "hidden",
+		}
 	},
 	titleBar: {
 		cursor: "pointer",
@@ -38,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 		color: 'white',
 	},
 	image: {
-		cursor: 'pointer'
+		cursor: 'pointer',
 	},
 }));
 
@@ -63,7 +62,7 @@ export const TestImage = observer(() => {
 			              }}
 			>
 				<img className={classes.image}
-					src={`data:image/png;base64,${imageLink}`} alt={typeVessel}
+				     src={`data:image/png;base64,${imageLink}`} alt={typeVessel}
 				/>
 				<GridListTileBar
 					className={classes.titleBar}
@@ -75,9 +74,11 @@ export const TestImage = observer(() => {
 		)
 	});
 
+	const isToMany = data.length > 2 ? "toMany" : "";
+
 	return (
-		<div className={classes.testImage}>
-			<GridList cellHeight={70} spacing={1} className={classes.gridList}>
+		<div className={`${classes.testImage} ${isToMany}`}>
+			<GridList cellHeight={70} spacing={1}>
 				{boatImage}
 			</GridList>
 		</div>

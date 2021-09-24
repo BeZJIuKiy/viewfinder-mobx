@@ -2,10 +2,11 @@ import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
 import ports from "../../../store/ports";
 import React, {useEffect, useState} from "react";
+import eventsState from "../../../store/eventsState";
 
 const useStyles = makeStyles((theme) => ({
 	otherCameras: {
-		maxHeight: 450,
+		maxHeight: window.innerHeight * eventsState.maxHeight,
 		overflowY: "auto"
 	},
 	otherCamerasAll: {

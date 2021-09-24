@@ -6,6 +6,7 @@ class EventsState {
 	isShowControlCameraMove  = false;
 	isShowImage = false;
 	zoneAction = "";
+	maxHeight = 0.4;
 
 	constructor() {
 		makeAutoObservable(this)

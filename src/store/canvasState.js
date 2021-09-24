@@ -120,6 +120,9 @@ class CanvasState {
         this.canvasReSize.coefficient.width = this.canvasReSize.newSize.width / this.canvasReSize.oldSize.width;
         this.canvasReSize.coefficient.height = this.canvasReSize.newSize.height / this.canvasReSize.oldSize.height;
 
+        console.log(`${width}x${height}`);
+
+
         for (const id in this.saveDataTest) {
             this.saveDataTest[id].forEach((polygon) => {
                 const points = polygon.getPoints();
@@ -134,6 +137,7 @@ class CanvasState {
                 }
 
                 polygon.setPoints(newPoints);
+                console.log(newPoints)
             })
         }
     }

@@ -22,6 +22,7 @@ import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import ports from "../../../store/ports";
 import {observer} from "mobx-react-lite";
+import eventsState from "../../../store/eventsState";
 
 
 function descendingComparator(a, b, orderBy) {
@@ -217,6 +218,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	table: {
 		minWidth: 750,
+		// maxHeight: window.innerHeight * eventsState.maxHeight,
 	},
 	visuallyHidden: {
 		border: 0,

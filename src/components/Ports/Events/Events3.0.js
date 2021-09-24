@@ -13,6 +13,7 @@ import {OtherCameras} from "./OtherCameras";
 import {ShipScreen} from "./ShipScreen";
 import {observer} from "mobx-react-lite";
 import styles from "../../../store/styles";
+import canvasState from "../../../store/canvasState";
 
 const useStyles = makeStyles((theme) => ({
 	event: {
@@ -83,11 +84,6 @@ const useStyles = makeStyles((theme) => ({
 
 		"&.show": {
 			display: "block",
-			// marginBottom: 2,
-
-			// [theme.breakpoints.down('sm')]: {
-			// 	marginBottom: 2,
-			// },
 		},
 		"&.hide": {
 			display: "none",
