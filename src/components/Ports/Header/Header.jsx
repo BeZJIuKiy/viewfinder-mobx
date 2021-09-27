@@ -94,20 +94,20 @@ export const Header = observer(() => {
 
 	useEffect(() => {
 		/* Set Events from Server */
-		setHandleInterval(
-			setInterval(() => {
-				getPoints(connects.urlEvents);
-			}, 1000)
-		)
+		// setHandleInterval(
+		// 	setInterval(() => {
+		// 		getPoints(connects.urlEvents);
+		// 	}, 1000)
+		// )
 	}, []);
 
 
 	useEffect(() => {
-		getNewNotifications();
+		// getNewNotifications();
 	}, [notifications]);
 	useEffect(() => {
 		setPortNotes();
-		if (port.id >= 0) setCameraNotes();
+		if (port.id >= 0) setCameraNotif();
 
 		header.addAllNewNotifications();
 	}, [port, camera, event, camera.events]);
@@ -136,7 +136,7 @@ export const Header = observer(() => {
 			header.addNewPortsNotifications(id, num);
 		})
 	};
-	const setCameraNotes = () => {
+	const setCameraNotif = () => {
 		port.cameras.forEach(({id, events}, i) => {
 			const notif = (events.filter(({newEvent}) => newEvent)).length;
 			header.addNewCamerasNotifications(id, notif);

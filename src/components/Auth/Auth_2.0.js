@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => {
 	return ({
 		main: {
 			width: "100%",
-			height: "100%",
-			// height: scrollHeight,
+			// height: "100%",
+			height: scrollHeight,
 
 			display: "flex",
 

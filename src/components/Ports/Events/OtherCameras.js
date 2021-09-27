@@ -3,6 +3,7 @@ import {observer} from "mobx-react-lite";
 import ports from "../../../store/ports";
 import React, {useEffect, useState} from "react";
 import eventsState from "../../../store/eventsState";
+import {ImageTitle} from "./ImageTitle";
 
 const useStyles = makeStyles((theme) => ({
 	otherCameras: {
@@ -15,9 +16,15 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: "center",
 		flexGrow: 1,
 
-		position: "relative",
+		marginBottom: 10,
 
 		color: "#333",
+
+		position: "relative",
+
+		"&:last-child": {
+			marginBottom: 0,
+		},
 	},
 	pressLayout: {
 		position: "absolute",
@@ -43,7 +50,6 @@ export const OtherCameras = observer(() => {
 			.map(camera => {
 				return (
 					<div key={`Other--Cameras--${camera.id}`} className={classes.otherCamerasAll}>
-						{camera.description}
 						{/*<iframe*/}
 						{/*	src={camera.link}*/}
 						{/*	width={"100%"} height={"100%"}*/}
@@ -54,6 +60,7 @@ export const OtherCameras = observer(() => {
 						{/*/>*/}
 						<img style={{width: "100%", height: "100%"}} src={camera.previewLink} alt={"jpg stream"}/>
 						<div className={classes.pressLayout} onClick={() => goToNextCam(camera.id)}/>
+						<ImageTitle title={camera.description}/>
 					</div>
 				)
 			}))

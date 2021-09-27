@@ -8,6 +8,7 @@ import header from "../../../store/header";
 import {observer} from "mobx-react-lite";
 import eventsState from "../../../store/eventsState";
 import styles from "../../../store/styles";
+import {ImageTitle} from "./ImageTitle";
 
 const useStyles = makeStyles((theme) => ({
 	testImage: {
@@ -23,16 +24,7 @@ const useStyles = makeStyles((theme) => ({
 			overflowX: "hidden",
 		}
 	},
-	titleBar: {
-		cursor: "pointer",
 
-		fontFamily: styles.fontFamily,
-		fontWeight: 500,
-
-		background:
-			'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-			'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-	},
 	icon: {
 		color: 'white',
 	},
@@ -61,15 +53,8 @@ export const TestImage = observer(() => {
 				              ports.setVisibleSelectedImage(true);
 			              }}
 			>
-				<img className={classes.image}
-				     src={`data:image/png;base64,${imageLink}`} alt={typeVessel}
-				/>
-				<GridListTileBar
-					className={classes.titleBar}
-					title={typeVessel}
-					titlePosition="top"
-					actionPosition="left"
-				/>
+				<img className={classes.image} src={`data:image/png;base64,${imageLink}`} alt={typeVessel}/>
+				<ImageTitle title={typeVessel}/>
 			</GridListTile>
 		)
 	});
