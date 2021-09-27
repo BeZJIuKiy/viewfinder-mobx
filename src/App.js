@@ -33,7 +33,7 @@ function App() {
             <Route path='/ports' component={Ports}/>
             <Route path='/account' component={Account30}/>
             <Route path='/events' component={Events30}/>
-            {/*<Route path='/test' component={Test}/>*/}
+            <Route path='/test' component={Test}/>
             {/*<Route path='/events' render={() => <Events /> } /> // так можно*/}
         </BrowserRouter>
     );

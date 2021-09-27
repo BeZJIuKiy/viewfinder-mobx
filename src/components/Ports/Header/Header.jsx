@@ -21,8 +21,6 @@ const useStyles = makeStyles((theme) => {
 
 	return ({
 		test: {
-			// width: "calc(100% - 300px)",
-			// height: 92,
 			height: styles.headerHeight,
 			// minHeight: styles.headerHeight,
 			flexShrink: 0,
