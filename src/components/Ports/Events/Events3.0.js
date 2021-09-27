@@ -74,7 +74,6 @@ const useStyles = makeStyles((theme) => ({
 		margin: "0 auto",
 
 		alignItems: "center",
-		borderRadius: 5,
 
 		"&.drawControl": {
 			marginLeft: -4,
@@ -90,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	correctingPosition: {
-		paddingTop: 92,
+		paddingTop: styles.headerHeight,
 		marginRight: 24,
 	},
 	container: {},

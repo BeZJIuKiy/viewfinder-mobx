@@ -5,9 +5,10 @@ import ports from "../../../store/ports";
 import {observer} from "mobx-react-lite";
 import {makeStyles} from "@material-ui/core/styles";
 import {useWindowDimensions} from "../../../useHooks/useWindowDimensions";
+import styles from "../../../store/styles";
+import eventsState from "../../../store/eventsState";
 
 const useStyles = makeStyles((theme) => {
-	const {width, height} = useWindowDimensions();
 	const scrollHeight = Math.max(
 		document.body.scrollHeight, document.documentElement.scrollHeight,
 		document.body.offsetHeight, document.documentElement.offsetHeight,
@@ -16,28 +17,12 @@ const useStyles = makeStyles((theme) => {
 
 	return ({
 		yamap: {
-			// width: "100%",
-			// height: "100%",
-
 			"&.show": {
-				display: "flex",
-				// height: "100%",
+				height: `calc(${scrollHeight}px - ${styles.headerHeight}px)`,
 				minHeight: "100%",
-				// minHeight: scrollHeight,
 
-				paddingTop: 92,
-				// marginTop: 92,
-
+				display: "flex",
 				flexGrow: 1,
-				height: `100vh`,
-				// height: `calc(100vh - 92px)`,
-
-				"@media(max-width: 425px)": {
-					// height: `calc(${scrollHeight}px - 124px)`,
-					height: scrollHeight,
-					// minHeight: "100%",
-					// minHeight: scrollHeight,
-				}
 			},
 
 			"&.hide": {
@@ -47,15 +32,8 @@ const useStyles = makeStyles((theme) => {
 		},
 
 		item: {
-			// width: "calc(100vw - 300px)",
-			// width: "100%",
-			// height: "100%",
 			width: "100%",
 			minHeight: "100%",
-
-			"@media(max-width: 425px)": {
-				width: "100%",
-			}
 		},
 
 		balloon: {
@@ -96,7 +74,7 @@ const useStyles = makeStyles((theme) => {
 	})
 })
 
-const YaMap = observer(({isVisible, style}) => {
+const YaMap = observer(({isVisible}) => {
 	const classes = useStyles();
 
 	const {data, portIcon, cameraIcon, selectedObjects} = ports;
@@ -176,7 +154,7 @@ const YaMap = observer(({isVisible, style}) => {
 	});
 
 	return (
-		<div className={`${classes.yamap} ${isVisible ? 'show' : 'hide'}`} style={{...style}}>
+		<div className={`${classes.yamap} ${isVisible ? 'show' : 'hide'}`}>
 			<YMaps query={{lang: "en_US"}}>
 				<Map className={`${classes.item}`}
 				     state={mapCenter}

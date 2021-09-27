@@ -8,11 +8,6 @@ class CanvasState {
 
     userName = "alex";
 
-    /* To EVENTS */
-    // isVisibleCameraCanvas = false;
-    // isCreatePolygon = false;
-    // zoneAction = "";
-
     tempPolygons = [];
 
     size = {
@@ -116,12 +111,8 @@ class CanvasState {
         this.canvasReSize.newSize.width = width;
         this.canvasReSize.newSize.height = height;
 
-
         this.canvasReSize.coefficient.width = this.canvasReSize.newSize.width / this.canvasReSize.oldSize.width;
         this.canvasReSize.coefficient.height = this.canvasReSize.newSize.height / this.canvasReSize.oldSize.height;
-
-        console.log(`${width}x${height}`);
-
 
         for (const id in this.saveDataTest) {
             this.saveDataTest[id].forEach((polygon) => {
@@ -137,7 +128,6 @@ class CanvasState {
                 }
 
                 polygon.setPoints(newPoints);
-                console.log(newPoints)
             })
         }
     }

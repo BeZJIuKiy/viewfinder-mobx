@@ -2,7 +2,7 @@ import {makeAutoObservable} from "mobx";
 
 class styles {
 	fontFamily = `"Quicksand", sans-serif`;
-	headerHeight = 92;
+	headerHeight = 60;
 
 	constructor() {
 		makeAutoObservable(this);
