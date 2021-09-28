@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 	active: {
 		fontFamily: styles.fontFamily,
 		fontWeight: 500,
+		borderRadius: 5,
 
 		"&.isActive": {
 			color: "#333",
@@ -48,6 +49,7 @@ export const Drawer = observer(() => {
 			<ListItem
 				key={`drawerItems-${title}`}
 				className={`${classes.active} ${i === account.selectedItemIndex ? "isActive" : "noActive"}`}
+				selected={true}
 				button
 				onClick={() => handleSelectItem(i)}
 			>

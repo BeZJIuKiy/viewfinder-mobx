@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {lighten, makeStyles} from '@material-ui/core/styles';
@@ -41,11 +41,13 @@ function descendingComparator(a, b, orderBy) {
 	}
 	return 0;
 }
+
 function getComparator(order, orderBy) {
 	return order === 'desc'
 		? (a, b) => descendingComparator(a, b, orderBy)
 		: (a, b) => -descendingComparator(a, b, orderBy);
 }
+
 function stableSort(array, comparator) {
 	const stabilizedThis = array.map((el, index) => [el, index]);
 	stabilizedThis.sort((a, b) => {
@@ -55,6 +57,7 @@ function stableSort(array, comparator) {
 	});
 	return stabilizedThis.map((el) => el[0]);
 }
+
 const headCells = (data) => {
 	if (data.length === 0) return;
 	const arr = [];
@@ -264,8 +267,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const AccountTable = observer(({rowsData, search, title, searchLabel, secretTitle}) => {
-	/* STYLES */
+	/* USE ELEMENTS */
 	const classes = useStyles();
+	const tableRef = useRef(null);
 
 
 	/* HOOKS */
@@ -276,6 +280,11 @@ export const AccountTable = observer(({rowsData, search, title, searchLabel, sec
 	const [dense, setDense] = React.useState(true);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+	useEffect(() => {
+		if (!!tableRef.current?.offsetHeight === false) return;
+		// console.log(tableRef.current?.offsetHeight, tableRef.current?.offsetTop);
+		tableRef.current.scrollIntoView();
+	}, [tableRef.current?.offsetHeight])
 
 	/* FUNCTION */
 	const handleRequestSort = (event, property) => {
@@ -336,7 +345,10 @@ export const AccountTable = observer(({rowsData, search, title, searchLabel, sec
 	const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
 	return (
-		<div className={classes.root}>
+		<div
+			className={classes.root}
+			ref={tableRef}
+		>
 			<div className={classes.search}>
 				<Search data={rowsData} search={search} label={`Search ${searchLabel}`} secretTitle={secretTitle}/>
 			</div>
