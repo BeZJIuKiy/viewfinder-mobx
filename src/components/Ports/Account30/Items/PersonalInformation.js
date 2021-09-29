@@ -435,7 +435,6 @@ export const PersonalInformation = observer(() => {
 	const personalInformationActionList = () => {
 		return (
 			<div className={classes.root}>
-
 				<div className={classes.desktopPersonalInfo}>
 					<img className={classes.avatar} src={avatar} alt="user avatar"/>
 					{persInfoAccordion()}

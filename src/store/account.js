@@ -9,6 +9,10 @@ import {mdiFerry} from '@mdi/js';
 import PaymentIcon from '@material-ui/icons/Payment';
 import {AutoSave} from "./AutoSave";
 import {makePersistable} from "mobx-persist-store";
+import {PersonalInformation} from "../components/Ports/Account30/Items/PersonalInformation";
+import {Devices} from "../components/Ports/Account30/Items/Devices";
+import {Fleet} from "../components/Ports/Account30/Items/Fleet";
+import {Payments} from "../components/Ports/Account30/Items/Payments";
 
 
 export const PERSONAL_INFORMATION = "Personal Information";
@@ -44,10 +48,10 @@ class account {
     // page = devicePixelRatio
 
     drawerItems = [
-        {id: counter.id++, icon: <PersonIcon/>, title: PERSONAL_INFORMATION},
-        {id: counter.id++, icon: <VideoCam/>, title: DEVICES},
-        {id: counter.id++, icon: <ShipIcon/>, title: FLEET},
-        {id: counter.id++, icon: <PaymentIcon/>, title: PAYMENTS},
+        {id: counter.id++, icon: <PersonIcon/>, title: PERSONAL_INFORMATION, object: <PersonalInformation/>},
+        {id: counter.id++, icon: <VideoCam/>, title: DEVICES, object: <Devices/>},
+        {id: counter.id++, icon: <ShipIcon/>, title: FLEET, object: <Fleet/>},
+        {id: counter.id++, icon: <PaymentIcon/>, title: PAYMENTS, object: <Payments/>},
     ];
 
     selectedItem = "";

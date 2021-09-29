@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import backgroundImage from "../Auth/images/backgroundNew.jpg"
 import {observer} from "mobx-react-lite";
 import Grid from "@material-ui/core/Grid";
 import {Header} from "./Header/Header";
-import {Hidden} from "@material-ui/core";
+import {Container, Hidden} from "@material-ui/core";
 // import {Drawer} from "./Drawer/Drawer";
 import styles from "../../store/styles";
 import Drawer from '@material-ui/core/Drawer';
@@ -23,6 +23,12 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import PropTypes from 'prop-types';
 import account from "../../store/account";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import Button from "@material-ui/core/Button";
+import {useHexToRgba} from "../../useHooks/useHexToRgba";
 
 const useStyles = makeStyles((theme) => ({
 	test: {
@@ -328,257 +334,240 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const useAccountDrawerStyles = makeStyles((theme) => ({
-	accountDrawer: {
-		// height: "100%",
-		minHeight: "100%",
-		borderRight: "1px solid #333",
 
-		position: "fixed",
-		// top: styles.headerHeight,
-		top: "50%",
-		left: 0,
-		zIndex: 2,
+const usePersonalInformationStyles = makeStyles((theme) => ({
+	root: {
+		width: "100%",
 
-		transform: "translate(0, -50%)"
-	}
-}))
-const AccountDrawer = observer(() => {
-	const classes = useAccountDrawerStyles();
+		marginTop: 10,
 
-	return (
-		<div className={classes.accountDrawer}>
-			<div>Item 01</div>
-			<div>Item 02</div>
-			<div>Item 03</div>
-			<div>Item 04</div>
-		</div>
-	)
-})
-
-const AccountContent = observer(() => {
-	return (
-		<div>
-			AccountContent
-		</div>
-	)
-})
-
-const useAccountStyles = makeStyles((theme) => ({
-	account: {
-		minHeight: "100%",
+		"@media(max-width: 425px)": {
+			alignItems: "flex-start",
+		},
 	},
+	desktopPersonalInfo: {
+		width: "100%",
 
-	gridItem: {
-		paddingTop: styles.headerHeight,
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+
+		textAlign: "left",
+
+		"@media(max-width: 425px)": {
+			display: "none",
+		},
+	},
+	avatar: {
+		width: "12vw",
+		height: "100%",
+
+		minWidth: 150,
+		minHeight: 200,
+		margin: "5px 0px",
+	},
+	heading: {
+		fontSize: theme.typography.pxToRem(11),
+		flexBasis: '33.33%',
+		flexShrink: 0,
+
+		fontFamily: styles.fontFamily,
+		fontWeight: 600,
+		color: theme.palette.text.secondary,
+		textTransform: "uppercase",
+
+		margin: "auto 0",
+	},
+	secondaryHeading: {
+		marginLeft: "-12%",
+
+		fontFamily: styles.fontFamily,
+		fontWeight: 600,
+		fontSize: theme.typography.pxToRem(15),
+		color: theme.palette.text.primary,
+
+		"@media(max-width: 425px)": {
+			marginLeft: "-10%",
+		},
+	},
+	text: {
+		fontFamily: styles.fontFamily,
+		fontWeight: 500,
+	},
+	accordion: {
+		width: "100%",
+	},
+	quickPay: {
+		width: "100%",
+
+		display: "flex",
+		justifyContent: "center",
+
+		"@media(max-width: 320px)": {
+			width: "100%"
+		},
+	},
+	btn: {
+		width: "5vw",
+		margin: "0px 3px",
+		fontFamily: styles.fontFamily,
+		fontWeight: 500,
+
+		"@media(max-width: 425px)": {
+			margin: "0px 2px",
+		},
+
+		"@media(max-width: 320px)": {
+			// display: "none",
+		},
 	},
 }))
-const Account = observer(() => {
-	const classes = useAccountStyles();
+const PersonalInformation = observer(() => {
+	const classes = usePersonalInformationStyles();
 
-	return (
-		<div className={classes.account}>
-			<Header/>
-			<Grid container className={classes.gridContainer}>
-				<Hidden xsDown>
-					<Grid item xs={12} sm={3} md={4} lg={3} xl={2}>
-						<div className={classes.gridItem}><AccountDrawer/></div>
-					</Grid>
-				</Hidden>
-				<Grid item xs={12} sm={9} md={8} lg={9} xl={10}>
-					<div className={classes.gridItem}>Content Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-						Accusamus accusantium aliquam aspernatur deleniti dicta dolorum eaque eius, eos esse fugit
-						inventore iste iure labore laboriosam minima mollitia necessitatibus odit placeat quasi qui quia
-						quibusdam ratione rerum sed sunt tempore tenetur veniam. Consectetur debitis repellat sapiente.
-						Aliquam beatae delectus ducimus est et ex facere iste odio odit, omnis saepe suscipit temporibus
-						ullam? Ad aperiam assumenda aut, blanditiis consectetur deleniti eius est harum nulla quos sequi
-						ullam, unde! Ab eaque natus, recusandae saepe sed sint totam. A alias amet consequatur cum
-						delectus deleniti deserunt dolor ducimus earum enim expedita facere fugiat, hic ipsam ipsum iure
-						magnam magni nam necessitatibus nesciunt nostrum officia officiis placeat praesentium quae
-						quidem quisquam quo ratione recusandae saepe sed, sint unde velit voluptas voluptate, voluptatem
-						voluptates! Aperiam culpa dolor ipsam praesentium. A aperiam corporis dicta eaque earum
-						explicabo, facere, hic illum impedit labore nemo nobis non numquam odio odit placeat possimus
-						quae qui reiciendis rerum saepe similique tempora tempore, totam ullam? Adipisci assumenda
-						dignissimos dolores ducimus eveniet facere molestiae nobis possimus! Consequatur nobis non
-						nostrum officiis quam tempore tenetur unde voluptatem. Distinctio dolor dolorum, eligendi
-						eveniet fugiat harum ipsa, laboriosam neque officiis pariatur quae quidem ratione recusandae
-						sequi soluta! Ab aliquam aliquid amet aspernatur autem deserunt doloremque ea earum esse ex
-						inventore laborum, laudantium modi nam nihil numquam odit optio perspiciatis quasi quisquam
-						repellendus tenetur vitae voluptates? Animi fugit harum in libero nemo omnis perspiciatis
-						praesentium, quas sapiente sit tempora veniam? Accusantium esse ex facilis fugit impedit, nobis
-						obcaecati quidem soluta? A autem cumque debitis, dolorum eaque hic, illo incidunt iusto minima
-						modi, necessitatibus nobis numquam quibusdam reiciendis soluta tempore veritatis. Ab accusamus
-						ad, cupiditate, dignissimos dolore eius enim et excepturi fugit, iure laboriosam nesciunt quis
-						quos ratione reiciendis sed soluta tempora ut veniam voluptatem. Atque autem culpa debitis eius
-						eligendi, esse explicabo ipsam iste maiores necessitatibus nemo non, perspiciatis quasi ratione
-						repudiandae? Aliquam aperiam, cumque doloribus ducimus eligendi enim expedita itaque maiores
-						molestiae mollitia nihil nisi pariatur porro possimus quam qui quos ratione temporibus tenetur
-						veniam veritatis vitae voluptate. A ab, aperiam atque autem doloribus iste laboriosam molestias
-						nihil, odio officia pariatur perferendis possimus ratione recusandae sunt, ut veniam vero!
-						Corporis impedit laudantium quae tempora ut. Culpa quisquam, reiciendis. Assumenda cum debitis
-						doloremque ducimus eligendi ex facere impedit magnam, maxime mollitia nemo odio praesentium qui
-						sequi soluta? Alias ipsa possimus quis tempore voluptates. Adipisci eos totam ut voluptate.
-						Aliquam, deleniti eius enim fugiat in maiores maxime molestias non optio? Ducimus facere maiores
-						officiis quod velit! Culpa dignissimos incidunt nesciunt praesentium recusandae rem sapiente!
-						Aliquid corporis, culpa dolorem ducimus illum, ipsam, iste iusto molestiae nisi odio optio
-						placeat porro quia tempora vel! Ab blanditiis commodi consequuntur culpa deserunt doloremque in
-						quidem voluptatem? Earum eligendi fugiat maiores necessitatibus nulla, perspiciatis ratione
-						repellendus. Ab adipisci assumenda, beatae consequuntur cumque delectus dignissimos distinctio
-						dolorem dolorum ea enim eos est expedita facere ipsam labore laudantium magni mollitia nobis
-						officia quidem quos rem repellat sapiente sint suscipit voluptates. Delectus dolorem doloribus
-						iusto molestiae vel. Alias aliquam aliquid blanditiis commodi consequatur corporis culpa
-						deserunt dicta dolorem doloribus eum explicabo fugit, harum id, maxime mollitia nam nesciunt
-						obcaecati odio perspiciatis quam quas quidem quisquam quod recusandae sapiente soluta ut
-						voluptas voluptates voluptatum? Deleniti, ducimus, voluptatum? Assumenda atque aut consequatur
-						dolores, ipsam labore laboriosam, libero molestiae molestias sed soluta, sunt voluptatibus. Ad
-						asperiores atque consectetur cupiditate, ea enim exercitationem expedita fugiat illum laborum
-						magnam maxime minima natus nesciunt nisi nostrum odit, officiis omnis perferendis, possimus
-						praesentium quasi quidem recusandae rem repudiandae saepe sequi similique sint temporibus unde
-						vel velit voluptatem voluptatum. A aliquid at beatae, distinctio, ex facilis fuga fugit in
-						inventore iste molestiae necessitatibus nesciunt nisi porro quae saepe soluta tempore totam,
-						velit voluptatem. Ad alias consectetur culpa, cum dolorem doloribus earum est expedita harum
-						iste, laboriosam laudantium, minima natus nihil non placeat provident quia quibusdam quisquam
-						quod repellendus repudiandae rerum vel veritatis voluptatem. Ad aliquam animi aperiam assumenda
-						autem cum delectus dolore dolorem eligendi eos et ex exercitationem fugit id iusto laborum
-						maiores maxime, modi mollitia nam nemo non nostrum nulla numquam obcaecati officiis perspiciatis
-						porro quae qui quo reprehenderit sed sit temporibus velit veniam voluptates voluptatum?
-						Accusamus at corporis dolor eos expedita illum impedit in ipsam iure molestias nemo officia
-						praesentium quaerat quidem repellendus, sunt ullam velit voluptas voluptate voluptatibus.
-						Aspernatur cum dolore ea eligendi eos excepturi exercitationem inventore labore nam natus neque
-						nostrum, quasi qui quis quos repellendus sint sit voluptates! Ad amet asperiores aspernatur
-						assumenda at aut autem blanditiis commodi consequuntur cum cumque dolores, ducimus eligendi eos
-						error et harum hic impedit in ipsum iste iure neque nisi non nulla odit quam qui rem repellat
-						repellendus reprehenderit sapiente sed veniam vero vitae voluptas voluptatibus? A ab accusantium
-						adipisci alias atque blanditiis corporis cum cumque dignissimos ducimus ea eaque enim error
-						eveniet excepturi magni, maxime mollitia nisi numquam obcaecati odio quam quia quis ratione
-						soluta suscipit voluptas voluptatibus. Commodi dolorum et nam sit? Ab, aliquam consequuntur
-						dolores expedita id in inventore ipsa laboriosam modi molestias mollitia neque nesciunt nulla
-						odio odit officia officiis perspiciatis quos rem repudiandae similique suscipit, vel voluptates!
-						Accusantium adipisci consequatur consequuntur dicta dignissimos eius enim ex id, incidunt iure
-						laborum neque odit rem repellendus saepe sequi tempora totam! Blanditiis corporis laudantium
-						magni voluptates! Ab architecto at autem beatae commodi culpa, cumque distinctio ea enim est
-						expedita explicabo fuga illo iure labore laudantium maiores maxime necessitatibus nemo placeat
-						quod quos reiciendis vel. A adipisci alias animi consectetur culpa cumque debitis deleniti
-						dolores eaque eligendi error eum exercitationem illo incidunt ipsa iste laborum maiores modi
-						nisi nobis obcaecati optio perferendis perspiciatis placeat provident quo quos, ratione repellat
-						repellendus reprehenderit sunt tempora tenetur voluptatem! A accusamus cum cupiditate deserunt
-						ducimus fugiat magni sed sint voluptatum. Assumenda at ex in modi, optio reiciendis veniam.
-						Provident, repellendus soluta. Dolore dolorem, in magnam natus necessitatibus pariatur quod
-						sequi tempora voluptates. Alias aliquam atque aut commodi cupiditate doloremque earum eveniet ex
-						exercitationem fugit illum incidunt ipsa iusto laudantium minus nesciunt pariatur perferendis,
-						placeat similique tempora. Ab aspernatur, at delectus deleniti impedit laudantium neque
-						obcaecati pariatur quaerat quas saepe, unde voluptas voluptates? Asperiores aut beatae cumque
-						dolor, ducimus ea eos illum ipsa necessitatibus neque, numquam quia quos rem repellendus
-						sapiente ullam vel veritatis? Ab ad, aliquam atque autem consectetur consequatur consequuntur
-						cum cupiditate eius enim, ex expedita fugiat impedit inventore ipsam laboriosam maiores
-						molestiae molestias numquam odit officia officiis pariatur porro qui repellendus reprehenderit
-						sapiente sunt suscipit ullam voluptatem! A alias aliquam aliquid assumenda aut blanditiis
-						commodi corporis cum deserunt distinctio dolore eaque, eos error eveniet ex explicabo facilis
-						illum ipsam iure minus molestias necessitatibus neque officia quaerat quia, quis rem repellendus
-						repudiandae rerum saepe similique tempore temporibus unde velit vitae voluptas voluptatem! Dolor
-						ea facilis, fugiat laborum necessitatibus odit velit? Dolorem iusto labore maiores, qui quo
-						sint! Accusantium aspernatur distinctio dolorem, esse fugiat laborum magni natus neque quam
-						recusandae reiciendis tenetur veritatis. Ab, beatae cum deleniti dolorem exercitationem labore
-						magnam quod sunt tempora totam! Amet atque consectetur consequatur cupiditate debitis distinctio
-						doloremque doloribus dolorum ducimus excepturi expedita fugit harum hic, laboriosam laudantium,
-						maxime molestias nam nemo nesciunt placeat quam quas quisquam quo quos reiciendis repellendus
-						reprehenderit repudiandae unde voluptate voluptatem! Deserunt illum maxime repellat? Adipisci
-						animi aperiam at cum dolores esse eum excepturi, facere, fuga fugit id illo impedit in ipsam
-						itaque iusto laudantium magni molestias nam numquam porro, possimus quas qui quia saepe sapiente
-						sed suscipit temporibus totam vero? Ab ad deserunt dignissimos distinctio eaque error est
-						excepturi expedita facere harum id illo inventore laudantium maiores modi mollitia nemo nihil
-						nostrum numquam officiis placeat porro possimus, quam quas quis suscipit ullam unde. Cumque
-						dolor magni modi nemo sapiente! Architecto blanditiis distinctio ea incidunt ipsa ipsam, iusto
-						perspiciatis repellat. Adipisci consequuntur delectus deserunt dolor, eos harum impedit magnam
-						maxime nulla quae quaerat quasi quia quibusdam quos voluptas? Alias architecto assumenda,
-						consequuntur cupiditate delectus deserunt distinctio eaque est eveniet expedita facilis hic
-						illum impedit iure minus molestias possimus quod soluta totam vero! A amet aut, blanditiis
-						commodi debitis deserunt dolores esse est exercitationem facilis fugiat, harum hic incidunt iste
-						iure magnam nemo nesciunt nihil non, odio omnis perferendis quam qui quis repudiandae sed sequi
-						vero? A aut blanditiis delectus deserunt dicta dolore doloribus enim esse et expedita explicabo
-						fugit illo illum incidunt inventore ipsa ipsum iure laboriosam laudantium libero natus nesciunt
-						nobis non nostrum obcaecati odio pariatur placeat porro, quidem quos rerum similique soluta sunt
-						tempora temporibus totam ullam! A adipisci consequatur, dolore eius eveniet molestiae
-						perspiciatis placeat quaerat, quam quis quod sapiente, tempora vero! Architecto eum fugiat
-						impedit minima neque nulla quam repellat tenetur vero voluptas! Autem deleniti in incidunt iure
-						placeat quaerat quod saepe voluptatem. Ab delectus fuga in nesciunt numquam reiciendis ullam
-						voluptate! Beatae consectetur debitis doloremque eius esse, explicabo fuga fugiat harum id illo
-						necessitatibus nihil, odio officia quibusdam quod repellendus sed? Accusamus, adipisci aliquid
-						beatae commodi consequatur corporis cum debitis distinctio dolore dolorum eveniet ex facere,
-						fugit id maxime minima minus molestias nihil nobis odit omnis possimus quas repellat, saepe sed
-						similique sit ut veniam voluptatem voluptates. Autem expedita maxime molestias nihil? Ab ad
-						aliquid asperiores culpa ea esse est exercitationem illum impedit molestias nemo nihil nobis
-						nostrum nulla odit placeat quae, quisquam sed sunt suscipit unde ut voluptate voluptatibus. A ad
-						adipisci alias consequatur corporis deleniti dolor dolores est ex, harum illum impedit laborum
-						laudantium magnam mollitia neque omnis optio perspiciatis praesentium qui quia quis
-						reprehenderit repudiandae similique ut veniam, voluptas. Dolores et expedita libero mollitia
-						natus nobis officiis porro quos, repellendus sint! Fugiat illum incidunt labore maxime numquam
-						quaerat, quam saepe. Assumenda delectus deleniti distinctio iste molestias nihil placeat quis
-						vitae. Ab aliquam aliquid animi blanditiis consequuntur culpa dicta distinctio dolore dolores ea
-						eius eveniet excepturi hic id illum impedit nemo nostrum officia placeat porro praesentium, quia
-						reiciendis, repellat sed totam ullam voluptatum! A accusamus ad atque aut exercitationem, fugit
-						incidunt inventore ipsa ipsum modi natus nobis odio optio, quia quod suscipit tempora velit,
-						voluptate? Excepturi, labore magnam minus molestiae mollitia odit quasi recusandae reiciendis
-						sapiente! Cupiditate deserunt et ex ipsum quia recusandae, tempore! Aspernatur cum, delectus, et
-						eveniet harum id inventore iure laborum molestiae non, odit sed tenetur vero? Alias consequuntur
-						eius harum id impedit inventore libero, necessitatibus officia optio quasi rem, sit? Ab beatae
-						corporis cumque id, illo ipsum iusto magni, maiores mollitia nam optio quis, repudiandae vero.
-						Ad aperiam aut commodi culpa cum debitis delectus deserunt dolor dolore dolorem doloremque ea
-						enim hic illum ipsa ipsam, libero minus nam necessitatibus nesciunt non obcaecati optio
-						praesentium quae quia sequi sint totam ullam ut velit vero voluptas voluptate voluptatibus!
-						Adipisci animi numquam quaerat recusandae veritatis voluptatem? Animi assumenda deleniti dolor
-						dolore, doloremque et exercitationem fuga nisi perferendis porro quibusdam sequi sunt. At autem
-						deserunt error eveniet fuga illum impedit inventore modi quia saepe. Ad aliquid assumenda,
-						debitis deserunt eaque, eos eveniet facere ipsa laudantium libero molestiae natus, neque
-						nesciunt nihil odio quam saepe sint totam. Adipisci amet beatae consectetur distinctio, dolorum
-						ducimus ea, exercitationem fugit harum hic id laborum modi mollitia natus obcaecati placeat
-						quaerat quasi quibusdam rem repellat, rerum sint vel voluptatibus. Accusantium aliquam assumenda
-						atque autem commodi consequuntur cumque cupiditate distinctio error et facere fuga harum ipsa
-						iusto nihil quae quibusdam quos ratione veniam, vitae voluptas voluptatem voluptates voluptatum!
-						Autem dolorem earum enim exercitationem ipsa maiores maxime, nisi obcaecati praesentium sed! A
-						ad amet deserunt dignissimos distinctio dolore, ea eum explicabo in ipsum maxime ratione sed
-						tenetur? Accusamus aliquid assumenda atque cum dolorem harum itaque modi natus obcaecati omnis,
-						placeat quam sint unde. Adipisci earum qui quo quos repellat. Alias at corporis, earum eos hic
-						laboriosam molestias, natus, odit perspiciatis quasi sapiente similique. Beatae doloremque
-						excepturi veniam! Aliquam dolore earum eius et eum ex fuga, fugiat fugit hic impedit laboriosam
-						nam officia, quas quasi quia quisquam rem repellendus reprehenderit sit voluptatem? Fugit hic
-						iste sed voluptatum? Aliquam at beatae consectetur consequatur, corporis dicta distinctio ea
-						eligendi et fugit hic inventore magnam magni nam necessitatibus nemo neque non odio officiis qui
-						sequi sit totam veritatis. Earum, quam?
+	const {avatar, name, company, status, balance, phone, email} = account.personalInformation;
+
+	const [expanded, setExpanded] = React.useState(false);
+
+	const handleChange = (panel) => (event, isExpanded) => {
+		setExpanded(isExpanded ? panel : false);
+	};
+
+	const persInfoAccordion = () => {
+		const personalInfo = [];
+
+		for (const key in account.personalInformation) {
+			if (key === "avatar" || key === "firstName" || key === "secondName") continue;
+
+			personalInfo.push(
+				<Accordion key={`personalInfo-${key}`} className={classes.accordion} expanded={expanded === key} onChange={handleChange(key)}>
+					<AccordionSummary
+						expandIcon={<ExpandMoreIcon/>}
+						aria-controls="panel1bh-content"
+						id="panel1bh-header"
+					>
+						<Typography className={classes.heading} component={'span'}>{key}</Typography>
+						<Typography
+							className={classes.secondaryHeading}
+							component={'span'}
+						>
+							{key === "name"
+								? `${name.first} ${name.last}`
+								: account.personalInformation[key]}
+						</Typography>
+					</AccordionSummary>
+
+					<AccordionDetails>
+						<Typography className={classes.text} component={'span'}>
+							{persInfoAccordionActions(key)}
+						</Typography>
+					</AccordionDetails>
+				</Accordion>
+			)
+		}
+
+		return personalInfo;
+	};
+	const persInfoAccordionActions = (name) => {
+		switch (name) {
+			case "name": {
+				return (
+					<div>
+						change first and last name
 					</div>
-				</Grid>
-			</Grid>
+				)
+			}
+
+			case "company": {
+				return (
+					<div>
+						change company name
+					</div>
+				)
+			}
+
+			case "phone": {
+				return (
+					<div>
+						change phone number
+					</div>
+				)
+			}
+
+			case "email": {
+				return (
+					<div>
+						change email
+					</div>
+				)
+			}
+
+			default: {
+				return "";
+			}
+		}
+	}
+	const quickPay = () => {
+		const lastPays = [];
+		for (let i = account.payHistory.length - 1; i > account.payHistory.length - 4; --i) {
+			lastPays.push(account.payHistory[i]);
+		}
+
+		return (
+			<div className={classes.quickPay}>
+				{lastPays.map(pay => (
+					<Button
+						className={classes.btn}
+						key={`quickPay-btn-${pay.price}`}
+						variant="contained"
+						color="primary"
+					>
+						{`$${pay.price}`}
+					</Button>
+				))}
+			</div>
+		)
+	};
+
+	return (
+		<div className={classes.root}>
+			<div className={classes.desktopPersonalInfo}>
+				<img className={classes.avatar} src={avatar} alt="user avatar"/>
+				{persInfoAccordion()}
+				<Accordion expanded={expanded === "Quick pay"} onChange={handleChange("Quick pay")}>
+					<AccordionSummary
+						expandIcon={<ExpandMoreIcon/>}
+						aria-controls="panel4bh-content"
+						id="panel4bh-header"
+					>
+						<Typography className={classes.heading}>Quick pay</Typography>
+						<Typography component={'span'} className={classes.secondaryHeading}>{quickPay()}</Typography>
+					</AccordionSummary>
+					<AccordionDetails>
+						<Typography className={classes.text}>
+							Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
+							vitae egestas augue. Duis vel est augue.
+						</Typography>
+					</AccordionDetails>
+				</Accordion>
+			</div>
 		</div>
 	)
 })
-
 
 const drawerWidth = 250;
-const hexToRgba = (hex, a = 1) => {
-	const newHex = (hex[0] === "#") ? hex.replace("#", "") : hex;
-	const rgb = [];
-
-	if (newHex.length < 6) {
-		for (let i = 0; i < newHex.length; ++i) {
-			rgb.push(parseInt((newHex[i] + newHex[i]), 16));
-		}
-	} else {
-		for (let i = 0; i < newHex.length; i += 2) {
-			rgb.push(parseInt(newHex[i] + newHex[i + 1], 16));
-		}
-	}
-	const [r, g, b] = rgb;
-
-	return `rgba(${r}, ${g}, ${b}, ${a})`;
-}
 
 const useResponsiveDrawerStyles = makeStyles((theme) => {
 	const firstColor = "#444";
 	const secondColor = "#999";
 
+	const textColor = "#ccc"
+
 	return ({
 		root: {
 			display: 'flex',
+			minHeight: "100vh",
+			background: useHexToRgba(firstColor, 0.7),
 		},
 		drawer: {
 			[theme.breakpoints.up('sm')]: {
@@ -603,10 +592,15 @@ const useResponsiveDrawerStyles = makeStyles((theme) => {
 		drawerPaper: {
 			zIndex: 1,
 			width: drawerWidth,
+			background: useHexToRgba(firstColor),
 		},
 		content: {
 			flexGrow: 1,
-			padding: theme.spacing(3),
+			// padding: theme.spacing(3),
+			// background: hexToRgba(textColor, 0.8),
+		},
+		list: {
+			overflowX: "hidden",
 		},
 		listItem: {
 			"&.isActive": {
@@ -623,7 +617,8 @@ const useResponsiveDrawerStyles = makeStyles((theme) => {
 					borderTopLeftRadius: 3,
 					borderBottomLeftRadius: 3,
 
-					background: hexToRgba(firstColor, 0.8),
+					// background: hexToRgba(firstColor, 0.8),
+					background: useHexToRgba(textColor, 0.8),
 				},
 			},
 		},
@@ -635,7 +630,9 @@ const useResponsiveDrawerStyles = makeStyles((theme) => {
 
 			"&.isActive": {
 				fontWeight: 500,
-				color: firstColor,
+
+				// color: firstColor,
+				color: textColor,
 			},
 		},
 
@@ -643,49 +640,104 @@ const useResponsiveDrawerStyles = makeStyles((theme) => {
 			color: secondColor,
 
 			"&.isActive": {
-				color: firstColor,
+				// color: firstColor,
+				color: textColor,
 			},
-		}
+		},
+
+		gridContainerMain: {
+			margin: 0,
+			marginLeft: theme.spacing(-3),
+		},
+
+		gridContainerItem: {
+			margin: 0,
+			padding: 0,
+			minHeight: "100%",
+		},
+
+		gridItem: {
+			minHeight: "100%",
+			padding: theme.spacing(1),
+			borderRadius: 5,
+			background: useHexToRgba(firstColor, 0.8),
+		},
 	})
 });
-export const ResponsiveDrawer = (props) => {
+export const ResponsiveDrawer = observer((props) => {
 	const {window} = props;
 	const classes = useResponsiveDrawerStyles();
 	const theme = useTheme();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const [selected, setSelected] = React.useState(account.drawerItems[0].title);
+	const [content, setContent] = React.useState(account.drawerItems[0].object);
 
 	const handleDrawerToggle = () => {
 		setMobileOpen(!mobileOpen);
 	};
-	const handleClick = (text) => {
+	const handleClick = (text, index) => {
 		setSelected(text);
+		setContent(account.drawerItems[index].object)
 	}
 
-	const drawer = (
-		<div>
-			<div className={classes.toolbar}/>
-			<List>
-				{account.drawerItems.map((item, index) => {
-					const isActive = selected === item.title ? "isActive" : "";
-					return (
-						<ListItem
-							key={item.title}
-							className={`${classes.listItem} ${isActive}`}
-							button
+	const drawer = () => {
+		return (
+			<div>
+				<div className={classes.toolbar}/>
+				<List className={classes.list}>
+					{account.drawerItems.map((item, index) => {
+						const isActive = selected === item.title ? "isActive" : "";
+						return (
+							<ListItem
+								key={item.title}
+								className={`${classes.listItem} ${isActive}`}
+								button
+								onClick={() => handleClick(item.title, index)}
+							>
+								<ListItemIcon
+									className={`${classes.listItemIcon} ${isActive}`}>{item.icon}</ListItemIcon>
+								<ListItemText primary={item.title}
+								              classes={{primary: `${classes.listItemText} ${isActive}`}}/>
+							</ListItem>
+						)
+					})}
+				</List>
+				<Divider/>
+			</div>
+		);
+	}
 
-							onClick={() => handleClick(item.title)}
-						>
-							<ListItemIcon className={`${classes.listItemIcon} ${isActive}`}>{item.icon}</ListItemIcon>
-							<ListItemText primary={item.title}
-							              classes={{primary: `${classes.listItemText} ${isActive}`}}/>
-						</ListItem>
-					)
-				})}
-			</List>
-			<Divider/>
-		</div>
-	);
+	const gridItem = (component) => {
+		return (
+			<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+				<div className={classes.gridItem}>
+					{component}
+				</div>
+			</Grid>
+		)
+	}
+
+	const gridContentItem = (components = []) => {
+		return (
+			<Grid container spacing={3} className={classes.gridContainerItem}>
+				{components.map((component) => gridItem(component))}
+			</Grid>
+		)
+	}
+	const gridContent = () => {
+		return (
+			<Container maxWidth={"lg"}>
+				<Grid container spacing={3} className={classes.gridContainerMain}>
+					<Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+						{gridContentItem([<PersonalInformation/>])}
+					</Grid>
+					<Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+						{gridContentItem(["444", "555"])}
+					</Grid>
+				</Grid>
+			</Container>
+		);
+	}
 
 	const container = window !== undefined ? () => window().document.body : undefined;
 
@@ -710,7 +762,7 @@ export const ResponsiveDrawer = (props) => {
 							keepMounted: true, // Better open performance on mobile.
 						}}
 					>
-						{drawer}
+						{drawer()}
 					</Drawer>
 				</Hidden>
 				<Hidden xsDown implementation="css">
@@ -721,39 +773,17 @@ export const ResponsiveDrawer = (props) => {
 						variant="permanent"
 						open
 					>
-						{drawer}
+						{drawer()}
 					</Drawer>
 				</Hidden>
 			</nav>
 			<main className={classes.content}>
 				<div className={classes.toolbar}/>
-				<Typography paragraph>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-					ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-					facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-					gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-					donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-					adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-					Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-					imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-					arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-					donec massa sapien faucibus et molestie ac.
-				</Typography>
-				<Typography paragraph>
-					Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-					facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-					tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-					consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-					vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-					hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-					tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-					nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-					accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-				</Typography>
+				{gridContent()}
 			</main>
 		</div>
 	);
-}
+})
 ResponsiveDrawer.propTypes = {
 	/**
 	 * Injected by the documentation to work in an iframe.
@@ -793,6 +823,7 @@ export const Test = observer(() => {
 	return (
 		<div className={classes.test}>
 			<ResponsiveDrawer/>
+			{/*<PersonalInformation/>*/}
 		</div>
 	)
 })

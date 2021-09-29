@@ -13,6 +13,7 @@ import {makeAutoObservable} from "mobx";
 import canvasState from "./canvasState";
 import {AutoSave} from "./AutoSave";
 import {makePersistable} from "mobx-persist-store";
+import header from "./header";
 // import boat1_02 from '../components/Ports/Events/images/b1-02.jpg'
 // import boat1_05 from '../components/Ports/Events/images/b1-05.jpg'
 
@@ -352,6 +353,8 @@ class ports {
 	setIsNewNotif = (id, isNew) => {
 		const event = this.selectedObjects.camera.events.find(event => event.id === id);
 		event.newEvent = isNew;
+
+		header.checkNewNotifications();
 	}
 
 	setVisibleSelectedImage = (isVisible) => {
