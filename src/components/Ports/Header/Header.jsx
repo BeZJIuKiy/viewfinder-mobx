@@ -10,7 +10,7 @@ import './Header.css';
 import {observer} from "mobx-react-lite";
 import header from "../../../store/header";
 import ports from "../../../store/ports";
-import {HeaderNotifications} from "./HeaderNotifications";
+import {HeaderNotifications} from "./HeaderNotifications/HeaderNotifications";
 import {MobileDrawer} from "../MobileDrawer/MobileDrawer";
 import boat1_04 from "../Events/images/b1-04.jpg";
 import connects from "../../../store/connects";
