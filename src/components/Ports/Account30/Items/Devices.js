@@ -1,20 +1,6 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import account, {DEVICES, FLEET, PERSONAL_INFORMATION} from "../../../../store/account";
-import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import Badge from "@material-ui/core/Badge";
-import {NavLink} from "react-router-dom";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import IconButton from "@material-ui/core/IconButton";
-import Button from "@material-ui/core/Button";
-import {FleetTable} from "../../Account/DataTable/FleetTable";
-import {DevicesTable} from "../../Account/DataTable/DevicesTable";
-import {SmallDevicesTable20} from "../../Account/DataTable/SmallFleetTable20";
-import {Search} from "./Search";
+import {DEVICES} from "../../../../store/account";
 import {AccountTable} from "./AccountTable";
 import ports from "../../../../store/ports";
 import {useWindowDimensions} from "../../../../useHooks/useWindowDimensions";
@@ -170,7 +156,8 @@ export const Devices = () => {
 
                 {width <= 425
                     ? <AccordionFromTable tableData={allDevicesFull()} header={"Country"}/>
-                    : <AccountTable secretTitle={"Devices: full Devices"} rowsData={allDevicesFull()} search={"Camera Name"} searchLabel={"Devices Name"}/>}
+                    : <AccountTable secretTitle={"Devices: full Devices"} rowsData={allDevicesFull()}
+                                    search={"Camera Name"} searchLabel={"Devices Name"}/>}
             </div>
         )
     };

@@ -4,7 +4,7 @@ import backgroundImage from "../Auth/images/backgroundNew.jpg"
 import {observer} from "mobx-react-lite";
 import Grid from "@material-ui/core/Grid";
 import {Header} from "./Header/Header";
-import {Container, Hidden} from "@material-ui/core";
+import {Card, CardActions, CardContent, CardHeader, Container, Hidden, Link} from "@material-ui/core";
 // import {Drawer} from "./Drawer/Drawer";
 import styles from "../../store/styles";
 import Drawer from '@material-ui/core/Drawer';
@@ -22,10 +22,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import PropTypes from 'prop-types';
-import account from "../../store/account";
+import account, {DEVICES, FLEET, PAYMENTS, PERSONAL_INFORMATION} from "../../store/account";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import {StarBorder} from "@material-ui/icons";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import Button from "@material-ui/core/Button";
 import {useHexToRgba} from "../../useHooks/useHexToRgba";
@@ -339,14 +340,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const usePersonalInfoMobileStyles = makeStyles((theme) => ({
+    personalInfoMobile: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+    },
     mobilePersonalInfo: {
         display: "flex",
-
         width: "100%",
+        alignItems: "center",
     },
     mobilePersonalInfoAvatar: {
         display: "flex",
 
+        width: 130,
+        height: 130,
         minWidth: 130,
         minHeight: 130,
 
@@ -389,23 +397,34 @@ const usePersonalInfoMobileStyles = makeStyles((theme) => ({
             textTransform: "uppercase",
         },
     },
+
+    btn: {
+        width: "80%",
+        marginBottom: theme.spacing(1),
+    },
 }))
 const PersonalInfoMobile = observer(() => {
     const classes = usePersonalInfoMobileStyles();
     const {name, company, status, balance} = account.personalInformation;
 
     return (
-        <div className={classes.mobilePersonalInfo}>
-            <div className={classes.mobilePersonalInfoAvatar}/>
-            <div className={classes.mobilePersonalInfoData}>
-                <div className={`${classes.mobilePersonalInfoDataItem} name`}>{name.first} {name.last}</div>
-                <div className={classes.mobilePersonalInfoDataItem}>{company}</div>
-                <div className={`${classes.mobilePersonalInfoDataItem} filed`}>COUNTRY: <span
-                    className={`${classes.mobilePersonalInfoDataItem} data`}>${balance}</span></div>
-                <div className={`${classes.mobilePersonalInfoDataItem} filed`}>
-                    Status: <span className={`${classes.mobilePersonalInfoDataItem} data`}>{status}</span>
+        <div className={classes.personalInfoMobile}>
+            <div className={classes.mobilePersonalInfo}>
+                <div className={classes.mobilePersonalInfoAvatar}/>
+                <div className={classes.mobilePersonalInfoData}>
+                    <div className={`${classes.mobilePersonalInfoDataItem} name`}>{name.first} {name.last}</div>
+                    <Button className={classes.btn} variant="outlined" color="default">
+                        Edit Profile
+                    </Button>
+                    <div className={classes.mobilePersonalInfoDataItem}>{company}</div>
+                    <div className={`${classes.mobilePersonalInfoDataItem} filed`}>COUNTRY: <span
+                        className={`${classes.mobilePersonalInfoDataItem} data`}>${balance}</span></div>
+                    <div className={`${classes.mobilePersonalInfoDataItem} filed`}>
+                        Status: <span className={`${classes.mobilePersonalInfoDataItem} data`}>{status}</span>
+                    </div>
                 </div>
             </div>
+
         </div>
     )
 });
@@ -657,6 +676,48 @@ const SmallTableDevices = observer(() => {
     )
 })
 
+const useFullTableDevicesStyles = makeStyles((theme) => ({
+    smallTable: {
+        display: "flex",
+        flexDirection: "column",
+        flexGrow: 1,
+        minHeight: "100%",
+    },
+
+    title: {
+        textAlign: "center",
+        fontWeight: "500",
+        fontSize: 24,
+    }
+}))
+const FullTableDevices = observer(() => {
+    const classes = useFullTableDevicesStyles();
+
+    const devices = [];
+    ports.data.forEach(({cameras}) => {
+        cameras.forEach(camera => {
+            devices.push({
+                id: camera.id,
+                "Country": camera.country,
+                "City": camera.city,
+                "Camera Name": camera.description,
+                "Type": camera.type,
+                "PTZ/STATIC": camera.move,
+                "Viewing Angle": camera.viewingAngle,
+                "Coordinates": `${camera.coordinates[0]}°, ${camera.coordinates[1]}°`
+            });
+        })
+    })
+
+    return (
+        <div className={classes.smallTable}>
+            <div className={classes.title}>Title</div>
+            <AccountTable secretTitle={"Personal information: Full Devices"} rowsData={devices}
+                          search={"Title"} searchLabel={"Devices Name"}/>
+        </div>
+    )
+})
+
 const useSmallTableFleetStyles = makeStyles((theme) => ({
     smallTable: {
         display: "flex",
@@ -686,27 +747,268 @@ const SmallTableFleet = observer(() => {
     return (
         <div className={classes.smallTable}>
             <div className={classes.title}>Title</div>
-            <AccountTable secretTitle={"Personal information: short Fleet"} rowsData={fleet}
+            <AccountTable secretTitle={"Personal information: Short Fleet"} rowsData={fleet}
                           search={"IMO"} searchLabel={"Search IMO"}/>
         </div>
     )
 })
 
+const useFullTableFleetStyles = makeStyles((theme) => ({
+    smallTable: {
+        display: "flex",
+        flexDirection: "column",
+        flexGrow: 1,
+        minHeight: "100%",
+    },
+
+    title: {
+        textAlign: "center",
+        fontWeight: "500",
+        fontSize: 24,
+
+    }
+}))
+const FullTableFleet = observer(() => {
+    const classes = useFullTableFleetStyles();
+
+    const fleet = account.myFleet.map((vessel) => ({
+            id: vessel.id,
+            "IMO": vessel.imo,
+            "Name": vessel.name,
+            "Vessel Type Generic": vessel.vesselTypeGeneric,
+            "Vessel Type Detailed": vessel.vesselTypeDetailed,
+            "Status": vessel.status,
+            "MMSI": vessel.mmsi,
+            "Call Sign": vessel.callSign,
+            "Flag": vessel.flag,
+            "Year Built": vessel.yearBuilt
+        })
+    )
+
+    return (
+        <div className={classes.smallTable}>
+            <div className={classes.title}>Title</div>
+            <AccountTable secretTitle={"Personal information: Full Fleet"} rowsData={fleet}
+                          search={"IMO"} searchLabel={"Search IMO"}/>
+        </div>
+    )
+})
+
+const usePaymentsStyles = makeStyles((theme) => ({
+    '@global': {
+        ul: {
+            margin: 0,
+            padding: 0,
+            listStyle: 'none',
+        },
+    },
+    appBar: {
+        borderBottom: `1px solid ${theme.palette.divider}`,
+    },
+    toolbar: {
+        flexWrap: 'wrap',
+    },
+    toolbarTitle: {
+        flexGrow: 1,
+    },
+    link: {
+        margin: theme.spacing(1, 1.5),
+    },
+    heroContent: {
+        padding: theme.spacing(8, 0, 6),
+    },
+    cardHeader: {
+        backgroundColor:
+            theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[700],
+    },
+    cardPricing: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'baseline',
+        marginBottom: theme.spacing(2),
+    },
+    footer: {
+        borderTop: `1px solid ${theme.palette.divider}`,
+        marginTop: theme.spacing(8),
+        paddingTop: theme.spacing(3),
+        paddingBottom: theme.spacing(3),
+        [theme.breakpoints.up('sm')]: {
+            paddingTop: theme.spacing(6),
+            paddingBottom: theme.spacing(6),
+        },
+    },
+}));
+const tiers = [
+    {
+        title: 'Free',
+        price: '0',
+        description: ['10 users included', '2 GB of storage', 'Help center access', 'Email support'],
+        buttonText: 'Sign up for free',
+        buttonVariant: 'outlined',
+    },
+    {
+        title: 'Pro',
+        subheader: 'Most popular',
+        price: '15',
+        description: [
+            '20 users included',
+            '10 GB of storage',
+            'Help center access',
+            'Priority email support',
+        ],
+        buttonText: 'Get started',
+        buttonVariant: 'contained',
+    },
+    {
+        title: 'Enterprise',
+        price: '30',
+        description: [
+            '50 users included',
+            '30 GB of storage',
+            'Help center access',
+            'Phone & email support',
+        ],
+        buttonText: 'Contact us',
+        buttonVariant: 'outlined',
+    },
+];
+const footers = [
+    {
+        title: 'Company',
+        description: ['Team', 'History', 'Contact us', 'Locations'],
+    },
+    {
+        title: 'Features',
+        description: ['Cool stuff', 'Random feature', 'Team feature', 'Developer stuff', 'Another one'],
+    },
+    {
+        title: 'Resources',
+        description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
+    },
+    {
+        title: 'Legal',
+        description: ['Privacy policy', 'Terms of use'],
+    },
+];
+const Payments = observer(() => {
+    const classes = usePaymentsStyles();
+
+    return (
+        <React.Fragment>
+            <CssBaseline />
+            <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
+                <Toolbar className={classes.toolbar}>
+                    <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+                        Company name
+                    </Typography>
+                    <nav>
+                        <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+                            Features
+                        </Link>
+                        <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+                            Enterprise
+                        </Link>
+                        <Link variant="button" color="textPrimary" href="#" className={classes.link}>
+                            Support
+                        </Link>
+                    </nav>
+                    <Button href="#" color="primary" variant="outlined" className={classes.link}>
+                        Login
+                    </Button>
+                </Toolbar>
+            </AppBar>
+            {/* Hero unit */}
+            <Container maxWidth="sm" component="main" className={classes.heroContent}>
+                <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+                    Pricing
+                </Typography>
+                <Typography variant="h5" align="center" color="textSecondary" component="p">
+                    Quickly build an effective pricing table for your potential customers with this layout.
+                    It&apos;s built with default Material-UI components with little customization.
+                </Typography>
+            </Container>
+            {/* End hero unit */}
+            <Container maxWidth="md" component="main">
+                <Grid container spacing={5} alignItems="flex-end">
+                    {tiers.map((tier) => (
+                        // Enterprise card is full width at sm breakpoint
+                        <Grid item key={tier.title} xs={12} sm={tier.title === 'Enterprise' ? 12 : 6} md={4}>
+                            <Card>
+                                <CardHeader
+                                    title={tier.title}
+                                    subheader={tier.subheader}
+                                    titleTypographyProps={{ align: 'center' }}
+                                    subheaderTypographyProps={{ align: 'center' }}
+                                    action={tier.title === 'Pro' ? <StarBorder /> : null}
+                                    className={classes.cardHeader}
+                                />
+                                <CardContent>
+                                    <div className={classes.cardPricing}>
+                                        <Typography component="h2" variant="h3" color="textPrimary">
+                                            ${tier.price}
+                                        </Typography>
+                                        <Typography variant="h6" color="textSecondary">
+                                            /mo
+                                        </Typography>
+                                    </div>
+                                    <ul>
+                                        {tier.description.map((line) => (
+                                            <Typography component="li" variant="subtitle1" align="center" key={line}>
+                                                {line}
+                                            </Typography>
+                                        ))}
+                                    </ul>
+                                </CardContent>
+                                <CardActions>
+                                    <Button fullWidth variant={tier.buttonVariant} color="primary">
+                                        {tier.buttonText}
+                                    </Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
+            </Container>
+            {/* Footer */}
+            <Container maxWidth="md" component="footer" className={classes.footer}>
+                <Grid container spacing={4} justifyContent="space-evenly">
+                    {footers.map((footer) => (
+                        <Grid item xs={6} sm={3} key={footer.title}>
+                            <Typography variant="h6" color="textPrimary" gutterBottom>
+                                {footer.title}
+                            </Typography>
+                            <ul>
+                                {footer.description.map((item) => (
+                                    <li key={item}>
+                                        <Link href="#" variant="subtitle1" color="textSecondary">
+                                            {item}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </Grid>
+                    ))}
+                </Grid>
+            </Container>
+            {/* End footer */}
+        </React.Fragment>
+    );
+})
+
 const drawerWidth = 250;
 
 const useResponsiveDrawerStyles = makeStyles((theme) => {
-    const bgcMain = "#444";
-    // const bgcGridItem = "#f00"
+    const bgcDrawer = "#444";
+    const textColorDrawer = "#999";
+    const textColorDrawerSelectedItem = "#ddd"
+
+    const bgcMainContent = "#444";
     const bgcGridItem = "#f5f5f5"
-
-    const secondColor = "#999";
-
-    const textColor = "#ccc"
 
     return ({
         root: {
             minHeight: "100vh",
-            background: useHexToRgba(bgcMain, 0.7),
+            background: useHexToRgba(bgcMainContent, 0.7),
 
             backgroundAttachment: "fixed",
             backgroundPosition: 'center',
@@ -736,7 +1038,7 @@ const useResponsiveDrawerStyles = makeStyles((theme) => {
         drawerPaper: {
             zIndex: 1,
             width: drawerWidth,
-            background: useHexToRgba(bgcMain),
+            background: useHexToRgba(bgcDrawer),
         },
         content: {
             flexGrow: 1,
@@ -767,7 +1069,7 @@ const useResponsiveDrawerStyles = makeStyles((theme) => {
                     borderBottomLeftRadius: 3,
 
                     // background: hexToRgba(firstColor, 0.8),
-                    background: useHexToRgba(textColor, 0.8),
+                    background: useHexToRgba(textColorDrawerSelectedItem, 0.8),
                 },
             },
         },
@@ -775,22 +1077,22 @@ const useResponsiveDrawerStyles = makeStyles((theme) => {
         listItemText: {
             fontFamily: styles.fontFamily,
             fontWeight: 400,
-            color: secondColor,
+            color: textColorDrawer,
 
             "&.isActive": {
                 fontWeight: 500,
 
                 // color: firstColor,
-                color: textColor,
+                color: textColorDrawerSelectedItem,
             },
         },
 
         listItemIcon: {
-            color: secondColor,
+            color: textColorDrawer,
 
             "&.isActive": {
                 // color: firstColor,
-                color: textColor,
+                color: textColorDrawerSelectedItem,
             },
         },
 
@@ -830,14 +1132,58 @@ export const ResponsiveDrawer = observer((props) => {
     const {width} = useWindowDimensions();
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [selected, setSelected] = React.useState(account.drawerItems[0].title);
-    const [content, setContent] = React.useState(account.drawerItems[0].object);
+    const [content, setContent] = React.useState([]);
+
+    useEffect(() => {
+        switch (selected) {
+            case PERSONAL_INFORMATION: {
+                const left = [
+                    {prefix: "first", component: width > 600 ? <PersonalInformation/> : <PersonalInfoMobile/>,},
+                ]
+                const right = [
+                    {prefix: "", component: <SmallTableDevices/>},
+                    {prefix: "", component: <SmallTableFleet/>},
+                ]
+
+                setContent([left, right]);
+                break;
+            }
+            case DEVICES: {
+                const center = [
+                    {prefix: "", component: <FullTableDevices/>},
+                ]
+
+                setContent([center]);
+                break;
+            }
+            case FLEET: {
+                const center = [
+                    {prefix: "", component: <FullTableFleet/>},
+                ]
+
+                setContent([center]);
+                break;
+            }
+            case PAYMENTS: {
+                const center = [
+                    {prefix: "", component: <Payments/>},
+                ]
+
+                setContent([center]);
+                break;
+            }
+            default:
+                setContent([]);
+        }
+    }, [selected, width])
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
     const handleClick = (text, index) => {
         setSelected(text);
-        setContent(account.drawerItems[index].object)
+
+        account.setSelectedItem(index);
     }
 
     const drawer = () => {
@@ -882,26 +1228,20 @@ export const ResponsiveDrawer = observer((props) => {
     }
 
     const gridContent = () => {
-        const left = [
-            {prefix: "first", component: width > 600 ? <PersonalInformation/> : <PersonalInfoMobile/>,},
-        ]
-        const right = [
-            {prefix: "", component: <SmallTableDevices/>,},
-            {prefix: "", component: <SmallTableFleet/>,},
-        ]
-
         return (
             <div className={classes.adjustmentPosition}>
                 <Container maxWidth={"xl"}>
                     <Grid container spacing={3} className={classes.gridContainerMain}>
-                        <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                            {/*{gridContentItem([<PersonalInformation/>], "first")}*/}
-                            {gridContentItem(left)}
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={12} lg={6} xl={6}>
-                            {/*{gridContentItem([<SmallTableDevices/>, <SmallTableFleet/>])}*/}
-                            {gridContentItem(right)}
-                        </Grid>
+                        {content?.map((item) => {
+                            const lg = 12 / content.length || 1;
+                            const xl = 12 / content.length || 1;
+
+                            return (
+                                <Grid item xs={12} sm={12} md={12} lg={lg} xl={xl}>
+                                    {gridContentItem(item)}
+                                </Grid>
+                            )
+                        })}
                     </Grid>
                 </Container>
             </div>

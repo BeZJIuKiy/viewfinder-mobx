@@ -139,7 +139,7 @@ export const MobileDrawer = observer(() => {
 	const drawerAccountItem = () => account.drawerItems.map(({id, icon, title}, i) => {
 		return (
 			<ListItem
-				key={`drawerAccountItem--${id}--${title}`}
+				key={`drawerAccountItem--${id}--${title}--${i}`}
 				className={`${classes.active} ${i === account.selectedItemIndex ? "isActive" : "noActive"}`}
 				button
 				onClick={() => handleSelectItem(i)}
