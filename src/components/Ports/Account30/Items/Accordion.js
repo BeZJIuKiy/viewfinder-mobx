@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
 
 		// marginLeft
 
-		color: theme.palette.text.secondary,
+		// color: theme.palette.text.secondary,
+		color: "inherit",
 		textTransform: "uppercase",
 
 		margin: "auto 0",

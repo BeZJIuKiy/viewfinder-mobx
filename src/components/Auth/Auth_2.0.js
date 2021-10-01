@@ -8,6 +8,7 @@ import styles from "../../store/styles";
 import {Form, Formik} from "formik";
 import {useHistory} from "react-router-dom";
 import {ContactUs} from "./ContactUs";
+import {useWindowDimensions} from "../../useHooks/useWindowDimensions";
 
 const useStyles = makeStyles((theme) => {
 	const scrollHeight = Math.max(
@@ -20,7 +21,8 @@ const useStyles = makeStyles((theme) => {
 		main: {
 			width: "100%",
 			// height: "100%",
-			height: scrollHeight,
+			// height: scrollHeight,
+			minHeight: useWindowDimensions().height,
 
 			display: "flex",
 
@@ -28,6 +30,8 @@ const useStyles = makeStyles((theme) => {
 			backgroundPosition: 'center',
 			backgroundSize: 'cover',
 			backgroundRepeat: 'no-repeat',
+
+			// overflow: "hidden",
 
 			position: "relative",
 
@@ -98,9 +102,7 @@ const useStyles = makeStyles((theme) => {
 		mainFormBorder: {
 			width: "45%",
 			color: "white",
-
-			padding: "10px 30px",
-
+			
 			'@media(max-width: 1024px)': {
 				width: "28vw",
 			},

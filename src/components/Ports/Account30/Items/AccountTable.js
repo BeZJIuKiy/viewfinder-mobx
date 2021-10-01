@@ -227,6 +227,7 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		width: '100%',
 		position: "relative",
+
 	},
 	search: {
 		display: "flex",
@@ -244,8 +245,10 @@ const useStyles = makeStyles((theme) => ({
 	paper: {
 		width: '100%',
 		marginBottom: theme.spacing(2),
+		background: "inherit",
 	},
 	table: {
+		// width: "100%",
 		minWidth: 500,
 	},
 	visuallyHidden: {
