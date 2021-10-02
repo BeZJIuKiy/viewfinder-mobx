@@ -594,10 +594,10 @@ const PersonalInformation = observer(() => {
 
         return (
             <div className={classes.quickPay}>
-                {lastPays.map(pay => (
+                {lastPays.map((pay, i) => (
                     <Button
                         className={classes.btn}
-                        key={`quickPay-btn-${pay.price}`}
+                        key={`quickPay-btn-${pay.price}--${i*10*pay.price.length}`}
                         variant="contained"
                         color="primary"
                     >
@@ -930,9 +930,9 @@ const Payments = observer(() => {
             {/* End hero unit */}
             <Container maxWidth="md" component="main">
                 <Grid container spacing={5} alignItems="flex-end">
-                    {tiers.map((tier) => (
+                    {tiers.map((tier, index) => (
                         // Enterprise card is full width at sm breakpoint
-                        <Grid item key={tier.title} xs={12} sm={tier.title === 'Enterprise' ? 12 : 6} md={4}>
+                        <Grid item key={`${tier.title}--${index*15+tier.title.length}`} xs={12} sm={tier.title === 'Enterprise' ? 12 : 6} md={4}>
                             <Card>
                                 <CardHeader
                                     title={tier.title}
@@ -952,8 +952,8 @@ const Payments = observer(() => {
                                         </Typography>
                                     </div>
                                     <ul>
-                                        {tier.description.map((line) => (
-                                            <Typography component="li" variant="subtitle1" align="center" key={line}>
+                                        {tier.description.map((line, index) => (
+                                            <Typography component="li" variant="subtitle1" align="center" key={`Payments--${line}--${index*15+line.length}`}>
                                                 {line}
                                             </Typography>
                                         ))}
@@ -971,15 +971,15 @@ const Payments = observer(() => {
             </Container>
             {/* Footer */}
             <Container maxWidth="md" component="footer" className={classes.footer}>
-                <Grid container spacing={4} justifyContent="space-evenly">
-                    {footers.map((footer) => (
-                        <Grid item xs={6} sm={3} key={footer.title}>
+                <Grid container spacing={4} justifycontent="space-evenly">
+                    {footers.map((footer, index) => (
+                        <Grid item xs={6} sm={3} key={`${footer.title}--${index*16+footer.title.length*10}`}>
                             <Typography variant="h6" color="textPrimary" gutterBottom>
                                 {footer.title}
                             </Typography>
                             <ul>
-                                {footer.description.map((item) => (
-                                    <li key={item}>
+                                {footer.description.map((item, index) => (
+                                    <li key={`${item}--${index*18+item.length*15}`}>
                                         <Link href="#" variant="subtitle1" color="textSecondary">
                                             {item}
                                         </Link>
@@ -1195,7 +1195,7 @@ export const ResponsiveDrawer = observer((props) => {
                         const isActive = selected === item.title ? "isActive" : "";
                         return (
                             <ListItem
-                                key={item.title}
+                                key={`${item.title}--${index*18+item.title.length*15}`}
                                 className={`${classes.listItem} ${isActive}`}
                                 button
                                 onClick={() => handleClick(item.title, index)}
@@ -1217,7 +1217,7 @@ export const ResponsiveDrawer = observer((props) => {
         return (
             <Grid container spacing={3} className={classes.gridContainerItem}>
                 {components.map(({prefix, component}, index) =>
-                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12} key={`gridContentItem--${index}`}>
+                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12} key={`gridContentItem--${index}--${prefix}--${index*16+prefix.length*10+index*prefix.length}`}>
                         <div className={`${classes.gridItem} ${prefix}`}>
                             {component}
                         </div>
@@ -1232,12 +1232,12 @@ export const ResponsiveDrawer = observer((props) => {
             <div className={classes.adjustmentPosition}>
                 <Container maxWidth={"xl"}>
                     <Grid container spacing={3} className={classes.gridContainerMain}>
-                        {content?.map((item) => {
+                        {content?.map((item, index) => {
                             const lg = 12 / content.length || 1;
                             const xl = 12 / content.length || 1;
 
                             return (
-                                <Grid item xs={12} sm={12} md={12} lg={lg} xl={xl}>
+                                <Grid item xs={12} sm={12} md={12} lg={lg} xl={xl} key={`Grid--Content--${lg+index*10+xl+index*20+lg}--${item.length*100}`}>
                                     {gridContentItem(item)}
                                 </Grid>
                             )

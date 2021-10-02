@@ -197,7 +197,7 @@ export const HeaderNotifications = observer(() => {
 				{/*<Divider/>*/}
 
 				<List className={classes.list} subheader={<li/>}>
-					{data.map(({id, city, cameras}) => <PopoverItem portId={id} city={city} cameras={cameras}/>)}
+					{data.map(({id, city, cameras}, index) => <PopoverItem key={`Popover--Item--${id+city.length+cameras.length+index}`} portId={id} city={city} cameras={cameras}/>)}
 				</List>
 
 				{/*<Divider/>*/}
