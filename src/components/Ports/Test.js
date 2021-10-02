@@ -4,7 +4,7 @@ import backgroundImage from "../Auth/images/backgroundNew.jpg"
 import {observer} from "mobx-react-lite";
 import Grid from "@material-ui/core/Grid";
 import {Header} from "./Header/Header";
-import {Card, CardActions, CardContent, CardHeader, Container, Hidden, Link} from "@material-ui/core";
+import {Card, CardActions, CardContent, CardHeader, Container, Hidden, Icon, Link} from "@material-ui/core";
 // import {Drawer} from "./Drawer/Drawer";
 import styles from "../../store/styles";
 import Drawer from '@material-ui/core/Drawer';
@@ -34,6 +34,8 @@ import ports from "../../store/ports";
 import {AccountTable} from "./Account30/Items/AccountTable";
 import {BoatEvents} from "./Events/BoatEvents";
 import {useWindowDimensions} from "../../useHooks/useWindowDimensions";
+import {MobileDrawer} from "./MobileDrawer/MobileDrawer";
+import test from "../../store/test";
 
 const useStyles = makeStyles((theme) => ({
     test: {
@@ -597,7 +599,7 @@ const PersonalInformation = observer(() => {
                 {lastPays.map((pay, i) => (
                     <Button
                         className={classes.btn}
-                        key={`quickPay-btn-${pay.price}--${i*10*pay.price.length}`}
+                        key={`quickPay-btn-${pay.price}--${i * 10 * pay.price.length}`}
                         variant="contained"
                         color="primary"
                     >
@@ -815,7 +817,7 @@ const usePaymentsStyles = makeStyles((theme) => ({
         margin: theme.spacing(1, 1.5),
     },
     heroContent: {
-        padding: theme.spacing(8, 0, 6),
+        padding: theme.spacing(0, 0, 6),
     },
     cardHeader: {
         backgroundColor:
@@ -895,28 +897,7 @@ const Payments = observer(() => {
 
     return (
         <React.Fragment>
-            <CssBaseline />
-            <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
-                <Toolbar className={classes.toolbar}>
-                    <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-                        Company name
-                    </Typography>
-                    <nav>
-                        <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                            Features
-                        </Link>
-                        <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                            Enterprise
-                        </Link>
-                        <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-                            Support
-                        </Link>
-                    </nav>
-                    <Button href="#" color="primary" variant="outlined" className={classes.link}>
-                        Login
-                    </Button>
-                </Toolbar>
-            </AppBar>
+            {/*<CssBaseline />*/}
             {/* Hero unit */}
             <Container maxWidth="sm" component="main" className={classes.heroContent}>
                 <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
@@ -932,14 +913,15 @@ const Payments = observer(() => {
                 <Grid container spacing={5} alignItems="flex-end">
                     {tiers.map((tier, index) => (
                         // Enterprise card is full width at sm breakpoint
-                        <Grid item key={`${tier.title}--${index*15+tier.title.length}`} xs={12} sm={tier.title === 'Enterprise' ? 12 : 6} md={4}>
+                        <Grid item key={`${tier.title}--${index * 15 + tier.title.length}`} xs={12}
+                              sm={tier.title === 'Enterprise' ? 12 : 6} md={4}>
                             <Card>
                                 <CardHeader
                                     title={tier.title}
                                     subheader={tier.subheader}
-                                    titleTypographyProps={{ align: 'center' }}
-                                    subheaderTypographyProps={{ align: 'center' }}
-                                    action={tier.title === 'Pro' ? <StarBorder /> : null}
+                                    titleTypographyProps={{align: 'center'}}
+                                    subheaderTypographyProps={{align: 'center'}}
+                                    action={tier.title === 'Pro' ? <StarBorder/> : null}
                                     className={classes.cardHeader}
                                 />
                                 <CardContent>
@@ -953,7 +935,8 @@ const Payments = observer(() => {
                                     </div>
                                     <ul>
                                         {tier.description.map((line, index) => (
-                                            <Typography component="li" variant="subtitle1" align="center" key={`Payments--${line}--${index*15+line.length}`}>
+                                            <Typography component="li" variant="subtitle1" align="center"
+                                                        key={`Payments--${line}--${index * 15 + line.length}`}>
                                                 {line}
                                             </Typography>
                                         ))}
@@ -973,13 +956,13 @@ const Payments = observer(() => {
             <Container maxWidth="md" component="footer" className={classes.footer}>
                 <Grid container spacing={4} justifycontent="space-evenly">
                     {footers.map((footer, index) => (
-                        <Grid item xs={6} sm={3} key={`${footer.title}--${index*16+footer.title.length*10}`}>
+                        <Grid item xs={6} sm={3} key={`${footer.title}--${index * 16 + footer.title.length * 10}`}>
                             <Typography variant="h6" color="textPrimary" gutterBottom>
                                 {footer.title}
                             </Typography>
                             <ul>
                                 {footer.description.map((item, index) => (
-                                    <li key={`${item}--${index*18+item.length*15}`}>
+                                    <li key={`${item}--${index * 18 + item.length * 15}`}>
                                         <Link href="#" variant="subtitle1" color="textSecondary">
                                             {item}
                                         </Link>
@@ -1000,10 +983,10 @@ const drawerWidth = 250;
 const useResponsiveDrawerStyles = makeStyles((theme) => {
     const bgcDrawer = "#444";
     const textColorDrawer = "#999";
-    const textColorDrawerSelectedItem = "#ddd"
+    const textColorDrawerSelectedItem = "#ddd";
 
     const bgcMainContent = "#444";
-    const bgcGridItem = "#f5f5f5"
+    const bgcGridItem = "#f5f5f5";
 
     return ({
         root: {
@@ -1186,38 +1169,54 @@ export const ResponsiveDrawer = observer((props) => {
         account.setSelectedItem(index);
     }
 
-    const drawer = () => {
-        return (
-            <div>
-                <div className={classes.toolbar}/>
-                <List className={classes.list}>
-                    {account.drawerItems.map((item, index) => {
-                        const isActive = selected === item.title ? "isActive" : "";
-                        return (
-                            <ListItem
-                                key={`${item.title}--${index*18+item.title.length*15}`}
-                                className={`${classes.listItem} ${isActive}`}
-                                button
-                                onClick={() => handleClick(item.title, index)}
-                            >
-                                <ListItemIcon
-                                    className={`${classes.listItemIcon} ${isActive}`}>{item.icon}</ListItemIcon>
-                                <ListItemText primary={item.title}
-                                              classes={{primary: `${classes.listItemText} ${isActive}`}}/>
-                            </ListItem>
-                        )
-                    })}
-                </List>
-                <Divider/>
-            </div>
-        );
-    }
+    const testDrawer = [];
+
+    const drawer = (
+        <div>
+            <div className={classes.toolbar}/>
+            <List className={classes.list}>
+                {account.drawerItems.map((item, index) => {
+                    const isActive = selected === item.title ? "isActive" : "";
+
+                    // testDrawer.push(
+                    //     <ListItem
+                    //         key={`${item.title}--${index * 18 + item.title.length * 15}`}
+                    //         className={`${classes.listItem} ${isActive}`}
+                    //         button
+                    //         onClick={() => handleClick(item.title, index)}
+                    //     >
+                    //         <ListItemIcon
+                    //             className={`${classes.listItemIcon} ${isActive}`}>{item.icon}</ListItemIcon>
+                    //         <ListItemText primary={item.title}
+                    //                       classes={{primary: `${classes.listItemText} ${isActive}`}}/>
+                    //     </ListItem>
+                    // )
+
+                    return (
+                        <ListItem
+                            key={`${item.title}--${index * 18 + item.title.length * 15}`}
+                            className={`${classes.listItem} ${isActive}`}
+                            button
+                            onClick={() => handleClick(item.title, index)}
+                        >
+                            <ListItemIcon
+                                className={`${classes.listItemIcon} ${isActive}`}>{item.icon}</ListItemIcon>
+                            <ListItemText primary={item.title}
+                                          classes={{primary: `${classes.listItemText} ${isActive}`}}/>
+                        </ListItem>
+                    )
+                })}
+            </List>
+            <Divider/>
+        </div>
+    );
 
     const gridContentItem = (components = []) => {
         return (
             <Grid container spacing={3} className={classes.gridContainerItem}>
                 {components.map(({prefix, component}, index) =>
-                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12} key={`gridContentItem--${index}--${prefix}--${index*16+prefix.length*10+index*prefix.length}`}>
+                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12}
+                          key={`gridContentItem--${index}--${prefix}--${index * 16 + prefix.length * 10 + index * prefix.length}`}>
                         <div className={`${classes.gridItem} ${prefix}`}>
                             {component}
                         </div>
@@ -1237,7 +1236,8 @@ export const ResponsiveDrawer = observer((props) => {
                             const xl = 12 / content.length || 1;
 
                             return (
-                                <Grid item xs={12} sm={12} md={12} lg={lg} xl={xl} key={`Grid--Content--${lg+index*10+xl+index*20+lg}--${item.length*100}`}>
+                                <Grid item xs={12} sm={12} md={12} lg={lg} xl={xl}
+                                      key={`Grid--Content--${lg + index * 10 + xl + index * 20 + lg}--${item.length * 100}`}>
                                     {gridContentItem(item)}
                                 </Grid>
                             )
@@ -1248,32 +1248,12 @@ export const ResponsiveDrawer = observer((props) => {
         );
     }
 
-    const container = window !== undefined ? () => window().document.body : undefined;
-
     return (
         <div className={classes.root}>
             <CssBaseline/>
-            <Header/>
+            <Header mobileDrawer={{component: drawer, style: classes.drawerPaper}}/>
 
             <nav className={classes.drawer} aria-label="mailbox folders">
-                {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-                <Hidden smUp implementation="css">
-                    <Drawer
-                        container={container}
-                        variant="temporary"
-                        anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-                        open={mobileOpen}
-                        onClose={handleDrawerToggle}
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
-                        ModalProps={{
-                            keepMounted: true, // Better open performance on mobile.
-                        }}
-                    >
-                        {drawer()}
-                    </Drawer>
-                </Hidden>
                 <Hidden xsDown implementation="css">
                     <Drawer
                         classes={{
@@ -1282,7 +1262,7 @@ export const ResponsiveDrawer = observer((props) => {
                         variant="permanent"
                         open
                     >
-                        {drawer()}
+                        {drawer}
                     </Drawer>
                 </Hidden>
             </nav>

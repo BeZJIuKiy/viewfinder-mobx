@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => {
 	})
 });
 
-export const Header = observer(() => {
+export const Header = observer(({mobileDrawer}) => {
 	const classes = useStyles();
 
 	const {allNewNote, portsNewNote, portsNoteTest} = header;
@@ -228,7 +228,7 @@ export const Header = observer(() => {
 				</div>
 
 				<span className={classes.mobileDrawer}>
-					<MobileDrawer/>
+					<MobileDrawer drawer={mobileDrawer}/>
 				</span>
 			</Toolbar>
 			{renderMenu()}
