@@ -21,12 +21,6 @@ const useStyles = makeStyles((theme) => ({
 	main: {
 		display: "flex",
 		flexDirection: "column",
-
-		"@media(max-width: 425px)": {
-			width: '100%',
-			flexDirection: "row",
-			padding: 0,
-		},
 	},
 	search: {
 		display: "flex",
@@ -34,10 +28,6 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: "center",
 
 		marginBottom: 10,
-
-		"@media(max-width: 425px)": {
-			display: "none",
-		}
 	}
 }));
 
@@ -106,12 +96,12 @@ export const Drawer = observer(() => {
 
 	return (
 		<div className={classes.drawer}>
-			<List className={`${classes.main}`} component="nav" aria-label="main mailbox folders">
-				<div className={classes.search}>
-					<DrawerSearch data={allData} search={search} label={`Search ${searchLabel}`}
-					              secretTitle={secretTitle}/>
-				</div>
+			<div className={classes.search}>
+				<DrawerSearch data={allData} search={search} label={`Search ${searchLabel}`}
+				              secretTitle={secretTitle}/>
+			</div>
 
+			<List className={`${classes.main}`} component="nav" aria-label="main mailbox folders">
 				{items}
 			</List>
 		</div>

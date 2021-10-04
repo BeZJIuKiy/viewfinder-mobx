@@ -23,7 +23,7 @@ export const DrawerItems = observer(({icon, description, notes, onClick}) => {
 	const classes = useStyles();
 
 	return (
-		<div>
+		<>
 			<ListItem button onClick={onClick}>
 				<ListItemIcon>
 					<Icon>
@@ -41,6 +41,6 @@ export const DrawerItems = observer(({icon, description, notes, onClick}) => {
 				</NavLink>
 			</ListItem>
 			<Divider/>
-		</div>
+		</>
 	)
 });
