@@ -2,6 +2,7 @@
 import mIcon_ports from '../components/Ports/Drawer/images/harborIcon02.png';
 import mIcon_cameras from '../components/Ports/Drawer/images/CamIcon.png';
 import previewSPbPort from '../img/preView̆.jpg';
+import previewSPbPortPTZ from '../img/preView̆0211.jpg';
 import previewImg2 from '../img/preView̆02.jpg';
 import previewImg3 from '../img/preView̆03.jpg';
 
@@ -71,14 +72,15 @@ class ports {
 					city: 'Saint Petersburg',
 					name: 'Camera 1',
 					type: 'Hikvision',
-					move: 'PTZ',
-					viewingAngle: '130',
-					description: 'Bench Camera PTZ',
-					coordinates: [59.762625, 30.355790],
+					move: 'STATIC',
+					viewingAngle: '80',
+					description: 'Club Parking STATIC',
+					coordinates: [59.977915, 30.240934],
 					zoom: 15,
+					link: 'https://rtsp.me/embed/ayAby5ia',
 					// link: "http://192.168.250.210:8000/bgr",
-					link: "http://192.168.250.147:8000/bgr", //MSI
-					previewLink: previewImg2,
+					// link: "http://192.168.250.147:8000/bgr", //MSI
+					previewLink: previewSPbPort,
 
 					// link: 'https://rtsp.me/embed/ayAby5ia',
 					// link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
@@ -124,13 +126,14 @@ class ports {
 					city: 'Saint Petersburg',
 					name: 'Camera 2',
 					type: 'Hikvision',
-					move: 'STATIC',
+					move: 'PTZ',
 					viewingAngle: '80',
-					description: 'Club Parking STATIC',
-					coordinates: [59.977915, 30.240934],
+					description: 'Club Parking PTZ',
+					coordinates: [59.977910, 30.240969],
 					zoom: 15,
-					link: 'http://87.244.33.186:8001/bgr',
-					previewLink: previewSPbPort,
+					link: 'https://rtsp.me/embed/hitQb4bf',
+					// link: 'http://87.244.33.186:8001/bgr',
+					previewLink: previewSPbPortPTZ,
 
 					// link: 'https://rtsp.me/embed/hitQb4bf',
 					// link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
