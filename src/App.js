@@ -6,6 +6,7 @@ import {Test} from "./components/Ports/Test";
 import {Events30} from "./components/Ports/Events/Events3.0";
 import connects from "./store/connects";
 import {SoundAlert} from "./components/SoundAlert";
+import {NewAccount} from "./components/Ports/NewAccount/NewAccount";
 
 function App() {
     connects.setUrlEvents("http://localhost:5001/api/boats");
@@ -29,8 +30,7 @@ function App() {
             <Route exact path='/' component={Auth_2_0}/>
             <Route path='/signin' component={Signin_2_0}/>
             <Route path='/ports' component={Ports}/>
-            {/*<Route path='/account' component={Account30}/>*/}
-            <Route path='/account' component={Test}/>
+            <Route path='/account' component={NewAccount}/>
             <Route path='/events' component={Events30}/>
             <Route path='/test' component={Test}/>
             {/*<Route path='/events' render={() => <Events /> } /> // так можно*/}

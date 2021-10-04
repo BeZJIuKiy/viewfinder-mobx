@@ -22,10 +22,11 @@ import {observer} from "mobx-react-lite";
 import header from "../../../store/header";
 import {DrawerSearch} from "../Drawer/DrawerSearch";
 import {DrawerItems} from "../Drawer/DrawerItems";
+import styles from "../../../store/styles";
 
 const useStyles = makeStyles({
     list: {
-        width: 250,
+        width: styles.drawerWidth,
     },
     fullList: {
         width: 'auto',
@@ -174,7 +175,8 @@ export const MobileDrawer = observer(({drawer}) => {
             case "/ports":
                 return drawerMapPoints();
             case "/account":
-                return drawerAccountItem();
+                return drawer.component;
+                // return drawerAccountItem();
             case "/test": {
                 return drawer.component;
             }

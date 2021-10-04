@@ -3,6 +3,7 @@ import {makeAutoObservable} from "mobx";
 class styles {
 	fontFamily = `"Quicksand", sans-serif`;
 	headerHeight = 60;
+	drawerWidth = 250;
 
 	constructor() {
 		makeAutoObservable(this);
