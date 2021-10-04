@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export const Drawer = observer(({isMobile}) => {
+export const Drawer = observer(() => {
 	const classes = useStyles();
 	const history = useHistory();
 
@@ -52,7 +52,6 @@ export const Drawer = observer(({isMobile}) => {
 
 	const {data, portIcon, cameraIcon, selectedObjects, searchQuery} = ports;
 	const {portsNoteTest, camerasNoteTest} = header;
-
 
 	const [allData, setAllData] = useState(data)
 	const [notes, setNotes] = useState("");
@@ -85,9 +84,9 @@ export const Drawer = observer(({isMobile}) => {
 		ports.clearSearchQuery();
 		history.push('/events');
 	}
-	const setData = (data, notif, icon) => {
+	const setData = (data, notify, icon) => {
 		setAllData(data);
-		setNotes(notif);
+		setNotes(notify);
 		setIcon(icon);
 	}
 
@@ -112,6 +111,7 @@ export const Drawer = observer(({isMobile}) => {
 					<DrawerSearch data={allData} search={search} label={`Search ${searchLabel}`}
 					              secretTitle={secretTitle}/>
 				</div>
+
 				{items}
 			</List>
 		</div>

@@ -45,7 +45,7 @@ export const Ports = () => {
 	return (
 		<Grid container className={classes.gridContainer}>
 			<Grid item xs={12} sm={12} md={12}>
-				<Header/>
+				<Header mobileDrawer={{component: <Drawer/>}}/>
 			</Grid>
 			<Hidden xsDown>
 				<Grid item xs={12} sm={3} md={4} lg={3} xl={2}>

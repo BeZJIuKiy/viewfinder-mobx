@@ -1,42 +1,8 @@
-import React, {useEffect, useRef} from 'react';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
+import React from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import backgroundImage from "../Auth/images/backgroundNew.jpg"
 import {observer} from "mobx-react-lite";
-import Grid from "@material-ui/core/Grid";
-import {Header} from "./Header/Header";
-import {Card, CardActions, CardContent, CardHeader, Container, Hidden, Icon, Link} from "@material-ui/core";
-import styles from "../../store/styles";
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import PropTypes from 'prop-types';
-import account, {DEVICES, FLEET, PAYMENTS, PERSONAL_INFORMATION} from "../../store/account";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {StarBorder} from "@material-ui/icons";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import Button from "@material-ui/core/Button";
-import {useHexToRgba} from "../../useHooks/useHexToRgba";
-import ports from "../../store/ports";
-import {AccountTable} from "./Account30/Items/AccountTable";
-import {BoatEvents} from "./Events/BoatEvents";
-import {useWindowDimensions} from "../../useHooks/useWindowDimensions";
-import {MobileDrawer} from "./MobileDrawer/MobileDrawer";
-import test from "../../store/test";
-import {useLocation} from 'react-router-dom';
-import {NewAccount} from "./NewAccount/NewAccount";
+import {OtherCamerasMobileDrawer} from "./Events/OtherCamerasMobileDrawer";
 
 const useStyles = makeStyles((theme) => ({
 	test: {
@@ -372,7 +338,8 @@ export const Test = observer(() => {
 
 	return (
 		<div className={classes.test}>
-			<NewAccount/>
+			{/*<NewAccount/>*/}
+			<OtherCamerasMobileDrawer/>
 		</div>
 	)
 })

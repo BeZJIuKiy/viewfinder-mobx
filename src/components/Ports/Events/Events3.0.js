@@ -14,6 +14,11 @@ import {ShipScreen} from "./ShipScreen";
 import {observer} from "mobx-react-lite";
 import styles from "../../../store/styles";
 import canvasState from "../../../store/canvasState";
+import {DrawerSearch} from "../Drawer/DrawerSearch";
+import List from "@material-ui/core/List";
+import {DrawerItems} from "../Drawer/DrawerItems";
+import header from "../../../store/header";
+import {OtherCamerasMobileDrawer} from "./OtherCamerasMobileDrawer";
 
 const useStyles = makeStyles((theme) => ({
 	event: {
@@ -139,7 +144,7 @@ export const Events30 = observer(() => {
 
 	return (
 		<div className={`${classes.event}`}>
-			<Header/>
+			<Header mobileDrawer={{component: <OtherCamerasMobileDrawer/>}}/>
 			<Container maxWidth="xl" className={classes.container}>
 				<div className={classes.correctingPosition}>
 					<Grid container spacing={3} justify={"center"} className={classes.gridContainer}>
@@ -161,7 +166,8 @@ export const Events30 = observer(() => {
 						</Hidden>
 
 						<Hidden smDown>
-							<Grid item xs={12} sm={12} md={6} lg={6} xl={6} className={`${classes.gridItem} drawControl`}>
+							<Grid item xs={12} sm={12} md={6} lg={6} xl={6}
+							      className={`${classes.gridItem} drawControl`}>
 								{gridContainerItem(<DrawControl/>, "drawControl", "drawControl")}
 							</Grid>
 						</Hidden>
