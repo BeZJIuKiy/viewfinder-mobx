@@ -34,8 +34,6 @@ const useStyles = makeStyles((theme) => {
 			overflow: 'auto',
 			boxShadow: "none",
 
-			// borderTopLeftRadius: 10,
-			// borderTopRightRadius: 10,
 			borderRadius: 5,
 
 			fontFamily: styles.fontFamily,
@@ -187,24 +185,14 @@ export const HeaderNotifications = observer(() => {
 					horizontal: 'center',
 				}}
 			>
-				{/*{notificationList()}*/}
-
 				<div className={classes.header}>
 					<div className={`${classes.title}`}>Notifications</div>
 					<div className={`${classes.subTitle}`}>You have <b>{header.allNewNote}</b> unread messages</div>
 				</div>
 
-				{/*<Divider/>*/}
-
 				<List className={classes.list} subheader={<li/>}>
 					{data.map(({id, city, cameras}, index) => <PopoverItem key={`Popover--Item--${id+city.length+cameras.length+index}`} portId={id} city={city} cameras={cameras}/>)}
 				</List>
-
-				{/*<Divider/>*/}
-
-				{/*<span className={classes.btnCorrectPosition}>*/}
-				{/*	<Button className={classes.btn} variant={"contained"}>View All</Button>*/}
-				{/*</span>*/}
 			</Popover>
 		</span>
 	);

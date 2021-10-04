@@ -96,6 +96,7 @@ const useStyles = makeStyles((theme) => {
 			fontFamily: styles.fontFamily,
 
 			"&.header": {
+				zIndex: 3,
 				color: colorMain,
 
 				borderTopLeftRadius: 5,
@@ -174,19 +175,22 @@ export const PopoverItem = observer(({portId, city, cameras}) => {
 		ports.setIsNewNotif(eventId, false);
 	}
 	const handleCloseNotify = (portId, cameraId, eventId) => {
-		// ports.setSelectedPort(portId);
-		// ports.setSelectedCamera(cameraId);
+		ports.setSelectedPort(portId);
+		ports.setSelectedCamera(cameraId);
 		//
-		// ports.setIsNewNotif(eventId, false);
+		ports.setIsNewNotif(eventId, false);
 
-		const event = ports.data.find((port) => port.id === portId)
-			.cameras.find((camera) => camera.id === cameraId)
-			.events.find((event) => event.id === eventId)
-
-		console.log(event)
+		// const event = ports.data.find((port) => port.id === portId)
+		// 	.cameras.find((camera) => camera.id === cameraId)
+		// 	.events.find((event) => event.id === eventId)
+		//
+		// console.log(event)
+		// ports.setIsNewNotif(eventId, false)
+		//
 		// const camera = port.cameras.find((camera) => camera.id === cameraId);
 
 	}
+	// const handleGoToAllEvents
 	const selectIcon = (type) => {
 		switch (type) {
 			case "regular":
@@ -243,17 +247,16 @@ export const PopoverItem = observer(({portId, city, cameras}) => {
 			<ul className={classes.ul}>
 				<ListSubheader className={`${classes.listSubheader} header`}>{`Port in ${city}`}</ListSubheader>
 				<Divider/>
+
 				{cameras.map((camera) =>
 					camera.events.filter((event) => event.newEvent)
 						.map(event => listItem(portId, camera.id, camera.description, event.id, event.date, event.typeError.toLowerCase(), event.description))
 				)}
-				{/*<Divider/>*/}
 
 				<span className={classes.btnCorrectPosition}>
 					<Button className={classes.btn} variant={"contained"}>View All</Button>
 				</span>
 			</ul>
-			{/*<Divider/>*/}
 		</li>
 	);
 });
