@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: "center",
 		alignItems: "center",
 
+		marginTop: theme.spacing(1),
 		marginBottom: 10,
 	}
 }));
@@ -85,7 +86,7 @@ export const Drawer = observer(() => {
 
 		return (
 			<DrawerItems
-				key={`${id}-${description}-${zoom}`}
+				key={`${id}-${description}-${zoom}-${id+description.length}`}
 				icon={icon}
 				description={description}
 				notes={notes[id]}

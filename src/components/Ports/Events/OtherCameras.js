@@ -49,7 +49,7 @@ export const OtherCameras = observer(() => {
 		setCameras(port.cameras.filter(({id}) => id !== camera.id)
 			.map(camera => {
 				return (
-					<div key={`Other--Cameras--${camera.id}`} className={classes.otherCamerasAll}>
+					<div key={`Other--Cameras--${camera.id}--${camera.description.length}`} className={classes.otherCamerasAll}>
 						{/*<iframe*/}
 						{/*	src={camera.link}*/}
 						{/*	width={"100%"} height={"100%"}*/}

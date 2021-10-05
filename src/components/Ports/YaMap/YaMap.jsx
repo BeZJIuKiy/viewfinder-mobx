@@ -77,14 +77,15 @@ const useStyles = makeStyles((theme) => {
 const YaMap = observer(({isVisible}) => {
 	const classes = useStyles();
 
-	const {data, portIcon, cameraIcon, selectedObjects} = ports;
+	const {data, portIcon, cameraIcon} = ports;
+	const {port, camera} = ports.selectedObjects
 
 	const [allData, setAllData] = useState(data);
 	const [balContent, setBalContent] = useState('');
 	const [mapCenter, setMapCenter] = useState();
 
 	useEffect(() => {
-		const portId = Number.isInteger(selectedObjects.port.id);
+		const portId = Number.isInteger(port.id);
 		const controls = [
 			'zoomControl',
 			'fullscreenControl',
@@ -93,14 +94,14 @@ const YaMap = observer(({isVisible}) => {
 		];
 
 		if (portId) {
-			setAllData(selectedObjects.port.cameras);
-			mapData(selectedObjects.camera.coordinates, selectedObjects.port.cameras[0].zoom, controls);
+			setAllData(port.cameras);
+			mapData(port.cameras[0].coordinates, port.cameras[0].zoom, controls);
 			// mapData(selectedObjects.port.coordinates, selectedObjects.port.cameras[0].zoom, controls);
 		} else {
 			setAllData(data);
 			mapData(data[0].cameras[0].coordinates, data[0].zoom, controls);
 		}
-	}, [selectedObjects.port]);
+	}, [port]);
 
 	const mapData = (center, zoom, controls) => setMapCenter({center, zoom, controls});
 	const clickOnCamera = (id) => {
