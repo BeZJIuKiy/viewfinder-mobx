@@ -23,6 +23,8 @@ import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import ports from "../../../store/ports";
 import {observer} from "mobx-react-lite";
 import eventsState from "../../../store/eventsState";
+import {ShipCard} from "./ShipCard";
+import {Modal} from "@material-ui/core";
 
 
 function descendingComparator(a, b, orderBy) {
@@ -143,6 +145,18 @@ const useToolbarStyles = makeStyles((theme) => ({
 	editIcons: {
 		display: 'flex'
 	},
+	modal: {
+		display: "flex",
+		position: "relative",
+		overflowY: "auto",
+	},
+	correctCardPosition: {
+		position: "absolute",
+		top: "20%",
+		left: "50%",
+
+		transform: "translate(-50%, 0)",
+	}
 }));
 
 const EnhancedTableToolbar = (props) => {
@@ -150,11 +164,19 @@ const EnhancedTableToolbar = (props) => {
 	const {numSelected} = props;
 	const {selectedObjects: {camera, event}} = ports;
 
+	const [open, setOpen] = useState(false);
+
 	// console.log(ports.selectedObjects);
 	const tableTitle = Number.isInteger(event.id)
 		? `ALL EVENTS ${event.typeVessel}`
 		: (camera.events.length ? `ALL EVENTS ${camera.description}` : "NO EVENTS");
 
+	const handleOpenModal = () => {
+		setOpen(true);
+	}
+	const handleClose = () => {
+		setOpen(false)
+	}
 
 	return (
 		<Toolbar
@@ -162,6 +184,15 @@ const EnhancedTableToolbar = (props) => {
 				[classes.highlight]: numSelected > 0,
 			})}
 		>
+			<Modal
+				className={classes.modal}
+				open={open}
+				onClose={handleClose}
+				aria-labelledby="simple-modal-title"
+				aria-describedby="simple-modal-description"
+			>
+				<div className={classes.correctCardPosition}><ShipCard/></div>
+			</Modal>
 			{numSelected > 0 ? (
 				<Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
 					{numSelected} selected
@@ -180,7 +211,7 @@ const EnhancedTableToolbar = (props) => {
 			{numSelected === 1 ? (
 				<Tooltip
 					title="Add ship"
-					onClick={() => alert("Add ship")}
+					onClick={handleOpenModal}
 				>
 					<IconButton aria-label="Add ship">
 						<AddCircleIcon color="secondary"/>
@@ -251,18 +282,32 @@ export const BoatEvents = observer(() => {
 	const [dense] = React.useState(false);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+	// useEffect(() => {
+	// 	setData(Number.isInteger(event.id)
+	// 		? camera.events.filter(e => e.typeVessel === event.typeVessel)
+	// 		: camera.events
+	// 	);
+	//
+	// 	setSelected([]);
+	// }, [camera, camera.events]);
+	// }, [event, camera, camera.events]);
+
 	useEffect(() => {
-		setData(Number.isInteger(event.id)
-			? camera.events.filter(e => e.typeVessel === event.typeVessel)
-			: camera.events
-		);
+		setData(camera.events);
 
 		setSelected([]);
-	}, [event, camera, camera.events]);
-
+	}, [camera.id]);
 	useEffect(() => {
-		if (imageId >= 0) setSelected([imageId]);
-		else if (selected.length === 1 && imageId < 0) setSelected([]);
+		console.log("useEffect")
+		if (imageId >= 0) {
+			console.log("IF")
+			setSelected([imageId]);
+			// setSelected([imageId]);
+		}
+		else if (selected.length === 1 && imageId < 0) {
+			console.log("ELSE IF")
+			setSelected([]);
+		}
 	}, [imageId]);
 
 	const rows = [];
@@ -297,9 +342,10 @@ export const BoatEvents = observer(() => {
 		setSelected([]);
 	};
 
-	const handleClick = (event, id, index) => {
+	const handleClick = (e, id, index) => {
 		const selectedIndex = selected.indexOf(id);
 		let newSelected = [];
+		console.log(selectedIndex)
 
 		if (selectedIndex === -1) {
 			newSelected = newSelected.concat(selected, id);
@@ -322,6 +368,8 @@ export const BoatEvents = observer(() => {
 		}
 
 		setSelected(newSelected);
+		console.log(id)
+		ports.setCard(id);
 	};
 
 	const handleChangePage = (event, newPage) => {
@@ -367,7 +415,6 @@ export const BoatEvents = observer(() => {
 							{stableSort(rows, getComparator(order, orderBy))
 								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 								.map((row, index) => {
-
 									const {id, typeError, typeVessel, date, imo, mmsi, callSign, country, description} = row;
 									const isItemSelected = isSelected(id);
 									const labelId = `enhanced-table-checkbox-${index}`;
@@ -376,7 +423,7 @@ export const BoatEvents = observer(() => {
 									return (
 										<TableRow
 											hover
-											onClick={(event) => handleClick(event, id, (index + page * rowsPerPage))}
+											onClick={(e) => handleClick(e, id, (index + page * rowsPerPage))}
 											role="checkbox"
 											aria-checked={isItemSelected}
 											tabIndex={-1}

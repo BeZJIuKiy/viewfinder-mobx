@@ -44,7 +44,7 @@ export const OtherCameras = observer(() => {
 	const [cameras, setCameras] = useState([])
 
 	useEffect(() => {
-		if (!!camera.id === false) return;
+		if (Number.isInteger(camera.id) === false) return;
 
 		setCameras(port.cameras.filter(({id}) => id !== camera.id)
 			.map(camera => {

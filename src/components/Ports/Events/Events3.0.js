@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
@@ -19,6 +19,7 @@ import List from "@material-ui/core/List";
 import {DrawerItems} from "../Drawer/DrawerItems";
 import header from "../../../store/header";
 import {OtherCamerasMobileDrawer} from "./OtherCamerasMobileDrawer";
+import {AccountTable} from "../NewAccount/Items/AccountTable";
 
 const useStyles = makeStyles((theme) => ({
 	event: {
@@ -121,7 +122,6 @@ export const Events30 = observer(() => {
 			</Grid>
 		)
 	}
-
 	const mainCamera = () => {
 		return (
 			<Grid container className={`${classes.secondGridContainer} mainCamera`}>
@@ -138,9 +138,28 @@ export const Events30 = observer(() => {
 		)
 	}
 
+	const [eventsData, setEventsData] = useState([]);
+
+	useEffect(() => {
+		if (Number.isInteger(camera.id) === false) return;
+
+		setEventsData(camera.events.map((event) => ({
+			id: event.id,
+			"Type": event.typeError,
+			"Date": event.date,
+			"IMO": event.imo,
+			"MMSI": event.mmsi,
+			"Call Sign": event.callSign,
+			"Type Vessel": event.typeVessel,
+			"Description": event.description,
+		})));
+	}, [camera.id])
+
 	if (!Number.isInteger(camera.id)) {
 		ports.setSelectedCamera(ports.data[0].cameras[0].id);
 	}
+
+	// console.log(eventsData)
 
 	return (
 		<div className={`${classes.event}`}>
@@ -173,6 +192,14 @@ export const Events30 = observer(() => {
 						</Hidden>
 
 						<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+							{/*{gridContainerItem(*/}
+							{/*	<AccountTable*/}
+							{/*		secretTitle={"Personal information: short Desvicesss"}*/}
+							{/*		rowsData={eventsData}*/}
+							{/*		search={"Date"}*/}
+							{/*		searchLabel={"IMO Ship"}*/}
+							{/*	/>*/}
+							{/*)}*/}
 							{gridContainerItem(<BoatEvents/>)}
 						</Grid>
 					</Grid>

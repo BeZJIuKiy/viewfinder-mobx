@@ -29,7 +29,7 @@ class ports {
 	counter = {
 		portsId: 0,
 		camerasId: 0,
-		eventsId: 0,
+		eventsId: 10,
 	};
 
 	portIcon = {
@@ -51,6 +51,7 @@ class ports {
 			isVisible: false,
 			id: -1,
 		},
+		cardData: {},
 	};
 
 	data = [
@@ -411,6 +412,10 @@ class ports {
 
 	setSearchQuery = (secretTitle, data) => {
 		this.searchQuery[secretTitle] = [...data];
+	}
+
+	setCard = (eventId) => {
+		this.selectedObjects.cardData = this.selectedObjects.camera.events.find((event) => event.id === eventId);
 	}
 
 	clearSearchQuery = () => {

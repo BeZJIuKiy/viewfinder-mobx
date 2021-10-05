@@ -59,7 +59,7 @@ function stableSort(array, comparator) {
 }
 
 const headCells = (data) => {
-	if (data.length === 0) return;
+	if (data.length === 0) return [];
 	const arr = [];
 
 	for (const key in data[0]) {
@@ -105,8 +105,8 @@ function EnhancedTableHead(props) {
 							{headCell.label}
 							{orderBy === headCell.id ? (
 								<span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
+                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+				                </span>
 							) : null}
 						</TableSortLabel>
 					</TableCell>
@@ -273,7 +273,6 @@ export const AccountTable = observer(({rowsData, search, title, searchLabel, sec
 	/* USE ELEMENTS */
 	const classes = useStyles();
 	const tableRef = useRef(null);
-
 
 	/* HOOKS */
 	const [order, setOrder] = React.useState('asc');
