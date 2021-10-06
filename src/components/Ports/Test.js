@@ -19,7 +19,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ports from "../../store/ports";
-import {ShipCard} from "./Events/ShipCard";
+import {ShipCard} from "./Events/ShipCard/ShipCard";
 
 const useStyles = makeStyles((theme) => ({
 	test: {

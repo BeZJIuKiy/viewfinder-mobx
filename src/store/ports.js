@@ -29,7 +29,7 @@ class ports {
 	counter = {
 		portsId: 0,
 		camerasId: 0,
-		eventsId: 10,
+		eventsId: 0,
 	};
 
 	portIcon = {
@@ -379,8 +379,16 @@ class ports {
 		this.data[0].cameras[0].events = events;
 		// this.data[portId].cameras[cameraId].events = events;
 	}
+	changeEvent = (portId, cameraId, event) => {
+		const camera = this.data.find(({id}) => id === portId)
+			.cameras.find(({id}) => id === cameraId)
+		const eventIndex = camera.events.findIndex(({id}) => id === event.id)
+		camera.events[eventIndex] = event;
 
-	setIsNewNotif = (id, isNew) => {
+		this.setCard(event.id)
+	}
+
+	setIsNewNotify = (id, isNew) => {
 		const event = this.selectedObjects.camera.events.find(event => event.id === id);
 		event.newEvent = isNew;
 

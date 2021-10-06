@@ -23,108 +23,128 @@ export const PAYMENTS = "Payments";
 const counter = {id: 0, pays: 0};
 
 const ShipIcon = () => (
-    <Icon path={mdiFerry}
-        // title="User Profile"
-          size={1}
-        // horizontal
-        // vertical
-        // rotate={90}
-        // color="red"
-        // spin
-    />
+	<Icon path={mdiFerry}
+		// title="User Profile"
+		  size={1}
+		// horizontal
+		// vertical
+		// rotate={90}
+		// color="red"
+		// spin
+	/>
 );
 
 class account {
-    /* ПЕРЕНЕСТИ В ОТДЕЛЬНЫЙ STATE */
+	/* ПЕРЕНЕСТИ В ОТДЕЛЬНЫЙ STATE */
 
-    payHistory = [
-        {id: counter.pays++, date: "11.08.2021", price: 500},
-        {id: counter.pays++, date: "11.09.2021", price: 1500},
-        {id: counter.pays++, date: "11.10.2021", price: 2500},
-        {id: counter.pays++, date: "11.11.2021", price: 1700},
-    ];
+	payHistory = [
+		{id: counter.pays++, date: "11.08.2021", price: 500},
+		{id: counter.pays++, date: "11.09.2021", price: 1500},
+		{id: counter.pays++, date: "11.10.2021", price: 2500},
+		{id: counter.pays++, date: "11.11.2021", price: 1700},
+	];
 
-    /* =========================== */
-    // page = devicePixelRatio
+	/* =========================== */
+	// page = devicePixelRatio
 
-    drawerItems = [
-        {id: counter.id++, icon: <PersonIcon/>, title: PERSONAL_INFORMATION, object: <PersonalInformation/>},
-        {id: counter.id++, icon: <VideoCam/>, title: DEVICES, object: <Devices/>},
-        {id: counter.id++, icon: <ShipIcon/>, title: FLEET, object: <Fleet/>},
-        {id: counter.id++, icon: <PaymentIcon/>, title: PAYMENTS, object: <Payments/>},
-    ];
+	drawerItems = [
+		{id: counter.id++, icon: <PersonIcon/>, title: PERSONAL_INFORMATION, object: <PersonalInformation/>},
+		{id: counter.id++, icon: <VideoCam/>, title: DEVICES, object: <Devices/>},
+		{id: counter.id++, icon: <ShipIcon/>, title: FLEET, object: <Fleet/>},
+		{id: counter.id++, icon: <PaymentIcon/>, title: PAYMENTS, object: <Payments/>},
+	];
 
-    selectedItem = "";
-    selectedItemIndex = null;
+	selectedItem = "";
+	selectedItemIndex = null;
 
-    counter = {
-        fleetId: 0,
-    };
+	counter = {
+		fleetId: 0,
+	};
 
-    personalInformation = {
-        avatar: userAvatar,
-        name: {
-            first: "Fernan",
-            last: "Magellan",
-        },
-        // sex: "male",
-        company: "ServiceSoft",
-        status: "Gold",
-        balance: 500,
-        // phone: '+X (XXX) XXX-XX-XX',
-        phone: '8 800 555-35-35',
-        email: 'servise.soft@somemail.com',
-    };
+	personalInformation = {
+		avatar: userAvatar,
+		name: {
+			first: "Fernan",
+			last: "Magellan",
+		},
+		// sex: "male",
+		company: "ServiceSoft",
+		status: "Gold",
+		balance: 500,
+		// phone: '+X (XXX) XXX-XX-XX',
+		phone: '8 800 555-35-35',
+		email: 'servise.soft@somemail.com',
+	};
 
-    myFleet = [];
+	myFleet = [];
 
-    searchQuery = {};
+	searchQuery = {};
+
+	templateShipData = {
+		// id: null,
+		name: "",
+		imo: "",
+		mmsi: "",
+		vesselTypeDetailed: "",
+		callSign: "",
+		flag: "",
+		yearBuilt: "",
+		images: [],
+		status: "",
+	};
 
 
-    constructor() {
-        // makeAutoObservable(this);
+	constructor() {
+		makeAutoObservable(this, {}, {autoBind: true});
+		this.myFleet = this.testFleet();
 
-        makeAutoObservable(this, {}, { autoBind: true });
-        this.myFleet = this.testFleet();
+		makePersistable(this, {
+			name: "AccountStore",
+			properties: ["selectedItem", "selectedItemIndex"],
+			storage: window.localStorage
+		});
+	}
 
-        makePersistable(this, {
-            name: "AccountStore",
-            properties: ["selectedItem", "selectedItemIndex"],
-            storage: window.localStorage
-        });
-        // AutoSave(this, "account");
-    }
+	testFleet = () => {
+		const testFleet = [];
 
-    testFleet = () => {
-        const testFleet = [];
-        for (let i = 0; i < 10; ++i) {
-            testFleet.push({
-                id: this.counter.fleetId++,
-                imo: `${i}`.repeat(10),
-                name: 'SERVICESOFT',
-                vesselTypeGeneric: 'Cargo - XXX',
-                vesselTypeDetailed: 'Container Ship',
-                status: 'Active',
-                mmsi: `${i}`.repeat(i+1),
-                callSign: 'AAAA',
-                flag: 'Any country',
-                // grossTonnage: 'XXXXXX',
-                // summerDWT: 'XXXXXX', /* В тоннах */
-                // lengthOverallBreadthExtreme: `${450 + i} x ${62 + i} m`,
-                yearBuilt: 2020,
-            })
-        }
-        return testFleet;
-    }
+		for (let i = 0; i < 10; ++i) {
+			testFleet.push({
+				id: this.counter.fleetId++,
+				name: 'SERVICESOFT',
+				imo: `${i}`.repeat(10),
+				mmsi: `${i}`.repeat(i + 1),
+				vesselTypeDetailed: 'Container Ship',
+				callSign: 'AAAA',
+				flag: 'Any country',
+				yearBuilt: 2020,
+				images: [],
+				status: 'Active',
 
-    setSelectedItem = (index) => {
-        this.selectedItem = this.drawerItems[index].title;
-        this.selectedItemIndex = index;
-    }
+				// vesselTypeGeneric: 'Cargo - XXX',
+				// grossTonnage: 'XXXXXX',
+				// summerDWT: 'XXXXXX', /* В тоннах */
+				// lengthOverallBreadthExtreme: `${450 + i} x ${62 + i} m`,
+			})
+		}
+		return testFleet;
+	}
 
-    setSearchQuery = (secretTitle, data) => {
-        this.searchQuery[secretTitle] = [...data];
-    }
+	setSelectedItem = (index) => {
+		this.selectedItem = this.drawerItems[index].title;
+		this.selectedItemIndex = index;
+	}
+
+	setSearchQuery = (secretTitle, data) => {
+		this.searchQuery[secretTitle] = [...data];
+	}
+	addShipInMyFleet = (ship) => {
+		ship.id = this.counter.fleetId++;
+		const shipIndex = this.myFleet.findIndex(({imo}) => imo === ship.imo);
+		shipIndex !== -1
+			? this.myFleet[shipIndex] = ship
+			: this.myFleet.push(ship);
+	}
 }
 
 

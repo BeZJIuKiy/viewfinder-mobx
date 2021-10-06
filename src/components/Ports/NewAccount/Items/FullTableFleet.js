@@ -26,7 +26,6 @@ export const FullTableFleet = observer(() => {
 			id: vessel.id,
 			"IMO": vessel.imo,
 			"Name": vessel.name,
-			"Vessel Type Generic": vessel.vesselTypeGeneric,
 			"Vessel Type Detailed": vessel.vesselTypeDetailed,
 			"Status": vessel.status,
 			"MMSI": vessel.mmsi,

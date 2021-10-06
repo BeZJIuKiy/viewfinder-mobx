@@ -172,13 +172,13 @@ export const PopoverItem = observer(({portId, city, cameras}) => {
 		ports.setSelectedPort(portId);
 		ports.setSelectedCamera(cameraId);
 
-		ports.setIsNewNotif(eventId, false);
+		ports.setIsNewNotify(eventId, false);
 	}
 	const handleCloseNotify = (portId, cameraId, eventId) => {
 		ports.setSelectedPort(portId);
 		ports.setSelectedCamera(cameraId);
 		//
-		ports.setIsNewNotif(eventId, false);
+		ports.setIsNewNotify(eventId, false);
 
 		// const event = ports.data.find((port) => port.id === portId)
 		// 	.cameras.find((camera) => camera.id === cameraId)

@@ -23,7 +23,7 @@ import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import ports from "../../../store/ports";
 import {observer} from "mobx-react-lite";
 import eventsState from "../../../store/eventsState";
-import {ShipCard} from "./ShipCard";
+import {ShipCard} from "./ShipCard/ShipCard";
 import {Modal} from "@material-ui/core";
 
 
@@ -282,30 +282,16 @@ export const BoatEvents = observer(() => {
 	const [dense] = React.useState(false);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-	// useEffect(() => {
-	// 	setData(Number.isInteger(event.id)
-	// 		? camera.events.filter(e => e.typeVessel === event.typeVessel)
-	// 		: camera.events
-	// 	);
-	//
-	// 	setSelected([]);
-	// }, [camera, camera.events]);
-	// }, [event, camera, camera.events]);
-
 	useEffect(() => {
 		setData(camera.events);
 
 		setSelected([]);
 	}, [camera.id]);
 	useEffect(() => {
-		console.log("useEffect")
 		if (imageId >= 0) {
-			console.log("IF")
 			setSelected([imageId]);
-			// setSelected([imageId]);
 		}
 		else if (selected.length === 1 && imageId < 0) {
-			console.log("ELSE IF")
 			setSelected([]);
 		}
 	}, [imageId]);
@@ -345,7 +331,6 @@ export const BoatEvents = observer(() => {
 	const handleClick = (e, id, index) => {
 		const selectedIndex = selected.indexOf(id);
 		let newSelected = [];
-		console.log(selectedIndex)
 
 		if (selectedIndex === -1) {
 			newSelected = newSelected.concat(selected, id);
@@ -362,14 +347,13 @@ export const BoatEvents = observer(() => {
 		if (newSelected.length === 1) {
 			ports.setImageId(newSelected[0]);
 			ports.setVisibleSelectedImage(true);
+			ports.setCard(newSelected[0]);
 		} else {
 			ports.setImageId(-1);
 			ports.setVisibleSelectedImage(false);
 		}
 
 		setSelected(newSelected);
-		console.log(id)
-		ports.setCard(id);
 	};
 
 	const handleChangePage = (event, newPage) => {
