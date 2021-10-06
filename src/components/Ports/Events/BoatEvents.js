@@ -24,7 +24,9 @@ import ports from "../../../store/ports";
 import {observer} from "mobx-react-lite";
 import eventsState from "../../../store/eventsState";
 import {ShipCard} from "./ShipCard/ShipCard";
-import {Modal} from "@material-ui/core";
+import {Dialog, Modal} from "@material-ui/core";
+import Draggable from "react-draggable";
+import {PaperComponent} from "../../../useHooks/useDraggable";
 
 
 function descendingComparator(a, b, orderBy) {
@@ -162,21 +164,33 @@ const useToolbarStyles = makeStyles((theme) => ({
 const EnhancedTableToolbar = (props) => {
 	const classes = useToolbarStyles();
 	const {numSelected} = props;
-	const {selectedObjects: {camera, event}} = ports;
+	const {selectedObjects: {port, camera, event, cardData}} = ports;
 
-	const [open, setOpen] = useState(false);
+	const [isOpenShipCard, setOpenShipCard] = useState(false);
+	const [isOpenDeleteDialog, setOpenDeleteDialog] = useState(false);
 
 	// console.log(ports.selectedObjects);
 	const tableTitle = Number.isInteger(event.id)
 		? `ALL EVENTS ${event.typeVessel}`
 		: (camera.events.length ? `ALL EVENTS ${camera.description}` : "NO EVENTS");
 
-	const handleOpenModal = () => {
-		setOpen(true);
+	const handleDeleteRow = () => {
+		ports.deleteEvent(port.id, camera.id, cardData.id);
 	}
-	const handleClose = () => {
-		setOpen(false)
+	const handleOpenShipCard = () => {
+		setOpenShipCard(true);
 	}
+	const handleCloseShipCard = () => {
+		setOpenShipCard(false);
+	}
+
+	const handleOpenDeleteDialog = () => {
+		setOpenDeleteDialog(true);
+	}
+	const handleCloseDeleteDialog = () => {
+		setOpenDeleteDialog(false);
+	}
+
 
 	return (
 		<Toolbar
@@ -184,15 +198,36 @@ const EnhancedTableToolbar = (props) => {
 				[classes.highlight]: numSelected > 0,
 			})}
 		>
-			<Modal
-				className={classes.modal}
-				open={open}
-				onClose={handleClose}
-				aria-labelledby="simple-modal-title"
+			<Dialog
+				PaperComponent={() => <PaperComponent id={"teeesting"}/>}
+				// PaperComponent={PaperComponent}
+				open={isOpenShipCard}
+				onClose={handleCloseShipCard}
+				aria-labelledby="draggable-dialog-title"
 				aria-describedby="simple-modal-description"
 			>
-				<div className={classes.correctCardPosition}><ShipCard/></div>
-			</Modal>
+				<ShipCard componentId={"teeesting"}/>
+			</Dialog>
+
+			{/*<Dialog*/}
+			{/*	PaperComponent={PaperComponent}*/}
+			{/*	open={isOpenDeleteDialog}*/}
+			{/*	onClose={handleCloseDeleteDialog}*/}
+			{/*	aria-labelledby="draggable-dialog-title"*/}
+			{/*	aria-describedby="simple-modal-description"*/}
+			{/*>*/}
+
+			{/*</Dialog>*/}
+
+			{/*<Modal*/}
+			{/*	className={classes.modal}*/}
+			{/*	open={open}*/}
+			{/*	onClose={handleClose}*/}
+			{/*	aria-labelledby="simple-modal-title"*/}
+			{/*	aria-describedby="simple-modal-description"*/}
+			{/*>*/}
+			{/*	<div className={classes.correctCardPosition}><ShipCard/></div>*/}
+			{/*</Modal>*/}
 			{numSelected > 0 ? (
 				<Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
 					{numSelected} selected
@@ -211,7 +246,7 @@ const EnhancedTableToolbar = (props) => {
 			{numSelected === 1 ? (
 				<Tooltip
 					title="Add ship"
-					onClick={handleOpenModal}
+					onClick={handleOpenShipCard}
 				>
 					<IconButton aria-label="Add ship">
 						<AddCircleIcon color="secondary"/>
@@ -225,7 +260,7 @@ const EnhancedTableToolbar = (props) => {
 					title="Delete"
 					onClick={() => alert("Delete")}
 				>
-					<IconButton aria-label="delete">
+					<IconButton aria-label="delete" onClick={handleDeleteRow}>
 						<DeleteIcon/>
 					</IconButton>
 				</Tooltip>
@@ -268,7 +303,7 @@ export const BoatEvents = observer(() => {
 	const classes = useStyles();
 	const {
 		selectedObjects: {
-			camera, event,
+			port, camera, event,
 			shipImage: {id: imageId},
 		},
 	} = ports;
@@ -285,8 +320,9 @@ export const BoatEvents = observer(() => {
 	useEffect(() => {
 		setData(camera.events);
 
+		ports.setVisibleSelectedImage(false);
 		setSelected([]);
-	}, [camera.id]);
+	}, [camera.id, camera.events.length]);
 	useEffect(() => {
 		if (imageId >= 0) {
 			setSelected([imageId]);
@@ -317,7 +353,6 @@ export const BoatEvents = observer(() => {
 		setOrder(isAsc ? 'desc' : 'asc');
 		setOrderBy(property);
 	};
-
 	const handleSelectAllClick = (event) => {
 		if (event.target.checked) {
 			const newSelecteds = rows.map((n) => n.id);
@@ -327,7 +362,6 @@ export const BoatEvents = observer(() => {
 
 		setSelected([]);
 	};
-
 	const handleClick = (e, id, index) => {
 		const selectedIndex = selected.indexOf(id);
 		let newSelected = [];
@@ -355,11 +389,9 @@ export const BoatEvents = observer(() => {
 
 		setSelected(newSelected);
 	};
-
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
 	};
-
 	const handleChangeRowsPerPage = (event) => {
 		setRowsPerPage(parseInt(event.target.value, 10));
 		setPage(0);

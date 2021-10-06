@@ -20,9 +20,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Collapse from "@material-ui/core/Collapse";
-import {Button, Grid, Hidden, Input} from "@material-ui/core";
+import {Button, Grid, Hidden, Input, Paper} from "@material-ui/core";
 import {useHexToRgba} from "../../../../useHooks/useHexToRgba";
 import account from "../../../../store/account";
+import Draggable from 'react-draggable';
 
 const useShopCardStyles = makeStyles((theme) => ({
 	root: {
@@ -78,7 +79,7 @@ const useShopCardStyles = makeStyles((theme) => ({
 		},
 	},
 }));
-export const ShipCard = observer(() => {
+export const ShipCard = observer(({componentId}) => {
 	const classes = useShopCardStyles();
 	const template = {...account.templateShipData, vesselTypeDetailed: ports.selectedObjects.cardData.typeVessel};
 
@@ -172,8 +173,13 @@ export const ShipCard = observer(() => {
 		)
 	}
 
+	console.log(componentId)
+
 	return (
-		<Card className={classes.root}>
+		<Card
+			className={classes.root}
+
+		>
 			<CardHeader
 				// avatar={
 				// 	<Avatar aria-label="recipe" className={classes.avatar}>
@@ -190,6 +196,8 @@ export const ShipCard = observer(() => {
 
 				title={cardData.typeVessel}
 				subheader={cardData.date}
+				style={{cursor: 'move'}}
+				id={componentId}
 			/>
 			<CardMedia
 				className={classes.media}

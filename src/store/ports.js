@@ -387,6 +387,12 @@ class ports {
 
 		this.setCard(event.id)
 	}
+	deleteEvent = (portId, cameraId, event) => {
+		const camera = this.data.find(({id}) => id === portId)
+			.cameras.find(({id}) => id === cameraId)
+		const eventIndex = camera.events.findIndex(({id}) => id === event.id)
+		camera.events.splice(eventIndex, 1);
+	}
 
 	setIsNewNotify = (id, isNew) => {
 		const event = this.selectedObjects.camera.events.find(event => event.id === id);
