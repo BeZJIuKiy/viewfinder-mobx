@@ -83,6 +83,8 @@ export const Canvas = observer(() => {
 
 	const windowSize = useWindowDimensions();
 
+	// const [width, setWidth] = useState("100%");
+	// const [height, setHeight] = useState("100%");
 	const [width, setWidth] = useState(1);
 	const [height, setHeight] = useState(1);
 	const [ratio, setRatio] = useState({width: 1, height: 1});
@@ -155,17 +157,18 @@ export const Canvas = observer(() => {
 	return (
 		<div className={classes.main}>
 			<div className={classes.canvasDraw}>
-				{/* Для RTCP потока */}
-				<iframe
-				    src={ports.selectedObjects.camera.link}
-				    width={"100%"} height={"100%"}
-				    // width={width} height={height}
-				    title="YouTube video player"
-				    ref={iframeRef}
-				    frameBorder="0"
-				    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-				    allowFullScreen
-				/>
+				{/* Для потока c сайта RTCP */}
+				<div className={classes.forPreview} ref={iframeRef}>
+					<iframe
+						src={ports.selectedObjects.camera.link}
+						width={width} height={height}
+						title="YouTube video player"
+						ref={iframeRef}
+						frameBorder="0"
+						allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+						allowFullScreen
+					/>
+				</div>
 
 				{/* Для JPG потока */}
 				{/*<div className={classes.forPreview} ref={iframeRef}>*/}

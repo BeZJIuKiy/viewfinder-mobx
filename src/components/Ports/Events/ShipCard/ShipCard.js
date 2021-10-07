@@ -27,8 +27,11 @@ import {DRAGGABLE_TESTING, PaperComponent} from "../../../../useHooks/useDraggab
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		minWidth: 345,
+		width: 310,
+		// minWidth: 345,
 		maxWidth: 345,
+		overflowY: "auto",
+
 	},
 	media: {
 		height: 0,
@@ -174,10 +177,7 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 			aria-labelledby="draggable-dialog-title"
 			aria-describedby="simple-modal-description"
 		>
-			<Card
-				className={classes.root}
-
-			>
+			<Card className={classes.root}>
 				<CardHeader
 					// avatar={
 					// 	<Avatar aria-label="recipe" className={classes.avatar}>
@@ -196,7 +196,6 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 					subheader={cardData?.date}
 					style={{cursor: 'move'}}
 					id={DRAGGABLE_TESTING}
-					// id={componentId}
 				/>
 				<CardMedia
 					className={classes.media}

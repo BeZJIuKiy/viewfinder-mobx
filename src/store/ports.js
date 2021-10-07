@@ -78,14 +78,14 @@ class ports {
 					description: 'Club Parking STATIC',
 					coordinates: [59.977915, 30.240934],
 					zoom: 15,
-					link: 'https://rtsp.me/embed/ayAby5ia',
-					// link: "http://192.168.250.210:8000/bgr",
-					// link: "http://192.168.250.147:8000/bgr", //MSI
+					link: "https://www.youtube.com/embed/UYCMrgERcyA?autoplay=1&mute=1",
 					previewLink: previewSPbPort,
 
 					// link: 'https://rtsp.me/embed/ayAby5ia',
 					// link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
 					// link: "http://192.168.250.183:63342/vf-ptz/rtsp/client.html?_ijt=3bma91crvde9ai0smaj26qmv3q",
+					// link: "http://192.168.250.147:8000/bgr", //MSI
+					// link: "http://192.168.250.210:8000/bgr",
 					// previewLink: "http://87.244.33.186:8001/bgr",
 					// previewLink: previewImg,
 					// link: 'http://87.244.33.186:8001/bgr',
@@ -216,7 +216,7 @@ class ports {
 					description: 'Port In/Out Camera STATIC',
 					coordinates: [59.346139, 18.124584],
 					zoom: 15,
-					link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
+					link: "https://www.youtube.com/embed/UYCMrgERcyA?autoplay=1&mute=1",
 					previewLink: previewImg2,
 
 					// link: 'https://rtsp.me/embed/ayAby5ia',
