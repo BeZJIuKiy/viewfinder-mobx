@@ -177,7 +177,7 @@ export const Canvas = observer(() => {
 				{/*	<img style={{width: width, height: height}} src={ports.selectedObjects.camera.link}*/}
 				{/*	     alt={"jpg stream"}/>*/}
 				{/*</div>*/}
-				<ContextMenuTrigger id={CANVAS_CONTEXT_MENU}>
+				<ContextMenuTrigger id={CANVAS_CONTEXT_MENU} disable={canvasState.isPolygonSelected}>
 					<canvas
 						className={`${classes.canvas} ${isVisibleCameraCanvas ? "show" : "hide"}`}
 						ref={canvasRef} width={width} height={height}

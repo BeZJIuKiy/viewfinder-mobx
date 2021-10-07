@@ -4,6 +4,7 @@ import {ContextMenu, ContextMenuTrigger, MenuItem, SubMenu} from "react-contextm
 import {makeStyles} from "@material-ui/core/styles";
 import {useHexToRgba} from "../../../../useHooks/useHexToRgba";
 import "./react-contextmenu.css";
+import canvasState from "../../../../store/canvasState";
 
 export const CANVAS_CONTEXT_MENU = "CANVAS_CONTEXT_MENU";
 
