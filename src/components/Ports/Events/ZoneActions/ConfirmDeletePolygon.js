@@ -4,7 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import canvasState from "../../../../store/canvasState";
 import Button from "@material-ui/core/Button";
 import ports from "../../../../store/ports";
-import Polygons from "../chageFigure/Polygons";
+import Polygons from "../ChangeFigure/Polygons";
 import eventsState from "../../../../store/eventsState";
 
 function rand() {

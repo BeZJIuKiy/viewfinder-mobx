@@ -1,13 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {observer} from 'mobx-react-lite'
 import {useParams} from 'react-router-dom'
-import Polygons from "./chageFigure/Polygons";
+import Polygons from "./ChangeFigure/Polygons";
 import canvasState from "../../../store/canvasState";
 import ports from "../../../store/ports";
 import {makeStyles} from "@material-ui/core/styles";
 import {CameraControlPanel} from "./CameraControlPanel/CameraControlPanel";
 import {useWindowDimensions} from "../../../useHooks/useWindowDimensions";
 import eventsState from "../../../store/eventsState";
+import {ContextMenuTrigger} from "react-contextmenu";
+import {CANVAS_CONTEXT_MENU, CanvasContextMenu} from "./ChangeFigure/CanvasContextMenu";
 
 const useStyles = makeStyles((theme) => {
 	const {camera} = ports.selectedObjects
@@ -175,11 +177,13 @@ export const Canvas = observer(() => {
 				{/*	<img style={{width: width, height: height}} src={ports.selectedObjects.camera.link}*/}
 				{/*	     alt={"jpg stream"}/>*/}
 				{/*</div>*/}
-
-				<canvas
-					className={`${classes.canvas} ${isVisibleCameraCanvas ? "show" : "hide"}`}
-					ref={canvasRef} width={width} height={height}
-				/>
+				<ContextMenuTrigger id={CANVAS_CONTEXT_MENU}>
+					<canvas
+						className={`${classes.canvas} ${isVisibleCameraCanvas ? "show" : "hide"}`}
+						ref={canvasRef} width={width} height={height}
+					/>
+				</ContextMenuTrigger>
+				<CanvasContextMenu/>
 
 				<span
 					className={`${classes.cameraControlPanel} ${isVisibleCameraCanvas ? "hide" : "show"}`}><CameraControlPanel/></span>

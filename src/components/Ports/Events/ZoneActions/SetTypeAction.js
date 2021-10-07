@@ -6,9 +6,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import canvasState from "../../../../store/canvasState";
 import {observer} from "mobx-react-lite";
-import {DEFAULT, ZONE_TYPE_IN_OUT, ZONE_TYPE_PARKING, ZONE_TYPE_RESTRICTED_AREA} from "../chageFigure/Polygon";
+import {DEFAULT, ZONE_TYPE_IN_OUT, ZONE_TYPE_PARKING, ZONE_TYPE_RESTRICTED_AREA} from "../ChangeFigure/Polygon";
 import ports from "../../../../store/ports";
-import Polygons from "../chageFigure/Polygons";
+import Polygons from "../ChangeFigure/Polygons";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {

@@ -2,6 +2,7 @@ import Polygon from "./Polygon";
 import canvasState from "../../../../store/canvasState";
 import ports from "../../../../store/ports";
 import eventsState from "../../../../store/eventsState";
+import { hideMenu } from 'react-contextmenu/modules/actions'
 
 export default class Polygons {
 	canvas = null;
@@ -31,46 +32,7 @@ export default class Polygons {
 
 		this.ctx = canvas.getContext('2d');
 
-		// console.log(ports.selectedObjects.camera.id);
-		// console.log(canvasState.saveDataTest);
-		// console.log(canvasState.saveDataTest[ports.selectedObjects.camera.id])
-		// this.polygons = [];
-		// this.polygons = canvasState.test.get(ports.selectedObjects.camera.id);
-
 		this.polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id];
-		console.log(this.polygons)
-
-		/* DELETE */
-		// if (this.polygons.length) {
-		// 	switch (this.polygons.length - 1) {
-		// 		case 0: {
-		// 			this.polygons[0].setAttributeType("In/Out");
-		// 			// console.log(this.polygons[0].getAttributeFillColor());
-		// 			break;
-		// 		}
-		//
-		// 		case 1: {
-		// 			this.polygons[0].setAttributeType("In/Out");
-		// 			this.polygons[1].setAttributeType("Parking");
-		// 			break;
-		// 		}
-		//
-		// 		case 2: {
-		// 			this.polygons[0].setAttributeType("In/Out");
-		// 			this.polygons[1].setAttributeType("Parking");
-		// 			this.polygons[2].setAttributeType("Restricted area");
-		// 			break;
-		// 		}
-		//
-		// 		default: {
-		// 			this.polygons[0].setAttributeType("In/Out");
-		// 			this.polygons[1].setAttributeType("Parking");
-		// 			this.polygons[2].setAttributeType("Restricted area");
-		// 		}
-		// 	}
-		// }
-
-		/* ====== */
 
 		this.drawPolygons();
 		this.polygons = this.showCenterPoint();
@@ -85,7 +47,7 @@ export default class Polygons {
 		this.canvas.onmousemove = this.mouseMoveHandler.bind(this);
 		this.canvas.onmousedown = this.mouseDownHandler.bind(this);
 		this.canvas.onmouseup = this.mouseUpHandler.bind(this);
-		this.canvas.oncontextmenu = this.mouseRightClickHandler.bind(this);
+		// this.canvas.oncontextmenu = this.mouseRightClickHandler.bind(this);
 	}
 
 	mouseDownHandler(e) {
@@ -108,7 +70,6 @@ export default class Polygons {
 			}
 		}
 	}
-
 	lmbDown = (e) => {
 		this.isDrag = true;
 		(this.currentHandle < 0) ? this.startCreateRect() : this.changePolygonPointPosition();
@@ -117,6 +78,7 @@ export default class Polygons {
 		console.log("Нажата СКМ");
 	}
 	rmbDown = (e) => {
+		hideMenu();
 		console.log("Нажата ПКМ");
 	}
 
@@ -139,9 +101,8 @@ export default class Polygons {
 			}
 		}
 	}
-
 	lmbUp = (e) => {
-		console.log("lmbUp");
+		// console.log("lmbUp");
 
 		if (this.isCreateRect) this.createNewPolygon();
 
@@ -189,7 +150,6 @@ export default class Polygons {
 		this.polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id];
 	}
 
-
 	mouseMoveHandler(e) {
 		this.bounds = e.target.getBoundingClientRect();
 		this.mousePos = {x: e.offsetX, y: e.offsetY};
@@ -227,12 +187,12 @@ export default class Polygons {
 			points: this.polygons[this.curPolygon].getPoints()
 		};
 
-		console.log("redrawPoint");
+		// console.log("redrawPoint");
 		this.drawPolygons(pointsWithId);
 		this.preparationPoints(pointsWithId[this.curPolygon], pointsWithId[this.curPolygon].points);
 	}
 	polygonSelection = () => {
-		console.log("polygonSelection");
+		// console.log("polygonSelection");
 
 		this.drawPolygons();
 		const polygon = this.polygons[this.curPolygon];
@@ -243,7 +203,12 @@ export default class Polygons {
 		this.preparationCenterPoints(polygon, centerPoints);
 	}
 
-	mouseRightClickHandler = (e) => e.preventDefault();
+	mouseRightClickHandler = (e) => {
+		// e.preventDefault();
+		console.log("12321");
+		// return <DeleteEventDialog/>
+	}
+
 
 	point = (x, y) => ({x, y});
 	newPoint = (x, y) => ({id: null, x, y});

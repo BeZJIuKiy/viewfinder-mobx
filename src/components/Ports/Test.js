@@ -20,6 +20,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ports from "../../store/ports";
 import {ShipCard} from "./Events/ShipCard/ShipCard";
+import {Canvaaas, CanvasContextMenu} from "./Events/ChangeFigure/CanvasContextMenu";
 
 const useStyles = makeStyles((theme) => ({
 	test: {
@@ -354,7 +355,9 @@ export const Test = observer(() => {
 
 	return (
 		<div className={classes.test}>
-			<ShipCard/>
+			{/*<ShipCard/>*/}
+			<Canvaaas/>
+			<CanvasContextMenu/>
 		</div>
 	)
 })
