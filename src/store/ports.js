@@ -29,7 +29,7 @@ class ports {
 	counter = {
 		portsId: 0,
 		camerasId: 0,
-		eventsId: 0,
+		eventsId: 10,
 	};
 
 	portIcon = {
@@ -387,11 +387,13 @@ class ports {
 
 		this.setCard(event.id)
 	}
-	deleteEvent = (portId, cameraId, event) => {
+	deleteEvents = (portId, cameraId, selectedId) => {
 		const camera = this.data.find(({id}) => id === portId)
-			.cameras.find(({id}) => id === cameraId)
-		const eventIndex = camera.events.findIndex(({id}) => id === event.id)
-		camera.events.splice(eventIndex, 1);
+			.cameras.find(({id}) => id === cameraId);
+		selectedId.forEach((eventsId) => {
+			const eventIndex = camera.events.findIndex(({id}) => id === eventsId)
+			camera.events.splice(eventIndex, 1);
+		})
 	}
 
 	setIsNewNotify = (id, isNew) => {
@@ -430,6 +432,9 @@ class ports {
 
 	setCard = (eventId) => {
 		this.selectedObjects.cardData = this.selectedObjects.camera.events.find((event) => event.id === eventId);
+	}
+	clearCard = () => {
+		this.selectedObjects.cardData = {};
 	}
 
 	clearSearchQuery = () => {

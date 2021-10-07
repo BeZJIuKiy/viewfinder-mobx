@@ -20,12 +20,12 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Collapse from "@material-ui/core/Collapse";
-import {Button, Grid, Hidden, Input, Paper} from "@material-ui/core";
+import {Button, Dialog, Grid, Hidden, Input, Paper} from "@material-ui/core";
 import {useHexToRgba} from "../../../../useHooks/useHexToRgba";
 import account from "../../../../store/account";
-import Draggable from 'react-draggable';
+import {DRAGGABLE_TESTING, PaperComponent} from "../../../../useHooks/useDraggable";
 
-const useShopCardStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
 	root: {
 		minWidth: 345,
 		maxWidth: 345,
@@ -68,20 +68,10 @@ const useShopCardStyles = makeStyles((theme) => ({
 		justifyContent: "center",
 		margin: "24px 8px 0px",
 	},
-
-	btn: {
-		"&.ok": {
-			background: useHexToRgba("#080", 0.8)
-		},
-
-		"&.cancel": {
-			background: useHexToRgba("#f00", 0.82)
-		},
-	},
 }));
-export const ShipCard = observer(({componentId}) => {
-	const classes = useShopCardStyles();
-	const template = {...account.templateShipData, vesselTypeDetailed: ports.selectedObjects.cardData.typeVessel};
+export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
+	const classes = useStyles();
+	const template = {...account.templateShipData, vesselTypeDetailed: ports.selectedObjects.cardData?.typeVessel};
 
 	const {cardData} = ports.selectedObjects
 
@@ -89,7 +79,6 @@ export const ShipCard = observer(({componentId}) => {
 	const [isRead, setRead] = React.useState(true);
 	const [localCardData, setLocalCardData] = React.useState(template);
 	const [errorFields, setErrorFields] = React.useState({});
-	// const [localCardData, setLocalCardData] = React.useState({...ports.selectedObjects.cardData});
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
@@ -120,8 +109,7 @@ export const ShipCard = observer(({componentId}) => {
 		if (isError) {
 			setErrorFields(errorField);
 			return;
-		}
-		else {
+		} else {
 			setErrorFields(errorField);
 		}
 
@@ -155,13 +143,12 @@ export const ShipCard = observer(({componentId}) => {
 			</>
 		)
 	}
-
 	const confirmBtn = (text = "test", color = "default", action) => {
 		return (
 			<Grid item xs={5} sm={5} md={5} lg={5} xl={5}>
 				<div className={`${classes.confirmBtn}`}>
 					<Button
-						className={`${classes.btn} ${color}`}
+						className={`${btnStyles} ${color}`}
 						variant={"contained"}
 						fullWidth
 						onClick={action}
@@ -172,108 +159,121 @@ export const ShipCard = observer(({componentId}) => {
 			</Grid>
 		)
 	}
-
-	console.log(componentId)
+	const handleCloseDialog = () => {
+		setRead(true);
+		setExpanded(false);
+		setErrorFields({});
+		handleClose();
+	}
 
 	return (
-		<Card
-			className={classes.root}
-
+		<Dialog
+			PaperComponent={PaperComponent}
+			open={isOpen}
+			onClose={handleCloseDialog}
+			aria-labelledby="draggable-dialog-title"
+			aria-describedby="simple-modal-description"
 		>
-			<CardHeader
-				// avatar={
-				// 	<Avatar aria-label="recipe" className={classes.avatar}>
-				// 		R
-				// 	</Avatar>
-				// }
-				// action={
-				// 	<IconButton aria-label="settings">
-				// 		<MoreVertIcon />
-				// 	</IconButton>
-				// }
-				// title="Shrimp and Chorizo Paella"
-				// subheader="September 14, 2016"
+			<Card
+				className={classes.root}
 
-				title={cardData.typeVessel}
-				subheader={cardData.date}
-				style={{cursor: 'move'}}
-				id={componentId}
-			/>
-			<CardMedia
-				className={classes.media}
-				image={`data:image/png;base64,${cardData.imageLink}`}
-				title={cardData.typeVessel}
-			/>
-			<CardContent>
-				<Typography variant="body2" color="textSecondary" component="p">
-					{cardData.description}
-				</Typography>
-			</CardContent>
-			<CardActions disableSpacing>
-				{/*<IconButton aria-label="add to fleet">*/}
-				{/*	<AddIcon/>*/}
-				{/*</IconButton>*/}
-				<IconButton aria-label="edit" onClick={handleEditShipData} color={isRead ? "default" : "primary"}>
-					<EditIcon/>
-				</IconButton>
-				{/*<IconButton aria-label="delete">*/}
-				{/*	<DeleteIcon/>*/}
-				{/*</IconButton>*/}
-				<IconButton
-					className={clsx(classes.expand, {
-						[classes.expandOpen]: expanded,
-					})}
-					onClick={handleExpandClick}
-					aria-expanded={expanded}
-					aria-label="show more"
-					disabled={!isRead}
-				>
-					<ExpandMoreIcon/>
-				</IconButton>
-			</CardActions>
-			<Collapse in={expanded} timeout="auto" unmountOnExit>
+			>
+				<CardHeader
+					// avatar={
+					// 	<Avatar aria-label="recipe" className={classes.avatar}>
+					// 		R
+					// 	</Avatar>
+					// }
+					// action={
+					// 	<IconButton aria-label="settings">
+					// 		<MoreVertIcon />
+					// 	</IconButton>
+					// }
+					// title="Shrimp and Chorizo Paella"
+					// subheader="September 14, 2016"
+
+					title={cardData?.typeVessel || "Ship is not found"}
+					subheader={cardData?.date}
+					style={{cursor: 'move'}}
+					id={DRAGGABLE_TESTING}
+					// id={componentId}
+				/>
+				<CardMedia
+					className={classes.media}
+					image={`data:image/png;base64,${cardData?.imageLink}`}
+					title={cardData?.typeVessel}
+				/>
 				<CardContent>
-					<Grid container>
-						{content("Ship Name", localCardData.name, "name")}
-						{content("IMO", localCardData.imo, "imo")}
-						{content("MMSI", localCardData.mmsi, "mmsi")}
-						{content("Ship Type", localCardData.vesselTypeDetailed, "vesselTypeDetailed")}
-						{content("Call Sign", localCardData.callSign, "callSign")}
-						{content("Flag", localCardData.flag, "flag")}
-						{content("Year Built", localCardData.yearBuilt, "yearBuilt")}
-					</Grid>
-
-					<div className={`${classes.containerConfirmBtn} ${isRead ? "hide" : "show"}`}>
-						<Grid container justify={"center"}>
-							{confirmBtn("add ship", "ok", handleConfirm)}
-							{confirmBtn("cancel", "cancel", handleCancel)}
-						</Grid>
-					</div>
-					{/*<Typography paragraph>Method:</Typography>*/}
-					{/*<Typography paragraph>*/}
-					{/*	Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10*/}
-					{/*	minutes.*/}
-					{/*</Typography>*/}
-					{/*<Typography paragraph>*/}
-					{/*	Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high*/}
-					{/*	heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly*/}
-					{/*	browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken*/}
-					{/*	and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and*/}
-					{/*	pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add*/}
-					{/*	saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.*/}
-					{/*</Typography>*/}
-					{/*<Typography paragraph>*/}
-					{/*	Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook*/}
-					{/*	without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to*/}
-					{/*	medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook*/}
-					{/*	again without stirring, until mussels have opened and rice is just tender, 5 to 7*/}
-					{/*	minutes more. (Discard any mussels that don’t open.)*/}
-					{/*</Typography>*/}
-					{/*<Typography>*/}
-					{/*	Set aside off of the heat to let rest for 10 minutes, and then serve.*/}
-					{/*</Typography>*/}
+					<Typography variant="body2" color="textSecondary" component="p">
+						{cardData?.description}
+					</Typography>
 				</CardContent>
-			</Collapse>
-		</Card>
+				<CardActions disableSpacing>
+					{/*<IconButton aria-label="add to fleet">*/}
+					{/*	<AddIcon/>*/}
+					{/*</IconButton>*/}
+					<IconButton aria-label="edit" onClick={handleEditShipData} color={isRead ? "default" : "primary"}>
+						<EditIcon/>
+					</IconButton>
+					{/*<IconButton aria-label="delete">*/}
+					{/*	<DeleteIcon/>*/}
+					{/*</IconButton>*/}
+					<IconButton
+						className={clsx(classes.expand, {
+							[classes.expandOpen]: expanded,
+						})}
+						onClick={handleExpandClick}
+						aria-expanded={expanded}
+						aria-label="show more"
+						disabled={!isRead}
+					>
+						<ExpandMoreIcon/>
+					</IconButton>
+				</CardActions>
+				<Collapse in={expanded} timeout="auto" unmountOnExit>
+					<CardContent>
+						<Grid container>
+							{content("Ship Name", localCardData.name, "name")}
+							{content("IMO", localCardData.imo, "imo")}
+							{content("MMSI", localCardData.mmsi, "mmsi")}
+							{content("Ship Type", localCardData.vesselTypeDetailed, "vesselTypeDetailed")}
+							{content("Call Sign", localCardData.callSign, "callSign")}
+							{content("Flag", localCardData.flag, "flag")}
+							{content("Year Built", localCardData.yearBuilt, "yearBuilt")}
+						</Grid>
+
+						<div className={`${classes.containerConfirmBtn} ${isRead ? "hide" : "show"}`}>
+							<Grid container justify={"center"}>
+								{confirmBtn("cancel", "cancel", handleCancel)}
+								{confirmBtn("add ship", "ok", handleConfirm)}
+							</Grid>
+						</div>
+						{/*<Typography paragraph>Method:</Typography>*/}
+						{/*<Typography paragraph>*/}
+						{/*	Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10*/}
+						{/*	minutes.*/}
+						{/*</Typography>*/}
+						{/*<Typography paragraph>*/}
+						{/*	Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high*/}
+						{/*	heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly*/}
+						{/*	browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken*/}
+						{/*	and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and*/}
+						{/*	pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add*/}
+						{/*	saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.*/}
+						{/*</Typography>*/}
+						{/*<Typography paragraph>*/}
+						{/*	Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook*/}
+						{/*	without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to*/}
+						{/*	medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook*/}
+						{/*	again without stirring, until mussels have opened and rice is just tender, 5 to 7*/}
+						{/*	minutes more. (Discard any mussels that don’t open.)*/}
+						{/*</Typography>*/}
+						{/*<Typography>*/}
+						{/*	Set aside off of the heat to let rest for 10 minutes, and then serve.*/}
+						{/*</Typography>*/}
+					</CardContent>
+				</Collapse>
+			</Card>
+		</Dialog>
 	);
 })

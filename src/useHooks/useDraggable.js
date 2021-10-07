@@ -3,10 +3,11 @@ import Paper from "@material-ui/core/Paper";
 import React from "react";
 import {observer} from "mobx-react-lite";
 
+export const DRAGGABLE_TESTING = `DRAGGABLE_TESTING`;
+
 export const PaperComponent = observer((props) => {
-	console.log(props.id);
 	return (
-		<Draggable handle={`#${props.id}`} cancel={'[class*="MuiDialogContent-root"]'}>
+		<Draggable handle={`#${DRAGGABLE_TESTING}`} cancel={'[class*="MuiDialogContent-root"]'}>
 			<Paper {...props} />
 		</Draggable>
 	);

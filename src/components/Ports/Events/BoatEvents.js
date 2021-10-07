@@ -24,9 +24,12 @@ import ports from "../../../store/ports";
 import {observer} from "mobx-react-lite";
 import eventsState from "../../../store/eventsState";
 import {ShipCard} from "./ShipCard/ShipCard";
-import {Dialog, Modal} from "@material-ui/core";
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal} from "@material-ui/core";
 import Draggable from "react-draggable";
-import {PaperComponent} from "../../../useHooks/useDraggable";
+import {DRAGGABLE_TESTING, PaperComponent} from "../../../useHooks/useDraggable";
+import {DeleteEventDialog} from "./DeleteEventDialog";
+import {useHexToRgba} from "../../../useHooks/useHexToRgba";
+
 
 
 function descendingComparator(a, b, orderBy) {
@@ -64,13 +67,6 @@ const headCells = [
 	{id: 'typeVessel', numeric: false, disablePadding: true, label: 'Type Vessel'},
 	// {id: 'country', numeric: false, disablePadding: false, label: 'Country'},
 	{id: 'description', numeric: false, disablePadding: false, label: 'Description'},
-
-	// {id: 'typeError', numeric: false, disablePadding: true, label: 'Type'},
-	// {id: 'typeVessel', numeric: false, disablePadding: true, label: 'Type Vessel'},
-	// {id: 'date', numeric: false, disablePadding: false, label: 'Date (YYYY-MM-DD)'},
-	// {id: 'time', numeric: false, disablePadding: false, label: 'Time (HH:MM:SS)'},
-	// {id: 'timezone', numeric: false, disablePadding: false, label: 'Timezone'},
-	// {id: 'description', numeric: false, disablePadding: false, label: 'Description'},
 ];
 
 function EnhancedTableHead(props) {
@@ -105,8 +101,8 @@ function EnhancedTableHead(props) {
 							{headCell.label}
 							{orderBy === headCell.id ? (
 								<span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
+				                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+				                </span>
 							) : null}
 						</TableSortLabel>
 					</TableCell>
@@ -158,25 +154,35 @@ const useToolbarStyles = makeStyles((theme) => ({
 		left: "50%",
 
 		transform: "translate(-50%, 0)",
-	}
+	},
+	btn: {
+		width: 116,
+		height: 36,
+
+		"&.ok": {
+			color: useHexToRgba("#fff", 0.8),
+			background: useHexToRgba("#080", 0.8)
+		},
+
+		"&.cancel": {
+			color: useHexToRgba("#fff", 0.8),
+			background: useHexToRgba("#f00", 0.82),
+		},
+	},
 }));
 
 const EnhancedTableToolbar = (props) => {
 	const classes = useToolbarStyles();
-	const {numSelected} = props;
+	const {numSelected, selected} = props;
 	const {selectedObjects: {port, camera, event, cardData}} = ports;
 
 	const [isOpenShipCard, setOpenShipCard] = useState(false);
 	const [isOpenDeleteDialog, setOpenDeleteDialog] = useState(false);
 
-	// console.log(ports.selectedObjects);
 	const tableTitle = Number.isInteger(event.id)
 		? `ALL EVENTS ${event.typeVessel}`
 		: (camera.events.length ? `ALL EVENTS ${camera.description}` : "NO EVENTS");
 
-	const handleDeleteRow = () => {
-		ports.deleteEvent(port.id, camera.id, cardData.id);
-	}
 	const handleOpenShipCard = () => {
 		setOpenShipCard(true);
 	}
@@ -198,36 +204,9 @@ const EnhancedTableToolbar = (props) => {
 				[classes.highlight]: numSelected > 0,
 			})}
 		>
-			<Dialog
-				PaperComponent={() => <PaperComponent id={"teeesting"}/>}
-				// PaperComponent={PaperComponent}
-				open={isOpenShipCard}
-				onClose={handleCloseShipCard}
-				aria-labelledby="draggable-dialog-title"
-				aria-describedby="simple-modal-description"
-			>
-				<ShipCard componentId={"teeesting"}/>
-			</Dialog>
+			<ShipCard isOpen={isOpenShipCard} btnStyles={classes.btn} handleClose={() => handleCloseShipCard()}/>
+			<DeleteEventDialog isOpen={isOpenDeleteDialog} handleClose={() => handleCloseDeleteDialog()} selectedId={selected} btnStyles={classes.btn}/>
 
-			{/*<Dialog*/}
-			{/*	PaperComponent={PaperComponent}*/}
-			{/*	open={isOpenDeleteDialog}*/}
-			{/*	onClose={handleCloseDeleteDialog}*/}
-			{/*	aria-labelledby="draggable-dialog-title"*/}
-			{/*	aria-describedby="simple-modal-description"*/}
-			{/*>*/}
-
-			{/*</Dialog>*/}
-
-			{/*<Modal*/}
-			{/*	className={classes.modal}*/}
-			{/*	open={open}*/}
-			{/*	onClose={handleClose}*/}
-			{/*	aria-labelledby="simple-modal-title"*/}
-			{/*	aria-describedby="simple-modal-description"*/}
-			{/*>*/}
-			{/*	<div className={classes.correctCardPosition}><ShipCard/></div>*/}
-			{/*</Modal>*/}
 			{numSelected > 0 ? (
 				<Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
 					{numSelected} selected
@@ -260,7 +239,7 @@ const EnhancedTableToolbar = (props) => {
 					title="Delete"
 					onClick={() => alert("Delete")}
 				>
-					<IconButton aria-label="delete" onClick={handleDeleteRow}>
+					<IconButton aria-label="delete" onClick={handleOpenDeleteDialog}>
 						<DeleteIcon/>
 					</IconButton>
 				</Tooltip>
@@ -326,8 +305,7 @@ export const BoatEvents = observer(() => {
 	useEffect(() => {
 		if (imageId >= 0) {
 			setSelected([imageId]);
-		}
-		else if (selected.length === 1 && imageId < 0) {
+		} else if (selected.length === 1 && imageId < 0) {
 			setSelected([]);
 		}
 	}, [imageId]);
@@ -405,11 +383,13 @@ export const BoatEvents = observer(() => {
 
 	const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+
 	return (
 		<div className={classes.root}>
 			<Paper className={classes.paper}>
 				<EnhancedTableToolbar
 					numSelected={selected.length}
+					selected={selected}
 				/>
 				<TableContainer>
 					<Table
@@ -431,7 +411,17 @@ export const BoatEvents = observer(() => {
 							{stableSort(rows, getComparator(order, orderBy))
 								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 								.map((row, index) => {
-									const {id, typeError, typeVessel, date, imo, mmsi, callSign, country, description} = row;
+									const {
+										id,
+										typeError,
+										typeVessel,
+										date,
+										imo,
+										mmsi,
+										callSign,
+										country,
+										description
+									} = row;
 									const isItemSelected = isSelected(id);
 									const labelId = `enhanced-table-checkbox-${index}`;
 									const notifType = `events__type__notification ${typeError.toLowerCase()}`;
