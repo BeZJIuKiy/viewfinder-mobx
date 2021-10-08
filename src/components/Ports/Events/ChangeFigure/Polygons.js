@@ -2,7 +2,7 @@ import Polygon from "./Polygon";
 import canvasState from "../../../../store/canvasState";
 import ports from "../../../../store/ports";
 import eventsState from "../../../../store/eventsState";
-import { hideMenu } from 'react-contextmenu/modules/actions'
+import {hideMenu} from 'react-contextmenu/modules/actions'
 
 export default class Polygons {
 	canvas = null;
@@ -47,7 +47,7 @@ export default class Polygons {
 		this.canvas.onmousemove = this.mouseMoveHandler.bind(this);
 		this.canvas.onmousedown = this.mouseDownHandler.bind(this);
 		this.canvas.onmouseup = this.mouseUpHandler.bind(this);
-		// this.canvas.oncontextmenu = this.mouseRightClickHandler.bind(this);
+		this.canvas.oncontextmenu = this.mouseRightClickHandler.bind(this);
 	}
 
 	mouseDownHandler(e) {
@@ -70,7 +70,9 @@ export default class Polygons {
 			}
 		}
 	}
+
 	lmbDown = (e) => {
+		hideMenu();
 		this.isDrag = true;
 		(this.currentHandle < 0) ? this.startCreateRect() : this.changePolygonPointPosition();
 	}
@@ -78,11 +80,15 @@ export default class Polygons {
 		console.log("Нажата СКМ");
 	}
 	rmbDown = (e) => {
-		hideMenu();
-		console.log("Нажата ПКМ");
+		this.drawPolygons();
+
+		if (this.selectPolygon()) {
+			this.polygonSelection();
+		}
 	}
 
 	mouseUpHandler(e) {
+		// if (!eventsState.isCreatePolygon) return;
 		switch (e.which) {
 			case 1: {
 				this.lmbUp(e);
@@ -101,9 +107,8 @@ export default class Polygons {
 			}
 		}
 	}
-	lmbUp = (e) => {
-		// console.log("lmbUp");
 
+	lmbUp = (e) => {
 		if (this.isCreateRect) this.createNewPolygon();
 
 		this.isDrag = false;
@@ -116,9 +121,7 @@ export default class Polygons {
 		this.selectPolygon() ? this.polygonSelection() : this.drawPolygons();
 	}
 	cmbUp = (e) => {
-		console.log("Отпущена СКМ");
-	}
-	rmbUp = (e) => {
+		// console.log("Отпущена СКМ");
 		if (this.currentHandle < 0
 			|| this.polygons[this.curPolygon].points[this.currentHandle].id === null
 			|| !eventsState.isCreatePolygon) return;
@@ -138,15 +141,17 @@ export default class Polygons {
 			this.polygons = this.showCenterPoint();
 		}
 
-		console.log("rmbUp");
 		this.drawPolygons();
+	}
+	rmbUp = (e) => {
+		console.log("Отпущена ПКМ");
 	}
 
 	/* FUNCTION: lmbUp */
 	createNewPolygon = () => {
 		this.isCreateRect = false;
 		canvasState.addPolygon(this.cameraId, new Polygon(canvasState.readyRectCounter, this.startX, this.startY, this.width, this.height));
-		// this.polygons = canvasState.test.get(this.cameraId);
+
 		this.polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id];
 	}
 
@@ -157,8 +162,14 @@ export default class Polygons {
 		if (!this.isDrag) this.findAnyPoint();
 		if (!eventsState.isCreatePolygon) return;
 
-		if (this.isDrag && this.currentHandle < 0) this.isCreateRect = true;
-		if (this.isDrag && this.isCreateRect) this.drawNewRect();
+		if (this.isDrag && this.currentHandle < 0) {
+			const minSize = 20;
+			const isMinWidth = (this.mousePos.x - this.startX) >= minSize;
+			const isMinHeight = (this.mousePos.y - this.startY) >= minSize;
+
+			if (isMinWidth && isMinHeight) this.isCreateRect = true;
+			if (this.isDrag && this.isCreateRect) this.drawNewRect();
+		}
 
 		if (this.currentHandle >= 0 && this.isDrag) this.changePointPosition();
 		if (this.isDrag && this.currentHandle >= 0) this.redrawPoint();
@@ -203,11 +214,7 @@ export default class Polygons {
 		this.preparationCenterPoints(polygon, centerPoints);
 	}
 
-	mouseRightClickHandler = (e) => {
-		// e.preventDefault();
-		console.log("12321");
-		// return <DeleteEventDialog/>
-	}
+	mouseRightClickHandler = (e) => e.preventDefault();
 
 
 	point = (x, y) => ({x, y});
@@ -278,7 +285,6 @@ export default class Polygons {
 		if (this.polygons.length === 0) return;
 
 		let findedPolygon = false;
-		// console.log(this.polygons[0]);
 
 		for (let i = 0; i < this.polygons.length; ++i) {
 			const points = this.polygons[i].getPoints();

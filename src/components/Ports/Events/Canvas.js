@@ -90,6 +90,8 @@ export const Canvas = observer(() => {
 	const [width, setWidth] = useState(1);
 	const [height, setHeight] = useState(1);
 	const [ratio, setRatio] = useState({width: 1, height: 1});
+	const [isComputer, setComputer] = useState(true);
+	const [isShowContextMenu, setShowContextMenu] = useState(false);
 
 	const {isVisibleCameraCanvas} = eventsState;
 
@@ -135,6 +137,8 @@ export const Canvas = observer(() => {
 		new Polygons(canvasRef.current, "", params.id);
 	}, [width, ports.selectedObjects.camera]);
 	useEffect(() => {
+		setComputer(windowSize.width >= 960);
+
 		if (ratio.width === 1 || ratio.height === 1 || ports.selectedObjects.shipImage.isVisible) return;
 
 		const isSide = (iframeRef.current?.scrollWidth / ratio.width * ratio.height) < windowSize.height * eventsState.maxHeight;
@@ -144,6 +148,9 @@ export const Canvas = observer(() => {
 
 		reSizeCanvas(coefficient);
 	}, [ratio, windowSize.width, windowSize.height, ports.selectedObjects.camera, ports.selectedObjects.shipImage.isVisible]);
+	useEffect(() => {
+		setShowContextMenu(canvasState.isPolygonSelected && eventsState.isCreatePolygon);
+	}, [canvasState.isPolygonSelected])
 
 	const reSizeCanvas = (coefficient) => {
 		const width = coefficient * ratio.width;
@@ -177,7 +184,10 @@ export const Canvas = observer(() => {
 				{/*	<img style={{width: width, height: height}} src={ports.selectedObjects.camera.link}*/}
 				{/*	     alt={"jpg stream"}/>*/}
 				{/*</div>*/}
-				<ContextMenuTrigger id={CANVAS_CONTEXT_MENU} disable={canvasState.isPolygonSelected}>
+				<ContextMenuTrigger
+					id={CANVAS_CONTEXT_MENU}
+					disable={!isShowContextMenu}
+					holdToDisplay={isComputer ? -1 : 1000}>
 					<canvas
 						className={`${classes.canvas} ${isVisibleCameraCanvas ? "show" : "hide"}`}
 						ref={canvasRef} width={width} height={height}

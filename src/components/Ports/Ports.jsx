@@ -47,12 +47,12 @@ export const Ports = () => {
 			<Grid item xs={12} sm={12} md={12}>
 				<Header mobileDrawer={{component: <Drawer/>}}/>
 			</Grid>
-			<Hidden xsDown>
+			<Hidden smDown>
 				<Grid item xs={12} sm={3} md={4} lg={3} xl={2}>
 					<div className={classes.gridItem}><Drawer/></div>
 				</Grid>
 			</Hidden>
-			<Grid item xs={12} sm={9} md={8} lg={9} xl={10}>
+			<Grid item xs={12} sm={12} md={8} lg={9} xl={10}>
 				<div className={classes.gridItem}><YaMap isVisible={true}/></div>
 			</Grid>
 		</Grid>

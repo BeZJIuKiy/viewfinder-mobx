@@ -262,7 +262,7 @@ export const DrawControl = observer(() => {
 					{controlButtons}
 				</Button>
 			</Grid>
-			<Grid item className={`${classes.mainControlItems} ${isVisibleCameraCanvas ? "show" : "hide"}`}>
+			<Grid item className={`${classes.mainControlItems} ${!isCreatePolygon && isVisibleCameraCanvas ? "show" : "hide"}`}>
 				<Button
 					className={`${classes.btn}`}
 					variant="contained"
@@ -272,14 +272,14 @@ export const DrawControl = observer(() => {
 					{btnControlZonesName}
 				</Button>
 			</Grid>
-			<Grid item className={`${classes.mainControlItems} ${isCreatePolygon ? "show" : "hide"}`}>
-				<div className={`${classes.mainControlItems} ${isCreatePolygon ? "show" : "hide"}`}>
-					<ZoneActions/>
-				</div>
-			</Grid>
-			<Grid item style={{flexGrow: 1}}>
-				{action}
-			</Grid>
+			{/*<Grid item className={`${classes.mainControlItems} ${isCreatePolygon ? "show" : "hide"}`}>*/}
+			{/*	<div className={`${classes.mainControlItems} ${isCreatePolygon ? "show" : "hide"}`}>*/}
+			{/*		<ZoneActions/>*/}
+			{/*	</div>*/}
+			{/*</Grid>*/}
+			{/*<Grid item style={{flexGrow: 1}}>*/}
+			{/*	{action}*/}
+			{/*</Grid>*/}
 			<Grid item className={`${classes.mainControlItems} ${isCreatePolygon ? "show" : "hide"}`}>
 				{confirmButtons()}
 			</Grid>

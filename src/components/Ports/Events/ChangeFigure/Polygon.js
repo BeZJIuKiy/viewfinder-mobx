@@ -1,7 +1,7 @@
-export const ZONE_TYPE_IN_OUT = "ZONE_TYPE_IN_OUT";
-export const ZONE_TYPE_PARKING = "ZONE_TYPE_PARKING";
-export const ZONE_TYPE_RESTRICTED_AREA = "ZONE_TYPE_RESTRICTED_AREA";
-export const DEFAULT = "DEFAULT";
+export const ZONE_TYPE_DEFAULT = "Default Area";
+export const ZONE_TYPE_IN_OUT = "In/Out Port Area";
+export const ZONE_TYPE_PARKING = "Parking Area";
+export const ZONE_TYPE_RESTRICTED_AREA = "Restricted Area";
 
 export default class Polygon {
 	id = null;

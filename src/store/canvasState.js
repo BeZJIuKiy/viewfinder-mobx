@@ -1,5 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import {makePersistable} from "mobx-persist-store";
+import {ZONE_TYPE_DEFAULT} from "../components/Ports/Events/ChangeFigure/Polygon";
 
 class CanvasState {
     canvas = null;
@@ -164,6 +165,7 @@ class CanvasState {
     }
 
     addPolygon(camId, polygon) {
+        polygon.setAttributeType(ZONE_TYPE_DEFAULT)
         this.saveDataTest[camId].push(polygon);
     }
 

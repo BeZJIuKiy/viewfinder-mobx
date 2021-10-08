@@ -138,23 +138,6 @@ export const Events30 = observer(() => {
 		)
 	}
 
-	const [eventsData, setEventsData] = useState([]);
-
-	useEffect(() => {
-		if (Number.isInteger(camera.id) === false) return;
-
-		setEventsData(camera.events.map((event) => ({
-			id: event.id,
-			"Type": event.typeError,
-			"Date": event.date,
-			"IMO": event.imo,
-			"MMSI": event.mmsi,
-			"Call Sign": event.callSign,
-			"Type Vessel": event.typeVessel,
-			"Description": event.description,
-		})));
-	}, [camera.id])
-
 	if (!Number.isInteger(camera.id)) {
 		ports.setSelectedCamera(ports.data[0].cameras[0].id);
 	}
@@ -192,14 +175,6 @@ export const Events30 = observer(() => {
 						</Hidden>
 
 						<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-							{/*{gridContainerItem(*/}
-							{/*	<AccountTable*/}
-							{/*		secretTitle={"Personal information: short Desvicesss"}*/}
-							{/*		rowsData={eventsData}*/}
-							{/*		search={"Date"}*/}
-							{/*		searchLabel={"IMO Ship"}*/}
-							{/*	/>*/}
-							{/*)}*/}
 							{gridContainerItem(<BoatEvents/>)}
 						</Grid>
 					</Grid>

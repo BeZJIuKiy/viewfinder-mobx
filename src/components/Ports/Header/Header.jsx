@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => {
 		mobileDrawer: {
 			display: "none",
 
-			[theme.breakpoints.down("xs")]: {
+			[theme.breakpoints.down("sm")]: {
 				display: "flex",
 
 				marginRight: -30,
