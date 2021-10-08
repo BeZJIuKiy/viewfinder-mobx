@@ -7,6 +7,9 @@ import {Events30} from "./components/Ports/Events/Events3.0";
 import connects from "./store/connects";
 import {SoundAlert} from "./components/SoundAlert";
 import {NewAccount} from "./components/Ports/NewAccount/NewAccount";
+import {useEffect} from "react";
+import {useWindowDimensions} from "./useHooks/useWindowDimensions";
+import styles from "./store/styles";
 
 function App() {
     connects.setUrlEvents("http://localhost:5001/api/boats");

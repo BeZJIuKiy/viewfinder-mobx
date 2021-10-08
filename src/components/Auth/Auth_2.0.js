@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import backgroundImage from "./images/backgroundNew.jpg"
 import backgroundImage320px from "./images/background320px.jpg"
@@ -9,6 +9,7 @@ import {Form, Formik} from "formik";
 import {useHistory} from "react-router-dom";
 import {ContactUs} from "./ContactUs";
 import {useWindowDimensions} from "../../useHooks/useWindowDimensions";
+import {observer} from "mobx-react-lite";
 
 const useStyles = makeStyles((theme) => {
 	const scrollHeight = Math.max(
@@ -21,8 +22,7 @@ const useStyles = makeStyles((theme) => {
 		main: {
 			width: "100%",
 			// height: "100%",
-			// height: scrollHeight,
-			minHeight: useWindowDimensions().height,
+			// minHeight: styles.mainHeight,
 
 			display: "flex",
 
@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme) => {
 		mainFormBorder: {
 			width: "45%",
 			color: "white",
-			
+
 			'@media(max-width: 1024px)': {
 				width: "28vw",
 			},
@@ -187,90 +187,91 @@ const useStyles = makeStyles((theme) => {
 })
 
 
-export const Auth_2_0 = () => {
-		const classes = useStyles();
-		const history = useHistory();
+export const Auth_2_0 = observer(() => {
+	const classes = useStyles();
+	const history = useHistory();
 
-		const sendData = async (values) => {
-			const url = 'http://localhost:8000/api/auth/sign_in';
+	const {height} = useWindowDimensions();
 
-			try {
-				const response = await fetch(url, {
-					method: 'POST',
-					body: JSON.stringify(values),
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				});
+	const sendData = async (values) => {
+		const url = 'http://localhost:8000/api/auth/sign_in';
 
-				const json = await response.json();
+		try {
+			const response = await fetch(url, {
+				method: 'POST',
+				body: JSON.stringify(values),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
 
-				console.log('Успешно: ', JSON.stringify(json));
-			} catch (error) {
-				console.error('Ошибка');
-			}
+			const json = await response.json();
+
+			console.log('Успешно: ', JSON.stringify(json));
+		} catch (error) {
+			console.error('Ошибка');
 		}
-		const demoBtn = () => {
-			return (
-				<Formik
-					initialValues={auth.demoUser}
-					onSubmit={(values, {setSubmitting}) => {
-						sendData(values);
-						history.push('/ports');
-						setSubmitting(false);
-					}}
-				>
-					{({isSubmitting}) => (
-						<Form>
-							<Button
-								className={`${classes.btn} demo`}
-								variant="outlined"
-								color="secondary"
-								type={"submit"}
-								disabled={isSubmitting}
-							>
-								DEMO
-							</Button>
-						</Form>
-					)}
-				</Formik>
-			)
-		}
-		const goToSignIn = () => {
-			return (
-				<Button
-					className={`${classes.btn} login`}
-					// variant="contained"
-					variant="outlined"
-					color="primary"
-					onClick={() => history.push('/signin')}
-				>
-					Log in
-				</Button>
-			)
-		}
-
+	}
+	const demoBtn = () => {
 		return (
-			<div className={classes.main}>
-				<div className={classes.mainSubstrateLeft}/>
+			<Formik
+				initialValues={auth.demoUser}
+				onSubmit={(values, {setSubmitting}) => {
+					sendData(values);
+					history.push('/ports');
+					setSubmitting(false);
+				}}
+			>
+				{({isSubmitting}) => (
+					<Form>
+						<Button
+							className={`${classes.btn} demo`}
+							variant="outlined"
+							color="secondary"
+							type={"submit"}
+							disabled={isSubmitting}
+						>
+							DEMO
+						</Button>
+					</Form>
+				)}
+			</Formik>
+		)
+	}
+	const goToSignIn = () => {
+		return (
+			<Button
+				className={`${classes.btn} login`}
+				// variant="contained"
+				variant="outlined"
+				color="primary"
+				onClick={() => history.push('/signin')}
+			>
+				Log in
+			</Button>
+		)
+	}
 
-				<ContactUs/>
+	return (
+		<div className={classes.main} style={{minHeight: height}}>
+			<div className={classes.mainSubstrateLeft}/>
 
-				<div className={classes.mainItem}>
-					<div className={classes.mainTitle}>ViewFinder</div>
+			<ContactUs/>
 
-					<div className={classes.mainForm}>
-						<div className={classes.mainFormBorder}>
-							<div className={classes.mainFormText}></div>
+			<div className={classes.mainItem}>
+				<div className={classes.mainTitle}>ViewFinder</div>
 
-							<div className={classes.mainFormBtn}>
-								{demoBtn()}
-								{goToSignIn()}
-							</div>
+				<div className={classes.mainForm}>
+					<div className={classes.mainFormBorder}>
+						<div className={classes.mainFormText}></div>
+
+						<div className={classes.mainFormBtn}>
+							{demoBtn()}
+							{goToSignIn()}
 						</div>
 					</div>
 				</div>
 			</div>
-		);
-	}
-;
+		</div>
+	);
+});

@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => {
 	return ({
 		yamap: {
 			"&.show": {
-				height: `calc(${scrollHeight}px - ${styles.headerHeight}px)`,
+				// height: `calc(${scrollHeight}px - ${styles.headerHeight}px)`,
 				minHeight: "100%",
 
 				display: "flex",
@@ -79,6 +79,7 @@ const YaMap = observer(({isVisible}) => {
 
 	const {data, portIcon, cameraIcon} = ports;
 	const {port, camera} = ports.selectedObjects
+	const {height} = useWindowDimensions();
 
 	const [allData, setAllData] = useState(data);
 	const [balContent, setBalContent] = useState('');
@@ -155,7 +156,7 @@ const YaMap = observer(({isVisible}) => {
 	});
 
 	return (
-		<div className={`${classes.yamap} ${isVisible ? 'show' : 'hide'}`}>
+		<div className={`${classes.yamap} ${isVisible ? 'show' : 'hide'}`} style={{height: `calc(${height}px - ${styles.headerHeight}px)`}}>
 			<YMaps query={{lang: "en_US"}}>
 				<Map className={`${classes.item}`}
 				     state={mapCenter}
