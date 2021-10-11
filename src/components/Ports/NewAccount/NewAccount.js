@@ -32,11 +32,18 @@ import {FullTableFleet} from "./Items/FullTableFleet";
 import {Payments} from "./Items/Payments";
 
 const useStyles = makeStyles((theme) => {
-	const bgcDrawer = "#444";
-	const textColorDrawer = "#999";
-	const textColorDrawerSelectedItem = "#ddd";
+	// const bgcDrawer = "#444";
+	// const textColorDrawer = "#999";
+	// const textColorDrawerSelectedItem = "#ddd";
+	//
+	// const bgcMainContent = "#444";
+	// const bgcGridItem = "#f5f5f5";
 
-	const bgcMainContent = "#444";
+	const bgcDrawer = "#eee";
+	const textColorDrawer = "#777";
+	const textColorDrawerSelectedItem = "#333";
+
+	const bgcMainContent = "#e1e1e1";
 	const bgcGridItem = "#f5f5f5";
 
 	return ({

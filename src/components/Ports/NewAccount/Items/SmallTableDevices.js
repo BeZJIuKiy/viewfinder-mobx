@@ -35,7 +35,7 @@ export const SmallTableDevices = observer(() => {
 
 	return (
 		<div className={classes.smallTable}>
-			<div className={classes.title}>Title</div>
+			<div className={classes.title}>Devices</div>
 			<AccountTable secretTitle={"Personal information: short Devices"} rowsData={devices}
 			              search={"Title"} searchLabel={"Devices Name"}/>
 		</div>

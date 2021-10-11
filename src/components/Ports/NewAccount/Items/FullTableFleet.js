@@ -37,7 +37,7 @@ export const FullTableFleet = observer(() => {
 
 	return (
 		<div className={classes.smallTable}>
-			<div className={classes.title}>Title</div>
+			<div className={classes.title}>Fleet</div>
 			<AccountTable secretTitle={"Personal information: Full Fleet"} rowsData={fleet}
 			              search={"IMO"} searchLabel={"Search IMO"}/>
 		</div>
