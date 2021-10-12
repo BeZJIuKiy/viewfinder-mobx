@@ -78,8 +78,8 @@ class ports {
 					description: 'Club Parking STATIC',
 					coordinates: [59.977915, 30.240934],
 					zoom: 15,
-					link: 'https://rtsp.me/embed/ayAby5ia',
-					// link: "https://www.youtube.com/embed/UYCMrgERcyA?autoplay=1&mute=1",
+					// link: 'https://rtsp.me/embed/ayAby5ia',
+					link: "https://www.youtube.com/embed/UYCMrgERcyA?autoplay=1&mute=1",
 					previewLink: previewSPbPort,
 
 					// link: 'https://rtsp.me/embed/ayAby5ia',
@@ -335,11 +335,11 @@ class ports {
 	constructor() {
 		makeAutoObservable(this, {}, {autoBind: true});
 
-		// makePersistable(this, {
-		//     name: "PortsStore",
-		//     properties: ["data", "selectedObjects", "searchQuery"],
-		//     storage: window.localStorage
-		// });
+		makePersistable(this, {
+		    name: "PortsStore",
+		    properties: ["data", "selectedObjects", ],
+		    storage: window.localStorage
+		});
 
 		// makePersistable(
 		//     this,

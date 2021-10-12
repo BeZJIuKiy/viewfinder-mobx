@@ -97,13 +97,12 @@ const YaMap = observer(({isVisible}) => {
 			setAllData(port.cameras);
 			setMapCenter({center: firstCam.coordinates, zoom: firstCam.zoom, controls});
 		} else {
-			setAllData(data);
 			const [x, y] = data[0].cameras[0].coordinates;
-
-			// const test = data[0].cameras[0].coordinates;
-			// const testArr = [x, y];
-
+			setAllData(data);
 			setMapCenter({center: [x, y], zoom: data[0].zoom, controls});
+
+			// setMapCenter({center: data[0].cameras[0].coordinates, zoom: data[0].zoom, controls});
+			// setMapCenter({center: [data[0].cameras[0].coordinates, data[0].cameras[0].coordinates[1]], zoom: data[0].zoom, controls});
 		}
 	}, [port]);
 
@@ -141,7 +140,7 @@ const YaMap = observer(({isVisible}) => {
 	const mapPlaceMark = allData.map(({id, coordinates, description, link}, i) => {
 		return (
 			<Placemark
-				key={`HandlePlaceMark-${id}-${description}`}
+				key={`HandlePlaceMark-${id}-${description}-${i}`}
 				geometry={coordinates}
 				properties={{
 					hintContent: `${description} cameras`,

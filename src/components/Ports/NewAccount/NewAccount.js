@@ -172,12 +172,10 @@ export const NewAccount = observer(() => {
 	const theme = useTheme();
 	const {width} = useWindowDimensions();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
-	const [selected, setSelected] = React.useState(account.drawerItems[0].title);
 	const [content, setContent] = React.useState([]);
 
-
 	useEffect(() => {
-		switch (selected) {
+		switch (account.selectedItem) {
 			case PERSONAL_INFORMATION: {
 				const left = [
 					{prefix: "first", component: width > 600 ? <PersonalInformation/> : <PersonalInfoMobile/>,},
@@ -217,7 +215,7 @@ export const NewAccount = observer(() => {
 			default:
 				setContent([]);
 		}
-	}, [selected, width])
+	}, [width, account.selectedItemIndex])
 	useEffect(() => {
 		setTimeout(() => {
 			window.scrollTo(0, 0);
@@ -228,8 +226,6 @@ export const NewAccount = observer(() => {
 		setMobileOpen(!mobileOpen);
 	};
 	const handleClick = (text, index) => {
-		setSelected(text);
-
 		account.setSelectedItem(index);
 	}
 
@@ -238,7 +234,7 @@ export const NewAccount = observer(() => {
 			<div className={classes.toolbar}/>
 			<List className={classes.list}>
 				{account.drawerItems.map((item, index) => {
-					const isActive = selected === item.title ? "isActive" : "";
+					const isActive = account.selectedItem === item.title ? "isActive" : "";
 					return (
 						<ListItem
 							key={`${item.title}--${index * 18 + item.title.length * 15}`}

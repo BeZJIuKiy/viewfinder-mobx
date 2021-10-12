@@ -15,6 +15,7 @@ import {MobileDrawer} from "../MobileDrawer/MobileDrawer";
 import boat1_04 from "../Events/images/b1-04.jpg";
 import connects from "../../../store/connects";
 import styles from "../../../store/styles";
+import account from "../../../store/account";
 
 const useStyles = makeStyles((theme) => {
 	const {miniAvatar} = header
@@ -79,7 +80,6 @@ const useStyles = makeStyles((theme) => {
 export const Header = observer(({mobileDrawer}) => {
 	const classes = useStyles();
 
-	const {allNewNote, portsNewNote, portsNoteTest} = header;
 	const {data, selectedObjects: {port, camera, event}} = ports;
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
@@ -105,7 +105,7 @@ export const Header = observer(({mobileDrawer}) => {
 	}, [notifications]);
 	useEffect(() => {
 		setPortNotes();
-		if (port.id >= 0) setCameraNotif();
+		if (port.id >= 0) setCameraNotify();
 
 		header.addAllNewNotifications();
 	}, [port, camera, event, camera.events]);
@@ -134,12 +134,13 @@ export const Header = observer(({mobileDrawer}) => {
 			header.addNewPortsNotifications(id, num);
 		})
 	};
-	const setCameraNotif = () => {
+	const setCameraNotify = () => {
 		port.cameras.forEach(({id, events}, i) => {
-			const notif = (events.filter(({newEvent}) => newEvent)).length;
-			header.addNewCamerasNotifications(id, notif);
+			const notify = (events.filter(({newEvent}) => newEvent)).length;
+			header.addNewCamerasNotifications(id, notify);
 		})
 	};
+
 	const renderMenu = () => {
 		return (
 			<Menu
@@ -220,6 +221,7 @@ export const Header = observer(({mobileDrawer}) => {
 							aria-haspopup="true"
 							// onClick={handleProfileMenuOpen}
 							color="inherit"
+							onClick={() => account.setSelectedItem()}
 						>
 							<span className={`${classes.accountIcon}`}/>
 						</IconButton>
