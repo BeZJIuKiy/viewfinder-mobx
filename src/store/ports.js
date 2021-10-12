@@ -337,7 +337,7 @@ class ports {
 
 		makePersistable(this, {
 		    name: "PortsStore",
-		    properties: ["data", "selectedObjects", ],
+		    properties: ["data", "selectedObjects"],
 		    storage: window.localStorage
 		});
 

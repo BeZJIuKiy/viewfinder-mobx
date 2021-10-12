@@ -125,6 +125,8 @@ export const DrawControl = observer(() => {
 	}, [zoneAction, isCreatePolygon]);
 
 	const createChangePolygon = () => {
+		canvasState.setPolygonInCamera(camera.id);
+
 		eventsState.setCreatePolygon(true);
 		canvasState.tempPolygons = canvasState.saveDataTest[camera.id];
 

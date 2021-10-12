@@ -32,7 +32,7 @@ export default class Polygons {
 
 		this.ctx = canvas.getContext('2d');
 
-		this.polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id];
+		this.polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id] || [];
 
 		this.drawPolygons();
 		this.polygons = this.showCenterPoint();

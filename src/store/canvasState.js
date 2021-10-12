@@ -63,8 +63,6 @@ class CanvasState {
         },
     }
 
-    username = "";
-
     readyRectCounter = 0;
     isPolygonSelected = false;
     currentPolygonNum = null;
@@ -79,24 +77,14 @@ class CanvasState {
         // makePersistable(this, {
         //     name: "CanvasStore",
         //     properties: [
-        //         // "canvas",
-        //         // "socket",
-        //         // "sessionId",
-        //         "userName",
-        //         "isVisibleCameraCanvas",
-        //         "isCreatePolygon",
-        //         "zoneAction",
         //         "tempPolygons",
         //         "size",
         //         "pointCoefficient",
-        //         "canvasSize",
-        //         "username",
+        //         "canvasReSize",
         //         "readyRectCounter",
         //         "isPolygonSelected",
         //         "currentPolygonNum",
         //         "saveDataTest",
-        //         "canvasReSize"
-        //         // "test",
         //     ],
         //     storage: window.localStorage
         // });
@@ -140,10 +128,6 @@ class CanvasState {
 
     setSocket(socket) {
         this.socket = socket;
-    }
-
-    setUsername(username) {
-        this.username = username;
     }
 
     setCanvas(canvas) {
