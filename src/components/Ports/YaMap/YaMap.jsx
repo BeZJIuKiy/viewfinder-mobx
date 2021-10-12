@@ -18,11 +18,8 @@ const useStyles = makeStyles((theme) => {
 	return ({
 		yamap: {
 			"&.show": {
-				// height: `calc(${scrollHeight}px - ${styles.headerHeight}px)`,
-				minHeight: "100%",
-
 				display: "flex",
-				flexGrow: 1,
+				minHeight: "100%",
 			},
 
 			"&.hide": {
@@ -94,17 +91,22 @@ const YaMap = observer(({isVisible}) => {
 			'rulerControl',
 		];
 
+
 		if (portId) {
+			const [firstCam] = port.cameras;
 			setAllData(port.cameras);
-			mapData(port.cameras[0].coordinates, port.cameras[0].zoom, controls);
-			// mapData(selectedObjects.port.coordinates, selectedObjects.port.cameras[0].zoom, controls);
+			setMapCenter({center: firstCam.coordinates, zoom: firstCam.zoom, controls});
 		} else {
 			setAllData(data);
-			mapData(data[0].cameras[0].coordinates, data[0].zoom, controls);
+			const [x, y] = data[0].cameras[0].coordinates;
+
+			// const test = data[0].cameras[0].coordinates;
+			// const testArr = [x, y];
+
+			setMapCenter({center: [x, y], zoom: data[0].zoom, controls});
 		}
 	}, [port]);
 
-	const mapData = (center, zoom, controls) => setMapCenter({center, zoom, controls});
 	const clickOnCamera = (id) => {
 		ports.setSelectedCamera(id);
 

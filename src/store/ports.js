@@ -29,7 +29,7 @@ class ports {
 	counter = {
 		portsId: 0,
 		camerasId: 0,
-		eventsId: 10,
+		eventsId: 0,
 	};
 
 	portIcon = {
