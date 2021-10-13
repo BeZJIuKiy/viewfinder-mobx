@@ -24,6 +24,7 @@ import Collapse from "@material-ui/core/Collapse";
 import {Button, Dialog, Grid, Hidden, Input, Paper, Tooltip} from "@material-ui/core";
 import account from "../../../../store/account";
 import {DRAGGABLE_TESTING, PaperComponent} from "../../../../useHooks/useDraggable";
+import styles from "../../../../store/styles";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -31,8 +32,9 @@ const useStyles = makeStyles((theme) => ({
 		// minWidth: 345,
 		maxWidth: 345,
 		overflowY: "auto",
-
 	},
+	// cardHeader: styles.notifyColors,
+	cardHeader: {},
 	media: {
 		height: 0,
 		paddingTop: '56.25%', // 16:9
@@ -70,6 +72,9 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		justifyContent: "center",
 		margin: "24px 8px 0px",
+	},
+	test: {
+		borderRadius: 0
 	},
 }));
 export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
@@ -255,6 +260,7 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 					// title="Shrimp and Chorizo Paella"
 					// subheader="September 14, 2016"
 
+					className={`${classes.cardHeader} ${cardData.typeError?.toLowerCase()}`}
 					title={cardData?.typeVessel || "Ship not found"}
 					subheader={cardData?.date}
 					style={{cursor: 'move'}}
@@ -267,7 +273,10 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 				/>
 				<CardContent>
 					<Typography variant="body2" color="textSecondary" component="p">
-						{cardData?.description}
+						{`${cardData?.description}`}
+					</Typography>
+					<Typography variant="body2" color="textSecondary" component="p">
+						Do you want to add this ship to your fleet?
 					</Typography>
 				</CardContent>
 				<CardActions disableSpacing>

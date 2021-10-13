@@ -142,7 +142,6 @@ export const Events30 = observer(() => {
 		ports.setSelectedCamera(ports.data[0].cameras[0].id);
 	}
 
-
 	// console.log(eventsData)
 
 	return (

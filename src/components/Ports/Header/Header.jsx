@@ -175,11 +175,11 @@ export const Header = observer(({mobileDrawer}) => {
 				country: note.country,
 				imageLink: note.img,
 				newEvent: true,
+				isDander: false,
 				description: 'Nothing interesting, keep moving on',
 			})
 		}))
 	}
-
 	const getPoints = async (url) => {
 		try {
 			await fetch(url)
@@ -206,7 +206,12 @@ export const Header = observer(({mobileDrawer}) => {
 				<NavLink className={`${classes.btnHome}`}
 				         to="/ports"
 				         onClick={() => ports.clearSelectedObjects()}
-				> ViewFinder
+				>
+					ViewFinder
+				</NavLink>
+
+				<NavLink className={`${classes.btnHome}`} to="/test">
+					Test
 				</NavLink>
 
 				<div className={classes.grow}/>

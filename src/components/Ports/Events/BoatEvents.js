@@ -23,6 +23,7 @@ import {observer} from "mobx-react-lite";
 import {ShipCard} from "./ShipCard/ShipCard";
 import {DeleteEventDialog} from "./DeleteEventDialog";
 import {useHexToRgba} from "../../../useHooks/useHexToRgba";
+import styles from "../../../store/styles";
 
 
 function descendingComparator(a, b, orderBy) {
@@ -269,6 +270,7 @@ const useStyles = makeStyles((theme) => ({
 		top: 20,
 		width: 1,
 	},
+	tableCell: styles.notifyColors,
 }));
 
 export const BoatEvents = observer(() => {
@@ -417,7 +419,8 @@ export const BoatEvents = observer(() => {
 									} = row;
 									const isItemSelected = isSelected(id);
 									const labelId = `enhanced-table-checkbox-${index}`;
-									const notifType = `events__type__notification ${typeError.toLowerCase()}`;
+									const notifyType = typeError.toLowerCase();
+									// const notifType = `events__type__notification ${typeError.toLowerCase()}`;
 
 									return (
 										<TableRow
@@ -438,7 +441,7 @@ export const BoatEvents = observer(() => {
 
 											<TableCell component="th" id={labelId} scope="row" padding="none"
 											           align="center"
-											           className={notifType}>{typeError}</TableCell>
+											           className={`${classes.tableCell} ${notifyType}`}>{typeError}</TableCell>
 											<TableCell align="left">{date}</TableCell>
 											<TableCell align="left">{imo}</TableCell>
 											<TableCell align="left">{mmsi}</TableCell>

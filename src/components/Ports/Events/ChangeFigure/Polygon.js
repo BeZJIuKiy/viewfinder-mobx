@@ -7,6 +7,7 @@ export default class Polygon {
 	id = null;
 	#idCounter = 0;
 
+	#name = "";
 	#points = [];
 
 	#lineWidth = null;
@@ -25,6 +26,7 @@ export default class Polygon {
 
 	constructor(id, x, y, w, h) {
 		this.id = id;
+		this.#name = `Area #${this.id}`;
 		this.#points = this.setPolygonData(x, y, w, h);
 		this.#lineWidth = 2;
 		this.#lineColor = "#000";
@@ -55,6 +57,7 @@ export default class Polygon {
 	addPoint(index, point) {
 		this.#points.splice(index, 0, point);
 	}
+
 	setPoints = (points) => {
 		this.#points = points;
 	}
@@ -121,4 +124,9 @@ export default class Polygon {
 		this.#attribute.fillColor = `rgba(${r}, ${g}, ${b}, ${a})`;
 	}
 	getAttributeFillColor = () => this.#attribute.fillColor;
+
+	setName = (name) => {
+		this.#name = name;
+	}
+	getName =() => this.#name;
 }
