@@ -9,6 +9,11 @@ import {observer} from "mobx-react-lite";
 import eventsState from "../../../store/eventsState";
 import styles from "../../../store/styles";
 import {ImageTitle} from "./ImageTitle";
+import {Tooltip} from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+import ErrorIcon from "@material-ui/icons/Error";
+import {useHexToRgba} from "../../../useHooks/useHexToRgba";
+import {ShipCard} from "./ShipCard/ShipCard";
 
 const useStyles = makeStyles((theme) => ({
 	testImage: {
@@ -31,12 +36,51 @@ const useStyles = makeStyles((theme) => ({
 	image: {
 		cursor: 'pointer',
 	},
+	dangerEvent: {
+		position: "absolute",
+
+		top: 3,
+		right: 3,
+		zIndex: 1,
+
+		"&.show": {
+			display: "flex",
+		},
+
+		"&.hide": {
+			display: "none",
+		}
+	},
+	iconButton: {
+		background: useHexToRgba("#eee", 0.1),
+	},
+
+	tooltipTitle: {
+		fontSize: 16
+	},
+
+	btn: {
+		width: 116,
+		height: 36,
+
+		"&.ok": {
+			color: useHexToRgba("#fff", 0.8),
+			background: useHexToRgba("#080", 0.8)
+		},
+
+		"&.cancel": {
+			color: useHexToRgba("#fff", 0.8),
+			background: useHexToRgba("#f00", 0.82),
+		},
+	},
 }));
 
 export const TestImage = observer(() => {
 	const classes = useStyles();
 	const {selectedObjects: {camera, event}} = ports;
+
 	const [data, setData] = useState(camera.events);
+	const [isOpenShipCard, setOpenShipCard] = useState(false);
 
 	useEffect(() => {
 		typeof event.id !== "undefined"
@@ -45,16 +89,53 @@ export const TestImage = observer(() => {
 	}, [event, camera, camera.events]);
 
 
-	const boatImage = data.map(({id, imageLink, typeVessel}) => {
+	const handleClick = (id) => {
+		ports.setImageId(id);
+		ports.setCard(id);
+		ports.setVisibleSelectedImage(true);
+	}
+	const handleDoubleClick = (id) => {
+		ports.setImageId(id);
+		ports.setCard(id);
+		ports.setVisibleSelectedImage(true);
+		setOpenShipCard(true);
+	}
+	const handleCloseShipCard = () => {
+		setOpenShipCard(false);
+	}
+
+	const dangerEvent = (isDanger) => {
+		const delay = 500;
+
 		return (
-			<GridListTile key={id} cols={2} rows={2}
-			              onClick={() => {
-				              ports.setImageId(id);
-				              ports.setVisibleSelectedImage(true);
-			              }}
+			<div className={`${classes.dangerEvent} ${isDanger ? "show" : "hide"}`}>
+				<Tooltip
+					enterDelay={delay}
+					enterNextDelay={delay}
+					title={<span className={classes.tooltipTitle}>{`This object Marked as Dangerous`}</span>}
+				>
+					<IconButton className={classes.iconButton} aria-label="dangerous-event">
+						<ErrorIcon color={"secondary"} />
+					</IconButton>
+				</Tooltip>
+			</div>
+		)
+	}
+
+	const boatImage = data.map(({id, name, imageLink, typeVessel, isDanger}) => {
+		const title = name ? `${name}` : `${typeVessel} - unknown`;
+
+		return (
+			<GridListTile
+				key={id}
+				cols={2}
+				rows={2}
+				onClick={() => handleClick(id)}
+				onDoubleClick={() => handleDoubleClick(id)}
 			>
 				<img className={classes.image} src={`data:image/png;base64,${imageLink}`} alt={typeVessel}/>
-				<ImageTitle title={typeVessel}/>
+				<ImageTitle title={`${title}`}/>
+				{dangerEvent(isDanger)}
 			</GridListTile>
 		)
 	});
@@ -66,6 +147,7 @@ export const TestImage = observer(() => {
 			<GridList cellHeight={70} spacing={1}>
 				{boatImage}
 			</GridList>
+			<ShipCard isOpen={isOpenShipCard} btnStyles={classes.btn} handleClose={() => handleCloseShipCard()}/>
 		</div>
 	);
 })

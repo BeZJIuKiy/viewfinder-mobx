@@ -18,18 +18,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import ports from "../../../store/ports";
 import {observer} from "mobx-react-lite";
-import eventsState from "../../../store/eventsState";
 import {ShipCard} from "./ShipCard/ShipCard";
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal} from "@material-ui/core";
-import Draggable from "react-draggable";
-import {DRAGGABLE_TESTING, PaperComponent} from "../../../useHooks/useDraggable";
 import {DeleteEventDialog} from "./DeleteEventDialog";
 import {useHexToRgba} from "../../../useHooks/useHexToRgba";
-
 
 
 function descendingComparator(a, b, orderBy) {

@@ -145,6 +145,7 @@ class account {
 			? this.myFleet[shipIndex] = ship
 			: this.myFleet.push(ship);
 	}
+	findShip = (imo) => this.myFleet.find((ship) => ship.imo === imo);
 }
 
 

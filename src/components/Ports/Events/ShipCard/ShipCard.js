@@ -19,9 +19,9 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ErrorIcon from '@material-ui/icons/Error';
 import Collapse from "@material-ui/core/Collapse";
-import {Button, Dialog, Grid, Hidden, Input, Paper} from "@material-ui/core";
-import {useHexToRgba} from "../../../../useHooks/useHexToRgba";
+import {Button, Dialog, Grid, Hidden, Input, Paper, Tooltip} from "@material-ui/core";
 import account from "../../../../store/account";
 import {DRAGGABLE_TESTING, PaperComponent} from "../../../../useHooks/useDraggable";
 
@@ -76,7 +76,7 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 	const classes = useStyles();
 	const template = {...account.templateShipData, vesselTypeDetailed: ports.selectedObjects.cardData?.typeVessel};
 
-	const {cardData} = ports.selectedObjects
+	const {port, camera, cardData} = ports.selectedObjects
 
 	const [expanded, setExpanded] = React.useState(false);
 	const [isRead, setRead] = React.useState(true);
@@ -84,7 +84,7 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 	const [errorFields, setErrorFields] = React.useState({});
 
 	useEffect(() => {
-		setLocalCardData(template);
+		setLocalCardData(cardData?.name ? account.findShip(cardData.imo) : template);
 	}, [isOpen])
 
 	const handleExpandClick = () => {
@@ -93,10 +93,11 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 	const handleEditShipData = () => {
 		setExpanded(true);
 		setRead(false);
+		ports.setDangerEvent(port.id, camera.id, cardData.id, false);
 	}
 	const handleChangeShipData = (e, key) => {
 		setLocalCardData({...localCardData, [key]: e.target.value})
-		setErrorFields({...errorFields, [key]: false})
+		setErrorFields({...errorFields, [key]: false});
 	}
 
 	const handleConfirm = () => {
@@ -121,12 +122,30 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 		}
 
 		setRead(true);
+
+		const newEvent = {
+			...cardData,
+			imo: localCardData.imo,
+			mmsi: localCardData.mmsi,
+			name: localCardData.name,
+			callSign: localCardData.callSign,
+		}
+		ports.changeEvent(port.id, camera.id, newEvent)
 		account.addShipInMyFleet(localCardData);
 	}
 	const handleCancel = () => {
 		setRead(true);
-		setLocalCardData(template);
+		setLocalCardData(cardData.name ? account.findShip(cardData.imo) : template);
 		setErrorFields({});
+	}
+	const handleDanger = () => {
+		ports.setDangerEvent(port.id, camera.id, cardData.id, isRead ? !cardData.isDanger : false);
+	}
+	const handleCloseDialog = () => {
+		setRead(true);
+		setExpanded(false);
+		setErrorFields({});
+		handleClose();
 	}
 
 	const content = (title, data = "", key) => {
@@ -166,12 +185,52 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 			</Grid>
 		)
 	}
-	const handleCloseDialog = () => {
-		setRead(true);
-		setExpanded(false);
-		setErrorFields({});
-		handleClose();
+
+	const changeEvent = () => {
+		const firstTitle = "Click and change the ship details to add to your fleet";
+		const secondTitle = `Change the ship data and click on "Add Ship" or click "Cancel"`;
+
+		const title = isRead ? firstTitle : secondTitle;
+		const color = isRead ? "default" : "primary";
+
+		return (
+			<Tooltip
+				enterDelay={delay}
+				enterNextDelay={delay}
+				title={<span style={{fontSize: 16}}>{`${title}`}</span>}
+			>
+				<IconButton aria-label="edit" onClick={handleEditShipData} color={color}>
+					<EditIcon/>
+				</IconButton>
+			</Tooltip>
+		)
 	}
+	const dangerEvent = () => {
+		const isDanger = cardData?.isDanger;
+
+		const firstTitle = "Remove mark Dangerous from the object";
+		const secondTitle = "Mark object as Dangerous";
+		const warning = "Edit is Active, you can't mark your ship is Dangerous";
+
+		const title = isDanger
+			? firstTitle
+			: isRead ? secondTitle : warning;
+		const color = isDanger ? "secondary" : "action";
+
+		return (
+			<Tooltip
+				enterDelay={delay}
+				enterNextDelay={delay}
+				title={<span style={{fontSize: 16}}>{title}</span>}
+			>
+				<IconButton aria-label="dangerous" onClick={handleDanger}>
+					<ErrorIcon color={color}/>
+				</IconButton>
+			</Tooltip>
+		)
+	}
+
+	const delay = 500;
 
 	return (
 		<Dialog
@@ -215,12 +274,8 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 					{/*<IconButton aria-label="add to fleet">*/}
 					{/*	<AddIcon/>*/}
 					{/*</IconButton>*/}
-					<IconButton aria-label="edit" onClick={handleEditShipData} color={isRead ? "default" : "primary"}>
-						<EditIcon/>
-					</IconButton>
-					{/*<IconButton aria-label="delete">*/}
-					{/*	<DeleteIcon/>*/}
-					{/*</IconButton>*/}
+					{changeEvent()}
+					{dangerEvent()}
 					<IconButton
 						className={clsx(classes.expand, {
 							[classes.expandOpen]: expanded,

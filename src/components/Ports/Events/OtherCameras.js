@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: "center",
 		flexGrow: 1,
 
+		cursor: "pointer",
 		marginBottom: 10,
 
 		color: "#333",
