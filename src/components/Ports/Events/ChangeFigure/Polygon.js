@@ -1,3 +1,5 @@
+import canvasState from "../../../../store/canvasState";
+
 export const ZONE_TYPE_DEFAULT = "Default Area";
 export const ZONE_TYPE_IN_OUT = "In/Out Port Area";
 export const ZONE_TYPE_PARKING = "Parking Area";
@@ -117,16 +119,19 @@ export default class Polygon {
 				this.setAttributeFillColor(170, 170, 170, 0.3);
 			}
 		}
+		canvasState.setPolygonChanged();
 	}
 	getAttributeType = () => this.#attribute.type;
 
 	setAttributeFillColor = (r, g, b, a) => {
 		this.#attribute.fillColor = `rgba(${r}, ${g}, ${b}, ${a})`;
+		canvasState.setPolygonChanged();
 	}
 	getAttributeFillColor = () => this.#attribute.fillColor;
 
 	setName = (name) => {
 		this.#name = name;
+		canvasState.setPolygonChanged();
 	}
 	getName =() => this.#name;
 }

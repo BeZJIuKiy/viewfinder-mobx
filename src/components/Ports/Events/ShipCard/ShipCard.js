@@ -260,7 +260,7 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 					// title="Shrimp and Chorizo Paella"
 					// subheader="September 14, 2016"
 
-					className={`${classes.cardHeader} ${cardData.typeError?.toLowerCase()}`}
+					className={`${classes.cardHeader} ${cardData?.typeError?.toLowerCase()}`}
 					title={cardData?.typeVessel || "Ship not found"}
 					subheader={cardData?.date}
 					style={{cursor: 'move'}}

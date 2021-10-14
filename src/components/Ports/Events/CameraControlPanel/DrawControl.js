@@ -133,10 +133,12 @@ export const DrawControl = observer(() => {
 		if (canvasState.tempPolygons.length) {
 			canvasState.tempPolygons = canvasState.tempPolygons.map(polygon => {
 				const points = polygon.getPoints().map(point => ({...point}));
+				const name = polygon.getName();
 				const attributeType = polygon.getAttributeType();
 
 				const newPolygon = new Polygon(polygon.getId(), 0, 0, 0, 0);
 				newPolygon.setPoints(points);
+				newPolygon.setName(name);
 				newPolygon.setAttributeType(attributeType);
 
 				return newPolygon;
@@ -144,6 +146,7 @@ export const DrawControl = observer(() => {
 		} else {
 			canvasState.tempPolygons = [];
 		}
+
 		new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
 	}
 	const controlMovePanelCamera = () => {

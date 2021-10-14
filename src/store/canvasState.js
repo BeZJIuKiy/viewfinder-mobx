@@ -9,6 +9,7 @@ class CanvasState {
 
     userName = "alex";
 
+    allPolygons = null;
     tempPolygons = [];
 
     size = {
@@ -65,6 +66,7 @@ class CanvasState {
 
     readyRectCounter = 0;
     isPolygonSelected = false;
+    isPolygonChanged = false;
     currentPolygonNum = null;
 
     saveDataTest = {};
@@ -121,15 +123,16 @@ class CanvasState {
         }
     }
 
+    setAllPolygons = (polygons) => {
+        this.allPolygons = polygons;
+    }
 
     setSessionId(id) {
         this.sessionId = id;
     }
-
     setSocket(socket) {
         this.socket = socket;
     }
-
     setCanvas(canvas) {
         this.canvas = canvas;
     }
@@ -141,18 +144,12 @@ class CanvasState {
     setPolygonInCamera = (id) => {
         if (Number.isInteger(this.saveDataTest[id]?.length)) return;
         this.saveDataTest[id] = [];
-
-        // if (this.test.has(id)) return;
-        //
-        // const polygons = [];
-        // this.test.set(id, polygons);
     }
 
     addPolygon(camId, polygon) {
         polygon.setAttributeType(ZONE_TYPE_DEFAULT)
         this.saveDataTest[camId].push(polygon);
     }
-
     changePolygon(camId, index, polygon) {
         this.saveDataTest[camId].splice(index, 1, polygon);
     }
@@ -168,6 +165,9 @@ class CanvasState {
     setPointCoefficient = (coefficient) => {
         this.pointCoefficient = coefficient;
     }
+    setPolygonChanged = () => {
+        this.isPolygonChanged = !this.isPolygonChanged;
+    }
 
     deletePolygon(camId, index) {
         this.saveDataTest[camId].splice(index, 1);
@@ -175,7 +175,6 @@ class CanvasState {
         // const polygons = this.test.get(camId);
         // polygons.splice(index, 1);
     }
-
 }
 
 export default new CanvasState();

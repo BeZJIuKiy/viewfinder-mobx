@@ -43,6 +43,13 @@ export default class Polygons {
 		this.listen();
 	}
 
+	setPolygon = (polygons) => {
+		this.polygons = polygons;
+	}
+	setCurPolygon = (num) => {
+		this.curPolygon = num;
+	}
+
 	listen() {
 		this.canvas.onmousemove = this.mouseMoveHandler.bind(this);
 		this.canvas.onmousedown = this.mouseDownHandler.bind(this);
@@ -203,8 +210,6 @@ export default class Polygons {
 		this.preparationPoints(pointsWithId[this.curPolygon], pointsWithId[this.curPolygon].points);
 	}
 	polygonSelection = () => {
-		// console.log("polygonSelection");
-
 		this.drawPolygons();
 		const polygon = this.polygons[this.curPolygon];
 		const points = this.polygons[this.curPolygon].getPoints();
@@ -215,7 +220,6 @@ export default class Polygons {
 	}
 
 	mouseRightClickHandler = (e) => e.preventDefault();
-
 
 	point = (x, y) => ({x, y});
 	newPoint = (x, y) => ({id: null, x, y});
@@ -304,8 +308,6 @@ export default class Polygons {
 	}
 
 	drawPolygons(polygons = this.polygons) {
-		// console.log("drawPolygons");
-
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		canvasState.setPolygonSelect(this.selectPolygon());
 
