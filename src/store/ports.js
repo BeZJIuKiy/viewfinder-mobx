@@ -78,8 +78,8 @@ class ports {
 					description: 'Club Parking STATIC',
 					coordinates: [59.977915, 30.240934],
 					zoom: 15,
-					// link: 'https://rtsp.me/embed/ayAby5ia',
-					link: "https://www.youtube.com/embed/UYCMrgERcyA?autoplay=1&mute=1",
+					link: 'https://rtsp.me/embed/ayAby5ia',
+					// link: "https://www.youtube.com/embed/UYCMrgERcyA?autoplay=1&mute=1",
 					previewLink: previewSPbPort,
 
 					// link: 'https://rtsp.me/embed/ayAby5ia',
