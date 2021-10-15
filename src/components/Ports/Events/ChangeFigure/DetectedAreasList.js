@@ -24,6 +24,7 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import eventsState from "../../../../store/eventsState";
 import styles from "../../../../store/styles";
 import Polygons from "./Polygons";
+import {DeletePolygonDialog} from "./DeletePolygonDialog";
 
 const useStyles = makeStyles((theme) => ({
 	detectedAreasList: {
@@ -41,6 +42,8 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	listItemText: {
+		cursor: "pointer",
+
 		color: "#444",
 		fontFamily: styles.fontFamily,
 		flexGrow: 1,
@@ -86,7 +89,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 
 	textField: {
-
 		"&.show": {
 			display: "flex",
 		},
@@ -104,6 +106,7 @@ export const DetectedAreasList = observer(() => {
 	const classes = useStyles();
 
 	const [test, setTest] = useState(new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId))
+	const [isOpenDeleteDialog, setOpenDeleteDialog] = useState({})
 
 	const {port, camera, event, cardData} = ports.selectedObjects;
 
@@ -118,7 +121,15 @@ export const DetectedAreasList = observer(() => {
 					isEdit: false,
 				}
 			});
-		})
+
+			setOpenDeleteDialog({
+				[area.id]: false
+			})
+		});
+
+
+
+		test.setPolygon(canvasState.saveDataTest[camera.id]);
 	}, [camera.id, canvasState.isPolygonChanged]);
 	useEffect(() => {
 		if (eventsState.isCreatePolygon === false) return;
@@ -144,8 +155,8 @@ export const DetectedAreasList = observer(() => {
 			}
 		});
 	}
-	const handleDeleteArea = () => {
-		console.log("123");
+	const handleDeleteArea = (area) => {
+		setOpenDeleteDialog({...isOpenDeleteDialog, [area.id]: true})
 	}
 
 	const handleChangeNameArea = (e, area) => {
@@ -184,18 +195,27 @@ export const DetectedAreasList = observer(() => {
 		});
 	}
 
-	const handleSelectArea = (area, index) => {
-		// if (canvasState.isPolygonSelected) {
-		// 	console.log(test.curPolygon);
-		// }
-
-		// console.log(index)
-		// console.log(canvasState.saveDataTest[camera.id].findIndex(({id}) => id === area.id));
-		test.setPolygon(canvasState.saveDataTest[camera.id]);
+	const handleHighlightArea = (area, index) => {
 		test.setCurPolygon(index);
 		test.setPolygon(test.showCenterPoint());
 		test.polygonSelection();
 	}
+	const handleSelectArea = (index) => {
+		test.setCurPolygon(index);
+		test.setPolygon(test.showCenterPoint());
+		test.polygonSelection();
+	}
+	const handleLeaveArea = (area, index) => {
+		test.drawPolygons();
+	}
+
+	const handleCloseDeleteDialog = (area) => {
+		// setOpenDeleteDialog(false);
+		console.log("handleCloseDeleteDialog")
+		console.log(area)
+		setOpenDeleteDialog({...isOpenDeleteDialog, [area.id]: false})
+	}
+
 
 	const currentAreaData = (area, index) => {
 		const name = area.getName();
@@ -203,8 +223,11 @@ export const DetectedAreasList = observer(() => {
 		const isOffBtn = eventsState.isCreatePolygon
 
 		return (
-			<ListItem onMouseMove={() => handleSelectArea(area, index)}>
-				<ListItemText className={`${classes.listItemText}`}>
+			<ListItem>
+				<ListItemText
+					className={`${classes.listItemText}`}
+					onClick={() => handleSelectArea(index)}
+				>
 					{name}
 					<ListSubheader className={`${classes.listSubheader}`}>
 						{`Area type: ${type}`}
@@ -222,11 +245,18 @@ export const DetectedAreasList = observer(() => {
 					<IconButton
 						className={classes.iconButton}
 						aria-label="AreaDeleteIcon"
-						onClick={handleDeleteArea}
+						onClick={() => handleDeleteArea(area)}
 						disabled={isOffBtn}
 					>
 						<DeleteIcon color={`${isOffBtn ? "disabled" : "action"}`}/>
 					</IconButton>
+					<DeletePolygonDialog
+						area={area}
+						index={index}
+						isOpen={isOpenDeleteDialog[area.id]}
+						handleClose={() => handleCloseDeleteDialog(area)}
+						btnStyles={classes.btn}
+					/>
 				</ListItemIcon>
 			</ListItem>
 		)

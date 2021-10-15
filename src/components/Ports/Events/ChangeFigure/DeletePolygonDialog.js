@@ -1,22 +1,25 @@
-import {DRAGGABLE_TESTING, PaperComponent} from "../../../useHooks/useDraggable";
+import {DRAGGABLE_TESTING, PaperComponent} from "../../../../useHooks/useDraggable";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
 import React, {useState} from "react";
 import {observer} from "mobx-react-lite";
 import {makeStyles} from "@material-ui/core/styles";
-import ports from "../../../store/ports";
-import header from "../../../store/header";
+import ports from "../../../../store/ports";
+import header from "../../../../store/header";
+import canvasState from "../../../../store/canvasState";
 
-const useStyles = makeStyles((theme) => ({}))
-export const DeleteEventDialog = observer((props) => {
+const useStyles = makeStyles((theme) => ({
+
+}))
+export const DeletePolygonDialog = observer(({area, index, isOpen, handleClose, btnStyles}) => {
 	const classes = useStyles();
 
-	const {isOpen, handleClose, selectedId, btnStyles} = props;
-	const {selectedObjects: {port, camera}} = ports;
+	const {camera} = ports.selectedObjects;
 
-	const handleDeleteRow = () => {
-		ports.deleteEvents(port.id, camera.id, selectedId);
-		header.checkNewNotifications();
-		handleClose();
+	const handleDeletePolygon = () => {
+		canvasState.deletePolygon(camera.id, index);
+	}
+	const handleCloseDialog = () => {
+		handleClose(area)
 	}
 
 	const confirmBtn = (classPrefix, text, action) => {
@@ -27,6 +30,8 @@ export const DeleteEventDialog = observer((props) => {
 		)
 	}
 
+	const name = area?.getName();
+
 	return (
 		<Dialog
 			PaperComponent={PaperComponent}
@@ -36,17 +41,17 @@ export const DeleteEventDialog = observer((props) => {
 			aria-describedby="simple-modal-descriptions"
 		>
 			<DialogTitle id={DRAGGABLE_TESTING} style={{cursor: 'move'}}>
-				{`Delete selected events?`}
+				{`Delete ${name}?`}
 			</DialogTitle>
 			<DialogContent>
 				<DialogContentText id="alert-dialog-description">
-					{`Are you sure you want to delete the selected ${selectedId.length} events?`}
+					{`Are you sure you want to delete the selected ${name} area?`}
 				</DialogContentText>
 			</DialogContent>
 
 			<DialogActions>
-				{confirmBtn("ok", "cancel", handleClose)}
-				{confirmBtn("cancel", "delete", handleDeleteRow)}
+				{confirmBtn("ok", "cancel", handleCloseDialog)}
+				{confirmBtn("cancel", "delete", handleDeletePolygon)}
 			</DialogActions>
 		</Dialog>
 	)

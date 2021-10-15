@@ -199,7 +199,12 @@ const EnhancedTableToolbar = (props) => {
 			})}
 		>
 			<ShipCard isOpen={isOpenShipCard} btnStyles={classes.btn} handleClose={() => handleCloseShipCard()}/>
-			<DeleteEventDialog isOpen={isOpenDeleteDialog} handleClose={() => handleCloseDeleteDialog()} selectedId={selected} btnStyles={classes.btn}/>
+			<DeleteEventDialog
+				isOpen={isOpenDeleteDialog}
+				handleClose={() => handleCloseDeleteDialog()}
+				selectedId={selected}
+				btnStyles={classes.btn}
+			/>
 
 			{numSelected > 0 ? (
 				<Typography className={classes.title} color="inherit" variant="subtitle1" component="div">

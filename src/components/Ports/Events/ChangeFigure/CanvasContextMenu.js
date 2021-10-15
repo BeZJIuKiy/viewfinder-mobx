@@ -12,6 +12,7 @@ import {List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import InboxIcon from "@material-ui/icons/Inbox";
 import CheckIcon from '@material-ui/icons/Check';
 import eventsState from "../../../../store/eventsState";
+import {DeletePolygonDialog} from "./DeletePolygonDialog";
 
 export const CANVAS_CONTEXT_MENU = "CANVAS_CONTEXT_MENU";
 
@@ -94,16 +95,35 @@ const useStyles = makeStyles((theme) => {
 		},
 		listItemText: {
 			marginLeft: theme.spacing(-2),
-		}
+		},
+		btn: {
+			width: 116,
+			height: 36,
+
+			"&.ok": {
+				color: useHexToRgba("#fff", 0.8),
+				background: useHexToRgba("#080", 0.8)
+			},
+
+			"&.cancel": {
+				color: useHexToRgba("#fff", 0.8),
+				background: useHexToRgba("#f00", 0.82),
+			},
+		},
 	})
 })
 export const CanvasContextMenu = observer(() => {
 	const classes = useStyles();
 
+	const {camera} = ports.selectedObjects;
+
 	const [selectedType, setSelectedType] = useState(ZONE_TYPE_DEFAULT);
+	const [area, setArea] = useState(canvasState.saveDataTest[camera.id][canvasState.currentPolygonNum]);
+	const [isOpenDeleteDialog, setOpenDeleteDialog] = useState(false);
 
 	useEffect(() => {
-		setSelectedType(canvasState.saveDataTest[ports.selectedObjects.camera.id][canvasState.currentPolygonNum]?.getAttributeType())
+		setSelectedType(canvasState.saveDataTest[camera.id][canvasState.currentPolygonNum]?.getAttributeType())
+		setArea(canvasState.saveDataTest[camera.id][canvasState.currentPolygonNum]);
 	}, [canvasState.currentPolygonNum])
 
 	const handleClick = (e, data) => {
@@ -113,6 +133,12 @@ export const CanvasContextMenu = observer(() => {
 		canvasState.saveDataTest[ports.selectedObjects.camera.id][canvasState.currentPolygonNum].setAttributeType(zoneType)
 		new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
 	};
+	const handleShowDeleteArea = () => {
+		setOpenDeleteDialog(true);
+	}
+	const handleHideDeleteArea = () => {
+		setOpenDeleteDialog(false);
+	}
 
 	const menuItem = (title, action) => {
 		return (
@@ -125,7 +151,6 @@ export const CanvasContextMenu = observer(() => {
 			</MenuItem>
 		)
 	}
-
 
 	const menuWithSub = (title, subTitles, subAction) => {
 		return (
@@ -161,9 +186,10 @@ export const CanvasContextMenu = observer(() => {
 		<div>
 			<ContextMenu id={CANVAS_CONTEXT_MENU} className={classes.contextMenu}>
 				{menuItem("Homes", handleClick)}
-				{menuItem("Post", handleClick)}
 				{menuWithSub("Change type", [ZONE_TYPE_DEFAULT, ZONE_TYPE_IN_OUT, ZONE_TYPE_PARKING, ZONE_TYPE_RESTRICTED_AREA], handleClickSubMenu)}
+				{menuItem("Delete area", handleShowDeleteArea)}
 			</ContextMenu>
+			<DeletePolygonDialog area={area} index={canvasState.currentPolygonNum} isOpen={isOpenDeleteDialog} handleClose={handleHideDeleteArea} btnStyles={classes.btn}/>
 		</div>
 	);
 });

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -14,6 +14,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ErrorIcon from "@material-ui/icons/Error";
 import {useHexToRgba} from "../../../useHooks/useHexToRgba";
 import {ShipCard} from "./ShipCard/ShipCard";
+import {useWindowDimensions} from "../../../useHooks/useWindowDimensions";
 
 const useStyles = makeStyles((theme) => ({
 	testImage: {
@@ -77,17 +78,23 @@ const useStyles = makeStyles((theme) => ({
 
 export const TestImage = observer(() => {
 	const classes = useStyles();
+	const testImageRef = useRef();
+
 	const {selectedObjects: {camera, event}} = ports;
+	const windowHeight = useWindowDimensions().height
 
 	const [data, setData] = useState(camera.events);
 	const [isOpenShipCard, setOpenShipCard] = useState(false);
+	const [isToMany, setToMany] = useState(false);
 
+	useEffect(() => {
+		setToMany(testImageRef.current.offsetHeight >= windowHeight * eventsState.maxHeight);
+	}, [testImageRef.current, useWindowDimensions().height])
 	useEffect(() => {
 		typeof event.id !== "undefined"
 			? setData(camera.events.filter(item => item.typeVessel === event.typeVessel))
 			: setData(camera.events);
 	}, [event, camera, camera.events]);
-
 
 	const handleClick = (id) => {
 		ports.setImageId(id);
@@ -140,10 +147,10 @@ export const TestImage = observer(() => {
 		)
 	});
 
-	const isToMany = data.length > 2 ? "toMany" : "";
+	// const isToMany = data.length > 2 ? "toMany" : "";
 
 	return (
-		<div className={`${classes.testImage} ${isToMany}`}>
+		<div className={`${classes.testImage} ${isToMany ? "toMany" : ""}`} ref={testImageRef}>
 			<GridList cellHeight={70} spacing={1}>
 				{boatImage}
 			</GridList>

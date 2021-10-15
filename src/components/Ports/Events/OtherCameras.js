@@ -1,14 +1,17 @@
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react-lite";
 import ports from "../../../store/ports";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import eventsState from "../../../store/eventsState";
 import {ImageTitle} from "./ImageTitle";
+import {useWindowDimensions} from "../../../useHooks/useWindowDimensions";
 
 const useStyles = makeStyles((theme) => ({
 	otherCameras: {
-		maxHeight: window.innerHeight * eventsState.maxHeight,
-		overflowY: "auto"
+		height: "100%",
+		maxHeight: useWindowDimensions().height * eventsState.maxHeight,
+		// maxHeight: window.innerHeight * eventsState.maxHeight,
+		overflowY: "auto",
 	},
 	otherCamerasAll: {
 		display: "flex",
@@ -39,10 +42,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 export const OtherCameras = observer(() => {
 	const classes = useStyles();
+	const otherCamerasRef = useRef();
 
 	const {port, camera} = ports.selectedObjects;
+	const {height} = useWindowDimensions();
 
 	const [cameras, setCameras] = useState([])
+	const [resize, setResize] = useState("");
 
 	useEffect(() => {
 		if (Number.isInteger(camera.id) === false) return;
@@ -66,6 +72,9 @@ export const OtherCameras = observer(() => {
 				)
 			}))
 	}, [port, camera]);
+	useEffect(() => {
+		setResize("resize");
+	}, [useWindowDimensions().height])
 
 	const goToNextCam = (camId) => {
 		ports.setSelectedCamera(camId);
@@ -76,7 +85,10 @@ export const OtherCameras = observer(() => {
 	}
 
 	return (
-		<div className={classes.otherCameras}>
+		<div
+			className={`${classes.otherCameras}`}
+			style={{maxHeight: useWindowDimensions().height * eventsState.maxHeight}}
+		>
 			{cameras}
 		</div>
 	)
