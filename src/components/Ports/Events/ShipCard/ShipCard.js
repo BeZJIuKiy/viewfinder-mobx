@@ -215,7 +215,7 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 
 		const firstTitle = "Remove mark Dangerous from the object";
 		const secondTitle = "Mark object as Dangerous";
-		const warning = "Edit is Active, you can't mark your ship is Dangerous";
+		const warning = "Edit is Active, you can't mark your ship as Dangerous";
 
 		const title = isDanger
 			? firstTitle

@@ -67,7 +67,7 @@ class CanvasState {
     readyRectCounter = 0;
     isPolygonSelected = false;
     isPolygonChanged = false;
-    currentPolygonNum = null;
+    currentPolygonNum = -1;
 
     saveDataTest = {};
 

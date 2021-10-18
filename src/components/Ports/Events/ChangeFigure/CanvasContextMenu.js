@@ -13,6 +13,7 @@ import InboxIcon from "@material-ui/icons/Inbox";
 import CheckIcon from '@material-ui/icons/Check';
 import eventsState from "../../../../store/eventsState";
 import {DeletePolygonDialog} from "./DeletePolygonDialog";
+import {SetPolygonParameterDialog} from "./SetPolygonParameterDialog";
 
 export const CANVAS_CONTEXT_MENU = "CANVAS_CONTEXT_MENU";
 
@@ -119,6 +120,7 @@ export const CanvasContextMenu = observer(() => {
 
 	const [selectedType, setSelectedType] = useState(ZONE_TYPE_DEFAULT);
 	const [area, setArea] = useState(canvasState.saveDataTest[camera.id][canvasState.currentPolygonNum]);
+	const [isOpenChangeNameAreaDialog, setOpenChangeNameAreaDialog] = useState(false);
 	const [isOpenDeleteDialog, setOpenDeleteDialog] = useState(false);
 
 	useEffect(() => {
@@ -132,7 +134,15 @@ export const CanvasContextMenu = observer(() => {
 	const handleClickSubMenu = (zoneType) => {
 		canvasState.saveDataTest[ports.selectedObjects.camera.id][canvasState.currentPolygonNum].setAttributeType(zoneType)
 		new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
+		canvasState.setCurrentPolygonNum(-1);
 	};
+	const handleShowChangeNameArea = () => {
+		setOpenChangeNameAreaDialog(true);
+	}
+	const handleHideChangeNameArea = () => {
+		setOpenChangeNameAreaDialog(false);
+	}
+
 	const handleShowDeleteArea = () => {
 		setOpenDeleteDialog(true);
 	}
@@ -185,10 +195,11 @@ export const CanvasContextMenu = observer(() => {
 	return (
 		<div>
 			<ContextMenu id={CANVAS_CONTEXT_MENU} className={classes.contextMenu}>
-				{menuItem("Homes", handleClick)}
-				{menuWithSub("Change type", [ZONE_TYPE_DEFAULT, ZONE_TYPE_IN_OUT, ZONE_TYPE_PARKING, ZONE_TYPE_RESTRICTED_AREA], handleClickSubMenu)}
+				{menuItem("Change Name", handleShowChangeNameArea)}
+				{menuWithSub("Change Type", [ZONE_TYPE_DEFAULT, ZONE_TYPE_IN_OUT, ZONE_TYPE_PARKING, ZONE_TYPE_RESTRICTED_AREA], handleClickSubMenu)}
 				{menuItem("Delete area", handleShowDeleteArea)}
 			</ContextMenu>
+			<SetPolygonParameterDialog area={area} index={canvasState.currentPolygonNum} isOpen={isOpenChangeNameAreaDialog} handleClose={handleHideChangeNameArea} btnStyles={classes.btn}/>
 			<DeletePolygonDialog area={area} index={canvasState.currentPolygonNum} isOpen={isOpenDeleteDialog} handleClose={handleHideDeleteArea} btnStyles={classes.btn}/>
 		</div>
 	);

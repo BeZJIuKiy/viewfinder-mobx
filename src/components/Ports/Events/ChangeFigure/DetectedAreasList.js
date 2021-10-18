@@ -106,6 +106,7 @@ export const DetectedAreasList = observer(() => {
 	const classes = useStyles();
 
 	const [test, setTest] = useState(new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId))
+	const [isClicked, setClicked] = useState(false);
 	const [isOpenDeleteDialog, setOpenDeleteDialog] = useState({})
 
 	const {port, camera, event, cardData} = ports.selectedObjects;
@@ -127,8 +128,6 @@ export const DetectedAreasList = observer(() => {
 			})
 		});
 
-
-
 		test.setPolygon(canvasState.saveDataTest[camera.id]);
 	}, [camera.id, canvasState.isPolygonChanged]);
 	useEffect(() => {
@@ -144,6 +143,13 @@ export const DetectedAreasList = observer(() => {
 			});
 		})
 	}, [eventsState.isCreatePolygon]);
+	useEffect(() => {
+		if (canvasState.currentPolygonNum === -1) return;
+
+		test.setCurPolygon(canvasState.currentPolygonNum);
+		test.setPolygon(test.showCenterPoint());
+		test.polygonSelection();
+	}, [isClicked])
 
 	const handleStartEditArea = (area) => {
 		setTempAreaData({
@@ -172,14 +178,14 @@ export const DetectedAreasList = observer(() => {
 		});
 	};
 
-	const handleSaveAreaData = (area) => {
+	const handleSaveAreaData = (area, index) => {
 		setTempAreaData({
 			...tempAreaData,
 			[area.id]: {...tempAreaData[area.id], isEdit: false,}
 		});
 
-		canvasState.saveDataTest[camera.id][area.id].setName(tempAreaData[area.id].name);
-		canvasState.saveDataTest[camera.id][area.id].setAttributeType(tempAreaData[area.id].type);
+		canvasState.saveDataTest[camera.id][index].setName(tempAreaData[area.id].name);
+		canvasState.saveDataTest[camera.id][index].setAttributeType(tempAreaData[area.id].type);
 
 		test.drawPolygons();
 	}
@@ -201,21 +207,16 @@ export const DetectedAreasList = observer(() => {
 		test.polygonSelection();
 	}
 	const handleSelectArea = (index) => {
-		test.setCurPolygon(index);
-		test.setPolygon(test.showCenterPoint());
-		test.polygonSelection();
+		canvasState.setCurrentPolygonNum(index);
+		setClicked(!isClicked);
 	}
 	const handleLeaveArea = (area, index) => {
 		test.drawPolygons();
 	}
 
 	const handleCloseDeleteDialog = (area) => {
-		// setOpenDeleteDialog(false);
-		console.log("handleCloseDeleteDialog")
-		console.log(area)
 		setOpenDeleteDialog({...isOpenDeleteDialog, [area.id]: false})
 	}
-
 
 	const currentAreaData = (area, index) => {
 		const name = area.getName();
@@ -223,7 +224,7 @@ export const DetectedAreasList = observer(() => {
 		const isOffBtn = eventsState.isCreatePolygon
 
 		return (
-			<ListItem>
+			<ListItem selected={index === canvasState.currentPolygonNum}>
 				<ListItemText
 					className={`${classes.listItemText}`}
 					onClick={() => handleSelectArea(index)}
@@ -261,7 +262,7 @@ export const DetectedAreasList = observer(() => {
 			</ListItem>
 		)
 	}
-	const editAreaData = (area) => {
+	const editAreaData = (area, index) => {
 		return (
 			<ListItem component={"div"}>
 				<ListItemText className={`${classes.listItemText}`}>
@@ -293,7 +294,7 @@ export const DetectedAreasList = observer(() => {
 					<IconButton
 						className={`${classes.iconButton} confirmBtn`}
 						aria-label="AreaEditIcon"
-						onClick={() => handleSaveAreaData(area)}
+						onClick={() => handleSaveAreaData(area, index)}
 						disabled={eventsState.isCreatePolygon}
 					>
 						<CheckCircleIcon className={`${classes.checkCircleIcon}`} fontSize={"large"}/>
@@ -316,7 +317,7 @@ export const DetectedAreasList = observer(() => {
 			{canvasState.saveDataTest[camera.id]?.map((area, index) => {
 				return (
 					<div key={`Detected-Areas-List-${index}`}>
-						{tempAreaData[area.id]?.isEdit ? editAreaData(area) : currentAreaData(area, index)}
+						{tempAreaData[area.id]?.isEdit ? editAreaData(area, index) : currentAreaData(area, index)}
 						<Divider/>
 					</div>
 				)
