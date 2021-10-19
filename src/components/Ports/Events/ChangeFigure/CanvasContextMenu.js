@@ -13,7 +13,7 @@ import InboxIcon from "@material-ui/icons/Inbox";
 import CheckIcon from '@material-ui/icons/Check';
 import eventsState from "../../../../store/eventsState";
 import {DeletePolygonDialog} from "./DeletePolygonDialog";
-import {SetPolygonParameterDialog} from "./SetPolygonParameterDialog";
+import {SetPolygonNameDialog} from "./SetPolygonNameDialog";
 
 export const CANVAS_CONTEXT_MENU = "CANVAS_CONTEXT_MENU";
 
@@ -139,6 +139,9 @@ export const CanvasContextMenu = observer(() => {
 	const handleShowChangeNameArea = () => {
 		setOpenChangeNameAreaDialog(true);
 	}
+	const handleShowChangeColorArea = () => {
+		setOpenChangeNameAreaDialog(true);
+	}
 	const handleHideChangeNameArea = () => {
 		setOpenChangeNameAreaDialog(false);
 	}
@@ -197,9 +200,10 @@ export const CanvasContextMenu = observer(() => {
 			<ContextMenu id={CANVAS_CONTEXT_MENU} className={classes.contextMenu}>
 				{menuItem("Change Name", handleShowChangeNameArea)}
 				{menuWithSub("Change Type", [ZONE_TYPE_DEFAULT, ZONE_TYPE_IN_OUT, ZONE_TYPE_PARKING, ZONE_TYPE_RESTRICTED_AREA], handleClickSubMenu)}
+				{menuItem("Change Color", handleShowChangeColorArea)}
 				{menuItem("Delete area", handleShowDeleteArea)}
 			</ContextMenu>
-			<SetPolygonParameterDialog area={area} index={canvasState.currentPolygonNum} isOpen={isOpenChangeNameAreaDialog} handleClose={handleHideChangeNameArea} btnStyles={classes.btn}/>
+			<SetPolygonNameDialog area={area} index={canvasState.currentPolygonNum} isOpen={isOpenChangeNameAreaDialog} handleClose={handleHideChangeNameArea} btnStyles={classes.btn}/>
 			<DeletePolygonDialog area={area} index={canvasState.currentPolygonNum} isOpen={isOpenDeleteDialog} handleClose={handleHideDeleteArea} btnStyles={classes.btn}/>
 		</div>
 	);

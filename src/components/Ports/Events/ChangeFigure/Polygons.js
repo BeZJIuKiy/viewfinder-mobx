@@ -81,17 +81,20 @@ export default class Polygons {
 	lmbDown = (e) => {
 		hideMenu();
 		this.isDrag = true;
+		this.findMousePosition(e);
+
 		(this.currentHandle < 0) ? this.startCreateRect() : this.changePolygonPointPosition();
 	}
 	cmbDown = (e) => {
 		console.log("Нажата СКМ");
 	}
 	rmbDown = (e) => {
-		this.drawPolygons();
-
 		if (this.selectPolygon()) {
-			this.polygonSelection();
-		}
+			this.polygonSelection()
+		} else {
+			hideMenu();
+			canvasState.setCurrentPolygonNum(-1);
+		};
 	}
 
 	mouseUpHandler(e) {
@@ -164,15 +167,16 @@ export default class Polygons {
 
 	mouseMoveHandler(e) {
 		this.bounds = e.target.getBoundingClientRect();
-		this.mousePos = {x: e.offsetX, y: e.offsetY};
+		this.findMousePosition(e);
 
-		if (!this.isDrag) this.findAnyPoint();
+		if (!this.isDrag && canvasState.isPolygonSelected) this.findAnyPoint();
 		if (!eventsState.isCreatePolygon) return;
 
 		if (this.isDrag && this.currentHandle < 0) {
 			const minSize = 20;
-			const isMinWidth = (this.mousePos.x - this.startX) >= minSize;
-			const isMinHeight = (this.mousePos.y - this.startY) >= minSize;
+
+			const isMinWidth = (Math.abs(this.mousePos.x - this.startX)) >= minSize;
+			const isMinHeight = (Math.abs(this.mousePos.y - this.startY)) >= minSize;
 
 			if (isMinWidth && isMinHeight) this.isCreateRect = true;
 			if (this.isDrag && this.isCreateRect) this.drawNewRect();
@@ -220,6 +224,9 @@ export default class Polygons {
 	}
 
 	mouseRightClickHandler = (e) => e.preventDefault();
+	findMousePosition = (e) => {
+		this.mousePos = {x: e.offsetX, y: e.offsetY};
+	}
 
 	point = (x, y) => ({x, y});
 	newPoint = (x, y) => ({id: null, x, y});
@@ -304,6 +311,7 @@ export default class Polygons {
 				findedPolygon = true;
 			}
 		}
+
 		return findedPolygon;
 	}
 

@@ -19,7 +19,7 @@ import eventsState from "../../../../store/eventsState";
 const useStyles = makeStyles((theme) => ({
 
 }))
-export const SetPolygonParameterDialog = observer(({area, index, isOpen, handleClose, btnStyles}) => {
+export const SetPolygonNameDialog = observer(({area, index, isOpen, handleClose, btnStyles}) => {
 	const classes = useStyles();
 
 	const {camera} = ports.selectedObjects;
