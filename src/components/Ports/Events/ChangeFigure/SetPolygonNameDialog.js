@@ -27,7 +27,8 @@ export const SetPolygonNameDialog = observer(({area, index, isOpen, handleClose,
 	const [value, setValue] = useState("");
 
 	useEffect(() => {
-		if (canvasState.isPolygonSelected === false) return;
+		// if (canvasState.isPolygonSelected === false) return;
+		if (canvasState.currentPolygonNum === -1) return;
 
 		setValue(canvasState.saveDataTest[camera.id][canvasState.currentPolygonNum]?.getName());
 	}, [canvasState.currentPolygonNum]);

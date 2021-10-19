@@ -59,6 +59,8 @@ export default class Polygons {
 
 	mouseDownHandler(e) {
 		if (!eventsState.isCreatePolygon) return;
+		this.findMousePosition(e);
+
 		switch (e.which) {
 			case 1: {
 				this.lmbDown(e);
@@ -81,9 +83,9 @@ export default class Polygons {
 	lmbDown = (e) => {
 		hideMenu();
 		this.isDrag = true;
-		this.findMousePosition(e);
 
-		(this.currentHandle < 0) ? this.startCreateRect() : this.changePolygonPointPosition();
+		// (this.currentHandle < 0) ? this.startCreateRect() : this.changePolygonPointPosition();
+		if (this.currentHandle < 0) this.startCreateRect();
 	}
 	cmbDown = (e) => {
 		console.log("Нажата СКМ");
@@ -121,6 +123,7 @@ export default class Polygons {
 	lmbUp = (e) => {
 		if (this.isCreateRect) this.createNewPolygon();
 
+		console.log("lmbUp");
 		this.isDrag = false;
 		this.curPolygon = null;
 		canvasState.setCurrentPolygonNum(this.curPolygon);
@@ -182,12 +185,17 @@ export default class Polygons {
 			if (this.isDrag && this.isCreateRect) this.drawNewRect();
 		}
 
-		if (this.currentHandle >= 0 && this.isDrag) this.changePointPosition();
-		if (this.isDrag && this.currentHandle >= 0) this.redrawPoint();
+		if (this.currentHandle >= 0 && this.isDrag) {
+			this.changePointPosition();
+			this.redrawPoint();
+		}
+		// if (this.currentHandle >= 0 && this.isDrag) this.redrawPoint();
+		// if (this.isDrag && this.currentHandle >= 0) this.redrawPoint();
 	}
 
 	/* FUNCTION: mouseMoveHandler */
 	findAnyPoint = () => {
+		console.log("findAnyPoint");
 		for (let i = 0; i < this.polygons?.length; ++i) {
 			this.currentHandle = this.getHandle(this.polygons[i]);
 			if (this.currentHandle >= 0) {
