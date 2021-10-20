@@ -84,8 +84,7 @@ export default class Polygons {
 		hideMenu();
 		this.isDrag = true;
 
-		// (this.currentHandle < 0) ? this.startCreateRect() : this.changePolygonPointPosition();
-		if (this.currentHandle < 0) this.startCreateRect();
+		(this.currentHandle < 0) ? this.startCreateRect() : this.changePolygonPointPosition();
 	}
 	cmbDown = (e) => {
 		console.log("Нажата СКМ");
@@ -123,7 +122,6 @@ export default class Polygons {
 	lmbUp = (e) => {
 		if (this.isCreateRect) this.createNewPolygon();
 
-		console.log("lmbUp");
 		this.isDrag = false;
 		this.curPolygon = null;
 		canvasState.setCurrentPolygonNum(this.curPolygon);
@@ -195,7 +193,6 @@ export default class Polygons {
 
 	/* FUNCTION: mouseMoveHandler */
 	findAnyPoint = () => {
-		console.log("findAnyPoint");
 		for (let i = 0; i < this.polygons?.length; ++i) {
 			this.currentHandle = this.getHandle(this.polygons[i]);
 			if (this.currentHandle >= 0) {

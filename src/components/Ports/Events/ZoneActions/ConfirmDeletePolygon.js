@@ -68,9 +68,7 @@ export const ConfirmDeletePolygon = () => {
     };
 
     const handleDeleteDetectedArea = () => {
-        // const polygons = canvasState.test.get(ports.selectedObjects.camera.id);
-        // polygons.splice(canvasState.currentPolygonNum, 1);
-        canvasState.saveDataTest[ports.selectedObjects.camera.id].splice(canvasState.currentPolygonNum, 1);
+        canvasState.deletePolygon(ports.selectedObjects.camera.id, canvasState.currentPolygonNum);
 
         new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
 

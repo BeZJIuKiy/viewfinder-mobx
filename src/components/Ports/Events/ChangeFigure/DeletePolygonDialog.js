@@ -51,8 +51,8 @@ export const DeletePolygonDialog = observer(({area, index, isOpen, handleClose, 
 			</DialogContent>
 
 			<DialogActions>
-				{confirmBtn("ok", "cancel", handleCloseDialog)}
-				{confirmBtn("cancel", "delete", handleDeletePolygon)}
+				{confirmBtn("cancel", "cancel", handleCloseDialog)}
+				{confirmBtn("ok", "delete", handleDeletePolygon)}
 			</DialogActions>
 		</Dialog>
 	)

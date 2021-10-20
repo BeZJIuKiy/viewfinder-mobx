@@ -210,9 +210,9 @@ export const Header = observer(({mobileDrawer}) => {
 					ViewFinder
 				</NavLink>
 
-				<NavLink className={`${classes.btnHome}`} to="/test">
-					Test
-				</NavLink>
+				{/*<NavLink className={`${classes.btnHome}`} to="/test">*/}
+				{/*	Test*/}
+				{/*</NavLink>*/}
 
 				<div className={classes.grow}/>
 				<div className={classes.sectionDesktop}>

@@ -184,8 +184,9 @@ export const DetectedAreasList = observer(() => {
 			[area.id]: {...tempAreaData[area.id], isEdit: false,}
 		});
 
-		canvasState.saveDataTest[camera.id][index].setName(tempAreaData[area.id].name);
-		canvasState.saveDataTest[camera.id][index].setAttributeType(tempAreaData[area.id].type);
+		const {name, type} = tempAreaData[area.id]
+		canvasState.changePolygonName(camera.id, index, name);
+		canvasState.changePolygonAttributeType(camera.id, index, type);
 
 		test.drawPolygons();
 	}

@@ -124,15 +124,19 @@ export const CanvasContextMenu = observer(() => {
 	const [isOpenDeleteDialog, setOpenDeleteDialog] = useState(false);
 
 	useEffect(() => {
-		setSelectedType(canvasState.saveDataTest[camera.id][canvasState.currentPolygonNum]?.getAttributeType())
-		setArea(canvasState.saveDataTest[camera.id][canvasState.currentPolygonNum]);
+		const index = canvasState.currentPolygonNum;
+
+		setSelectedType(canvasState.rawData[camera.id][index]?.attributes.type)
+		setArea(canvasState.saveDataTest[camera.id][index]);
 	}, [canvasState.currentPolygonNum])
 
 	const handleClick = (e, data) => {
 		alert(`Clicked on menu ${data.item}`);
 	};
 	const handleClickSubMenu = (zoneType) => {
-		canvasState.saveDataTest[ports.selectedObjects.camera.id][canvasState.currentPolygonNum].setAttributeType(zoneType)
+		// canvasState.saveDataTest[ports.selectedObjects.camera.id][canvasState.currentPolygonNum].setAttributeType(zoneType)
+		// const {camera} = ports.selectedObjects;
+		canvasState.changePolygonAttributeType(camera.id, canvasState.currentPolygonNum, zoneType)
 		new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
 		canvasState.setCurrentPolygonNum(-1);
 	};

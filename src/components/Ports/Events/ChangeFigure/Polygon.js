@@ -10,6 +10,7 @@ export default class Polygon {
 	#idCounter = 0;
 
 	#name = "";
+	#startSize = {x: null, y: null, w: null, h: null};
 	#points = [];
 
 	#lineWidth = null;
@@ -22,13 +23,14 @@ export default class Polygon {
 	#centerPointColor = "";
 
 	#attribute = {
-		type: "",
+		type: ZONE_TYPE_DEFAULT,
 		fillColor: "rgba(170, 170, 170, 0.3)",
 	}
 
 	constructor(id, x, y, w, h) {
 		this.id = id;
 		this.#name = `Area #${this.id}`;
+		this.#startSize = {x, y, w, h};
 		this.#points = this.setPolygonData(x, y, w, h);
 		this.#lineWidth = 2;
 		this.#lineColor = "#000";
@@ -55,6 +57,8 @@ export default class Polygon {
 			{id: this.#idCounter++, x: x, y: y + h},
 		])
 	}
+
+	getStartSize = () => this.#startSize;
 
 	addPoint(index, point) {
 		this.#points.splice(index, 0, point);
@@ -129,9 +133,15 @@ export default class Polygon {
 	}
 	getAttributeFillColor = () => this.#attribute.fillColor;
 
+	setAttribute = (attributes) => {
+		// this.#attribute = {...attributes}
+		this.setAttributeType(attributes.type);
+	}
+	getAttribute = () => this.#attribute;
+
 	setName = (name) => {
 		this.#name = name;
 		canvasState.setPolygonChanged();
 	}
-	getName =() => this.#name;
+	getName = () => this.#name;
 }
