@@ -82,6 +82,7 @@ export default class Polygons {
 
 	lmbDown = (e) => {
 		hideMenu();
+		console.log("lmbDown")
 		this.isDrag = true;
 
 		(this.currentHandle < 0) ? this.startCreateRect() : this.changePolygonPointPosition();
@@ -173,6 +174,8 @@ export default class Polygons {
 		if (!this.isDrag && canvasState.isPolygonSelected) this.findAnyPoint();
 		if (!eventsState.isCreatePolygon) return;
 
+		// console.log(`isDrag: ${this.isDrag}`)
+
 		if (this.isDrag && this.currentHandle < 0) {
 			const minSize = 20;
 
@@ -180,7 +183,9 @@ export default class Polygons {
 			const isMinHeight = (Math.abs(this.mousePos.y - this.startY)) >= minSize;
 
 			if (isMinWidth && isMinHeight) this.isCreateRect = true;
-			if (this.isDrag && this.isCreateRect) this.drawNewRect();
+			if (this.isDrag && this.isCreateRect) {
+				this.drawNewRect();
+			}
 		}
 
 		if (this.currentHandle >= 0 && this.isDrag) {

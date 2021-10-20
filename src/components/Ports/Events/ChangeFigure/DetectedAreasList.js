@@ -104,14 +104,16 @@ const useStyles = makeStyles((theme) => ({
 }))
 export const DetectedAreasList = observer(() => {
 	const classes = useStyles();
+	// const {polygonItem} = canvasState;
 
-	const [test, setTest] = useState(new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId))
+	// const [test, setTest] = useState(new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId))
 	const [isClicked, setClicked] = useState(false);
 	const [isOpenDeleteDialog, setOpenDeleteDialog] = useState({})
 
-	const {port, camera, event, cardData} = ports.selectedObjects;
+	const {camera} = ports.selectedObjects;
 
 	const [tempAreaData, setTempAreaData] = useState({});
+
 
 	useEffect(() => {
 		canvasState.saveDataTest[camera.id]?.forEach((area) => {
@@ -128,7 +130,7 @@ export const DetectedAreasList = observer(() => {
 			})
 		});
 
-		test.setPolygon(canvasState.saveDataTest[camera.id]);
+		canvasState.polygonItem.setPolygon(canvasState.saveDataTest[camera.id]);
 	}, [camera.id, canvasState.isPolygonChanged]);
 	useEffect(() => {
 		if (eventsState.isCreatePolygon === false) return;
@@ -146,9 +148,9 @@ export const DetectedAreasList = observer(() => {
 	useEffect(() => {
 		if (canvasState.currentPolygonNum === -1) return;
 
-		test.setCurPolygon(canvasState.currentPolygonNum);
-		test.setPolygon(test.showCenterPoint());
-		test.polygonSelection();
+		canvasState.polygonItem.setCurPolygon(canvasState.currentPolygonNum);
+		canvasState.polygonItem.setPolygon(canvasState.polygonItem.showCenterPoint());
+		canvasState.polygonItem.polygonSelection();
 	}, [isClicked])
 
 	const handleStartEditArea = (area) => {
@@ -188,7 +190,7 @@ export const DetectedAreasList = observer(() => {
 		canvasState.changePolygonName(camera.id, index, name);
 		canvasState.changePolygonAttributeType(camera.id, index, type);
 
-		test.drawPolygons();
+		canvasState.polygonItem.drawPolygons();
 	}
 	const handleRestoreAreaData = (area) => {
 		setTempAreaData({
@@ -202,17 +204,9 @@ export const DetectedAreasList = observer(() => {
 		});
 	}
 
-	const handleHighlightArea = (area, index) => {
-		test.setCurPolygon(index);
-		test.setPolygon(test.showCenterPoint());
-		test.polygonSelection();
-	}
 	const handleSelectArea = (index) => {
 		canvasState.setCurrentPolygonNum(index);
 		setClicked(!isClicked);
-	}
-	const handleLeaveArea = (area, index) => {
-		test.drawPolygons();
 	}
 
 	const handleCloseDeleteDialog = (area) => {

@@ -1,6 +1,7 @@
 import {makeAutoObservable} from "mobx";
 import {makePersistable} from "mobx-persist-store";
 import Polygon, {ZONE_TYPE_DEFAULT} from "../components/Ports/Events/ChangeFigure/Polygon";
+import Polygons from "../components/Ports/Events/ChangeFigure/Polygons";
 
 class CanvasState {
 	canvas = null;
@@ -69,6 +70,7 @@ class CanvasState {
 	isPolygonChanged = false;
 	currentPolygonNum = -1;
 
+	polygonItem = null;
 	saveDataTest = {};
 	rawData = {};
 
@@ -95,7 +97,7 @@ class CanvasState {
 
 		setTimeout(() => {
 			for (const camId in this.rawData) {
-				if (this.rawData[camId].length && !this.saveDataTest[camId].length) {
+				if (this.rawData[camId].length && !this.saveDataTest[camId]?.length) {
 					console.log(this.rawData[camId]);
 					this.rawData[camId].forEach(area => this.restoreAreas(camId, area));
 				}
@@ -138,13 +140,12 @@ class CanvasState {
 	setSessionId(id) {
 		this.sessionId = id;
 	}
-
 	setSocket(socket) {
 		this.socket = socket;
 	}
-
 	setCanvas(canvas) {
 		this.canvas = canvas;
+		this.polygonItem = new Polygons(this.canvas, this.socket, this.sessionId);
 	}
 
 	incReadyRectCounter() {
@@ -214,9 +215,9 @@ class CanvasState {
 		// polygon.setAttributeType(area.attributes);
 
 		// polygon.setAttribute(area.attributes);
-		console.log(area.name);
+		// console.log(area.name);
 
-		this.saveDataTest[camId].push(polygon);
+		this.saveDataTest[camId]?.push(polygon);
 	}
 
 	deletePolygon(camId, index) {
