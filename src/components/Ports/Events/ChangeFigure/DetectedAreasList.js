@@ -104,7 +104,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 export const DetectedAreasList = observer(() => {
 	const classes = useStyles();
-	// const {polygonItem} = canvasState;
+	const {polygonItem} = canvasState;
 
 	// const [test, setTest] = useState(new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId))
 	const [isClicked, setClicked] = useState(false);
@@ -130,7 +130,7 @@ export const DetectedAreasList = observer(() => {
 			})
 		});
 
-		canvasState.polygonItem.setPolygon(canvasState.saveDataTest[camera.id]);
+		polygonItem.setPolygon(canvasState.saveDataTest[camera.id]);
 	}, [camera.id, canvasState.isPolygonChanged]);
 	useEffect(() => {
 		if (eventsState.isCreatePolygon === false) return;
@@ -146,11 +146,14 @@ export const DetectedAreasList = observer(() => {
 		})
 	}, [eventsState.isCreatePolygon]);
 	useEffect(() => {
-		if (canvasState.currentPolygonNum === -1) return;
+		const {currentPolygonNum} = canvasState;
+		const isStop = currentPolygonNum === -1 || currentPolygonNum === null;
 
-		canvasState.polygonItem.setCurPolygon(canvasState.currentPolygonNum);
-		canvasState.polygonItem.setPolygon(canvasState.polygonItem.showCenterPoint());
-		canvasState.polygonItem.polygonSelection();
+		if (isStop) return;
+
+		polygonItem.setCurPolygon(currentPolygonNum);
+		polygonItem.setPolygon(polygonItem.showCenterPoint());
+		polygonItem.polygonSelection();
 	}, [isClicked])
 
 	const handleStartEditArea = (area) => {
@@ -190,7 +193,7 @@ export const DetectedAreasList = observer(() => {
 		canvasState.changePolygonName(camera.id, index, name);
 		canvasState.changePolygonAttributeType(camera.id, index, type);
 
-		canvasState.polygonItem.drawPolygons();
+		polygonItem.drawPolygons();
 	}
 	const handleRestoreAreaData = (area) => {
 		setTempAreaData({

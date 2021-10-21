@@ -95,14 +95,7 @@ class CanvasState {
 			storage: window.localStorage
 		});
 
-		setTimeout(() => {
-			for (const camId in this.rawData) {
-				if (this.rawData[camId].length && !this.saveDataTest[camId]?.length) {
-					console.log(this.rawData[camId]);
-					this.rawData[camId].forEach(area => this.restoreAreas(camId, area));
-				}
-			}
-		});
+		setTimeout(this.checkDataAvailability);
 	}
 
 	setCanvasReSize = (width, height) => {
@@ -140,9 +133,11 @@ class CanvasState {
 	setSessionId(id) {
 		this.sessionId = id;
 	}
+
 	setSocket(socket) {
 		this.socket = socket;
 	}
+
 	setCanvas(canvas) {
 		this.canvas = canvas;
 		this.polygonItem = new Polygons(this.canvas, this.socket, this.sessionId);
@@ -153,14 +148,13 @@ class CanvasState {
 	}
 
 	setPolygonInCamera = (id) => {
-		if (Number.isInteger(this.saveDataTest[id]?.length)) return;
+		const isStop = Number.isInteger(this.saveDataTest[id]?.length) || Number.isInteger(this.rawData[id]?.length);
+		if (isStop) return;
 		this.saveDataTest[id] = [];
 		this.rawData[id] = [];
-		console.log(this.rawData[id]);
 	}
 
 	addPolygon(camId, polygon) {
-		// console.log(this.rawData[camId])
 		if (!!!this.rawData[camId]) this.rawData[camId] = [];
 
 		polygon.setAttributeType(ZONE_TYPE_DEFAULT)
@@ -169,10 +163,14 @@ class CanvasState {
 	}
 
 	changePolygon(camId, index, polygon) {
-		console.log(polygon)
+		console.log("changePolygon")
 
 		this.saveDataTest[camId].splice(index, 1, polygon);
 		this.rawData[camId][index] = this.polygonRawData(polygon);
+	}
+
+	setRawPolygonPoints = (camId, index, points) => {
+		this.rawData[camId][index].points = points;
 	}
 	changePolygonName = (camId, index, name) => {
 		this.saveDataTest[camId][index].setName(name);
@@ -206,18 +204,33 @@ class CanvasState {
 		attributes: polygon.getAttribute(),
 	})
 
+	checkDataAvailability = () => {
+		for (const camId in this.rawData) {
+			if (!!!this.saveDataTest[camId]) {
+				this.saveDataTest[camId] = [];
+			}
+
+			if (this.rawData[camId].length && !this.saveDataTest[camId]?.length) {
+				this.rawData[camId].forEach(area => this.restoreAreas(camId, area));
+			}
+		}
+	}
+
 	restoreAreas = (camId, area) => {
 		const {x, y, w, h} = area.startSize;
 		const polygon = new Polygon(area.id, x, y, w, h);
 		polygon.setName(area.name);
 		polygon.setPoints(area.points);
 		polygon.setAttribute(area.attributes)
-		// polygon.setAttributeType(area.attributes);
 
-		// polygon.setAttribute(area.attributes);
-		// console.log(area.name);
-
-		this.saveDataTest[camId]?.push(polygon);
+		this.saveDataTest[camId].push(polygon);
+	}
+	dataSynchronization = () => {
+		for (const camId in this.saveDataTest) {
+			this.saveDataTest[camId].forEach((area, index) => {
+				this.rawData[camId][index] = this.polygonRawData(area);
+			});
+		}
 	}
 
 	deletePolygon(camId, index) {

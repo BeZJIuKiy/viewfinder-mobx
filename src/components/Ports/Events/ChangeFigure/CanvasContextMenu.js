@@ -137,19 +137,19 @@ export const CanvasContextMenu = observer(() => {
 		// canvasState.saveDataTest[ports.selectedObjects.camera.id][canvasState.currentPolygonNum].setAttributeType(zoneType)
 		// const {camera} = ports.selectedObjects;
 		canvasState.changePolygonAttributeType(camera.id, canvasState.currentPolygonNum, zoneType)
-		new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
+		// new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
+		canvasState.polygonItem.drawPolygons();
 		canvasState.setCurrentPolygonNum(-1);
 	};
 	const handleShowChangeNameArea = () => {
 		setOpenChangeNameAreaDialog(true);
 	}
-	const handleShowChangeColorArea = () => {
-		setOpenChangeNameAreaDialog(true);
-	}
 	const handleHideChangeNameArea = () => {
 		setOpenChangeNameAreaDialog(false);
 	}
-
+	const handleShowChangeColorArea = () => {
+		setOpenChangeNameAreaDialog(true);
+	}
 	const handleShowDeleteArea = () => {
 		setOpenDeleteDialog(true);
 	}

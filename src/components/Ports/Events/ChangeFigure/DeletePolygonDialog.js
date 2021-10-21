@@ -6,6 +6,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import ports from "../../../../store/ports";
 import header from "../../../../store/header";
 import canvasState from "../../../../store/canvasState";
+import Polygons from "./Polygons";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -18,6 +19,15 @@ export const DeletePolygonDialog = observer(({area, index, isOpen, handleClose, 
 	const handleDeletePolygon = () => {
 		handleClose(area);
 		canvasState.deletePolygon(camera.id, index);
+		// canvasState.polygonItem.deletePolygon();
+		// canvasState.polygonItem.setPolygon(canvasState.saveDataTest[camera.id])
+		// console.log(canvasState.saveDataTest[camera.id])
+		// console.log(canvasState.rawData[camera.id])
+		// console.log(canvasState.polygonItem.polygons)
+		// new Polygons(canvasState.canvas, canvasState.socket, "");
+		// canvasState.polygonItem.setPolygon(canvasState.saveDataTest[camera.id])
+		// canvasState.polygonItem.drawPolygons();
+
 	}
 	const handleCloseDialog = () => {
 		handleClose(area)

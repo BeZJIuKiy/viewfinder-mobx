@@ -82,7 +82,6 @@ export default class Polygons {
 
 	lmbDown = (e) => {
 		hideMenu();
-		console.log("lmbDown")
 		this.isDrag = true;
 
 		(this.currentHandle < 0) ? this.startCreateRect() : this.changePolygonPointPosition();
@@ -129,11 +128,12 @@ export default class Polygons {
 		canvasState.incReadyRectCounter();
 		this.currentHandle = -1;
 
+		console.log(this.polygons)
+
 		this.polygons = this.showCenterPoint();
 		this.selectPolygon() ? this.polygonSelection() : this.drawPolygons();
 	}
 	cmbUp = (e) => {
-		// console.log("Отпущена СКМ");
 		if (this.currentHandle < 0
 			|| this.polygons[this.curPolygon].points[this.currentHandle].id === null
 			|| !eventsState.isCreatePolygon) return;
@@ -163,7 +163,6 @@ export default class Polygons {
 	createNewPolygon = () => {
 		this.isCreateRect = false;
 		canvasState.addPolygon(this.cameraId, new Polygon(canvasState.readyRectCounter, this.startX, this.startY, this.width, this.height));
-
 		this.polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id];
 	}
 
@@ -211,6 +210,11 @@ export default class Polygons {
 
 		point.x = this.mousePos.x;
 		point.y = this.mousePos.y;
+
+		// const camId = ports.selectedObjects.camera.id;
+		// const areaIndex = this.curPolygon;
+		// const pointIndex = this.currentHandle;
+		// canvasState.rawData[camId][areaIndex].points[pointIndex] = point;
 	}
 	redrawPoint = () => {
 		const pointsWithId = [...this.polygons];
@@ -224,6 +228,8 @@ export default class Polygons {
 		this.preparationPoints(pointsWithId[this.curPolygon], pointsWithId[this.curPolygon].points);
 	}
 	polygonSelection = () => {
+		console.log(this.polygons)
+		console.log(this.curPolygon)
 		this.drawPolygons();
 		const polygon = this.polygons[this.curPolygon];
 		const points = this.polygons[this.curPolygon].getPoints();
@@ -245,7 +251,7 @@ export default class Polygons {
 		this.dist(this.mousePos, this.point(x, y)) <= this.handlesSize);
 
 	addPoints = (first, second) => this.newPoint((first.x + second.x) / 2, (first.y + second.y) / 2);
-	deletePolygon = () => this.polygons.splice(this.curPolygon, 1);
+	deletePolygon = (index = this.curPolygon) => this.polygons.splice(index, 1);
 
 	showCenterPoint = () => this.polygons.map((polygon) => {
 		const points = [];
@@ -300,6 +306,7 @@ export default class Polygons {
 			this.polygons[this.curPolygon].incCounter();
 			const points = this.polygons[this.curPolygon].points.filter(({id}) => id !== null);
 			this.polygons[this.curPolygon].setPoints(points);
+			// canvasState.setRawPolygonPoints(ports.selectedObjects.camera.id, this.curPolygon, points);
 		}
 	}
 	selectPolygon = () => {
