@@ -128,7 +128,7 @@ export default class Polygons {
 		canvasState.incReadyRectCounter();
 		this.currentHandle = -1;
 
-		console.log(this.polygons)
+		this.polygons = canvasState.saveDataTest[this.cameraId];
 
 		this.polygons = this.showCenterPoint();
 		this.selectPolygon() ? this.polygonSelection() : this.drawPolygons();
@@ -332,6 +332,7 @@ export default class Polygons {
 		return findedPolygon;
 	}
 
+	// drawPolygons(polygons = this.polygons) {
 	drawPolygons(polygons = this.polygons) {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		canvasState.setPolygonSelect(this.selectPolygon());

@@ -19,15 +19,8 @@ export const DeletePolygonDialog = observer(({area, index, isOpen, handleClose, 
 	const handleDeletePolygon = () => {
 		handleClose(area);
 		canvasState.deletePolygon(camera.id, index);
-		// canvasState.polygonItem.deletePolygon();
-		// canvasState.polygonItem.setPolygon(canvasState.saveDataTest[camera.id])
-		// console.log(canvasState.saveDataTest[camera.id])
-		// console.log(canvasState.rawData[camera.id])
-		// console.log(canvasState.polygonItem.polygons)
+		canvasState.polygonItem.drawPolygons();
 		// new Polygons(canvasState.canvas, canvasState.socket, "");
-		// canvasState.polygonItem.setPolygon(canvasState.saveDataTest[camera.id])
-		// canvasState.polygonItem.drawPolygons();
-
 	}
 	const handleCloseDialog = () => {
 		handleClose(area)
