@@ -28,7 +28,7 @@ class ports {
 
 	counter = {
 		portsId: 0,
-		camerasId: 0,
+		camerasId: 1,
 		eventsId: 0,
 	};
 
