@@ -14,6 +14,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import eventsState from "../../../../store/eventsState";
 import {DeletePolygonDialog} from "./DeletePolygonDialog";
 import {SetPolygonNameDialog} from "./SetPolygonNameDialog";
+import {SetPolygonColorDialog} from "./SetPolygonColorDialog";
 
 export const CANVAS_CONTEXT_MENU = "CANVAS_CONTEXT_MENU";
 
@@ -112,13 +113,14 @@ export const CanvasContextMenu = observer(() => {
 	const [area, setArea] = useState(canvasState.saveDataTest[camera.id][canvasState.currentPolygonNum]);
 	const [isOpenChangeNameAreaDialog, setOpenChangeNameAreaDialog] = useState(false);
 	const [isOpenDeleteDialog, setOpenDeleteDialog] = useState(false);
+	const [isOpenChangeColorDialog, setOpenChangeColorDialog] = useState(false);
 
 	useEffect(() => {
 		const index = canvasState.currentPolygonNum;
 
-		setSelectedType(canvasState.rawData[camera.id][index]?.attributes.type)
+		setSelectedType(canvasState.saveDataTest[camera.id][index]?.getAttributeType() || ZONE_TYPE_DEFAULT)
 		setArea(canvasState.saveDataTest[camera.id][index]);
-	}, [canvasState.currentPolygonNum])
+	}, [canvasState.currentPolygonNum, canvasState.isPolygonSelected]);
 
 	const handleClick = (e, data) => {
 		alert(`Clicked on menu ${data.item}`);
@@ -128,15 +130,21 @@ export const CanvasContextMenu = observer(() => {
 		canvasState.setCurrentPolygonNum(-1);
 		new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
 	};
+
 	const handleShowChangeNameArea = () => {
 		setOpenChangeNameAreaDialog(true);
 	}
 	const handleHideChangeNameArea = () => {
 		setOpenChangeNameAreaDialog(false);
 	}
+
 	const handleShowChangeColorArea = () => {
-		setOpenChangeNameAreaDialog(true);
+		setOpenChangeColorDialog(true);
 	}
+	const handleHideChangeColorArea = () => {
+		setOpenChangeColorDialog(false);
+	}
+
 	const handleShowDeleteArea = () => {
 		setOpenDeleteDialog(true);
 	}
@@ -162,7 +170,7 @@ export const CanvasContextMenu = observer(() => {
 				<List className={classes.list}>
 					<SubMenu className={classes.subMenu} hoverDelay={0} title={title}>
 						{subTitles.map((title, index) => {
-								return (
+							return (
 									<div
 										className={classes.subMenuItem}
 										key={`Menu-With-Sub-${title.length}-${title}-${index}`}
@@ -195,6 +203,7 @@ export const CanvasContextMenu = observer(() => {
 				{menuItem("Delete area", handleShowDeleteArea)}
 			</ContextMenu>
 			<SetPolygonNameDialog area={area} index={canvasState.currentPolygonNum} isOpen={isOpenChangeNameAreaDialog} handleClose={handleHideChangeNameArea} btnStyles={classes.btn}/>
+			<SetPolygonColorDialog area={area} index={canvasState.currentPolygonNum} isOpen={isOpenChangeColorDialog} handleClose={handleHideChangeColorArea} btnStyles={classes.btn}/>
 			<DeletePolygonDialog area={area} index={canvasState.currentPolygonNum} isOpen={isOpenDeleteDialog} handleClose={handleHideDeleteArea} btnStyles={classes.btn}/>
 		</div>
 	);

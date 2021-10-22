@@ -127,7 +127,7 @@ export default class Polygon {
 	}
 	getAttributeType = () => this.#attribute.type;
 
-	setAttributeFillColor = (r, g, b, a) => {
+	setAttributeFillColor = (r, g, b, a = 0.7) => {
 		this.#attribute.fillColor = `rgba(${r}, ${g}, ${b}, ${a})`;
 		canvasState.setPolygonChanged();
 	}

@@ -209,6 +209,7 @@ export const DetectedAreasList = observer(() => {
 	const handleSelectArea = (index) => {
 		canvasState.polygonItem.setPolygon(canvasState.saveDataTest[camera.id]);
 		canvasState.setCurrentPolygonNum(index);
+		canvasState.checkDataAvailability();
 		setClicked(!isClicked);
 	}
 	const handleCloseDeleteDialog = (area) => {

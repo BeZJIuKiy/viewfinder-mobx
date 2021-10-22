@@ -159,26 +159,26 @@ class CanvasState {
 
 		polygon.setAttributeType(ZONE_TYPE_DEFAULT)
 		this.saveDataTest[camId].push(polygon);
-		this.rawData[camId].push(this.polygonRawData(polygon));
+		// this.rawData[camId].push(this.polygonRawData(polygon));
 	}
 
 	changePolygon(camId, index, polygon) {
 		console.log("changePolygon")
 
 		this.saveDataTest[camId].splice(index, 1, polygon);
-		this.rawData[camId][index] = this.polygonRawData(polygon);
+		// this.rawData[camId][index] = this.polygonRawData(polygon);
 	}
 
-	setRawPolygonPoints = (camId, index, points) => {
-		this.rawData[camId][index].points = points;
-	}
+	// setRawPolygonPoints = (camId, index, points) => {
+	// 	this.rawData[camId][index].points = points;
+	// }
 	changePolygonName = (camId, index, name) => {
 		this.saveDataTest[camId][index].setName(name);
-		this.rawData[camId][index].name = name;
+		// this.rawData[camId][index].name = name;
 	}
 	changePolygonAttributeType = (camId, index, type) => {
 		this.saveDataTest[camId][index].setAttributeType(type);
-		this.rawData[camId][index].attributes.type = type;
+		// this.rawData[camId][index].attributes.type = type;
 	}
 
 	setPolygonSelect = (isSelect) => {
@@ -194,6 +194,11 @@ class CanvasState {
 	}
 	setPolygonChanged = () => {
 		this.isPolygonChanged = !this.isPolygonChanged;
+	}
+	setPolygonColor = (camId, index, rgba) => {
+		const {r, g, b} = rgba;
+		this.saveDataTest[camId][index].setAttributeFillColor(r, g, b);
+		// this.saveDataTest[camId][index].setAttributeFillColor(r, g, b);
 	}
 
 	polygonRawData = (polygon) => ({
@@ -237,7 +242,7 @@ class CanvasState {
 
 	deletePolygon(camId, index) {
 		this.saveDataTest[camId].splice(index, 1);
-		this.rawData[camId].splice(index, 1);
+		// this.rawData[camId].splice(index, 1);
 	}
 }
 
