@@ -89,7 +89,7 @@ export const TestImage = observer(() => {
 
 	useEffect(() => {
 		setToMany(testImageRef.current.offsetHeight >= windowHeight * eventsState.maxHeight);
-	}, [testImageRef.current, useWindowDimensions().height])
+	}, [testImageRef.current, useWindowDimensions().height, header.allNewNote])
 	useEffect(() => {
 		typeof event.id !== "undefined"
 			? setData(camera.events.filter(item => item.typeVessel === event.typeVessel))
