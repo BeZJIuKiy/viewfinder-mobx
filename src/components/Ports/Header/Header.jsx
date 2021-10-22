@@ -92,16 +92,16 @@ export const Header = observer(({mobileDrawer}) => {
 
 	useEffect(() => {
 		/* Set Events from Server */
-		// setHandleInterval(
-		// 	setInterval(() => {
-		// 		getPoints(connects.urlEvents);
-		// 	}, 1000)
-		// )
+		setHandleInterval(
+			setInterval(() => {
+				getPoints(connects.urlEvents);
+			}, 1000)
+		)
 	}, []);
 
 
 	useEffect(() => {
-		// getNewNotifications();
+		getNewNotifications();
 	}, [notifications]);
 	useEffect(() => {
 		setPortNotes();
