@@ -228,8 +228,6 @@ export default class Polygons {
 		this.preparationPoints(pointsWithId[this.curPolygon], pointsWithId[this.curPolygon].points);
 	}
 	polygonSelection = () => {
-		console.log(this.polygons)
-		console.log(this.curPolygon)
 		this.drawPolygons();
 		const polygon = this.polygons[this.curPolygon];
 		const points = this.polygons[this.curPolygon].getPoints();
