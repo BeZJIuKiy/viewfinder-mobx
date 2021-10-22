@@ -12,11 +12,11 @@ import {useWindowDimensions} from "./useHooks/useWindowDimensions";
 import styles from "./store/styles";
 
 function App() {
-    connects.setUrlEvents("http://localhost:5001/api/boats");
-    // connects.setUrlEvents("http://192.168.250.183:5001/api/boats");
+    // connects.setUrlEvents("http://localhost:5001/api/boats");
+    connects.setUrlEvents("http://192.168.250.183:5001/api/boats");
 
-    connects.setUrlZones("http://localhost:5001/api/zones");
-    // connects.setUrlZones("http://192.168.250.183:5001/api/zones");
+    // connects.setUrlZones("http://localhost:5001/api/zones");
+    connects.setUrlZones("http://192.168.250.183:5001/api/zones");
 
     // connects.setUrlPortsPage("http://localhost:8080/api/boats");
 
