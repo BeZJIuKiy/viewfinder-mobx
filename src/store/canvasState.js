@@ -226,7 +226,7 @@ class CanvasState {
 		const polygon = new Polygon(area.id, x, y, w, h);
 		polygon.setName(area.name);
 		polygon.setPoints(area.points);
-		polygon.setAttribute(area.attributes)
+		polygon.setAttribute(area.attributes);
 
 		this.saveDataTest[camId].push(polygon);
 	}

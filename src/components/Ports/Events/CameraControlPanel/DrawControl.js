@@ -134,12 +134,14 @@ export const DrawControl = observer(() => {
 			canvasState.tempPolygons = canvasState.tempPolygons.map(polygon => {
 				const points = polygon.getPoints().map(point => ({...point}));
 				const name = polygon.getName();
-				const attributeType = polygon.getAttributeType();
+				const attribute = polygon.getAttribute();
+				// const attributeType = polygon.getAttributeType();
 
 				const newPolygon = new Polygon(polygon.getId(), 0, 0, 0, 0);
 				newPolygon.setPoints(points);
 				newPolygon.setName(name);
-				newPolygon.setAttributeType(attributeType);
+				newPolygon.setAttribute(attribute);
+				// newPolygon.setAttributeType(attributeType);
 
 				return newPolygon;
 			})
@@ -176,8 +178,12 @@ export const DrawControl = observer(() => {
 		canvasState.dataSynchronization();
 		eventsState.setCreatePolygon(false);
 		eventsState.setZoneAction("");
+
+		console.log(canvasState.rawData[camera.id])
 	}
 	const deleteNewPolygonsData = () => {
+		console.log(canvasState.tempPolygons)
+
 		canvasState.saveDataTest[camera.id] = canvasState.tempPolygons;
 		canvasState.dataSynchronization();
 		eventsState.setCreatePolygon(false);
