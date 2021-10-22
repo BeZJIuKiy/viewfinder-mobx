@@ -206,12 +206,11 @@ export const DetectedAreasList = observer(() => {
 			}
 		});
 	}
-
 	const handleSelectArea = (index) => {
+		canvasState.polygonItem.setPolygon(canvasState.saveDataTest[camera.id]);
 		canvasState.setCurrentPolygonNum(index);
 		setClicked(!isClicked);
 	}
-
 	const handleCloseDeleteDialog = (area) => {
 		setOpenDeleteDialog({...isOpenDeleteDialog, [area.id]: false})
 	}
@@ -309,6 +308,7 @@ export const DetectedAreasList = observer(() => {
 			</ListItem>
 		)
 	}
+
 
 	return (
 		<List className={classes.detectedAreasList}>

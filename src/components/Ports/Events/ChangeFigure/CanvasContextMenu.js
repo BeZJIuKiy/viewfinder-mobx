@@ -17,16 +17,6 @@ import {SetPolygonNameDialog} from "./SetPolygonNameDialog";
 
 export const CANVAS_CONTEXT_MENU = "CANVAS_CONTEXT_MENU";
 
-
-export const Canvaaas = () => {
-	return (
-		<ContextMenuTrigger id={CANVAS_CONTEXT_MENU}>
-			<div>Right Click for Open Menu</div>
-		</ContextMenuTrigger>
-	)
-}
-
-
 const useStyles = makeStyles((theme) => {
 	const menuBorderRadius = 5;
 

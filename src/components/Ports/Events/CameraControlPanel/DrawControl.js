@@ -178,7 +178,13 @@ export const DrawControl = observer(() => {
 		eventsState.setZoneAction("");
 	}
 	const deleteNewPolygonsData = () => {
+		console.log(canvasState.saveDataTest[camera.id])
+		console.log(canvasState.tempPolygons)
+
 		canvasState.saveDataTest[camera.id] = canvasState.tempPolygons;
+
+		console.log(canvasState.saveDataTest[camera.id])
+		console.log(canvasState.rawData[camera.id])
 		canvasState.dataSynchronization();
 		eventsState.setCreatePolygon(false);
 		eventsState.setZoneAction("");
