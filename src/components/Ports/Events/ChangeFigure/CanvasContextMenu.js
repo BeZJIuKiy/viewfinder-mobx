@@ -124,12 +124,9 @@ export const CanvasContextMenu = observer(() => {
 		alert(`Clicked on menu ${data.item}`);
 	};
 	const handleClickSubMenu = (zoneType) => {
-		// canvasState.saveDataTest[ports.selectedObjects.camera.id][canvasState.currentPolygonNum].setAttributeType(zoneType)
-		// const {camera} = ports.selectedObjects;
 		canvasState.changePolygonAttributeType(camera.id, canvasState.currentPolygonNum, zoneType)
-		// new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
-		canvasState.polygonItem.drawPolygons();
 		canvasState.setCurrentPolygonNum(-1);
+		new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
 	};
 	const handleShowChangeNameArea = () => {
 		setOpenChangeNameAreaDialog(true);

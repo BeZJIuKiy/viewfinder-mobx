@@ -227,6 +227,8 @@ class CanvasState {
 	}
 	dataSynchronization = () => {
 		for (const camId in this.saveDataTest) {
+			this.rawData[camId] = [];
+
 			this.saveDataTest[camId].forEach((area, index) => {
 				this.rawData[camId][index] = this.polygonRawData(area);
 			});
