@@ -134,9 +134,9 @@ export default class Polygon {
         canvasState.setPolygonChanged();
     }
     getAttributeFillColor = () => this.#attribute.fillColor;
+    getAttributeRgba = () => this.#attribute.rgba;
 
     setAttribute = (attributes) => {
-        // this.#attribute = {...attributes}
         const {r, g, b} = attributes.rgba;
         this.setAttributeType(attributes.type);
         this.setAttributeFillColor(r, g, b);

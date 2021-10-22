@@ -113,6 +113,7 @@ export const DetectedAreasList = observer(() => {
 	const {camera} = ports.selectedObjects;
 
 	const [tempAreaData, setTempAreaData] = useState({});
+	const [color, setColor] = useState("#bbbbbb");
 
 
 	useEffect(() => {
@@ -216,6 +217,11 @@ export const DetectedAreasList = observer(() => {
 		setOpenDeleteDialog({...isOpenDeleteDialog, [area.id]: false})
 	}
 
+	const handleChangeColorArea = (e) => {
+		// console.log(e.target.value);
+		setColor(e.target.value);
+	}
+
 	const currentAreaData = (area, index) => {
 		const name = area.getName();
 		const type = area.getAttributeType();
@@ -261,6 +267,7 @@ export const DetectedAreasList = observer(() => {
 		)
 	}
 	const editAreaData = (area, index) => {
+
 		return (
 			<ListItem component={"div"}>
 				<ListItemText className={`${classes.listItemText}`}>
@@ -286,6 +293,12 @@ export const DetectedAreasList = observer(() => {
 							<MenuItem value={ZONE_TYPE_PARKING}>{`${ZONE_TYPE_PARKING}`}</MenuItem>
 							<MenuItem value={ZONE_TYPE_RESTRICTED_AREA}>{`${ZONE_TYPE_RESTRICTED_AREA}`}</MenuItem>
 						</Select>
+
+						<div>
+							<span>{`Color: `}</span>
+							<input type={"color"} value={color} onChange={handleChangeColorArea}/>
+						</div>
+
 					</ListSubheader>
 				</ListItemText>
 				<ListItemIcon className={`${classes.listItemIcon}`}>
