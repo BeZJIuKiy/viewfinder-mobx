@@ -18,18 +18,12 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import ports from "../../../store/ports";
 import {observer} from "mobx-react-lite";
-import eventsState from "../../../store/eventsState";
 import {ShipCard} from "./ShipCard/ShipCard";
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal} from "@material-ui/core";
-import Draggable from "react-draggable";
-import {DRAGGABLE_TESTING, PaperComponent} from "../../../useHooks/useDraggable";
 import {DeleteEventDialog} from "./DeleteEventDialog";
 import {useHexToRgba} from "../../../useHooks/useHexToRgba";
-
+import styles from "../../../store/styles";
 
 
 function descendingComparator(a, b, orderBy) {
@@ -205,7 +199,12 @@ const EnhancedTableToolbar = (props) => {
 			})}
 		>
 			<ShipCard isOpen={isOpenShipCard} btnStyles={classes.btn} handleClose={() => handleCloseShipCard()}/>
-			<DeleteEventDialog isOpen={isOpenDeleteDialog} handleClose={() => handleCloseDeleteDialog()} selectedId={selected} btnStyles={classes.btn}/>
+			<DeleteEventDialog
+				isOpen={isOpenDeleteDialog}
+				handleClose={() => handleCloseDeleteDialog()}
+				selectedId={selected}
+				btnStyles={classes.btn}
+			/>
 
 			{numSelected > 0 ? (
 				<Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
@@ -276,6 +275,7 @@ const useStyles = makeStyles((theme) => ({
 		top: 20,
 		width: 1,
 	},
+	tableCell: styles.notifyColors,
 }));
 
 export const BoatEvents = observer(() => {
@@ -424,7 +424,8 @@ export const BoatEvents = observer(() => {
 									} = row;
 									const isItemSelected = isSelected(id);
 									const labelId = `enhanced-table-checkbox-${index}`;
-									const notifType = `events__type__notification ${typeError.toLowerCase()}`;
+									const notifyType = typeError.toLowerCase();
+									// const notifType = `events__type__notification ${typeError.toLowerCase()}`;
 
 									return (
 										<TableRow
@@ -445,7 +446,7 @@ export const BoatEvents = observer(() => {
 
 											<TableCell component="th" id={labelId} scope="row" padding="none"
 											           align="center"
-											           className={notifType}>{typeError}</TableCell>
+											           className={`${classes.tableCell} ${notifyType}`}>{typeError}</TableCell>
 											<TableCell align="left">{date}</TableCell>
 											<TableCell align="left">{imo}</TableCell>
 											<TableCell align="left">{mmsi}</TableCell>

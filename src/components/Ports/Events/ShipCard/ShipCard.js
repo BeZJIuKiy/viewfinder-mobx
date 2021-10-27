@@ -19,11 +19,12 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ErrorIcon from '@material-ui/icons/Error';
 import Collapse from "@material-ui/core/Collapse";
-import {Button, Dialog, Grid, Hidden, Input, Paper} from "@material-ui/core";
-import {useHexToRgba} from "../../../../useHooks/useHexToRgba";
+import {Button, Dialog, Grid, Hidden, Input, Paper, Tooltip} from "@material-ui/core";
 import account from "../../../../store/account";
 import {DRAGGABLE_TESTING, PaperComponent} from "../../../../useHooks/useDraggable";
+import styles from "../../../../store/styles";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -31,8 +32,9 @@ const useStyles = makeStyles((theme) => ({
 		// minWidth: 345,
 		maxWidth: 345,
 		overflowY: "auto",
-
 	},
+	// cardHeader: styles.notifyColors,
+	cardHeader: {},
 	media: {
 		height: 0,
 		paddingTop: '56.25%', // 16:9
@@ -71,17 +73,24 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: "center",
 		margin: "24px 8px 0px",
 	},
+	test: {
+		borderRadius: 0
+	},
 }));
 export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 	const classes = useStyles();
 	const template = {...account.templateShipData, vesselTypeDetailed: ports.selectedObjects.cardData?.typeVessel};
 
-	const {cardData} = ports.selectedObjects
+	const {port, camera, cardData} = ports.selectedObjects
 
 	const [expanded, setExpanded] = React.useState(false);
 	const [isRead, setRead] = React.useState(true);
 	const [localCardData, setLocalCardData] = React.useState(template);
 	const [errorFields, setErrorFields] = React.useState({});
+
+	useEffect(() => {
+		setLocalCardData(cardData?.name ? account.findShip(cardData.imo) : template);
+	}, [isOpen])
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
@@ -89,10 +98,11 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 	const handleEditShipData = () => {
 		setExpanded(true);
 		setRead(false);
+		ports.setDangerEvent(port.id, camera.id, cardData.id, false);
 	}
 	const handleChangeShipData = (e, key) => {
 		setLocalCardData({...localCardData, [key]: e.target.value})
-		setErrorFields({...errorFields, [key]: false})
+		setErrorFields({...errorFields, [key]: false});
 	}
 
 	const handleConfirm = () => {
@@ -117,12 +127,30 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 		}
 
 		setRead(true);
+
+		const newEvent = {
+			...cardData,
+			imo: localCardData.imo,
+			mmsi: localCardData.mmsi,
+			name: localCardData.name,
+			callSign: localCardData.callSign,
+		}
+		ports.changeEvent(port.id, camera.id, newEvent)
 		account.addShipInMyFleet(localCardData);
 	}
 	const handleCancel = () => {
 		setRead(true);
-		setLocalCardData(template);
+		setLocalCardData(cardData.name ? account.findShip(cardData.imo) : template);
 		setErrorFields({});
+	}
+	const handleDanger = () => {
+		ports.setDangerEvent(port.id, camera.id, cardData.id, isRead ? !cardData.isDanger : false);
+	}
+	const handleCloseDialog = () => {
+		setRead(true);
+		setExpanded(false);
+		setErrorFields({});
+		handleClose();
 	}
 
 	const content = (title, data = "", key) => {
@@ -162,12 +190,52 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 			</Grid>
 		)
 	}
-	const handleCloseDialog = () => {
-		setRead(true);
-		setExpanded(false);
-		setErrorFields({});
-		handleClose();
+
+	const changeEvent = () => {
+		const firstTitle = "Click and change the ship details to add to your fleet";
+		const secondTitle = `Change the ship data and click on "Add Ship" or click "Cancel"`;
+
+		const title = isRead ? firstTitle : secondTitle;
+		const color = isRead ? "default" : "primary";
+
+		return (
+			<Tooltip
+				enterDelay={delay}
+				enterNextDelay={delay}
+				title={<span style={{fontSize: 16}}>{`${title}`}</span>}
+			>
+				<IconButton aria-label="edit" onClick={handleEditShipData} color={color}>
+					<EditIcon/>
+				</IconButton>
+			</Tooltip>
+		)
 	}
+	const dangerEvent = () => {
+		const isDanger = cardData?.isDanger;
+
+		const firstTitle = "Remove mark Dangerous from the object";
+		const secondTitle = "Mark object as Dangerous";
+		const warning = "Edit is Active, you can't mark your ship as Dangerous";
+
+		const title = isDanger
+			? firstTitle
+			: isRead ? secondTitle : warning;
+		const color = isDanger ? "secondary" : "action";
+
+		return (
+			<Tooltip
+				enterDelay={delay}
+				enterNextDelay={delay}
+				title={<span style={{fontSize: 16}}>{title}</span>}
+			>
+				<IconButton aria-label="dangerous" onClick={handleDanger}>
+					<ErrorIcon color={color}/>
+				</IconButton>
+			</Tooltip>
+		)
+	}
+
+	const delay = 500;
 
 	return (
 		<Dialog
@@ -192,7 +260,8 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 					// title="Shrimp and Chorizo Paella"
 					// subheader="September 14, 2016"
 
-					title={cardData?.typeVessel || "Ship is not found"}
+					className={`${classes.cardHeader} ${cardData?.typeError?.toLowerCase()}`}
+					title={cardData?.typeVessel || "Ship not found"}
 					subheader={cardData?.date}
 					style={{cursor: 'move'}}
 					id={DRAGGABLE_TESTING}
@@ -204,19 +273,18 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 				/>
 				<CardContent>
 					<Typography variant="body2" color="textSecondary" component="p">
-						{cardData?.description}
+						{`${cardData?.description}`}
+					</Typography>
+					<Typography variant="body2" color="textSecondary" component="p">
+						Do you want to add this ship to your fleet?
 					</Typography>
 				</CardContent>
 				<CardActions disableSpacing>
 					{/*<IconButton aria-label="add to fleet">*/}
 					{/*	<AddIcon/>*/}
 					{/*</IconButton>*/}
-					<IconButton aria-label="edit" onClick={handleEditShipData} color={isRead ? "default" : "primary"}>
-						<EditIcon/>
-					</IconButton>
-					{/*<IconButton aria-label="delete">*/}
-					{/*	<DeleteIcon/>*/}
-					{/*</IconButton>*/}
+					{changeEvent()}
+					{dangerEvent()}
 					<IconButton
 						className={clsx(classes.expand, {
 							[classes.expandOpen]: expanded,
@@ -247,29 +315,6 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 								{confirmBtn("add ship", "ok", handleConfirm)}
 							</Grid>
 						</div>
-						{/*<Typography paragraph>Method:</Typography>*/}
-						{/*<Typography paragraph>*/}
-						{/*	Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10*/}
-						{/*	minutes.*/}
-						{/*</Typography>*/}
-						{/*<Typography paragraph>*/}
-						{/*	Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high*/}
-						{/*	heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly*/}
-						{/*	browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken*/}
-						{/*	and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and*/}
-						{/*	pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add*/}
-						{/*	saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.*/}
-						{/*</Typography>*/}
-						{/*<Typography paragraph>*/}
-						{/*	Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook*/}
-						{/*	without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to*/}
-						{/*	medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook*/}
-						{/*	again without stirring, until mussels have opened and rice is just tender, 5 to 7*/}
-						{/*	minutes more. (Discard any mussels that don’t open.)*/}
-						{/*</Typography>*/}
-						{/*<Typography>*/}
-						{/*	Set aside off of the heat to let rest for 10 minutes, and then serve.*/}
-						{/*</Typography>*/}
 					</CardContent>
 				</Collapse>
 			</Card>

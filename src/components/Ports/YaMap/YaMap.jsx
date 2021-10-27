@@ -18,11 +18,8 @@ const useStyles = makeStyles((theme) => {
 	return ({
 		yamap: {
 			"&.show": {
-				// height: `calc(${scrollHeight}px - ${styles.headerHeight}px)`,
-				minHeight: "100%",
-
 				display: "flex",
-				flexGrow: 1,
+				minHeight: "100%",
 			},
 
 			"&.hide": {
@@ -94,17 +91,21 @@ const YaMap = observer(({isVisible}) => {
 			'rulerControl',
 		];
 
+
 		if (portId) {
+			const [firstCam] = port.cameras;
 			setAllData(port.cameras);
-			mapData(port.cameras[0].coordinates, port.cameras[0].zoom, controls);
-			// mapData(selectedObjects.port.coordinates, selectedObjects.port.cameras[0].zoom, controls);
+			setMapCenter({center: firstCam.coordinates, zoom: firstCam.zoom, controls});
 		} else {
+			const [x, y] = data[0].cameras[0].coordinates;
 			setAllData(data);
-			mapData(data[0].cameras[0].coordinates, data[0].zoom, controls);
+			setMapCenter({center: [x, y], zoom: data[0].zoom, controls});
+
+			// setMapCenter({center: data[0].cameras[0].coordinates, zoom: data[0].zoom, controls});
+			// setMapCenter({center: [data[0].cameras[0].coordinates, data[0].cameras[0].coordinates[1]], zoom: data[0].zoom, controls});
 		}
 	}, [port]);
 
-	const mapData = (center, zoom, controls) => setMapCenter({center, zoom, controls});
 	const clickOnCamera = (id) => {
 		ports.setSelectedCamera(id);
 
@@ -139,7 +140,7 @@ const YaMap = observer(({isVisible}) => {
 	const mapPlaceMark = allData.map(({id, coordinates, description, link}, i) => {
 		return (
 			<Placemark
-				key={`HandlePlaceMark-${id}-${description}`}
+				key={`HandlePlaceMark-${id}-${description}-${i}`}
 				geometry={coordinates}
 				properties={{
 					hintContent: `${description} cameras`,

@@ -55,7 +55,7 @@ class account {
 	];
 
 	selectedItem = "";
-	selectedItemIndex = null;
+	selectedItemIndex = -1;
 
 	counter = {
 		fleetId: 0,
@@ -100,7 +100,7 @@ class account {
 
 		makePersistable(this, {
 			name: "AccountStore",
-			properties: ["selectedItem", "selectedItemIndex"],
+			properties: ["myFleet", "selectedItem", "selectedItemIndex", "templateShipData", ],
 			storage: window.localStorage
 		});
 	}
@@ -130,7 +130,7 @@ class account {
 		return testFleet;
 	}
 
-	setSelectedItem = (index) => {
+	setSelectedItem = (index = 0) => {
 		this.selectedItem = this.drawerItems[index].title;
 		this.selectedItemIndex = index;
 	}
@@ -145,6 +145,7 @@ class account {
 			? this.myFleet[shipIndex] = ship
 			: this.myFleet.push(ship);
 	}
+	findShip = (imo) => this.myFleet.find((ship) => ship.imo === imo);
 }
 
 

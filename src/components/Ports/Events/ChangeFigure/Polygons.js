@@ -32,7 +32,7 @@ export default class Polygons {
 
 		this.ctx = canvas.getContext('2d');
 
-		this.polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id];
+		this.polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id] || [];
 
 		this.drawPolygons();
 		this.polygons = this.showCenterPoint();
@@ -41,6 +41,13 @@ export default class Polygons {
 		this.currentHandle = -1;
 
 		this.listen();
+	}
+
+	setPolygon = (polygons) => {
+		this.polygons = polygons;
+	}
+	setCurPolygon = (num) => {
+		this.curPolygon = num;
 	}
 
 	listen() {
@@ -52,6 +59,8 @@ export default class Polygons {
 
 	mouseDownHandler(e) {
 		if (!eventsState.isCreatePolygon) return;
+		this.findMousePosition(e);
+
 		switch (e.which) {
 			case 1: {
 				this.lmbDown(e);
@@ -74,17 +83,19 @@ export default class Polygons {
 	lmbDown = (e) => {
 		hideMenu();
 		this.isDrag = true;
+
 		(this.currentHandle < 0) ? this.startCreateRect() : this.changePolygonPointPosition();
 	}
 	cmbDown = (e) => {
 		console.log("Нажата СКМ");
 	}
 	rmbDown = (e) => {
-		this.drawPolygons();
-
 		if (this.selectPolygon()) {
-			this.polygonSelection();
-		}
+			this.polygonSelection()
+		} else {
+			hideMenu();
+			canvasState.setCurrentPolygonNum(-1);
+		};
 	}
 
 	mouseUpHandler(e) {
@@ -117,11 +128,12 @@ export default class Polygons {
 		canvasState.incReadyRectCounter();
 		this.currentHandle = -1;
 
+		this.polygons = canvasState.saveDataTest[this.cameraId];
+
 		this.polygons = this.showCenterPoint();
 		this.selectPolygon() ? this.polygonSelection() : this.drawPolygons();
 	}
 	cmbUp = (e) => {
-		// console.log("Отпущена СКМ");
 		if (this.currentHandle < 0
 			|| this.polygons[this.curPolygon].points[this.currentHandle].id === null
 			|| !eventsState.isCreatePolygon) return;
@@ -151,28 +163,36 @@ export default class Polygons {
 	createNewPolygon = () => {
 		this.isCreateRect = false;
 		canvasState.addPolygon(this.cameraId, new Polygon(canvasState.readyRectCounter, this.startX, this.startY, this.width, this.height));
-
 		this.polygons = canvasState.saveDataTest[ports.selectedObjects.camera.id];
 	}
 
 	mouseMoveHandler(e) {
 		this.bounds = e.target.getBoundingClientRect();
-		this.mousePos = {x: e.offsetX, y: e.offsetY};
+		this.findMousePosition(e);
 
-		if (!this.isDrag) this.findAnyPoint();
+		if (!this.isDrag && canvasState.isPolygonSelected) this.findAnyPoint();
 		if (!eventsState.isCreatePolygon) return;
+
+		// console.log(`isDrag: ${this.isDrag}`)
 
 		if (this.isDrag && this.currentHandle < 0) {
 			const minSize = 20;
-			const isMinWidth = (this.mousePos.x - this.startX) >= minSize;
-			const isMinHeight = (this.mousePos.y - this.startY) >= minSize;
+
+			const isMinWidth = (Math.abs(this.mousePos.x - this.startX)) >= minSize;
+			const isMinHeight = (Math.abs(this.mousePos.y - this.startY)) >= minSize;
 
 			if (isMinWidth && isMinHeight) this.isCreateRect = true;
-			if (this.isDrag && this.isCreateRect) this.drawNewRect();
+			if (this.isDrag && this.isCreateRect) {
+				this.drawNewRect();
+			}
 		}
 
-		if (this.currentHandle >= 0 && this.isDrag) this.changePointPosition();
-		if (this.isDrag && this.currentHandle >= 0) this.redrawPoint();
+		if (this.currentHandle >= 0 && this.isDrag) {
+			this.changePointPosition();
+			this.redrawPoint();
+		}
+		// if (this.currentHandle >= 0 && this.isDrag) this.redrawPoint();
+		// if (this.isDrag && this.currentHandle >= 0) this.redrawPoint();
 	}
 
 	/* FUNCTION: mouseMoveHandler */
@@ -190,6 +210,11 @@ export default class Polygons {
 
 		point.x = this.mousePos.x;
 		point.y = this.mousePos.y;
+
+		// const camId = ports.selectedObjects.camera.id;
+		// const areaIndex = this.curPolygon;
+		// const pointIndex = this.currentHandle;
+		// canvasState.rawData[camId][areaIndex].points[pointIndex] = point;
 	}
 	redrawPoint = () => {
 		const pointsWithId = [...this.polygons];
@@ -203,8 +228,6 @@ export default class Polygons {
 		this.preparationPoints(pointsWithId[this.curPolygon], pointsWithId[this.curPolygon].points);
 	}
 	polygonSelection = () => {
-		// console.log("polygonSelection");
-
 		this.drawPolygons();
 		const polygon = this.polygons[this.curPolygon];
 		const points = this.polygons[this.curPolygon].getPoints();
@@ -215,7 +238,9 @@ export default class Polygons {
 	}
 
 	mouseRightClickHandler = (e) => e.preventDefault();
-
+	findMousePosition = (e) => {
+		this.mousePos = {x: e.offsetX, y: e.offsetY};
+	}
 
 	point = (x, y) => ({x, y});
 	newPoint = (x, y) => ({id: null, x, y});
@@ -224,7 +249,7 @@ export default class Polygons {
 		this.dist(this.mousePos, this.point(x, y)) <= this.handlesSize);
 
 	addPoints = (first, second) => this.newPoint((first.x + second.x) / 2, (first.y + second.y) / 2);
-	deletePolygon = () => this.polygons.splice(this.curPolygon, 1);
+	deletePolygon = (index = this.curPolygon) => this.polygons.splice(index, 1);
 
 	showCenterPoint = () => this.polygons.map((polygon) => {
 		const points = [];
@@ -279,6 +304,7 @@ export default class Polygons {
 			this.polygons[this.curPolygon].incCounter();
 			const points = this.polygons[this.curPolygon].points.filter(({id}) => id !== null);
 			this.polygons[this.curPolygon].setPoints(points);
+			// canvasState.setRawPolygonPoints(ports.selectedObjects.camera.id, this.curPolygon, points);
 		}
 	}
 	selectPolygon = () => {
@@ -300,12 +326,12 @@ export default class Polygons {
 				findedPolygon = true;
 			}
 		}
+
 		return findedPolygon;
 	}
 
+	// drawPolygons(polygons = this.polygons) {
 	drawPolygons(polygons = this.polygons) {
-		// console.log("drawPolygons");
-
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		canvasState.setPolygonSelect(this.selectPolygon());
 

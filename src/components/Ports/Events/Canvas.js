@@ -149,6 +149,7 @@ export const Canvas = observer(() => {
 		reSizeCanvas(coefficient);
 	}, [ratio, windowSize.width, windowSize.height, ports.selectedObjects.camera, ports.selectedObjects.shipImage.isVisible]);
 	useEffect(() => {
+		// console.log("Canvas - isPolygonSelected")
 		setShowContextMenu(canvasState.isPolygonSelected && eventsState.isCreatePolygon);
 	}, [canvasState.isPolygonSelected])
 

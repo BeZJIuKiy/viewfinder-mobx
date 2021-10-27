@@ -12,18 +12,11 @@ import {List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import InboxIcon from "@material-ui/icons/Inbox";
 import CheckIcon from '@material-ui/icons/Check';
 import eventsState from "../../../../store/eventsState";
+import {DeletePolygonDialog} from "./DeletePolygonDialog";
+import {SetPolygonNameDialog} from "./SetPolygonNameDialog";
+import {SetPolygonColorDialog} from "./SetPolygonColorDialog";
 
 export const CANVAS_CONTEXT_MENU = "CANVAS_CONTEXT_MENU";
-
-
-export const Canvaaas = () => {
-	return (
-		<ContextMenuTrigger id={CANVAS_CONTEXT_MENU}>
-			<div>Right Click for Open Menu</div>
-		</ContextMenuTrigger>
-	)
-}
-
 
 const useStyles = makeStyles((theme) => {
 	const menuBorderRadius = 5;
@@ -94,25 +87,70 @@ const useStyles = makeStyles((theme) => {
 		},
 		listItemText: {
 			marginLeft: theme.spacing(-2),
-		}
+		},
+		btn: {
+			width: 116,
+			height: 36,
+
+			"&.ok": {
+				color: useHexToRgba("#fff", 0.8),
+				background: useHexToRgba("#080", 0.8)
+			},
+
+			"&.cancel": {
+				color: useHexToRgba("#fff", 0.8),
+				background: useHexToRgba("#f00", 0.82),
+			},
+		},
 	})
 })
 export const CanvasContextMenu = observer(() => {
 	const classes = useStyles();
 
+	const {camera} = ports.selectedObjects;
+
 	const [selectedType, setSelectedType] = useState(ZONE_TYPE_DEFAULT);
+	const [area, setArea] = useState(canvasState.saveDataTest[camera.id][canvasState.currentPolygonNum]);
+	const [isOpenChangeNameAreaDialog, setOpenChangeNameAreaDialog] = useState(false);
+	const [isOpenDeleteDialog, setOpenDeleteDialog] = useState(false);
+	const [isOpenChangeColorDialog, setOpenChangeColorDialog] = useState(false);
 
 	useEffect(() => {
-		setSelectedType(canvasState.saveDataTest[ports.selectedObjects.camera.id][canvasState.currentPolygonNum]?.getAttributeType())
-	}, [canvasState.currentPolygonNum])
+		const index = canvasState.currentPolygonNum;
+
+		setSelectedType(canvasState.saveDataTest[camera.id][index]?.getAttributeType() || ZONE_TYPE_DEFAULT)
+		setArea(canvasState.saveDataTest[camera.id][index]);
+	}, [canvasState.currentPolygonNum, canvasState.isPolygonSelected]);
 
 	const handleClick = (e, data) => {
 		alert(`Clicked on menu ${data.item}`);
 	};
 	const handleClickSubMenu = (zoneType) => {
-		canvasState.saveDataTest[ports.selectedObjects.camera.id][canvasState.currentPolygonNum].setAttributeType(zoneType)
+		canvasState.changePolygonAttributeType(camera.id, canvasState.currentPolygonNum, zoneType)
+		canvasState.setCurrentPolygonNum(-1);
 		new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
 	};
+
+	const handleShowChangeNameArea = () => {
+		setOpenChangeNameAreaDialog(true);
+	}
+	const handleHideChangeNameArea = () => {
+		setOpenChangeNameAreaDialog(false);
+	}
+
+	const handleShowChangeColorArea = () => {
+		setOpenChangeColorDialog(true);
+	}
+	const handleHideChangeColorArea = () => {
+		setOpenChangeColorDialog(false);
+	}
+
+	const handleShowDeleteArea = () => {
+		setOpenDeleteDialog(true);
+	}
+	const handleHideDeleteArea = () => {
+		setOpenDeleteDialog(false);
+	}
 
 	const menuItem = (title, action) => {
 		return (
@@ -126,14 +164,13 @@ export const CanvasContextMenu = observer(() => {
 		)
 	}
 
-
 	const menuWithSub = (title, subTitles, subAction) => {
 		return (
 			<MenuItem className={classes.menuItem}>
 				<List className={classes.list}>
 					<SubMenu className={classes.subMenu} hoverDelay={0} title={title}>
 						{subTitles.map((title, index) => {
-								return (
+							return (
 									<div
 										className={classes.subMenuItem}
 										key={`Menu-With-Sub-${title.length}-${title}-${index}`}
@@ -160,10 +197,14 @@ export const CanvasContextMenu = observer(() => {
 	return (
 		<div>
 			<ContextMenu id={CANVAS_CONTEXT_MENU} className={classes.contextMenu}>
-				{menuItem("Homes", handleClick)}
-				{menuItem("Post", handleClick)}
-				{menuWithSub("Change type", [ZONE_TYPE_DEFAULT, ZONE_TYPE_IN_OUT, ZONE_TYPE_PARKING, ZONE_TYPE_RESTRICTED_AREA], handleClickSubMenu)}
+				{menuItem("Change Name", handleShowChangeNameArea)}
+				{menuWithSub("Change Type", [ZONE_TYPE_DEFAULT, ZONE_TYPE_IN_OUT, ZONE_TYPE_PARKING, ZONE_TYPE_RESTRICTED_AREA], handleClickSubMenu)}
+				{menuItem("Change Color", handleShowChangeColorArea)}
+				{menuItem("Delete area", handleShowDeleteArea)}
 			</ContextMenu>
+			<SetPolygonNameDialog area={area} index={canvasState.currentPolygonNum} isOpen={isOpenChangeNameAreaDialog} handleClose={handleHideChangeNameArea} btnStyles={classes.btn}/>
+			<SetPolygonColorDialog area={area} index={canvasState.currentPolygonNum} isOpen={isOpenChangeColorDialog} handleClose={handleHideChangeColorArea} btnStyles={classes.btn}/>
+			<DeletePolygonDialog area={area} index={canvasState.currentPolygonNum} isOpen={isOpenDeleteDialog} handleClose={handleHideDeleteArea} btnStyles={classes.btn}/>
 		</div>
 	);
 });

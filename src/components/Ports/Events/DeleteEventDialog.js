@@ -7,9 +7,10 @@ import ports from "../../../store/ports";
 import header from "../../../store/header";
 
 const useStyles = makeStyles((theme) => ({}))
-export const DeleteEventDialog = observer(({isOpen, handleClose, selectedId, btnStyles}) => {
+export const DeleteEventDialog = observer((props) => {
 	const classes = useStyles();
 
+	const {isOpen, handleClose, selectedId, btnStyles} = props;
 	const {selectedObjects: {port, camera}} = ports;
 
 	const handleDeleteRow = () => {

@@ -12,11 +12,11 @@ import {useWindowDimensions} from "./useHooks/useWindowDimensions";
 import styles from "./store/styles";
 
 function App() {
-    connects.setUrlEvents("http://localhost:5001/api/boats");
-    // connects.setUrlEvents("http://192.168.250.183:5001/api/boats");
+    // connects.setUrlEvents("http://localhost:5001/api/boats");
+    connects.setUrlEvents("http://192.168.250.183:5001/api/boats");
 
-    connects.setUrlZones("http://localhost:5001/api/zones");
-    // connects.setUrlZones("http://192.168.250.183:5001/api/zones");
+    // connects.setUrlZones("http://localhost:5001/api/zones");
+    connects.setUrlZones("http://192.168.250.183:5001/api/zones");
 
     // connects.setUrlPortsPage("http://localhost:8080/api/boats");
 
@@ -24,8 +24,8 @@ function App() {
     // connects.setServerEvents(new EventSource('http://192.168.250.183:5001/api/boats/sse'));
     // connects.setWSCameraCameraControl(new WebSocket(`ws://192.168.250.147:7000`)); //Для выставки
 
-    connects.setWSCameraCameraControl(new WebSocket(`ws://localhost:7000`)); //Для выставки
-    // connects.setWSCameraCameraControl(new WebSocket(`ws://192.168.250.183:8080`)); // For work with LuckeR
+    // connects.setWSCameraCameraControl(new WebSocket(`ws://localhost:7000`)); //Для выставки
+    connects.setWSCameraCameraControl(new WebSocket(`ws://192.168.250.183:8080`)); // For work with LuckeR
 
     return (
         <BrowserRouter>

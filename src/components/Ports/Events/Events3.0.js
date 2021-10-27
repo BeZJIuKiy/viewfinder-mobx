@@ -20,6 +20,8 @@ import {DrawerItems} from "../Drawer/DrawerItems";
 import header from "../../../store/header";
 import {OtherCamerasMobileDrawer} from "./OtherCamerasMobileDrawer";
 import {AccountTable} from "../NewAccount/Items/AccountTable";
+import {DetectedAreasList} from "./ChangeFigure/DetectedAreasList";
+import eventsState from "../../../store/eventsState";
 
 const useStyles = makeStyles((theme) => ({
 	event: {
@@ -137,6 +139,21 @@ export const Events30 = observer(() => {
 			</Grid>
 		)
 	}
+	const twoComponents = (firstComponent, secondComponent, isComparison, classPrefix = "") => {
+		return (
+			<Grid container className={`${classes.secondGridContainer} ${classPrefix}`}>
+				<Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+					<div className={`${classes.types} ${isComparison ? "hide" : "show"}`}>
+						{firstComponent}
+					</div>
+
+					<div className={`${classes.types} ${isComparison ? "show" : "hide"}`}>
+						{secondComponent}
+					</div>
+				</Grid>
+			</Grid>
+		)
+	}
 
 	if (!Number.isInteger(camera.id)) {
 		ports.setSelectedCamera(ports.data[0].cameras[0].id);
@@ -163,7 +180,8 @@ export const Events30 = observer(() => {
 
 						<Hidden smDown>
 							<Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
-								{gridContainerItem(<OtherCameras/>)}
+								{/*{gridContainerItem(<OtherCameras/>)}*/}
+								{twoComponents(<OtherCameras/>,<DetectedAreasList/>, eventsState.isVisibleCameraCanvas)}
 							</Grid>
 						</Hidden>
 

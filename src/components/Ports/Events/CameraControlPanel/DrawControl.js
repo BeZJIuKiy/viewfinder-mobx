@@ -125,23 +125,30 @@ export const DrawControl = observer(() => {
 	}, [zoneAction, isCreatePolygon]);
 
 	const createChangePolygon = () => {
+		canvasState.setPolygonInCamera(camera.id);
+
 		eventsState.setCreatePolygon(true);
 		canvasState.tempPolygons = canvasState.saveDataTest[camera.id];
 
 		if (canvasState.tempPolygons.length) {
 			canvasState.tempPolygons = canvasState.tempPolygons.map(polygon => {
 				const points = polygon.getPoints().map(point => ({...point}));
-				const attributeType = polygon.getAttributeType();
+				const name = polygon.getName();
+				const attribute = polygon.getAttribute();
+				// const attributeType = polygon.getAttributeType();
 
 				const newPolygon = new Polygon(polygon.getId(), 0, 0, 0, 0);
 				newPolygon.setPoints(points);
-				newPolygon.setAttributeType(attributeType);
+				newPolygon.setName(name);
+				newPolygon.setAttribute(attribute);
+				// newPolygon.setAttributeType(attributeType);
 
 				return newPolygon;
 			})
 		} else {
 			canvasState.tempPolygons = [];
 		}
+
 		new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
 	}
 	const controlMovePanelCamera = () => {
@@ -168,11 +175,17 @@ export const DrawControl = observer(() => {
 
 	const saveNewPolygonsData = () => {
 		postPoints();
+		canvasState.dataSynchronization();
 		eventsState.setCreatePolygon(false);
 		eventsState.setZoneAction("");
+
+		console.log(canvasState.rawData[camera.id])
 	}
 	const deleteNewPolygonsData = () => {
+		console.log(canvasState.tempPolygons)
+
 		canvasState.saveDataTest[camera.id] = canvasState.tempPolygons;
+		canvasState.dataSynchronization();
 		eventsState.setCreatePolygon(false);
 		eventsState.setZoneAction("");
 	}
