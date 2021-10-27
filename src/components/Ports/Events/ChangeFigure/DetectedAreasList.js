@@ -294,10 +294,10 @@ export const DetectedAreasList = observer(() => {
 							<MenuItem value={ZONE_TYPE_RESTRICTED_AREA}>{`${ZONE_TYPE_RESTRICTED_AREA}`}</MenuItem>
 						</Select>
 
-						<div>
-							<span>{`Color: `}</span>
-							<input type={"color"} value={color} onChange={handleChangeColorArea}/>
-						</div>
+						{/*<div>*/}
+						{/*	<span>{`Color: `}</span>*/}
+						{/*	<input type={"color"} value={color} onChange={handleChangeColorArea}/>*/}
+						{/*</div>*/}
 
 					</ListSubheader>
 				</ListItemText>
