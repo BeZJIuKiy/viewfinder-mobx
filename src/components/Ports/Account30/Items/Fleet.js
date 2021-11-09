@@ -4,6 +4,8 @@ import account, {FLEET} from "../../../../store/account";
 import {AccountTable} from "./AccountTable";
 import {useWindowDimensions} from "../../../../useHooks/useWindowDimensions";
 import {AccordionFromTable} from "./Accordion";
+import {Grid} from "@material-ui/core";
+import {FleetCard} from "../../NewAccount/Items/FleetCard";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -126,7 +128,6 @@ export const Fleet = () => {
             {content()}
         </div>
     );
-    const {width} = useWindowDimensions();
 
     const fleetTitle = FLEET;
     const fleetSubtitle = "";
@@ -146,13 +147,21 @@ export const Fleet = () => {
         )
     };
     // const fleetSubtitle = "Here you can change information of your fleet";
-    const fleetActionList = () => {
+    // const fleetActionList = () => {
+    //     return (
+    //         <div className={classes.content}>
+    //             {width <= 425
+    //                 ? <AccordionFromTable tableData={allFleetFull()} header={"IMO"}/>
+    //                 : <AccountTable secretTitle={"Fleet: full Fleet"} rowsData={allFleetFull()} search={`IMO`}
+    //                                 searchLabel={`Fleet IMO`}/>}
+    //         </div>
+    //     )
+    // };
+
+    const fleetActionList = (ship) => {
         return (
             <div className={classes.content}>
-
-                {width <= 425
-                    ? <AccordionFromTable tableData={allFleetFull()} header={"IMO"}/>
-                    : <AccountTable secretTitle={"Fleet: full Fleet"} rowsData={allFleetFull()} search={`IMO`} searchLabel={`Fleet IMO`}/>}
+                <FleetCard/>
             </div>
         )
     };
@@ -161,7 +170,16 @@ export const Fleet = () => {
         <div className={classes.mainContainer}>
             <div className={classes.personalData}>
                 <div className={classes.personalDataItem}>
-                    {informationBlock(classes.personalDataContent, fleetTitle, fleetSubtitle, fleetActionList)}
+                    {/*{informationBlock(classes.personalDataContent, fleetTitle, fleetSubtitle, fleetActionList)}*/}
+                    <Grid container>
+                        {account.myFleet.map((ship) => {
+                            return (
+                                <Grid item>
+                                    {fleetActionList(ship)}
+                                </Grid>
+                            )
+                        })}
+                    </Grid>
                 </div>
             </div>
             <div className={classes.substrate}/>
