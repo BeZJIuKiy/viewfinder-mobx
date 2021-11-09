@@ -11,7 +11,7 @@ import Polygons from "./Polygons";
 const useStyles = makeStyles((theme) => ({
 
 }))
-export const DeletePolygonDialog = observer(({area, index, isOpen, handleClose, btnStyles}) => {
+export const DeletePolygonDialog = observer(({area, index, isOpen, handleClose, btnStyles, isSaveData = false}) => {
 	const classes = useStyles();
 
 	const {camera} = ports.selectedObjects;
@@ -19,6 +19,9 @@ export const DeletePolygonDialog = observer(({area, index, isOpen, handleClose, 
 	const handleDeletePolygon = () => {
 		handleClose(area);
 		canvasState.deletePolygon(camera.id, index);
+
+		if (isSaveData) canvasState.dataSynchronization();
+
 		new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
 	}
 	const handleCloseDialog = () => {
