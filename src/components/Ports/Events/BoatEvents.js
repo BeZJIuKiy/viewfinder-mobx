@@ -310,6 +310,8 @@ export const BoatEvents = observer(() => {
 		}
 	}, [imageId]);
 
+	console.log(ports.data[portIndex].cameras)
+
 	const rows = [];
 	// data.forEach(row => {
 	curCamera.events.forEach(row => {

@@ -81,7 +81,7 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
     const classes = useStyles();
     const template = {...account.templateShipData, vesselTypeDetailed: ports.selectedObjects.cardData?.typeVessel};
 
-    const {port, camera, event, cardData} = ports.selectedObjects;
+    const {port, camera, cardData} = ports.selectedObjects;
 
     const [expanded, setExpanded] = React.useState(false);
     const [isRead, setRead] = React.useState(true);
@@ -112,7 +112,7 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
         localCardData.fromEvent.isFromEvent = true;
         localCardData.fromEvent.portId = port.id;
         localCardData.fromEvent.cameraId = camera.id;
-        localCardData.fromEvent.eventId = event.id;
+        localCardData.fromEvent.eventId = cardData.id;
 
         let isError = false;
         const errorField = {};

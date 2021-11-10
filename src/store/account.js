@@ -158,6 +158,12 @@ class account {
 			: this.myFleet.push(ship);
 	}
 	findShip = (imo) => this.myFleet.find((ship) => ship.imo === imo);
+	deleteShip = (shipId) => {
+		const shipIndex = this.myFleet.findIndex(({id}) => id === shipId);
+		if (shipIndex === -1) return;
+
+		this.myFleet.splice(shipIndex, 1);
+	}
 }
 
 

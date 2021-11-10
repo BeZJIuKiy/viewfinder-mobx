@@ -117,6 +117,12 @@ export const FleetCard = observer(({ship}) => {
         setLocalCardData({...localCardData, [key]: e.target.value})
         setErrorFields({...errorFields, [key]: false});
     }
+    const handleDeleteShip = () => {
+        const {isFromEvent, portId, cameraId, eventId} = localCardData.fromEvent;
+
+        account.deleteShip(ship.id);
+        if (isFromEvent) ports.changeEvent(portId, cameraId, clearEvent(portId, cameraId, eventId));
+    }
 
     const handleConfirm = () => {
         const {isFromEvent, portId, cameraId, eventId} = localCardData.fromEvent;
@@ -193,7 +199,7 @@ export const FleetCard = observer(({ship}) => {
         )
     }
 
-    const changeEvent = () => {
+    const changeFleetCard = () => {
         const firstTitle = "Click and change the ship details to add to your fleet";
         const secondTitle = `Change the ship data and click on "Add Ship" or click "Cancel"`;
 
@@ -212,6 +218,24 @@ export const FleetCard = observer(({ship}) => {
             </Tooltip>
         )
     }
+
+    const deleteFleetCard = (shipId) => {
+        const title = "Click for Delete this ship from Your fleet";
+        const color = "default";
+
+        return (
+            <Tooltip
+                enterDelay={delay}
+                enterNextDelay={delay}
+                title={<span style={{fontSize: 16}}>{`${title}`}</span>}
+            >
+                <IconButton aria-label="edit" onClick={handleDeleteShip} color={color}>
+                    <DeleteIcon/>
+                </IconButton>
+            </Tooltip>
+        )
+    }
+
     const editedEvent = (portId, cameraId, eventId) => {
         const portIndex = ports.data.findIndex(({id}) => id === portId);
         const cameraIndex = ports.data[portIndex].cameras.findIndex(({id}) => id === cameraId);
@@ -226,6 +250,21 @@ export const FleetCard = observer(({ship}) => {
             typeVessel: localCardData.vesselTypeDetailed,
         })
     }
+
+    const clearEvent = (portId, cameraId, eventId) => {
+        const portIndex = ports.data.findIndex(({id}) => id === portId);
+        const cameraIndex = ports.data[portIndex].cameras.findIndex(({id}) => id === cameraId);
+        const event = ports.data[portIndex].cameras[cameraIndex].events.find(({id}) => id === eventId);
+
+        return ({
+            ...event,
+            imo: "",
+            mmsi: "",
+            name: "",
+            callSign: "",
+        })
+    }
+
 
     const delay = 500;
 
@@ -263,7 +302,8 @@ export const FleetCard = observer(({ship}) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                {changeEvent()}
+                {changeFleetCard()}
+                {deleteFleetCard()}
                 <IconButton
                     className={clsx(classes.expand, {
                         [classes.expandOpen]: expanded,
@@ -291,7 +331,7 @@ export const FleetCard = observer(({ship}) => {
                     <div className={`${classes.containerConfirmBtn} ${isRead ? "hide" : "show"}`}>
                         <Grid container justify={"center"}>
                             {confirmBtn("cancel", "cancel", handleCancel)}
-                            {confirmBtn("add ship", "ok", handleConfirm)}
+                            {confirmBtn("ok", "ok", handleConfirm)}
                         </Grid>
                     </div>
                 </CardContent>
