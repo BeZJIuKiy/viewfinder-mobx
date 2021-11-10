@@ -19,12 +19,10 @@ export const SetPolygonColorDialog = observer(({area, index, isOpen, handleClose
 
     const handleChangeColor = (e) => {
         setValue(e.rgb)
-        // setValue(e.hex)
     }
     const handleSavingChanges = () => {
         handleClose(area);
-        canvasState.setPolygonColor(camera.id, index, value);
-        // canvasState.deletePolygon(camera.id, index);
+        canvasState.changePolygonAttributeColor(camera.id, index, value);
         new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId);
     }
     const handleCloseDialog = () => {

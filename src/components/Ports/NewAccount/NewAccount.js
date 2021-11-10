@@ -30,6 +30,7 @@ import {FullTableDevices} from "./Items/FullTableDevices";
 import {SmallTableFleet} from "./Items/SmallTableFleet";
 import {FullTableFleet} from "./Items/FullTableFleet";
 import {Payments} from "./Items/Payments";
+import {MyFleet} from "./Items/MyFleet";
 
 const useStyles = makeStyles((theme) => {
 	// const bgcDrawer = "#444";
@@ -198,7 +199,8 @@ export const NewAccount = observer(() => {
 			}
 			case FLEET: {
 				const center = [
-					{prefix: "", component: <FullTableFleet/>},
+					{prefix: "", component: <MyFleet/>},
+					// {prefix: "", component: <FullTableFleet/>},
 				]
 
 				setContent([center]);

@@ -85,11 +85,11 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 
 	const [expanded, setExpanded] = React.useState(false);
 	const [isRead, setRead] = React.useState(true);
-	const [localCardData, setLocalCardData] = React.useState(template);
+	const [localCardData, setLocalCardData] = React.useState({...template, images: []});
 	const [errorFields, setErrorFields] = React.useState({});
 
 	useEffect(() => {
-		setLocalCardData(cardData?.name ? account.findShip(cardData.imo) : template);
+		setLocalCardData(cardData?.name ? account.findShip(cardData.imo) : {...template, images: []});
 	}, [isOpen])
 
 	const handleExpandClick = () => {
@@ -140,7 +140,7 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
 	}
 	const handleCancel = () => {
 		setRead(true);
-		setLocalCardData(cardData.name ? account.findShip(cardData.imo) : template);
+		setLocalCardData(cardData.name ? account.findShip(cardData.imo) : {...template, images: []});
 		setErrorFields({});
 	}
 	const handleDanger = () => {
