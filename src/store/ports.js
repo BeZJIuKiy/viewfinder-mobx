@@ -1,6 +1,6 @@
 // Icons
 import mIcon_ports from '../components/Ports/Drawer/images/harborIcon02.png';
-import mIcon_cameras from '../components/Ports/Drawer/images/camIcon.png';
+import mIcon_cameras from '../components/Ports/Drawer/images/CamIcon.png';
 import previewSPbPort from '../img/preView̆.jpg';
 import previewSPbPortPTZ from '../img/preView̆0211.jpg';
 import previewImg2 from '../img/preView̆02.jpg';
@@ -78,8 +78,8 @@ class ports {
 					description: 'Club Parking STATIC',
 					coordinates: [59.977915, 30.240934],
 					zoom: 15,
-					link: 'https://rtsp.me/embed/ayAby5ia',
-					// link: "https://www.youtube.com/embed/UYCMrgERcyA?autoplay=1&mute=1",
+					// link: 'https://rtsp.me/embed/ayAby5ia',
+					link: "https://www.youtube.com/embed/UYCMrgERcyA?autoplay=1&mute=1",
 					previewLink: previewSPbPort,
 
 					// link: 'https://rtsp.me/embed/ayAby5ia',
@@ -396,6 +396,8 @@ class ports {
 		const eventIndex = camera.events.findIndex(({id}) => id === event.id)
 		camera.events[eventIndex] = event;
 
+		console.log(event)//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! JCB<RFFFFFFFFFFF
+
 		this.setCard(event.id)
 	}
 	findEvent = (portId, cameraId, eventId) => {
@@ -436,7 +438,6 @@ class ports {
 	};
 
 	clearSelectedObjects = () => {
-		console.log("123")
 		this.selectedObjects = {
 			port: {},
 			camera: {},

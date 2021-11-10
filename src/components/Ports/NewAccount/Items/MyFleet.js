@@ -33,8 +33,8 @@ export const MyFleet = observer(() => {
         <div className={classes.smallTable}>
             <div className={classes.title}>Fleet</div>
             <Grid container className={classes.gridContainer} spacing={2} justify={"center"}>
-                {account.myFleet.map((ship) =>
-                    <Grid item>
+                {account.myFleet.map((ship, index) =>
+                    <Grid key={`MyFleet-${index}`} item>
                         <FleetCard ship={ship}/>
                     </Grid>
                 )}

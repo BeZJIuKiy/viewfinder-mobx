@@ -93,21 +93,18 @@ const useStyles = makeStyles((theme) => ({
 
 export const FleetCard = observer(({ship}) => {
     const classes = useStyles();
-    const template = {...account.templateShipData};
+    const template = {...ship, images: [...ship.images]};
 
     const {port, camera, cardData} = ports.selectedObjects;
-    // const {id, name, imo, mmsi, vesselTypeDetailed, callSign, flag, yearBuilt, images, status} = ship;
 
     const [expanded, setExpanded] = React.useState(false);
     const [isRead, setRead] = React.useState(true);
-    const [localCardData, setLocalCardData] = React.useState(ship);
+    const [localCardData, setLocalCardData] = React.useState(template);
     const [errorFields, setErrorFields] = React.useState({});
 
     useEffect(() => {
-        setLocalCardData(ship);
-        // setLocalCardData(cardData?.name ? account.findShip(cardData.imo) : template);
+        setLocalCardData(template);
     }, [isRead]);
-    // }, [isOpen]);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -122,14 +119,13 @@ export const FleetCard = observer(({ship}) => {
     }
 
     const handleConfirm = () => {
-        localCardData.images.push(cardData.imageLink);
-        localCardData.status = "Active";
+        const {isFromEvent, portId, cameraId, eventId} = localCardData.fromEvent;
 
         let isError = false;
         const errorField = {};
 
         for (const key in localCardData) {
-            if (localCardData[key]?.length) continue;
+            if (localCardData[key]?.length || key === "id" || key === "fromEvent") continue;
             errorField[key] = true;
             isError = true;
         }
@@ -143,14 +139,9 @@ export const FleetCard = observer(({ship}) => {
 
         setRead(true);
 
-        const newEvent = {
-            ...cardData,
-            imo: localCardData.imo,
-            mmsi: localCardData.mmsi,
-            name: localCardData.name,
-            callSign: localCardData.callSign,
+        if (isFromEvent) {
+            ports.changeEvent(portId, cameraId, editedEvent(portId, cameraId, eventId));
         }
-        ports.changeEvent(port.id, camera.id, newEvent)
         account.addShipInMyFleet(localCardData);
     }
     const handleCancel = () => {
@@ -221,6 +212,20 @@ export const FleetCard = observer(({ship}) => {
             </Tooltip>
         )
     }
+    const editedEvent = (portId, cameraId, eventId) => {
+        const portIndex = ports.data.findIndex(({id}) => id === portId);
+        const cameraIndex = ports.data[portIndex].cameras.findIndex(({id}) => id === cameraId);
+        const event = ports.data[portIndex].cameras[cameraIndex].events.find(({id}) => id === eventId);
+
+        return ({
+            ...event,
+            imo: localCardData.imo,
+            mmsi: localCardData.mmsi,
+            name: localCardData.name,
+            callSign: localCardData.callSign,
+            typeVessel: localCardData.vesselTypeDetailed,
+        })
+    }
 
     const delay = 500;
 
@@ -241,17 +246,17 @@ export const FleetCard = observer(({ship}) => {
                 // subheader="September 14, 2016"
 
                 className={`${classes.cardHeader} ${cardData?.typeError?.toLowerCase()}`}
-                title={localCardData.name || "Ship not found"}
-                subheader={localCardData.vesselTypeDetailed || "Unknown ship type"}
+                title={ship.name || "Ship not found"}
+                subheader={ship.vesselTypeDetailed || "Unknown ship type"}
             />
             <CardMedia
                 className={classes.media}
-                image={`data:image/png;base64,${localCardData?.images[0]}`}
-                title={localCardData.name || "No ship name"}
+                image={`data:image/png;base64,${ship?.images[0]}`}
+                title={ship.name || "No ship name"}
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    {`Status: ${localCardData.status || "Unknown"}`}
+                    {`Status: ${ship.status || "Unknown"}`}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                     Do you want to add this ship to your fleet?

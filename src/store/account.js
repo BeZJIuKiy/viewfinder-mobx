@@ -91,6 +91,12 @@ class account {
 		yearBuilt: "",
 		images: [],
 		status: "",
+		fromEvent: {
+			isFromEvent: false,
+			portId: null,
+			cameraId: null,
+			eventId: null,
+		}
 	};
 
 
@@ -120,6 +126,12 @@ class account {
 				yearBuilt: 2020,
 				images: [],
 				status: 'Active',
+				fromEvent: {
+					isFromEvent: false,
+					portId: null,
+					cameraId: null,
+					eventId: null,
+				}
 
 				// vesselTypeGeneric: 'Cargo - XXX',
 				// grossTonnage: 'XXXXXX',

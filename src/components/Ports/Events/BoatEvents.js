@@ -287,7 +287,9 @@ export const BoatEvents = observer(() => {
 		},
 	} = ports;
 
-	const [data, setData] = useState(camera.events);
+	const portIndex = ports.data.findIndex(({id}) => id === port.id);
+	const curCamera = ports.data[portIndex].cameras.find(({id}) => id === camera.id);
+
 	const [order, setOrder] = React.useState('asc');
 	const [orderBy, setOrderBy] = React.useState('date');
 	const [selected, setSelected] = React.useState([]);
@@ -297,8 +299,6 @@ export const BoatEvents = observer(() => {
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
 	useEffect(() => {
-		setData(camera.events);
-
 		ports.setVisibleSelectedImage(false);
 		setSelected([]);
 	}, [camera.id, camera.events.length]);
@@ -311,7 +311,8 @@ export const BoatEvents = observer(() => {
 	}, [imageId]);
 
 	const rows = [];
-	data.forEach(row => {
+	// data.forEach(row => {
+	curCamera.events.forEach(row => {
 		rows.push({
 			id: row.id,
 			imo: row.imo,
@@ -325,6 +326,8 @@ export const BoatEvents = observer(() => {
 			description: row.description,
 		})
 	});
+
+	// console.log(data)
 
 	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === 'asc';
