@@ -142,7 +142,6 @@ export const FleetCard = observer(({ship}) => {
             if (localCardData[key]?.length || Number.isInteger(localCardData[key]) || key === "fromEvent" || key === "images") continue;
             errorField[key] = true;
             isError = true;
-            console.log(key)
         }
 
         if (isError) {
