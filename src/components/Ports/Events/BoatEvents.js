@@ -310,12 +310,22 @@ export const BoatEvents = observer(() => {
 		}
 	}, [imageId]);
 
-	console.log(ports.data[portIndex].cameras)
-
-	const rows = [];
-	// data.forEach(row => {
-	curCamera.events.forEach(row => {
-		rows.push({
+	// const rows = [];
+	// curCamera.events.forEach(row => {
+	// 	rows.push({
+	// 		id: row.id,
+	// 		imo: row.imo,
+	// 		mmsi: row.mmsi,
+	// 		date: row.date,
+	// 		callSign: row.callSign,
+	// 		typeError: row.typeError,
+	// 		typeVessel: row.typeVessel,
+	// 		country: row.country,
+	// 		imageLink: row.img,
+	// 		description: row.description,
+	// 	})
+	// });
+	const rows = curCamera.events.map(row => ({
 			id: row.id,
 			imo: row.imo,
 			mmsi: row.mmsi,
@@ -327,9 +337,8 @@ export const BoatEvents = observer(() => {
 			imageLink: row.img,
 			description: row.description,
 		})
-	});
+	);
 
-	// console.log(data)
 
 	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === 'asc';

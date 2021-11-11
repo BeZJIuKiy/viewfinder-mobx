@@ -25,6 +25,7 @@ import {Button, Dialog, Grid, Hidden, Input, Paper, Tooltip} from "@material-ui/
 import account from "../../../../store/account";
 import {DRAGGABLE_TESTING, PaperComponent} from "../../../../useHooks/useDraggable";
 import {useHexToRgba} from "../../../../useHooks/useHexToRgba";
+import {DeleteShipDialog} from "./DeleteShipDialog";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -99,6 +100,7 @@ export const FleetCard = observer(({ship}) => {
 
     const [expanded, setExpanded] = React.useState(false);
     const [isRead, setRead] = React.useState(true);
+    const [isOpen, setOpen] = React.useState(false);
     const [localCardData, setLocalCardData] = React.useState(template);
     const [errorFields, setErrorFields] = React.useState({});
 
@@ -117,11 +119,16 @@ export const FleetCard = observer(({ship}) => {
         setLocalCardData({...localCardData, [key]: e.target.value})
         setErrorFields({...errorFields, [key]: false});
     }
-    const handleDeleteShip = () => {
-        const {isFromEvent, portId, cameraId, eventId} = localCardData.fromEvent;
+    const handleOpenDeleteDialog = () => {
+        setOpen(true);
 
-        account.deleteShip(ship.id);
-        if (isFromEvent) ports.changeEvent(portId, cameraId, clearEvent(portId, cameraId, eventId));
+        // const {isFromEvent, portId, cameraId, eventId} = localCardData.fromEvent;
+        //
+        // account.deleteShip(ship.id);
+        // if (isFromEvent) ports.changeEvent(portId, cameraId, clearEvent(portId, cameraId, eventId));
+    }
+    const handleCloseDeleteDialog = () => {
+        setOpen(false);
     }
 
     const handleConfirm = () => {
@@ -131,9 +138,11 @@ export const FleetCard = observer(({ship}) => {
         const errorField = {};
 
         for (const key in localCardData) {
-            if (localCardData[key]?.length || key === "id" || key === "fromEvent") continue;
+            // if (localCardData[key]?.length || key === "id" || key === "fromEvent") continue;
+            if (localCardData[key]?.length || Number.isInteger(localCardData[key]) || key === "fromEvent" || key === "images") continue;
             errorField[key] = true;
             isError = true;
+            console.log(key)
         }
 
         if (isError) {
@@ -148,7 +157,7 @@ export const FleetCard = observer(({ship}) => {
         if (isFromEvent) {
             ports.changeEvent(portId, cameraId, editedEvent(portId, cameraId, eventId));
         }
-        account.addShipInMyFleet(localCardData);
+        account.changeShip(ship, localCardData);
     }
     const handleCancel = () => {
         setRead(true);
@@ -219,7 +228,7 @@ export const FleetCard = observer(({ship}) => {
         )
     }
 
-    const deleteFleetCard = (shipId) => {
+    const deleteFleetCard = () => {
         const title = "Click for Delete this ship from Your fleet";
         const color = "default";
 
@@ -229,7 +238,7 @@ export const FleetCard = observer(({ship}) => {
                 enterNextDelay={delay}
                 title={<span style={{fontSize: 16}}>{`${title}`}</span>}
             >
-                <IconButton aria-label="edit" onClick={handleDeleteShip} color={color}>
+                <IconButton aria-label="edit" onClick={handleOpenDeleteDialog} color={color}>
                     <DeleteIcon/>
                 </IconButton>
             </Tooltip>
@@ -251,91 +260,79 @@ export const FleetCard = observer(({ship}) => {
         })
     }
 
-    const clearEvent = (portId, cameraId, eventId) => {
-        const portIndex = ports.data.findIndex(({id}) => id === portId);
-        const cameraIndex = ports.data[portIndex].cameras.findIndex(({id}) => id === cameraId);
-        const event = ports.data[portIndex].cameras[cameraIndex].events.find(({id}) => id === eventId);
-
-        return ({
-            ...event,
-            imo: "",
-            mmsi: "",
-            name: "",
-            callSign: "",
-        })
-    }
-
-
     const delay = 500;
 
     return (
-        <Card className={classes.root}>
-            <CardHeader
-                // avatar={
-                // 	<Avatar aria-label="recipe" className={classes.avatar}>
-                // 		R
-                // 	</Avatar>
-                // }
-                // action={
-                // 	<IconButton aria-label="settings">
-                // 		<MoreVertIcon />
-                // 	</IconButton>
-                // }
-                // title="Shrimp and Chorizo Paella"
-                // subheader="September 14, 2016"
+        <>
+            <Card className={classes.root}>
+                <CardHeader
+                    // avatar={
+                    // 	<Avatar aria-label="recipe" className={classes.avatar}>
+                    // 		R
+                    // 	</Avatar>
+                    // }
+                    // action={
+                    // 	<IconButton aria-label="settings">
+                    // 		<MoreVertIcon />
+                    // 	</IconButton>
+                    // }
+                    // title="Shrimp and Chorizo Paella"
+                    // subheader="September 14, 2016"
 
-                className={`${classes.cardHeader} ${cardData?.typeError?.toLowerCase()}`}
-                title={ship.name || "Ship not found"}
-                subheader={ship.vesselTypeDetailed || "Unknown ship type"}
-            />
-            <CardMedia
-                className={classes.media}
-                image={`data:image/png;base64,${ship?.images[0]}`}
-                title={ship.name || "No ship name"}
-            />
-            <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    {`Status: ${ship.status || "Unknown"}`}
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    Do you want to add this ship to your fleet?
-                </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-                {changeFleetCard()}
-                {deleteFleetCard()}
-                <IconButton
-                    className={clsx(classes.expand, {
-                        [classes.expandOpen]: expanded,
-                    })}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                    disabled={!isRead}
-                >
-                    <ExpandMoreIcon/>
-                </IconButton>
-            </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    className={`${classes.cardHeader} ${cardData?.typeError?.toLowerCase()}`}
+                    title={ship.name || "Ship not found"}
+                    subheader={ship.vesselTypeDetailed || "Unknown ship type"}
+                />
+                <CardMedia
+                    className={classes.media}
+                    image={`data:image/png;base64,${ship?.images[0]}`}
+                    title={ship.name || "No ship name"}
+                />
                 <CardContent>
-                    <Grid container>
-                        {content("Ship Name", localCardData.name, "name")}
-                        {content("IMO", localCardData.imo, "imo")}
-                        {content("MMSI", localCardData.mmsi, "mmsi")}
-                        {content("Ship Type", localCardData.vesselTypeDetailed, "vesselTypeDetailed")}
-                        {content("Call Sign", localCardData.callSign, "callSign")}
-                        {content("Flag", localCardData.flag, "flag")}
-                        {content("Year Built", localCardData.yearBuilt, "yearBuilt")}
-                    </Grid>
-
-                    <div className={`${classes.containerConfirmBtn} ${isRead ? "hide" : "show"}`}>
-                        <Grid container justify={"center"}>
-                            {confirmBtn("cancel", "cancel", handleCancel)}
-                            {confirmBtn("ok", "ok", handleConfirm)}
-                        </Grid>
-                    </div>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {`Status: ${ship.status || "Unknown"}`}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        Do you want to add this ship to your fleet?
+                    </Typography>
                 </CardContent>
-            </Collapse>
-        </Card>
+                <CardActions disableSpacing>
+                    {changeFleetCard()}
+                    {deleteFleetCard()}
+                    <IconButton
+                        className={clsx(classes.expand, {
+                            [classes.expandOpen]: expanded,
+                        })}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                        disabled={!isRead}
+                    >
+                        <ExpandMoreIcon/>
+                    </IconButton>
+                </CardActions>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                        <Grid container>
+                            {content("Ship Name", localCardData.name, "name")}
+                            {content("IMO", localCardData.imo, "imo")}
+                            {content("MMSI", localCardData.mmsi, "mmsi")}
+                            {content("Ship Type", localCardData.vesselTypeDetailed, "vesselTypeDetailed")}
+                            {content("Call Sign", localCardData.callSign, "callSign")}
+                            {content("Flag", localCardData.flag, "flag")}
+                            {content("Year Built", localCardData.yearBuilt, "yearBuilt")}
+                        </Grid>
+
+                        <div className={`${classes.containerConfirmBtn} ${isRead ? "hide" : "show"}`}>
+                            <Grid container justify={"center"}>
+                                {confirmBtn("cancel", "cancel", handleCancel)}
+                                {confirmBtn("ok", "ok", handleConfirm)}
+                            </Grid>
+                        </div>
+                    </CardContent>
+                </Collapse>
+            </Card>
+            <DeleteShipDialog ship={ship} isOpen={isOpen} handleClose={handleCloseDeleteDialog} btnStyles={classes.btn}/>
+        </>
     );
 })

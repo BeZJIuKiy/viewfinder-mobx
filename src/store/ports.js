@@ -395,12 +395,6 @@ class ports {
 		const cameraIndex = this.data[portIndex].cameras.findIndex(({id}) => id === cameraId);
 		const eventIndex = this.data[portIndex].cameras[cameraIndex].events.findIndex(({id}) => id === event.id);
 
-		// if (Number.isInteger(this.selectedObjects.port?.id) === false) {
-		// 	this.selectedObjects.port = this.data[portIndex];
-		// 	this.selectedObjects.camera = this.data[portIndex].cameras[cameraIndex];
-		// 	this.selectedObjects.event = this.data[portIndex].cameras[cameraIndex].events[eventIndex];
-		// }
-
 		this.data[portIndex].cameras[cameraIndex].events[eventIndex] = {...event};
 		this.selectedObjects.cardData = this.data[portIndex].cameras[cameraIndex].events[eventIndex];
 	}

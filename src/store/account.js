@@ -157,6 +157,10 @@ class account {
 			? this.myFleet[shipIndex] = ship
 			: this.myFleet.push(ship);
 	}
+	changeShip = (oldShip, newShip) => {
+		const shipIndex = this.myFleet.findIndex(({imo}) => imo === oldShip.imo)
+		this.myFleet[shipIndex] = newShip;
+	}
 	findShip = (imo) => this.myFleet.find((ship) => ship.imo === imo);
 	deleteShip = (shipId) => {
 		const shipIndex = this.myFleet.findIndex(({id}) => id === shipId);

@@ -159,21 +159,6 @@ export const DetectedAreasList = observer(() => {
         polygonItem.setPolygon(polygonItem.showCenterPoint());
         polygonItem.polygonSelection();
     }, [isClicked]);
-    useEffect(() => {
-        // if (canvasState.saveDataTest[camera.id].length === 0) return;
-        //
-        // canvasState.saveDataTest[camera.id].forEach((area) => {
-        //     setMultiColor({...multiColor, [area.id]: area.getAttributeRgba()})
-        // })
-
-        // if (!canvasState.isPolygonSelected) return;
-
-        // const {r, g, b} = canvasState.saveDataTest[camera.id][canvasState.currentPolygonNum].getAttributeRgba();
-        // const rgb = `#${r.toString(16)}${g.toString(16)}${b.toString(16)}`;
-        // // console.log(rgba)
-        //
-        // setColor(rgb);
-    }, [canvasState.isPolygonSelected, canvasState.currentPolygonNum])
 
     const handleStartEditArea = (area) => {
         setTempAreaData({
