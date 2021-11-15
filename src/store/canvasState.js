@@ -88,7 +88,7 @@ class CanvasState {
 				"canvasReSize",
 				"readyRectCounter",
 				// "isPolygonSelected",
-				"currentPolygonNum",
+				// "currentPolygonNum",
 				"rawData",
 				// "saveDataTest",
 			],

@@ -1,6 +1,6 @@
 // Icons
 import mIcon_ports from '../components/Ports/Drawer/images/harborIcon02.png';
-import mIcon_cameras from '../components/Ports/Drawer/images/CamIcon.png';
+import mIcon_cameras from '../components/Ports/Drawer/images/camIcon.png';
 import previewSPbPort from '../img/preView̆.jpg';
 import previewSPbPortPTZ from '../img/preView̆0211.jpg';
 import previewImg2 from '../img/preView̆02.jpg';
