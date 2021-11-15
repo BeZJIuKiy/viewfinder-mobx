@@ -41,10 +41,12 @@ const useStyles = makeStyles((theme) => ({
 		margin: theme.spacing(0.5),
 
 		"&.telegram": {
+			fontSize: "1.8vw",
 			color: "white",
 			borderRadius: "50%",
 			backgroundColor: "#777",
-			paddingRight: "5%",
+			padding: 5,
+			paddingLeft: "3px",
 
 			"&:hover": {
 				color: "white",
@@ -52,10 +54,12 @@ const useStyles = makeStyles((theme) => ({
 			},
 		},
 		"&.phone": {
+			fontSize: "1.8vw",
 			color: "white",
 			borderRadius: "50%",
 			backgroundColor: "#777",
 			padding: 5,
+			// padding: "10%",
 
 			"&:hover": {
 				color: "white",
@@ -63,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 			},
 		},
 		"&.email": {
+			fontSize: "1.8vw",
 			color: "white",
 			borderRadius: "50%",
 			backgroundColor: "#777",

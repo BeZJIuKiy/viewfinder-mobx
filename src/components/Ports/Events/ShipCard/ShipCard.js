@@ -118,7 +118,14 @@ export const ShipCard = observer(({isOpen, btnStyles, handleClose}) => {
         const errorField = {};
 
         for (const key in localCardData) {
-            if (localCardData[key]?.length || key === "id" || key === "fromEvent") continue;
+            const isExceptions = key === "id"
+                || key === "fromEvent"
+                || key === "mmsi"
+                || key === "flag"
+                || key === "yearBuilt"
+                || key === "callSign";
+
+            if (localCardData[key]?.length || isExceptions) continue;
 
             errorField[key] = true;
             isError = true;

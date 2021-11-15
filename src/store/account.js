@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {userAvatar} from "./ports";
+import {testAccountImg, userAvatar} from "./ports";
 import Icon from "@mdi/react";
 
 // ICONS
@@ -102,7 +102,20 @@ class account {
 
 	constructor() {
 		makeAutoObservable(this, {}, {autoBind: true});
-		this.myFleet = this.testFleet();
+		// this.myFleet = this.testFleet();
+		this.myFleet.push({
+			...this.templateShipData,
+			id: this.counter.fleetId++,
+			name: "ServiceSoft",
+			imo: "111122224444",
+			mmsi: "555566667777",
+			vesselTypeDetailed: "Tow Boat",
+			callSign: "Test Sign",
+			flag: "Test",
+			yearBuilt: "2020",
+			images: [testAccountImg],
+			status: "Active",
+		});
 
 		makePersistable(this, {
 			name: "AccountStore",
