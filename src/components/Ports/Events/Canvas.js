@@ -157,7 +157,6 @@ export const Canvas = observer(() => {
         reSizeCanvas(coefficient);
     }, [ratio, windowSize.width, windowSize.height, ports.selectedObjects.camera, ports.selectedObjects.shipImage.isVisible]);
     useEffect(() => {
-        // console.log("Canvas - isPolygonSelected")
         setShowContextMenu(canvasState.isPolygonSelected && eventsState.isCreatePolygon);
     }, [canvasState.isPolygonSelected])
 
@@ -177,21 +176,21 @@ export const Canvas = observer(() => {
             <div className={classes.canvasDraw}>
                 {/* Для потока c сайта RTCP */}
                 <div className={classes.forPreview} ref={iframeRef}>
-                    {/*<iframe*/}
-                    {/*	src={ports.selectedObjects.camera.link}*/}
-                    {/*	width={width} height={height}*/}
-                    {/*	title="YouTube video player"*/}
-                    {/*	ref={iframeRef}*/}
-                    {/*	frameBorder="0"*/}
-                    {/* allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"*/}
-                    {/*	allowFullScreen*/}
-                    {/*/>*/}
-
-                    <video
-                        width={width} height={height}
-                        src={ports.selectedObjects.camera.link}
-                        controls autoPlay muted
+                    <iframe
+                    	src={ports.selectedObjects.camera.link}
+                    	width={width} height={height}
+                    	title="YouTube video player"
+                    	ref={iframeRef}
+                    	frameBorder="0"
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    	allowFullScreen
                     />
+
+                    {/*<video*/}
+                    {/*    width={width} height={height}*/}
+                    {/*    src={ports.selectedObjects.camera.link}*/}
+                    {/*    controls autoPlay muted*/}
+                    {/*/>*/}
                 </div>
 
                 {/* Для JPG потока */}

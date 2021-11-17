@@ -139,9 +139,6 @@ export const Header = observer(({mobileDrawer}) => {
                     }, time);
                 })
             }
-        } else if (camera.id === 2) {
-            // console.log("3000, 6000");
-            // timePoints.push(3000, 6000);
         }
     }, [history.location.pathname]);
 
