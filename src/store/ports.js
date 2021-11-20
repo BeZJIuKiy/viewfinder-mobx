@@ -462,6 +462,7 @@ class ports {
 		//     },
 		// );
 
+
 	};
 
 	setSelectedPort = (portId) => {

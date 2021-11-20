@@ -27,6 +27,12 @@ export default class Polygon {
         fillColor: "rgba(170, 170, 170, 0.3)",
         rgba: {r: 0, g: 0, b: 0, a: 0.3},
     }
+    #standardAttributeType = {
+        [ZONE_TYPE_DEFAULT]: {r: 170, g: 170, b: 170, a: 0.3},
+        [ZONE_TYPE_IN_OUT]: {r: 32, g: 162, b: 211, a: 0.3},
+        [ZONE_TYPE_PARKING]: {r: 211, g: 168, b: 32, a: 0.3},
+        [ZONE_TYPE_RESTRICTED_AREA]: {r: 211, g: 32, b: 32, a: 0.3},
+    }
 
     constructor(id, x, y, w, h) {
         this.id = id;
@@ -107,26 +113,31 @@ export default class Polygon {
 
     setAttributeType = (type) => {
         this.#attribute.type = type;
-        switch (type) {
-            case ZONE_TYPE_IN_OUT: {
-                this.setAttributeFillColor(32, 165, 211, 0.3);
-                break;
-            }
-            case ZONE_TYPE_PARKING: {
-                this.setAttributeFillColor(211, 168, 32, 0.3);
-                break;
-            }
-            case ZONE_TYPE_RESTRICTED_AREA: {
-                this.setAttributeFillColor(211, 32, 32, 0.3);
-                break;
-            }
-            default: {
-                this.setAttributeFillColor(170, 170, 170, 0.3);
-            }
-        }
+
+        const {r, g, b, a} = this.#standardAttributeType[type];
+        this.setAttributeFillColor(r, g, b, a);
+
+        // switch (type) {
+        //     case ZONE_TYPE_IN_OUT: {
+        //         this.setAttributeFillColor(32, 165, 211, 0.3);
+        //         break;
+        //     }
+        //     case ZONE_TYPE_PARKING: {
+        //         this.setAttributeFillColor(211, 168, 32, 0.3);
+        //         break;
+        //     }
+        //     case ZONE_TYPE_RESTRICTED_AREA: {
+        //         this.setAttributeFillColor(211, 32, 32, 0.3);
+        //         break;
+        //     }
+        //     default: {
+        //         this.setAttributeFillColor(170, 170, 170, 0.3);
+        //     }
+        // }
         canvasState.setPolygonChanged();
     }
     getAttributeType = () => this.#attribute.type;
+    getStandardAttributeTypeColor = (type) => this.#standardAttributeType[type];
 
     setAttributeFillColor = (r, g, b, a = 0.3) => {
         this.#attribute.fillColor = `rgba(${r}, ${g}, ${b}, ${a})`;

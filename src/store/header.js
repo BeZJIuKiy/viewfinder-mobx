@@ -53,12 +53,11 @@ class header {
 		for (const key in this.portsNoteTest) allNewNote += this.portsNoteTest[key]
 		this.allNewNote = allNewNote;
 	}
-	addNewPortsNotifications = (id, notif) => {
-		this.portsNoteTest[id] = notif;
-
+	addNewPortsNotifications = (id, notify) => {
+		this.portsNoteTest[id] = notify;
 	}
-	addNewCamerasNotifications = (id, notif) => {
-		this.camerasNoteTest[id] = notif;
+	addNewCamerasNotifications = (id, notify) => {
+		this.camerasNoteTest[id] = notify;
 	}
 }
 

@@ -106,11 +106,11 @@ export const DetectedAreasList = observer(() => {
     const classes = useStyles();
     const {polygonItem} = canvasState;
 
+    const {camera} = ports.selectedObjects;
+
     // const [test, setTest] = useState(new Polygons(canvasState.canvas, canvasState.socket, canvasState.sessionId))
     const [isClicked, setClicked] = useState(false);
-    const [isOpenDeleteDialog, setOpenDeleteDialog] = useState({})
-
-    const {camera} = ports.selectedObjects;
+    const [isOpenDeleteDialog, setOpenDeleteDialog] = useState({});
 
     const [tempAreaData, setTempAreaData] = useState({});
     const [color, setColor] = useState("#bbbbbb");
@@ -184,7 +184,9 @@ export const DetectedAreasList = observer(() => {
     const handleChangeTypeArea = (event, area) => {
         setTempAreaData({
             ...tempAreaData,
-            [area.id]: {...tempAreaData[area.id], type: event.target.value}
+            [area.id]: {...tempAreaData[area.id],
+                type: event.target.value,
+                color: area.getStandardAttributeTypeColor(event.target.value)},
         });
     };
 
@@ -194,10 +196,11 @@ export const DetectedAreasList = observer(() => {
             [area.id]: {...tempAreaData[area.id], isEdit: false,}
         });
 
-        const {name, type, color} = tempAreaData[area.id]
+        const {name, type, color} = tempAreaData[area.id];
+
         canvasState.changePolygonName(camera.id, index, name);
         canvasState.changePolygonAttributeType(camera.id, index, type);
-        canvasState.changePolygonAttributeColor(camera.id, index, color)
+        canvasState.changePolygonAttributeColor(camera.id, index, color);
 
         canvasState.dataSynchronization();
 
@@ -249,7 +252,7 @@ export const DetectedAreasList = observer(() => {
         const isOffBtn = eventsState.isCreatePolygon;
 
         return (
-            <ListItem selected={index === canvasState.currentPolygonNum}>
+            <ListItem selected={index === canvasState.currentPolygonNum} component={"div"}>
                 <ListItemText
                     className={`${classes.listItemText}`}
                     onClick={() => handleSelectArea(index)}
@@ -279,7 +282,7 @@ export const DetectedAreasList = observer(() => {
                     <DeletePolygonDialog
                         area={area}
                         index={index}
-                        isOpen={isOpenDeleteDialog[area.id]}
+                        isOpen={isOpenDeleteDialog[area.id] || false}
                         isSaveData={true}
                         handleClose={() => handleCloseDeleteDialog(area)}
                         btnStyles={classes.btn}

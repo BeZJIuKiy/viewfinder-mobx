@@ -92,6 +92,7 @@ export const Canvas = observer(() => {
     const classes = useStyles();
 
     const windowSize = useWindowDimensions();
+    const {camera} = ports.selectedObjects;
 
     // const [width, setWidth] = useState("100%");
     // const [height, setHeight] = useState("100%");
@@ -100,6 +101,7 @@ export const Canvas = observer(() => {
     const [ratio, setRatio] = useState({width: 1, height: 1});
     const [isComputer, setComputer] = useState(true);
     const [isShowContextMenu, setShowContextMenu] = useState(false);
+    const [link, setLink] = useState("");
 
     const {isVisibleCameraCanvas} = eventsState;
 
@@ -139,6 +141,9 @@ export const Canvas = observer(() => {
         displayResolution(canvasState.size.width / canvasState.size.height);
     }, []);
     useEffect(() => {
+        setLink(camera.link);
+    }, [camera.id])
+    useEffect(() => {
         canvasState.setSocket("");
         canvasState.setSessionId(params.id);
 
@@ -177,7 +182,7 @@ export const Canvas = observer(() => {
                 {/* Для потока c сайта RTCP */}
                 <div className={classes.forPreview} ref={iframeRef}>
                     <iframe
-                    	src={ports.selectedObjects.camera.link}
+                    	src={link}
                     	width={width} height={height}
                     	title="YouTube video player"
                     	ref={iframeRef}

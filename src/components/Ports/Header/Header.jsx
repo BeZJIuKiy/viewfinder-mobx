@@ -104,48 +104,8 @@ export const Header = observer(({mobileDrawer}) => {
         // 	}, 1000)
         // )
 
-        const timePoints = [];
-        const isEventPage = history.location.pathname === "/events";
-
-        if (camera.id === 1) {
-            timePoints.push(
-                {date: "2021-10-22T11:26:33.936Z", time: 24000, img: camera01ComeScreen01},
-                {date: "2021-10-22T11:26:53.447Z", time: 34000, img: camera01ComeScreen02},
-
-                {date: "2021-10-22T11:26:57.367Z", time: 40000, img: camera01ComeScreen03},
-                {date: "2021-10-22T11:27:03.259Z", time: 47000, img: camera01ComeScreen04},
-            );
-
-            if (isEventPage) {
-                timePoints.forEach(({date, time, img}, index) => {
-                    setTimeout(() => {
-                        const newEvent = {
-                            ...event,
-                            typeError: 'Regular',
-                            date,
-                            imo: "",
-                            mmsi: "",
-                            name: "",
-                            callSign: "",
-                            typeVessel: "Boat",
-                            country: "Turkey",
-                            imageLink: img,
-                            newEvent: true,
-                            isDanger: false,
-                            description: "Unidentified ship entered / exited from the port.",
-                        }
-                        ports.addEvent(port.id, camera.id, newEvent);
-                        header.checkNewNotifications();
-                    }, time);
-                })
-            }
-        }
+        // if (camera.id === 1) mySelfAddEvent();
     }, [history.location.pathname]);
-
-    useEffect(() => {
-        /* After Preview - DELETE */
-        clearInterval(handleInterval);
-    }, [notifications])
 
     useEffect(() => {
         // getNewNotifications();
@@ -242,6 +202,44 @@ export const Header = observer(({mobileDrawer}) => {
             console.log(e)
         }
     };
+
+    /* For Preview */
+    const mySelfAddEvent = () => {
+        const timePoints = [];
+        const isEventPage = history.location.pathname === "/events";
+
+        timePoints.push(
+            {date: "2021-10-22T11:26:33.936Z", time: 24000, img: camera01ComeScreen01},
+            {date: "2021-10-22T11:26:53.447Z", time: 34000, img: camera01ComeScreen02},
+
+            {date: "2021-10-22T11:26:57.367Z", time: 40000, img: camera01ComeScreen03},
+            {date: "2021-10-22T11:27:03.259Z", time: 47000, img: camera01ComeScreen04},
+        );
+
+        if (isEventPage) {
+            timePoints.forEach(({date, time, img}, index) => {
+                setTimeout(() => {
+                    const newEvent = {
+                        ...event,
+                        typeError: 'Regular',
+                        date,
+                        imo: "",
+                        mmsi: "",
+                        name: "",
+                        callSign: "",
+                        typeVessel: "Boat",
+                        country: "Turkey",
+                        imageLink: img,
+                        newEvent: true,
+                        isDanger: false,
+                        description: "Unidentified ship entered / exited from the port.",
+                    }
+                    ports.addEvent(port.id, camera.id, newEvent);
+                    header.checkNewNotifications();
+                }, time);
+            })
+        }
+    }
 
     const menuId = 'primary-search-account-menu';
     const isMenuOpen = Boolean(anchorEl);
