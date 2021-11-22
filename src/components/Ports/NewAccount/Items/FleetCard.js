@@ -1,7 +1,7 @@
 import {makeStyles} from "@material-ui/core/styles";
 import {red} from "@material-ui/core/colors";
 import {observer} from "mobx-react-lite";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import ports from "../../../../store/ports";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -90,16 +90,24 @@ const useStyles = makeStyles((theme) => ({
             background: useHexToRgba("#f00", 0.82),
         },
     },
+    selectImage: {
+        display: "flex",
+        flexGrow: 1,
+        marginTop: theme.spacing(2),
+        justifyContent: "center",
+        overflowX: "auto",
+    },
 }));
 
-export const FleetCard = observer(({ship}) => {
+export const FleetCard = observer(({ship, isEdit = false, isDown = false, closeCard = () => {}}) => {
     const classes = useStyles();
     const template = {...ship, images: [...ship.images]};
 
     const {port, camera, cardData} = ports.selectedObjects;
 
-    const [expanded, setExpanded] = React.useState(false);
-    const [isRead, setRead] = React.useState(true);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [expanded, setExpanded] = React.useState(isDown);
+    const [isRead, setRead] = React.useState(!isEdit);
     const [isOpen, setOpen] = React.useState(false);
     const [localCardData, setLocalCardData] = React.useState(template);
     const [errorFields, setErrorFields] = React.useState({});
@@ -156,12 +164,15 @@ export const FleetCard = observer(({ship}) => {
         if (isFromEvent) {
             ports.changeEvent(portId, cameraId, editedEvent(portId, cameraId, eventId));
         }
+
+        closeCard();
         account.changeShip(ship, localCardData);
     }
     const handleCancel = () => {
         setRead(true);
         setLocalCardData(cardData?.name ? account.findShip(cardData.imo) : template);
         setErrorFields({});
+        closeCard();
     }
     const handleCloseDialog = () => {
         setRead(true);
@@ -190,6 +201,14 @@ export const FleetCard = observer(({ship}) => {
             </>
         )
     }
+    const selectImage = () => {
+        return (
+            <div className={classes.selectImage}>
+                <input type="file" name="myImage" onChange={handleSelectImage}/>
+            </div>
+        )
+    }
+
     const confirmBtn = (text = "test", type = "default", action) => {
         return (
             <Grid item xs={5} sm={5} md={5} lg={5} xl={5}>
@@ -226,7 +245,6 @@ export const FleetCard = observer(({ship}) => {
             </Tooltip>
         )
     }
-
     const deleteFleetCard = () => {
         const title = "Click for Delete this ship from Your fleet";
         const color = "default";
@@ -243,7 +261,6 @@ export const FleetCard = observer(({ship}) => {
             </Tooltip>
         )
     }
-
     const editedEvent = (portId, cameraId, eventId) => {
         const portIndex = ports.data.findIndex(({id}) => id === portId);
         const cameraIndex = ports.data[portIndex].cameras.findIndex(({id}) => id === cameraId);
@@ -259,7 +276,29 @@ export const FleetCard = observer(({ship}) => {
         })
     }
 
+    const handleSelectImage = async (event) => {
+        const base64 = await convertToBase64(event.target.files[0]);
+
+        setSelectedImage(base64);
+        setLocalCardData({...localCardData, images: [base64]});
+    }
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = (() => {
+                resolve(fileReader.result.replace("data:image/jpeg;base64,", ""));
+            })
+            fileReader.onerror = ((error) => {
+                reject(error);
+            })
+        })
+    }
+
     const delay = 500;
+
+    const img = selectedImage ? selectedImage : ship?.images[0];
 
     return (
         <>
@@ -284,7 +323,8 @@ export const FleetCard = observer(({ship}) => {
                 />
                 <CardMedia
                     className={classes.media}
-                    image={`data:image/png;base64,${ship?.images[0]}`}
+                    image={`data:image/png;base64,${img}`}
+                    // image={`data:image/png;base64,${ship?.images[0]}`}
                     title={ship.name || "No ship name"}
                 />
                 <CardContent>
@@ -320,6 +360,7 @@ export const FleetCard = observer(({ship}) => {
                             {content("Call Sign", localCardData.callSign, "callSign")}
                             {content("Flag", localCardData.flag, "flag")}
                             {content("Year Built", localCardData.yearBuilt, "yearBuilt")}
+                            {selectImage()}
                         </Grid>
 
                         <div className={`${classes.containerConfirmBtn} ${isRead ? "hide" : "show"}`}>
@@ -331,7 +372,8 @@ export const FleetCard = observer(({ship}) => {
                     </CardContent>
                 </Collapse>
             </Card>
-            <DeleteShipDialog ship={ship} isOpen={isOpen} handleClose={handleCloseDeleteDialog} btnStyles={classes.btn}/>
+            <DeleteShipDialog ship={ship} isOpen={isOpen} handleClose={handleCloseDeleteDialog}
+                              btnStyles={classes.btn}/>
         </>
     );
 })

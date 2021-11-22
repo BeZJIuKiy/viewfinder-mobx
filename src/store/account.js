@@ -90,7 +90,7 @@ class account {
 		flag: "",
 		yearBuilt: "",
 		images: [],
-		status: "",
+		status: "Active",
 		fromEvent: {
 			isFromEvent: false,
 			portId: null,
@@ -172,7 +172,9 @@ class account {
 	}
 	changeShip = (oldShip, newShip) => {
 		const shipIndex = this.myFleet.findIndex(({imo}) => imo === oldShip.imo)
-		this.myFleet[shipIndex] = newShip;
+		shipIndex === -1
+			? this.myFleet.push(newShip)
+			: this.myFleet[shipIndex] = newShip;
 	}
 	findShip = (imo) => this.myFleet.find((ship) => ship.imo === imo);
 	deleteShip = (shipId) => {
