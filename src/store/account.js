@@ -13,6 +13,7 @@ import {PersonalInformation} from "../components/Ports/Account30/Items/PersonalI
 import {Devices} from "../components/Ports/Account30/Items/Devices";
 import {Fleet} from "../components/Ports/Account30/Items/Fleet";
 import {Payments} from "../components/Ports/Account30/Items/Payments";
+import previewSPbPort from "../img/preView̆.jpg";
 
 
 export const PERSONAL_INFORMATION = "Personal Information";
@@ -97,6 +98,37 @@ class account {
 			cameraId: null,
 			eventId: null,
 		}
+	};
+	templateDeviceData = {
+		// id: this.counter.camerasId++,
+		country: "",
+		city: "",
+		name: "",
+		type: "",
+		move: "",
+		viewingAngle: "",
+		description: "",
+		coordinates: [null, null],
+		zoom: 15,
+		link: "",
+		previewLink: "",
+		events: [
+			{
+				// id: this.counter.eventsId++,
+				typeError: "",
+				date: "",
+				imo: null,
+				mmsi: null,
+				name: "",
+				callSign: null,
+				typeVessel: "",
+				country: "",
+				imageLink: "",
+				newEvent: true,
+				isDanger: false,
+				description: "",
+			},
+		],
 	};
 
 

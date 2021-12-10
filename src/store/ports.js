@@ -103,6 +103,7 @@ class ports {
 					// link: 'https://rtsp.me/embed/ayAby5ia',
 					link: "https://www.youtube.com/embed/UYCMrgERcyA?autoplay=1&mute=1",
 					previewLink: previewSPbPort,
+					status: "Online",
 
 					// link: 'https://rtsp.me/embed/ayAby5ia',
 					// link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
@@ -162,6 +163,7 @@ class ports {
 					link: 'https://rtsp.me/embed/hitQb4bf',
 					// link: 'http://87.244.33.186:8001/bgr',
 					previewLink: previewSPbPortPTZ,
+					status: "Online",
 
 					// link: 'https://rtsp.me/embed/hitQb4bf',
 					// link: "https://www.youtube.com/embed/IJ4hW1VWRAo?autoplay=1&mute=1",
