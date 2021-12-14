@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const DeviceCard = observer(({device, isEdit = false, isDown = false, closeCard = () => {}}) => {
     const classes = useStyles();
-    const template = {...device, events: [...device.events]};
+    const template = {...device, events: [...device.events], ox: null, oy: null};
 
     const {port, camera, cardData} = ports.selectedObjects;
 
@@ -133,14 +133,22 @@ export const DeviceCard = observer(({device, isEdit = false, isDown = false, clo
     }
 
     const handleConfirm = () => {
-        const {isFromEvent, portId, cameraId, eventId} = localCardData.fromEvent;
+        // const {isFromEvent, portId, cameraId, eventId} = localCardData.fromEvent;
 
         let isError = false;
         const errorField = {};
 
         for (const key in localCardData) {
-            // if (localCardData[key]?.length || key === "id" || key === "fromEvent") continue;
-            if (localCardData[key]?.length || Number.isInteger(localCardData[key]) || key === "fromEvent" || key === "images") continue;
+            const exceptions = ["events", "zoom", "previewLink", "viewingAngle", "type", "move", "description", "coordinates"];
+            const isExceptions = exceptions.findIndex((exception) => key === exception) >= 0;
+
+            const isNumber = key === "ox" || key === "oy";
+
+            const isCondition = isNumber
+                ? +localCardData[key] > 0 || isExceptions
+                : localCardData[key]?.length || +localCardData[key] > 0 || isExceptions;
+
+            if (isCondition) continue;
             errorField[key] = true;
             isError = true;
         }
@@ -154,12 +162,9 @@ export const DeviceCard = observer(({device, isEdit = false, isDown = false, clo
 
         setRead(true);
 
-        if (isFromEvent) {
-            ports.changeEvent(portId, cameraId, editedEvent(portId, cameraId, eventId));
-        }
-
         closeCard();
-        account.changeShip(device, localCardData);
+        console.log("Дошел до нужного места")
+        // account.changeShip(device, localCardData);
     }
     const handleCancel = () => {
         setRead(true);
@@ -274,10 +279,12 @@ export const DeviceCard = observer(({device, isEdit = false, isDown = false, clo
         //
         // setSelectedImage(base64);
 
-        console.log(event.target.files[0])
-
         if (event.target.files[0].type !== "image/jpeg") return event.target.value = "";
-        setLocalCardData({...localCardData, previewLink: event.target.files[0].name});
+
+        const readyImg = URL.createObjectURL(event.target.files[0]);
+        setLocalCardData({...localCardData, previewLink: readyImg});
+
+        return () => URL.revokeObjectURL(readyImg);
     }
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -297,25 +304,10 @@ export const DeviceCard = observer(({device, isEdit = false, isDown = false, clo
 
     const img = "";
 
-    console.log(localCardData.previewLink)
-
     return (
         <>
             <Card className={classes.root}>
                 <CardHeader
-                    // avatar={
-                    // 	<Avatar aria-label="recipe" className={classes.avatar}>
-                    // 		R
-                    // 	</Avatar>
-                    // }
-                    // action={
-                    // 	<IconButton aria-label="settings">
-                    // 		<MoreVertIcon />
-                    // 	</IconButton>
-                    // }
-                    // title="Shrimp and Chorizo Paella"
-                    // subheader="September 14, 2016"
-
                     className={`${classes.cardHeader} ${cardData?.typeError?.toLowerCase()}`}
                     title={device.name || "No Device name"}
                     subheader={`Location: ${device.city || "Unknown location"}`}
@@ -323,8 +315,7 @@ export const DeviceCard = observer(({device, isEdit = false, isDown = false, clo
                 <CardMedia
                     className={classes.media}
                     image={localCardData.previewLink}
-                    // image={`data:image/png;base64,${img}`}
-                    title={device.name || "No Device name"}
+                    title={device.name || "No Device Image"}
                 />
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
@@ -357,8 +348,8 @@ export const DeviceCard = observer(({device, isEdit = false, isDown = false, clo
                             {content("City", localCardData.city, "city")}
                             {content("Model", localCardData.type, "type")}
                             {content("Description", localCardData.description, "description")}
-                            {content("Position OX", localCardData.coordinates[0], "coordinates0")}
-                            {content("Position OY", localCardData.coordinates[1], "coordinates1")}
+                            {content("Position OX", localCardData.coordinates[0], "ox")}
+                            {content("Position OY", localCardData.coordinates[1], "oy")}
                             {content("URL", localCardData.link, "link")}
                             {selectImage()}
                         </Grid>

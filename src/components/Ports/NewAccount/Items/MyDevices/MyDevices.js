@@ -104,7 +104,7 @@ export const MyDevices = observer(() => {
                     ? (
                         <div style={{paddingTop: 8, paddingLeft: 8,}}>
                             <DeviceCard
-                                ship={deviceTemplate}
+                                device={deviceTemplate}
                                 isEdit={true}
                                 isDown={true}
                                 closeCard={() => handleCloseCard()}
