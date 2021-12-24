@@ -23,7 +23,6 @@ import {DeleteShipDialog} from "../DeleteShipDialog";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: 310,
-        // minWidth: 345,
         maxWidth: 345,
         overflowY: "auto",
     },
@@ -122,19 +121,12 @@ export const DeviceCard = observer(({device, isEdit = false, isDown = false, clo
     }
     const handleOpenDeleteDialog = () => {
         setOpen(true);
-
-        // const {isFromEvent, portId, cameraId, eventId} = localCardData.fromEvent;
-        //
-        // account.deleteShip(ship.id);
-        // if (isFromEvent) ports.changeEvent(portId, cameraId, clearEvent(portId, cameraId, eventId));
     }
     const handleCloseDeleteDialog = () => {
         setOpen(false);
     }
 
     const handleConfirm = () => {
-        // const {isFromEvent, portId, cameraId, eventId} = localCardData.fromEvent;
-
         let isError = false;
         const errorField = {};
 
@@ -145,10 +137,10 @@ export const DeviceCard = observer(({device, isEdit = false, isDown = false, clo
             const isNumber = key === "ox" || key === "oy";
 
             const isCondition = isNumber
-                ? +localCardData[key] > 0 || isExceptions
-                : localCardData[key]?.length || +localCardData[key] > 0 || isExceptions;
+                ? +localCardData[key] > 0
+                : localCardData[key]?.length || +localCardData[key] > 0;
 
-            if (isCondition) continue;
+            if (isCondition || isExceptions) continue;
             errorField[key] = true;
             isError = true;
         }
@@ -162,9 +154,12 @@ export const DeviceCard = observer(({device, isEdit = false, isDown = false, clo
 
         setRead(true);
 
-        closeCard();
-        console.log("Дошел до нужного места")
-        // account.changeShip(device, localCardData);
+        closeCard(localCardData);
+
+        ports.addCameraFromAccount({
+            ...localCardData,
+            coordinates: [+localCardData.ox, +localCardData.oy],
+        })
     }
     const handleCancel = () => {
         setRead(true);
