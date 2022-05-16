@@ -82,7 +82,6 @@ class ports {
             link: '',
 
             cameras: [
-                /* FOR MSI */
                 {
                     id: this.counter.camerasId++,
                     country: 'Turkey',
