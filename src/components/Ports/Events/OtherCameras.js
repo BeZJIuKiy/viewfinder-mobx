@@ -5,6 +5,7 @@ import React, {useEffect, useRef, useState} from "react";
 import eventsState from "../../../store/eventsState";
 import {ImageTitle} from "./ImageTitle";
 import {useWindowDimensions} from "../../../useHooks/useWindowDimensions";
+import { useHexToRgba } from "../../../useHooks/useHexToRgba";
 
 const useStyles = makeStyles((theme) => ({
 	otherCameras: {
@@ -53,8 +54,30 @@ export const OtherCameras = observer(() => {
 	useEffect(() => {
 		if (Number.isInteger(camera.id) === false) return;
 
-		setCameras(port.cameras.filter(({id}) => id !== camera.id)
-			.map(camera => {
+		const otherCameras = port.cameras.filter(({id}) => id !== camera.id);
+		const isManyCameras = !!otherCameras.length;
+		const NoCameras = () => {
+			const title = "No Cameras";
+
+			return (
+				<div style={{
+					width: "100%",
+					height: "100%",
+
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+
+					color: "#777",
+					background: "rgba(200, 200, 200, 0.3)",
+					borderRadius: 4,
+				}}>
+					{title}
+				</div>
+			)
+		}
+		setCameras(isManyCameras 
+			? otherCameras.map(camera => {
 				return (
 					<div key={`Other--Cameras--${camera.id}--${camera.description.length}`} className={classes.otherCamerasAll}>
 						{/*<iframe*/}
@@ -70,7 +93,9 @@ export const OtherCameras = observer(() => {
 						<ImageTitle title={camera.description}/>
 					</div>
 				)
-			}))
+			})
+			: <NoCameras />
+		)
 	}, [port, camera]);
 	useEffect(() => {
 		setResize("resize");
