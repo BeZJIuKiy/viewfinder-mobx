@@ -180,8 +180,8 @@ export const Canvas = observer(() => {
         <div className={classes.main}>
             <div className={classes.canvasDraw}>
                 {/* Для потока c сайта RTCP */}
-                <div className={classes.forPreview} ref={iframeRef}>
-                    <iframe
+                {/* <div className={classes.forPreview} ref={iframeRef}> */}
+                    {/* <iframe
                     	src={link}
                     	width={width} height={height}
                     	title="YouTube video player"
@@ -189,20 +189,20 @@ export const Canvas = observer(() => {
                     	frameBorder="0"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     	allowFullScreen
-                    />
+                    /> */}
 
-                    {/*<video*/}
-                    {/*    width={width} height={height}*/}
-                    {/*    src={ports.selectedObjects.camera.link}*/}
-                    {/*    controls autoPlay muted*/}
-                    {/*/>*/}
-                </div>
+                    {/* <video
+                       width={width} height={height}
+                       src={ports.selectedObjects.camera.link}
+                       controls autoPlay muted
+                    /> */}
+                {/* </div> */}
 
                 {/* Для JPG потока */}
-                {/*<div className={classes.forPreview} ref={iframeRef}>*/}
-                {/*	<img style={{width: width, height: height}} src={ports.selectedObjects.camera.link}*/}
-                {/*	     alt={"jpg stream"}/>*/}
-                {/*</div>*/}
+                <div className={classes.forPreview} ref={iframeRef}>
+                	<img style={{width: width, height: height}} src={ports.selectedObjects.camera.link}
+                    alt={"jpg stream"}/>
+                </div>
                 <ContextMenuTrigger
                     id={CANVAS_CONTEXT_MENU}
                     disable={!isShowContextMenu}

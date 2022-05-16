@@ -3,12 +3,12 @@ import {Header} from './Header/Header';
 import {Drawer} from './Drawer/Drawer';
 import YaMap from './YaMap/YaMap';
 import './ports.css';
-import {NewMap} from './NewMap/NewMap';
-import {useWindowDimensions} from "../../useHooks/useWindowDimensions";
+// import {NewMap} from './NewMap/NewMap';
+// import {useWindowDimensions} from "../../useHooks/useWindowDimensions";
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import {Hidden} from "@material-ui/core";
-import connects from "../../store/connects";
+// import connects from "../../store/connects";
 import styles from "../../store/styles";
 
 
@@ -34,9 +34,9 @@ export const Ports = () => {
 	const classes = useStyles();
 
 	const [mapVisible, setmapVisible] = useState(true);
-	const addtype = ["Yamap", "NewMap"];
+	// const addtype = ["Yamap", "NewMap"];
 
-	const handlerMapChange = () => setmapVisible(!mapVisible);
+	// const handlerMapChange = () => setmapVisible(!mapVisible);
 
 	// fetch(connects.urlPortsPage)
 	// 	.then(response => response.json())

@@ -434,11 +434,11 @@ class ports {
     constructor() {
         makeAutoObservable(this, {}, {autoBind: true});
 
-        makePersistable(this, {
-            name: "PortsStore",
-            properties: ["data", "selectedObjects"],
-            storage: window.localStorage
-        });
+        // makePersistable(this, {
+        //     name: "PortsStore",
+        //     properties: ["data", "selectedObjects"],
+        //     storage: window.localStorage
+        // });
 
         // makePersistable(
         //     this,

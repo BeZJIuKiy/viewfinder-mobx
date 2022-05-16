@@ -5,11 +5,9 @@ import {Signin_2_0} from "./components/Auth/SinginIn/Signin_2.0";
 import {Test} from "./components/Ports/Test";
 import {Events30} from "./components/Ports/Events/Events3.0";
 import connects from "./store/connects";
-import {SoundAlert} from "./components/SoundAlert";
+// import {SoundAlert} from "./components/SoundAlert";
 import {NewAccount} from "./components/Ports/NewAccount/NewAccount";
-import {useEffect} from "react";
-import {useWindowDimensions} from "./useHooks/useWindowDimensions";
-import styles from "./store/styles";
+
 
 function App() {
     // connects.setUrlEvents("http://localhost:5001/api/boats");
@@ -29,7 +27,7 @@ function App() {
 
     return (
         <BrowserRouter>
-            <SoundAlert/>
+            {/* <SoundAlert/> */}
             <Route exact path='/' component={Auth_2_0}/>
             <Route path='/signin' component={Signin_2_0}/>
             <Route path='/ports' component={Ports}/>
