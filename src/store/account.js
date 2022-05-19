@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {testAccountImg, userAvatar} from "./ports";
+import {bodr04, testAccountImg, userAvatar} from "./ports";
 import Icon from "@mdi/react";
 
 // ICONS
@@ -145,7 +145,7 @@ class account {
 			callSign: "Test Sign",
 			flag: "Test",
 			yearBuilt: "2020",
-			images: [testAccountImg],
+			images: [bodr04],
 			status: "Active",
 		});
 

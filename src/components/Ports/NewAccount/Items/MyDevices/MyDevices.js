@@ -92,7 +92,7 @@ export const MyDevices = observer(() => {
 
     return (
         <div className={classes.smallTable}>
-            <div className={classes.title}>Fleet</div>
+            <div className={classes.title}>Devices</div>
             <Grid container className={classes.gridContainer} spacing={2} justify={"center"}>
                 {allCameras.map((device, index) =>
                     <Grid key={`MyDevice-${index}`} item>
