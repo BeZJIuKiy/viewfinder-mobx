@@ -12,14 +12,14 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY yarn.lock ./
 COPY package*.json ./
 
-RUN yarn
-RUN yarn add global react-scripts@4.0.3
+RUN yarn install
+# RUN yarn add global react-scripts@4.0.3
 # RUN npm run start
 
 # add app
 COPY . .
 
-EXPOSE 80
+# EXPOSE 80
 
 # start app
 CMD ["yarn", "start"]
