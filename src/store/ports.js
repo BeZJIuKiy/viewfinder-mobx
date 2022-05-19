@@ -131,7 +131,7 @@ class ports {
                         {
                             id: this.counter.eventsId++,
                             typeError: MESSAGE_TYPE_REGULAR,
-                            date: "2022-05-08T12:18:56.368Z",
+                            date: "2022-05-08T12:18:56.368",
                             imo: null,
                             mmsi: null,
                             name: "",
@@ -146,7 +146,7 @@ class ports {
                         {
                             id: this.counter.eventsId++,
                             typeError: MESSAGE_TYPE_WARNING,
-                            date: "2022-05-08T14:40:039Z",
+                            date: "2022-05-08T14:40:039",
                             imo: null,
                             mmsi: null,
                             name: "",
@@ -161,7 +161,7 @@ class ports {
                         {
                             id: this.counter.eventsId++,
                             typeError: MESSAGE_TYPE_CRITICAL,
-                            date: "2022-05-08T18:18:56.956Z",
+                            date: "2022-05-08T18:18:27.956",
                             imo: null,
                             mmsi: null,
                             name: "",
@@ -176,7 +176,7 @@ class ports {
                         {
                             id: this.counter.eventsId++,
                             typeError: MESSAGE_TYPE_REGULAR,
-                            date: "2022-05-08T18:18:58.748Z",
+                            date: "2022-05-08T18:33:47.748",
                             imo: null,
                             mmsi: null,
                             name: "",
@@ -191,7 +191,7 @@ class ports {
                         {
                             id: this.counter.eventsId++,
                             typeError: MESSAGE_TYPE_REGULAR,
-                            date: "2022-05-08T12:18:56.368Z",
+                            date: "2022-05-08T18:37:12.078",
                             imo: null,
                             mmsi: null,
                             name: "",
@@ -206,7 +206,7 @@ class ports {
                         {
                             id: this.counter.eventsId++,
                             typeError: MESSAGE_TYPE_REGULAR,
-                            date: "2022-05-08T12:18:56.368Z",
+                            date: "2022-05-08T18:44:41.556",
                             imo: null,
                             mmsi: null,
                             name: "",
