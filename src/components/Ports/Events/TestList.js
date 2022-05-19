@@ -19,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
 		maxHeight: 400,
 
 		backgroundColor: theme.palette.background.paper,
-		overflowY: 'auto',
+		overflowY: 'visible',
+		// overflowY: 'auto',
 	},
 
 	list: {

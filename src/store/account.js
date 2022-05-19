@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {bodr04, testAccountImg, userAvatar} from "./ports";
+import {bodr04, bodr05, bodr06, bodr07, testAccountImg, userAvatar} from "./ports";
 import Icon from "@mdi/react";
 
 // ICONS
@@ -138,7 +138,7 @@ class account {
 		this.myFleet.push({
 			...this.templateShipData,
 			id: this.counter.fleetId++,
-			name: "ServiceSoft",
+			name: `ServiceSoft ${this.counter.fleetId}`,
 			imo: "111122224444",
 			mmsi: "555566667777",
 			vesselTypeDetailed: "Tow Boat",
@@ -146,6 +146,34 @@ class account {
 			flag: "Test",
 			yearBuilt: "2020",
 			images: [bodr04],
+			status: "Active",
+		});
+
+		this.myFleet.push({
+			...this.templateShipData,
+			id: this.counter.fleetId++,
+			name: `ServiceSoft ${this.counter.fleetId}`,
+			imo: "111122224444",
+			mmsi: "555566667777",
+			vesselTypeDetailed: "Tow Boat",
+			callSign: "Test Sign",
+			flag: "Test",
+			yearBuilt: "2020",
+			images: [bodr05],
+			status: "Active",
+		});
+
+		this.myFleet.push({
+			...this.templateShipData,
+			id: this.counter.fleetId++,
+			name: `ServiceSoft ${this.counter.fleetId}`,
+			imo: "111122224444",
+			mmsi: "555566667777",
+			vesselTypeDetailed: "Tow Boat",
+			callSign: "Test Sign",
+			flag: "Test",
+			yearBuilt: "2020",
+			images: [bodr07],
 			status: "Active",
 		});
 

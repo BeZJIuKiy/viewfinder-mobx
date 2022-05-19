@@ -14,7 +14,8 @@ function App() {
     connects.setUrlEvents("http://192.168.250.183:5001/api/boats");
 
     // connects.setUrlZones("http://localhost:5001/api/zones");
-    connects.setUrlZones("http://192.168.250.183:5001/api/zones");
+    // connects.setUrlZones("http://192.168.250.183:5001/api/zones");
+    connects.setUrlZones("http://87.244.7.150:8080");
 
     // connects.setUrlPortsPage("http://localhost:8080/api/boats");
 
