@@ -197,7 +197,7 @@ export const Events30 = observer(() => {
                         className={classes.gridContainer}
                     >
                         <Hidden smDown>
-                            <Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
+                            <Grid item xs={3} sm={3} md={3} lg={3} xl={3} style={{overflowY: "visible"}}>
                                 {gridContainerItem(<TestImage />)}
                             </Grid>
                         </Hidden>
