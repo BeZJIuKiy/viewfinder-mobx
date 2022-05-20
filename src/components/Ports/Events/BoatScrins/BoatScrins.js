@@ -13,10 +13,12 @@ import header from '../../../../store/header';
 import { ImageTitle } from '../ImageTitle';
 import { ShipCard } from '../ShipCard/ShipCard';
 import { useHexToRgba } from '../../../../useHooks/useHexToRgba';
+import styles from "./BoatScrins.module.css";
 
 const useStyles = makeStyles((theme) => ({
     testImage: {
         maxHeight: window.innerHeight * eventsState.maxHeight,
+        // maxHeight: "100%",
 
         display: 'flex',
         flexWrap: 'wrap',
@@ -149,7 +151,8 @@ const BoatScrins = observer(() => {
     // const isToMany = data.length > 2 ? "toMany" : "";
 
     return (
-        <div className={`${classes.testImage} ${isToMany ? "toMany" : ""}`} ref={testImageRef}>
+        // <div className={`${classes.testImage} ${isToMany ? "toMany" : ""}`} ref={testImageRef}>
+        <div className={`${classes.testImage} ${isToMany ? styles.tooMany : ""}`} ref={testImageRef}>
             <GridList cellHeight={70} spacing={1}>
                 {boatImage}
             </GridList>
