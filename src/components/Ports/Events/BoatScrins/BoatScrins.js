@@ -151,8 +151,7 @@ const BoatScrins = observer(() => {
     // const isToMany = data.length > 2 ? "toMany" : "";
 
     return (
-        // <div className={`${classes.testImage} ${isToMany ? "toMany" : ""}`} ref={testImageRef}>
-        <div className={`${classes.testImage} ${isToMany ? styles.tooMany : ""}`} ref={testImageRef}>
+        <div className={`${classes.testImage} ${isToMany ? "toMany" : ""}`} ref={testImageRef}>
             <GridList cellHeight={70} spacing={1}>
                 {boatImage}
             </GridList>
