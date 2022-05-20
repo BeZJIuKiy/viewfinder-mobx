@@ -22,6 +22,7 @@ import { OtherCamerasMobileDrawer } from "./OtherCamerasMobileDrawer";
 import { AccountTable } from "../NewAccount/Items/AccountTable";
 import { DetectedAreasList } from "./ChangeFigure/DetectedAreasList";
 import eventsState from "../../../store/eventsState";
+import BoatScrins from "./BoatScrins/BoatScrins";
 
 const useStyles = makeStyles((theme) => ({
     event: {
@@ -198,7 +199,8 @@ export const Events30 = observer(() => {
                     >
                         <Hidden smDown>
                             <Grid item xs={3} sm={3} md={3} lg={3} xl={3} style={{overflowY: "visible"}}>
-                                {gridContainerItem(<TestImage />)}
+                                {/* {gridContainerItem(<TestImage />)} */}
+                                {gridContainerItem(<BoatScrins />)}
                             </Grid>
                         </Hidden>
 
